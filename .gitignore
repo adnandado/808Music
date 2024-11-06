@@ -154,3 +154,14 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# C# Build
+bin/
+obj/
