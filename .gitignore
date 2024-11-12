@@ -165,3 +165,6 @@ Thumbs.db
 # C# Build
 bin/
 obj/
+
+#alt frontend
+/frontend2
