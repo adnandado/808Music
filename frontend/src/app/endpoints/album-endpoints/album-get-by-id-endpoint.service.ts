@@ -16,6 +16,7 @@ export interface AlbumGetResponse {
   coverPath: string;
   numOfTracks: number;
   artist: Artist;
+  isActive: boolean;
 }
 
 @Injectable({

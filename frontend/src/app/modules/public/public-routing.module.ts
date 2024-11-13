@@ -6,7 +6,7 @@ import {AboutComponent} from './about/about.component';
 import {BlogComponent} from './blog/blog.component';
 import {ContactUsComponent} from './contact-us/contact-us.component';
 import {TravelsComponent} from './travels/travels.component';
-import {AlbumCreateComponent} from './album/album-create/album-create.component';
+import {AlbumCreateComponent} from '../artist/album/album-create/album-create.component';
 
 const routes: Routes = [
   {

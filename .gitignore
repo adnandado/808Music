@@ -168,3 +168,6 @@ obj/
 
 #alt frontend
 /frontend2
+#static files
+backend/RS1_2024_25.API/TrackFiles
+backend/RS1_2024_25.API/wwwroot

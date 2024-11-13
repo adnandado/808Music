@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 import { ArtistRoutingModule } from './artist-routing.module';
 import { AlbumListComponent } from './album/album-list/album-list.component';
@@ -14,6 +14,8 @@ import {
   MatTable
 } from '@angular/material/table';
 import {MatChipRow} from '@angular/material/chips';
+import {MatButton, MatFabAnchor, MatFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 
 @NgModule({
@@ -34,7 +36,12 @@ import {MatChipRow} from '@angular/material/chips';
     MatHeaderRowDef,
     MatRowDef,
     MatChipRow,
-    MatRow
+    MatRow,
+    NgOptimizedImage,
+    MatButton,
+    MatIcon,
+    MatFabButton,
+    MatFabAnchor
   ]
 })
 export class ArtistModule { }

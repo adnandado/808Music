@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AlbumListComponent} from './album-list/album-list.component';
-import {AlbumCreateComponent} from '../../public/album/album-create/album-create.component';
 import {UnauthorizedComponent} from '../../shared/unauthorized/unauthorized.component';
 import {AlbumListMaterialComponent} from './album-list-material/album-list-material.component';
+import {AlbumCreateComponent} from './album-create/album-create.component';
 
 const routes: Routes = [
   {
@@ -17,7 +17,7 @@ const routes: Routes = [
         path: 'edit', component: AlbumListMaterialComponent
       }
     ]
-  }
+  },
 ];
 
 @NgModule({

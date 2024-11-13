@@ -11,7 +11,7 @@ export interface AlbumInsertRequest {
   distributor: string;
   releaseDate: string;
   albumTypeId: number;
-  isActive: number;
+  isActive: boolean;
   coverImage?: File;
   artistId: number;
 }
@@ -41,7 +41,7 @@ export class AlbumInsertOrUpdateEndpointService implements MyBaseEndpointAsync<A
         if(request.coverImage !== undefined) {
           formData.append("coverImage", request.coverImage);
         }
-        formData.append("isActive", request.isActive.toString());
+        formData.append("isActive", request.isActive ? "true" : "false");
         formData.append("albumTypeId",request.albumTypeId.toString());
         formData.append("artistId",request.artistId.toString());
 

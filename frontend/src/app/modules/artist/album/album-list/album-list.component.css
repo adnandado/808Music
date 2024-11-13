@@ -1,0 +1,89 @@
+.base-page{
+  background-color: #3E3F40;
+  width: 100vw;
+  height: 100vh;
+}
+
+.flex-container {
+  display: flex;
+  background-color: #3E3F40;
+  padding: 1em;
+  flex-direction: column;
+}
+h1,h6
+{
+  color: white;
+}
+/*
+.album-card {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: brown;
+}
+
+.album-card-thumbnail {
+  width: fit-content;
+  height: fit-content;
+}
+
+.album-card-controls {
+  display: flex;
+  flex-direction: row;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+*/
+
+
+.content {
+  margin: 16px;
+  overflow-x: auto;
+}
+
+/* Table Styling */
+.album-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.album-table th,
+.album-table td {
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+}
+
+.album-table th {
+  background-color: mediumpurple;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.album-card-thumbnail img {
+  border-radius: 4px;
+}
+
+.album-card-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+button[mat-flat-button] {
+  background-color: mediumpurple;
+  cursor: pointer;
+  color: white;
+}
+
+button[mat-flat-button]:hover {
+  background-color: rebeccapurple;
+}

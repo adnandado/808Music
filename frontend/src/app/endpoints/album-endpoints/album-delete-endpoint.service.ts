@@ -15,6 +15,6 @@ export class AlbumDeleteEndpointService implements MyBaseEndpointAsync<number, v
   }
 
   handleAsync(request: number): Observable<void> {
-    return this.httpClient.get<void>(`${this.url}/${request}`)
+    return this.httpClient.delete<void>(`${this.url}/${request}`)
     }
 }
