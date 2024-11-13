@@ -41,11 +41,11 @@ app.UseCors(
         .AllowCredentials()
 ); //This needs to set everything allowed
 
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath)),
-    RequestPath = "/media"
-});
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath)),
+//    RequestPath = "/media"
+//});
 
 app.UseAuthorization();
 

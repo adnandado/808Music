@@ -8,12 +8,12 @@ namespace RS1_2024_25.API.Data.Models
         [Key]
         public int Id { get; set; }
         public string Title { get; set; }
-        public int QtyInStock { get; set; }
+        public int QtyInStock { get; set; } = 1; 
         public float Price { get; set; }
-        public bool IsDigital { get; set; }
+        public bool IsDigital { get; set; } = false;
 
-        [ForeignKey(nameof(Artist))]
-        public int ArtistId { get; set; }
-        public Artist? Artist { get; set; }
+        //[ForeignKey(nameof(Artist))]
+        //public int ArtistId { get; set; }
+        //public Artist? Artist { get; set; }
     }
 }
