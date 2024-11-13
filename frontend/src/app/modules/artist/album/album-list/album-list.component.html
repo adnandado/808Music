@@ -1,5 +1,82 @@
-<p>album-list works!</p>
+
 <router-outlet></router-outlet>
+<div class="base-page">
+  <div class="flex-container">
+    <div>
+      <h1>Albums:</h1>
+      <h6>(Admin view)</h6>
+    </div>
+    <div class="controls">
+      <a mat-fab extended routerLink="/artist/create">
+        <mat-icon>add</mat-icon>
+        Create Album
+      </a>
+    </div>
+
+    <div class="content">
+      @if (albums != null)
+      {
+        <table class="album-table">
+          <thead>
+          <tr>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Release Date</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+
+          <tbody>
+            @for (a of albums; track a.id)
+            {
+              <tr>
+                <td class="album-card-thumbnail">
+                  <img [src]="'http://localhost:7000' + a.coverArt" height="64" width="64">
+                </td>
+                <td>{{a.title}}</td>
+                <td>{{a.artist}}</td>
+                <td>{{a.releaseDate}}</td>
+                <td class="album-card-controls">
+                  <button mat-flat-button (click)="editAlbum(a.id)">Edit</button>
+                  <button mat-flat-button (click)="deleteAlbum(a.id)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+    <!--<div class="content">
+      @if (albums != null)
+      {
+        <div class="album-card">
+          <div>Cover</div>
+          <div>Title</div>
+          <div>Artist</div>
+          <div>Release Date</div>
+          <div>Controls</div>
+        </div>
+        @for(a of albums; track a.id)
+        {
+          <div class="album-card">
+            <div class="album-card-thumbnail"><img [src]="'http://localhost:7000'+a.coverArt" height="64" width="64"></div>
+            <div>{{a.title}}</div>
+            <div>{{a.artist}}</div>
+            <div>{{a.releaseDate}}</div>
+            <div class="album-card-controls">
+              <button mat-flat-button>Edit</button>
+              <button mat-flat-button>Delete</button>
+            </div>
+          </div>
+        }
+      }
+    </div>-->
+
+  </div>
+</div>
+<!--
 <div class="content-cont">
   @if (albums !== null)
   {
@@ -30,3 +107,4 @@
     </table>
   }
 </div>
+-->

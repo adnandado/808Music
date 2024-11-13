@@ -3,6 +3,8 @@ import {
   AlbumGetAllEndpointService,
   AlbumGetAllResponse
 } from '../../../../endpoints/album-endpoints/album-get-all-endpoint.service';
+import {AlbumDeleteEndpointService} from '../../../../endpoints/album-endpoints/album-delete-endpoint.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-album-list',
@@ -13,7 +15,9 @@ export class AlbumListComponent implements OnInit {
   albums: AlbumGetAllResponse[] | null = null;
   readonly displayColumns= ["Id","Title","ReleaseDate", "Artist"]
 
-  constructor(private albumService: AlbumGetAllEndpointService) {
+  constructor(private albumService: AlbumGetAllEndpointService,
+              private albumDeleteService: AlbumDeleteEndpointService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -23,5 +27,22 @@ export class AlbumListComponent implements OnInit {
         console.log(JSON.stringify(a[0]))
       }
     )
+  }
+
+  deleteAlbum(id: number) {
+    if(confirm("Are you sure you want to delete this album?"))
+    {
+      this.albumDeleteService.handleAsync(id).subscribe({
+        error: () => { alert("Album deletion failed."); },
+        complete: () => {
+          alert("Album deleted successfully.");
+          this.ngOnInit();
+        }
+      });
+    }
+  }
+
+  editAlbum(id: number) {
+    this.router.navigate(['/artist/edit', id]);
   }
 }

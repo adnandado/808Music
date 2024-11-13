@@ -48,8 +48,8 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
                 Password = "admin123",
                 FirstName = "Admin",
                 LastName = "One",
-                IsAdmin = true, 
-                IsManager = false 
+                IsAdmin = true,
+                IsManager = false
             },
             new MyAppUser
             {
@@ -58,7 +58,7 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
                 FirstName = "Manager",
                 LastName = "One",
                 IsAdmin = false,
-                IsManager = true 
+                IsManager = true
             },
             new MyAppUser
             {
@@ -66,8 +66,8 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
                 Password = "user123",
                 FirstName = "User",
                 LastName = "One",
-                IsAdmin = false, 
-                IsManager = false 
+                IsAdmin = false,
+                IsManager = false
             },
             new MyAppUser
             {
@@ -80,10 +80,51 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             }
         };
 
+        var artists = new List<Artist> {
+            new Artist
+            {
+                Name = "Artist2",
+                Bio = "bio of artist 2"
+            },
+            new Artist
+            {
+                Name = "Artist3",
+                Bio = "bio of artist 3"
+            },
+            new Artist
+            {
+                Name = "Artist3",
+                Bio = "bio of artist 3"
+            }
+        };
+
+        var albumTypes = new List<AlbumType> {
+            new AlbumType
+            {
+                Type = "Single"
+            },
+            new AlbumType
+            {
+                Type = "EP"
+            },
+            new AlbumType
+            {
+                Type = "Mixtape"
+            },
+            new AlbumType
+            {
+                Type = "Album"
+            }
+        };
+
         // Dodavanje podataka u bazu
         await db.Countries.AddRangeAsync(countries, cancellationToken);
         await db.Cities.AddRangeAsync(cities, cancellationToken);
         await db.MyAppUsers.AddRangeAsync(users, cancellationToken);
+        await db.AlbumTypes.AddRangeAsync(albumTypes, cancellationToken);
+        await db.Artists.AddRangeAsync(artists, cancellationToken);
+
+
         await db.SaveChangesAsync(cancellationToken);
 
         return "Data generation completed successfully.";

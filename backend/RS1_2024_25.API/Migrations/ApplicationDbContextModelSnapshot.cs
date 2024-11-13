@@ -30,6 +30,9 @@ namespace RS1_2024_25.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AlbumTypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ArtistId")
                         .HasColumnType("int");
 
@@ -51,15 +54,33 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlbumTypeId");
+
+                    b.HasIndex("ArtistId");
+
+                    b.ToTable("Albums");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.AlbumType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArtistId");
-
-                    b.ToTable("Album");
+                    b.ToTable("AlbumTypes");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Artist", b =>
@@ -406,13 +427,6 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CoverArt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CreditsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Length")
                         .HasColumnType("int");
 
@@ -433,8 +447,6 @@ namespace RS1_2024_25.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AlbumId");
-
-                    b.HasIndex("CreditsId");
 
                     b.ToTable("Tracks");
                 });
@@ -464,11 +476,19 @@ namespace RS1_2024_25.API.Migrations
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Album", b =>
                 {
+                    b.HasOne("RS1_2024_25.API.Data.Models.AlbumType", "AlbumType")
+                        .WithMany()
+                        .HasForeignKey("AlbumTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
                         .WithMany()
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("AlbumType");
 
                     b.Navigation("Artist");
                 });
@@ -585,15 +605,7 @@ namespace RS1_2024_25.API.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("RS1_2024_25.API.Data.Models.Credits", "Credits")
-                        .WithMany()
-                        .HasForeignKey("CreditsId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Album");
-
-                    b.Navigation("Credits");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TrackGenre", b =>

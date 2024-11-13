@@ -9,7 +9,8 @@ import {HomeComponent} from './home/home.component';
 import {PublicLayoutComponent} from './public-layout/public-layout.component';
 import {TravelsComponent} from './travels/travels.component';
 import {FormsModule} from '@angular/forms';
-import { AlbumCreateComponent } from './album/album-create/album-create.component';
+import { AlbumCreateComponent } from '../artist/album/album-create/album-create.component';
+import {MatButton} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AlbumCreateComponent } from './album/album-create/album-create.componen
   imports: [
     CommonModule,
     PublicRoutingModule,
-    FormsModule
+    FormsModule,
+    MatButton
   ],
 
 })

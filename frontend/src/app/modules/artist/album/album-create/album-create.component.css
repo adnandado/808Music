@@ -1,0 +1,124 @@
+/* General container styling */
+div {
+  max-width: 400px; /* Limit form width */
+  margin: 0 auto; /* Center the form on the page */
+  font-family: 'Roboto', sans-serif; /* Material Design font */
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Add spacing between form elements */
+}
+
+/* Input container */
+form > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label styling */
+label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+/* Input styling */
+input[type="text"], input[type="file"], input[type="checkbox"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+  outline: none;
+}
+
+/* Checkbox alignment */
+input[type="checkbox"] {
+  width: auto;
+  margin-left: 8px;
+}
+
+/* File input styling */
+input[type="file"] {
+  border: none;
+  padding: 0;
+  color: #666;
+}
+
+/* Button styling */
+button[mat-flat-button] {
+  background-color: mediumpurple;
+  color: white;
+}
+
+button:hover {
+  background-color: rebeccapurple;
+}
+
+.control-btns {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Select styling */
+select {
+  appearance: auto; /* Remove default browser styling */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+  outline: none;
+}
+
+select:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* Optional: Style for placeholder */
+select option[value=""][disabled] {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  div {
+    max-width: 100%;
+    padding: 0 16px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}
+
+

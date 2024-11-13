@@ -14,7 +14,7 @@ export class LoginComponent {
 
   albumData: AlbumInsertRequest = {
     albumTypeId: 0,
-    isActive: 0,
+    isActive: false,
     artistId: 0,
     distributor: "",
     releaseDate: "",

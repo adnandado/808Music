@@ -22,6 +22,8 @@ namespace RS1_2024_25.API.Data
         public DbSet<Credits> Credits { get; set; }
         public DbSet<ArtistTrack> ArtistsTracks { get; set; }
         public DbSet<Artist> Artists { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<AlbumType> AlbumTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
