@@ -4,6 +4,7 @@ using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Auth;
 using RS1_2024_25.API.Services;
+using static RS1_2024_25.API.Endpoints.CityEndpoints.ProductGetAllEndpoint;
 
 
 var config = new ConfigurationBuilder()
@@ -41,11 +42,28 @@ app.UseCors(
         .AllowCredentials()
 ); //This needs to set everything allowed
 
-//app.UseStaticFiles(new StaticFileOptions
-//{
-//    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath)),
-//    RequestPath = "/media"
-//});
+app.MapGet("/api/ProductGetAll", async (ApplicationDbContext db) =>
+{
+    var result = await db.Products
+                         .Select(p => new ProductGetAllResponse
+                         {
+                             ID = p.Id,
+                             Title = p.Title,
+                             Price = p.Price,
+                             Quantity = p.QtyInStock,
+                             isDigital = p.IsDigital
+                         })
+                         .ToArrayAsync();
+
+    return result;
+});
+
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath)),
+    RequestPath = "/media"
+});
 
 app.UseAuthorization();
 

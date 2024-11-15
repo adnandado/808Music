@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper.Api;
-using static RS1_2024_25.API.Endpoints.CityEndpoints.ProductGetAll1Endpoint;
+using static RS1_2024_25.API.Endpoints.CityEndpoints.ProductGetAllEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
-public class ProductGetAll1Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+public class ProductGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithoutRequest
     .WithResult<ProductGetAllResponse[]>
 {
-    [HttpGet]
+    [HttpGet("api/ProductGetAll")]
     public override async Task<ProductGetAllResponse[]> HandleAsync(CancellationToken cancellationToken = default)
     {
         var result = await db.Products

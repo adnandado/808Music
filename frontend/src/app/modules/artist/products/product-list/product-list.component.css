@@ -1,0 +1,101 @@
+
+.table-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f3f0f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+h1 {
+  color: #5a4e89;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+
+thead {
+  background-color: #5a4e89;
+  color: white;
+  text-align: left;
+}
+
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #e1e1e1;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+
+button {
+  padding: 5px 10px;
+  background-color: #5a4e89;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 5px;
+}
+
+
+button:hover {
+  background-color: #4a3a6f;
+}
+
+
+.create-product-button {
+  display: block;
+  width: 200px;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #5a4e89;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+
+.create-product-button:hover {
+  background-color: #4a3a6f;
+}
+
+
+.loading {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #5a4e89;
+  padding: 20px;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: red;
+  text-align: center;
+  padding: 20px;
+}

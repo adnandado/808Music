@@ -25,6 +25,8 @@ public class ProductAddEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         db.Products.Add(product);
         await db.SaveChangesAsync(cancellationToken);
 
+
+
         return new ProductAddResponse
         {
             ID = product.Id,
@@ -41,6 +43,7 @@ public class ProductAddEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         public required float Price { get; set; }
         public int Quantity { get; set; }
         public bool isDigital { get; set; }
+
     }
 
     public class ProductAddResponse

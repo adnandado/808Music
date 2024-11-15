@@ -1,0 +1,36 @@
+<h1>Product List</h1>
+
+
+<div *ngIf="loading">Loading...</div>
+
+
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+
+<table *ngIf="!loading && !errorMessage">
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Is Digital</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let product of products">
+    <td>{{ product.title }}</td>
+    <td>{{ product.price }}</td>
+    <td>{{ product.quantity }}</td>
+    <td>{{ product.isDigital ? 'Yes' : 'No' }}</td>
+    <td>
+      <!-- Edit button -->
+      <button (click)="editProduct(product)">Edit</button>
+      <!-- Delete button -->
+      <button (click)="deleteProduct(product.id)">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<button (click)="createNewProduct()">CREATE NEW PRODUCT</button>

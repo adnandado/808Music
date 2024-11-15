@@ -16,12 +16,18 @@ import {
 import {MatChipRow} from '@angular/material/chips';
 import {MatButton, MatFabAnchor, MatFabButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import { ProductsCreateComponent } from './products/products-create/products-create.component';
+import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import { ProductListComponent } from './products/product-list/product-list.component';
 
 
 @NgModule({
   declarations: [
     AlbumListComponent,
-    ChooseProfileComponent
+    ChooseProfileComponent,
+    ProductsCreateComponent,
+    ProductListComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +47,9 @@ import {MatIcon} from '@angular/material/icon';
     MatButton,
     MatIcon,
     MatFabButton,
-    MatFabAnchor
+    MatFabAnchor,
+    FormsModule,
+    RouterModule
   ]
 })
 export class ArtistModule { }

@@ -1,0 +1,31 @@
+<div xmlns="http://www.w3.org/1999/html">
+
+  <h1>Create Product</h1>
+
+  <form>
+    <div>
+      <label>Title:</label>
+      <input type="text" [(ngModel)]="productData.title" name="title">
+    </div>
+
+    <div>
+      <label>Price:</label>
+      <input type="number" [(ngModel)]="productData.price" name="price">
+    </div>
+
+    <div>
+      <label>Quantity:</label>
+      <input type="number" [(ngModel)]="productData.quantity" name="quantity">
+    </div>
+
+    <div>
+      <label>Is Digital?</label>
+      <input type="checkbox" [(ngModel)]="productData.isDigital" name="isDigital">
+    </div>
+
+    <div class="control-btns">
+      <button (click)="createProduct()">Create</button>
+      <button (click)="backToList()">Cancel</button>
+    </div>
+  </form>
+</div>
