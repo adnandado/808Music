@@ -93,7 +93,7 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             },
             new Artist
             {
-                Name = "Artist3",
+                Name = "Artist4",
                 Bio = "bio of artist 3"
             }
         };

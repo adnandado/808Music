@@ -1,54 +1,62 @@
-<div xmlns="http://www.w3.org/1999/html">
-  @if (albumData.id != null)
-  {
-    <h1>Edit album</h1>
-    <label style="display: block">Current cover:</label>
-    <img [src]="MyConfig.api_address + existingCoverPath" width="200px" height="200px">
-  } @else {
-    <h1>Create album</h1>
-  }
-  <form>
-    <div>
-      <label>Title:</label>
-      <input type="text" [(ngModel)]="albumData.title" name="title">
-    </div>
-    <div>
-      <label>Distributor</label>
-      <input type="text" [(ngModel)]="albumData.distributor" name="distributor">
-    </div>
-    <div>
-      <label>Release Date</label>
-      <input type="text" [(ngModel)]="albumData.releaseDate" name="releaseDate">
-    </div>
-    <div>
-      <label>Visibility: Public?</label>
-      <input type="checkbox" [(ngModel)]="albumData.isActive" name="isActive">
-    </div>
-    <div class="create-album-type">
-      <label>Type:</label>
-      <select [(ngModel)]="albumData.albumTypeId" name="albumTypeId">
-        @for (a of albumTypes; track a.id)
-        {
-          <option [value]="a.id">{{a.type}}</option>
+<div class="base-page">
+  <div class="album-cover-highlight">
+    @if (albumData.id != null)
+    {
+      <h1>Edit Album:</h1>
+      <label style="display: block">Current cover:</label>
+      <img [src]="MyConfig.api_address + existingCoverPath" width="200px" height="200px">
+    } @else {
+      <h1>Create Album:</h1>
+    }
+  </div>
+  <div class="album-form">
+    <form>
+      <div class="album-form-field">
+        @if (albumData.id == null){
+          <label>Cover (optional)</label>
+        } @else {
+          <label>New cover (optional)</label>
         }
-      </select>
-    </div>
-    <div class="create-album-artist">
-      <label>Artist:</label>
-      <select [(ngModel)]="albumData.artistId" name="artistId">
-        @for (a of artists; track a.id)
-        {
-          <option [value]="a.id">{{a.name}}</option>
-        }
-      </select>
-    </div>
-    <div>
-      <label>Cover</label>
-      <input type="file" (change)="onImagePicked($event)">
-    </div>
-    <div class="control-btns">
-      <button mat-flat-button (click)="createAlbum()">Create</button>
-      <button mat-flat-button (click)="backToList()">Cancel</button>
-    </div>
-  </form>
+        <input type="file" (change)="onImagePicked($event)">
+      </div>
+      <div class="album-form-field">
+        <label>Title</label>
+        <input type="text" [(ngModel)]="albumData.title" name="title">
+      </div>
+      <div class="album-form-field">
+        <label>Distributor</label>
+        <input type="text" [(ngModel)]="albumData.distributor" name="distributor">
+      </div>
+      <div class="album-form-field">
+        <label>Release Date (dd-MM-yyyy)</label>
+        <input type="text" [(ngModel)]="albumData.releaseDate" name="releaseDate">
+      </div>
+      <div class="create-album-type album-form-field">
+        <label>Type:</label>
+        <select [(ngModel)]="albumData.albumTypeId" name="albumTypeId">
+          @for (a of albumTypes; track a.id)
+          {
+            <option [value]="a.id">{{a.type}}</option>
+          }
+        </select>
+      </div>
+      <div class="create-album-artist album-form-field">
+        <label>Artist:</label>
+        <select [(ngModel)]="albumData.artistId" name="artistId">
+          @for (a of artists; track a.id)
+          {
+            <option [value]="a.id">{{a.name}}</option>
+          }
+        </select>
+      </div>
+      <div class="album-form-field">
+        <label>Visibility - public?</label>
+        <input type="checkbox" [(ngModel)]="albumData.isActive" name="isActive">
+      </div>
+      <div class="control-btns">
+        <button mat-flat-button (click)="createAlbum()">Create</button>
+        <button mat-flat-button (click)="backToList()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>

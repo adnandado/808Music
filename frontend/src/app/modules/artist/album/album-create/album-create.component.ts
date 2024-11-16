@@ -69,7 +69,8 @@ export class AlbumCreateComponent implements OnInit {
 
   createAlbum() {
     let response: AlbumInsertResponse | null = null;
-    this.albumCreate.handleAsync(this.albumData).subscribe(res => {
+    this.albumCreate.handleAsync(this.albumData).subscribe(
+      res => {
       response = res;
       alert("Album created successfully.\n"+JSON.stringify(response)+"\n");
       this.backToList();
@@ -82,7 +83,6 @@ export class AlbumCreateComponent implements OnInit {
     {
       this.albumData.coverImage = file;
     }
-    this.logData()
   }
 
   backToList():void {
@@ -94,4 +94,5 @@ export class AlbumCreateComponent implements OnInit {
   }
 
   protected readonly MyConfig = MyConfig;
+
 }

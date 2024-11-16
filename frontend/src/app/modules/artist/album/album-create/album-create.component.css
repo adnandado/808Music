@@ -1,124 +1,112 @@
 /* General container styling */
 div {
-  max-width: 400px; /* Limit form width */
-  margin: 0 auto; /* Center the form on the page */
-  font-family: 'Roboto', sans-serif; /* Material Design font */
+  font-family: 'Roboto', sans-serif; /* Use Material Design's primary font */
+  max-width: 600px; /* Limit form width */
+  margin: 0 auto; /* Center the form */
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 h1 {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 24px;
   color: #333;
+  margin-bottom: 24px;
+  text-align: center;
 }
 
-/* Form styling */
+/* Highlight section for album cover */
+.album-cover-highlight {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.album-cover-highlight img {
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Form container */
 form {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Add spacing between form elements */
+  gap: 16px; /* Add spacing between form fields */
 }
 
-/* Input container */
+.album-form {
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+/* Field container */
 form > div {
-  position: relative;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  position: relative;
 }
 
 /* Label styling */
 label {
   font-size: 14px;
   color: #666;
-  margin-bottom: 8px;
   transition: all 0.2s ease;
 }
 
 /* Input styling */
-input[type="text"], input[type="file"], input[type="checkbox"] {
+input[type="text"], input[type="file"], select {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 8px;
   font-size: 16px;
-  transition: all 0.2s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+select:focus,
+input[type="file"]:focus {
   border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
   outline: none;
 }
 
-/* Checkbox alignment */
+/* Select dropdown styling */
+select {
+  cursor: pointer;
+  background-size: 12px 12px;
+  width: 100%;
+}
+.album-form-field
+{
+  width: 80%;
+}
+
+/* Checkbox styling */
 input[type="checkbox"] {
   width: auto;
   margin-left: 8px;
 }
 
-/* File input styling */
-input[type="file"] {
-  border: none;
-  padding: 0;
-  color: #666;
-}
-
-/* Button styling */
-button[mat-flat-button] {
-  background-color: mediumpurple;
-  color: white;
-}
-
-button:hover {
-  background-color: rebeccapurple;
-}
-
+/* Button container */
 .control-btns {
   display: flex;
-  flex-direction: row;
-}
-
-/* Select styling */
-select {
-  appearance: auto; /* Remove default browser styling */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px 12px;
-  font-size: 16px;
-  color: #333;
-  background-color: white;
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
-}
-
-select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
-  outline: none;
-}
-
-select:disabled {
-  background-color: #f5f5f5;
-  color: #999;
-  cursor: not-allowed;
-}
-
-/* Optional: Style for placeholder */
-select option[value=""][disabled] {
-  color: #aaa;
-  font-style: italic;
+  justify-content: flex-end;
+  gap: 16px; /* Space between buttons */
 }
 
 /* Responsive design */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   div {
     max-width: 100%;
-    padding: 0 16px;
+    padding: 8px;
   }
 
   h1 {
     font-size: 20px;
   }
+
+  .control-btns {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
-
-
