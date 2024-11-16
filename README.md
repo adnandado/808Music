@@ -1,5 +1,7 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Za parcijalni 
+1. Pokrenuti DataSeedGenerateEnpoint preko Swawggera prije pokretanja CRUD formi
+2. CRUD za albume se nalazi na ruti /artist/album - napravio IB220215
+3. CRUD za produkte se nazali na ruti /product-list - napravio IB220280
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
