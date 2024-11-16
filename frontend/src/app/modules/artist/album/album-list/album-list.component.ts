@@ -45,4 +45,8 @@ export class AlbumListComponent implements OnInit {
   editAlbum(id: number) {
     this.router.navigate(['/artist/edit', id]);
   }
+
+  getDateString(date: string) :string {
+    return new Date(date).toLocaleDateString('en-GB', {weekday:"long", month:"numeric", day:"numeric", year:"numeric"});
+  }
 }
