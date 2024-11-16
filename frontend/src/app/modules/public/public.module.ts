@@ -10,7 +10,7 @@ import {PublicLayoutComponent} from './public-layout/public-layout.component';
 import {TravelsComponent} from './travels/travels.component';
 import {FormsModule} from '@angular/forms';
 import { AlbumCreateComponent } from '../artist/album/album-create/album-create.component';
-import {MatButton} from '@angular/material/button';
+import {MatAnchor, MatButton} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import {MatButton} from '@angular/material/button';
     CommonModule,
     PublicRoutingModule,
     FormsModule,
-    MatButton
+    MatButton,
+    MatAnchor
   ],
 
 })

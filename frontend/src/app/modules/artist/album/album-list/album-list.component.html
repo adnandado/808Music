@@ -22,7 +22,7 @@
             <th>Cover</th>
             <th>Title</th>
             <th>Artist</th>
-            <th>Release Date</th>
+            <th>Release Date (dd/MM/yyyy)</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -36,7 +36,7 @@
                 </td>
                 <td>{{a.title}}</td>
                 <td>{{a.artist}}</td>
-                <td>{{a.releaseDate}}</td>
+                <td>{{getDateString(a.releaseDate)}}</td>
                 <td class="album-card-controls">
                   <button mat-flat-button (click)="editAlbum(a.id)">Edit</button>
                   <button mat-flat-button (click)="deleteAlbum(a.id)">Delete</button>
