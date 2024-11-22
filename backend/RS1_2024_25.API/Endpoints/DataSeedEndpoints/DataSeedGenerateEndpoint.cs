@@ -49,7 +49,11 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
                 FirstName = "Admin",
                 LastName = "One",
                 IsAdmin = true,
-                IsManager = false
+                IsManager = false,
+                Email = "admin@admin.com",
+                DateOfBirth = DateTime.Now,
+                IsActive = true,
+                CountryId = db.Countries.First().ID
             },
             new MyAppUser
             {
@@ -58,7 +62,11 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
                 FirstName = "Manager",
                 LastName = "One",
                 IsAdmin = false,
-                IsManager = true
+                IsManager = true,
+                Email = "admin@admin.com",
+                DateOfBirth = DateTime.Now,
+                IsActive = true,
+                CountryId = db.Countries.First().ID
             },
             new MyAppUser
             {
@@ -67,7 +75,11 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
                 FirstName = "User",
                 LastName = "One",
                 IsAdmin = false,
-                IsManager = false
+                IsManager = false,
+                Email = "admin@admin.com",
+                DateOfBirth = DateTime.Now,
+                IsActive = true,
+                CountryId = db.Countries.First().ID
             },
             new MyAppUser
             {
@@ -76,7 +88,11 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
                 FirstName = "User",
                 LastName = "Two",
                 IsAdmin = false,
-                IsManager = false
+                IsManager = false,
+                Email = "admin@admin.com",
+                DateOfBirth = DateTime.Now,
+                IsActive = true,
+                CountryId = db.Countries.First().ID
             }
         };
 
