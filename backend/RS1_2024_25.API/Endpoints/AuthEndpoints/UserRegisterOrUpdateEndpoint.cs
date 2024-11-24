@@ -45,8 +45,8 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 db.MyAppUsers.Add(user);
             }
 
-            MyAppUser dupeUser = await db.MyAppUsers.FirstOrDefaultAsync(u => u.Username == request.Username && u.Email == request.Email);
-            if(dupeUser != null)
+            MyAppUser dupeUser = await db.MyAppUsers.FirstOrDefaultAsync(u => u.Username == request.Username || u.Email == request.Email);
+            if(dupeUser != null && dupeUser != user)
             {
                 return BadRequest("Account with this email or username already exists");
             }
@@ -82,8 +82,6 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
             if (!Regex.IsMatch(this.Username, "^[a-zA-Z0-9.]{3,20}$"))
                 return false;
             if (!Regex.IsMatch(this.Email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))
-                return false;
-            if (!Regex.IsMatch(this.Password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))
                 return false;
             if (!Regex.IsMatch(this.Password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))
                 return false;

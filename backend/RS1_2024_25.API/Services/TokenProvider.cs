@@ -10,6 +10,7 @@ namespace RS1_2024_25.API.Services
 {
     public class TokenProvider(IConfiguration cfg)
     {
+        private Random rnd = new Random();
         public string Create(MyAppUser user)
         {
             string secretKey = cfg["Jwt:Secret"]!;
@@ -31,6 +32,20 @@ namespace RS1_2024_25.API.Services
 
             var jwtHandler = new JsonWebTokenHandler();
             return jwtHandler.CreateToken(tokenDescriptor);
+        }
+
+        public string CreateRefreshToken()
+        {
+            byte[] bytes = new byte[64];
+            rnd.NextBytes(bytes);
+            return Convert.ToBase64String(bytes);
+        }
+
+        public string CreateResetToken()
+        {
+            byte[] bytes = new byte[32];
+            rnd.NextBytes(bytes);
+            return Convert.ToHexString(bytes);
         }
     }
 }

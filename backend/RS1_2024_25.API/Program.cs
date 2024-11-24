@@ -4,9 +4,10 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RS1_2024_25.API.Data;
-using RS1_2024_25.API.Helper;
+using RS1_2024_25.API.Data.Models.Mail;
 using RS1_2024_25.API.Helper.Auth;
 using RS1_2024_25.API.Services;
+using RS1_2024_25.API.Services.Interfaces;
 using System.Text;
 using static RS1_2024_25.API.Endpoints.CityEndpoints.ProductGetAllEndpoint;
 
@@ -70,6 +71,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddTransient<MyAuthService>();
 builder.Services.AddTransient<FileHandler>();
 builder.Services.AddSingleton<TokenProvider>();
+builder.Services.AddTransient<IMyMailService, MailService>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 
 var app = builder.Build();
 

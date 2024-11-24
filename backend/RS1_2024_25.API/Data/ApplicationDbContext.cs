@@ -24,6 +24,8 @@ namespace RS1_2024_25.API.Data
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Album> Albums { get; set; }
         public DbSet<AlbumType> AlbumTypes { get; set; }
+        public DbSet<MyRefreshToken> MyRefreshTokens { get; set; }
+        public DbSet<MyResetToken> MyResetTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
