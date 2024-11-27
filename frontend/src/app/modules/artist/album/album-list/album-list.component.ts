@@ -5,6 +5,7 @@ import {
 } from '../../../../endpoints/album-endpoints/album-get-all-endpoint.service';
 import {AlbumDeleteEndpointService} from '../../../../endpoints/album-endpoints/album-delete-endpoint.service';
 import {Router} from '@angular/router';
+import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
 
 @Component({
   selector: 'app-album-list',
@@ -17,10 +18,15 @@ export class AlbumListComponent implements OnInit {
 
   constructor(private albumService: AlbumGetAllEndpointService,
               private albumDeleteService: AlbumDeleteEndpointService,
-              private router: Router) {
+              private router: Router,
+              private auth: MyUserAuthService) {
   }
 
   ngOnInit(): void {
+    if(!this.auth.isLoggedIn())
+    {
+      this.router.navigate(['/auth/login']);
+    }
     this.albumService.handleAsync({}).subscribe(
       a =>{
         this.albums = a

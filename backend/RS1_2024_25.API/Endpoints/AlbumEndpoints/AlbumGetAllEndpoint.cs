@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper;
@@ -9,6 +10,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
     public class AlbumGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync.WithRequest<AlbumGetAllRequest>.WithActionResult<MyPagedList<AlbumGetResponse>>
     {
         [HttpGet]
+        [Authorize]
         public override async Task<ActionResult<MyPagedList<AlbumGetResponse>>> HandleAsync([FromQuery] AlbumGetAllRequest request, CancellationToken cancellationToken = default)
         {
             var albums = db.Albums.AsQueryable();

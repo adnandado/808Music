@@ -44,52 +44,39 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         {
             new MyAppUser
             {
-                Username = "admin1",
-                Password = "admin123",
+                Username = "admin",
+                Password = BCrypt.Net.BCrypt.EnhancedHashPassword("admin123"),
                 FirstName = "Admin",
                 LastName = "One",
                 IsAdmin = true,
                 IsManager = false,
-                Email = "admin@admin.com",
+                Email = "marko.dogan@edu.fit.ba",
                 DateOfBirth = DateTime.Now,
                 IsActive = true,
                 CountryId = db.Countries.First().ID
             },
             new MyAppUser
             {
-                Username = "manager1",
-                Password = "manager123",
+                Username = "manager",
+                Password = BCrypt.Net.BCrypt.EnhancedHashPassword("manager123"),
                 FirstName = "Manager",
                 LastName = "One",
                 IsAdmin = false,
                 IsManager = true,
-                Email = "admin@admin.com",
+                Email = "adnan.grbesic@edu.fit.ba",
                 DateOfBirth = DateTime.Now,
                 IsActive = true,
                 CountryId = db.Countries.First().ID
             },
             new MyAppUser
             {
-                Username = "user1",
-                Password = "user123",
+                Username = "user808",
+                Password = BCrypt.Net.BCrypt.EnhancedHashPassword("user123"),
                 FirstName = "User",
                 LastName = "One",
                 IsAdmin = false,
                 IsManager = false,
-                Email = "admin@admin.com",
-                DateOfBirth = DateTime.Now,
-                IsActive = true,
-                CountryId = db.Countries.First().ID
-            },
-            new MyAppUser
-            {
-                Username = "user2",
-                Password = "user456",
-                FirstName = "User",
-                LastName = "Two",
-                IsAdmin = false,
-                IsManager = false,
-                Email = "admin@admin.com",
+                Email = "pcrpmo@gmail.com",
                 DateOfBirth = DateTime.Now,
                 IsActive = true,
                 CountryId = db.Countries.First().ID
@@ -134,11 +121,11 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         };
 
         // Dodavanje podataka u bazu
-        await db.Countries.AddRangeAsync(countries, cancellationToken);
-        await db.Cities.AddRangeAsync(cities, cancellationToken);
+        //await db.Countries.AddRangeAsync(countries, cancellationToken);
+        //await db.Cities.AddRangeAsync(cities, cancellationToken);
         await db.MyAppUsers.AddRangeAsync(users, cancellationToken);
-        await db.AlbumTypes.AddRangeAsync(albumTypes, cancellationToken);
-        await db.Artists.AddRangeAsync(artists, cancellationToken);
+        //await db.AlbumTypes.AddRangeAsync(albumTypes, cancellationToken);
+        //await db.Artists.AddRangeAsync(artists, cancellationToken);
 
 
         await db.SaveChangesAsync(cancellationToken);

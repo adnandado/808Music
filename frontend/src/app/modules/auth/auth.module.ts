@@ -9,6 +9,12 @@ import {TwoFactorComponent} from './two-factor/two-factor.component';
 import {FormsModule} from '@angular/forms';
 import { LogoutComponent } from './logout/logout.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
+import {MatFormField} from "@angular/material/form-field";
+import {MatInput} from '@angular/material/input';
+import {MatHeaderRow} from '@angular/material/table';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatCard, MatCardContent} from "@angular/material/card";
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -18,12 +24,19 @@ import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
     ForgetPasswordComponent,
     TwoFactorComponent,
     LogoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
-    FormsModule
+    FormsModule,
+    MatFormField,
+    MatInput,
+    MatHeaderRow,
+    MatCheckbox,
+    MatCard,
+    MatCardContent
   ]
 })
 export class AuthModule {

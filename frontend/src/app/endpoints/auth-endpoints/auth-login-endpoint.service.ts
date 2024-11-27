@@ -5,11 +5,8 @@ import {MyConfig} from '../../my-config';
 import {MyAuthService} from '../../services/auth-services/my-auth.service';
 import {LoginTokenDto} from '../../services/auth-services/dto/login-token-dto';
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
+import {LoginRequest} from './user-auth-login-endpoint.service';
 
-export interface LoginRequest {
-  username: string;
-  password: string;
-}
 
 @Injectable({
   providedIn: 'root'
