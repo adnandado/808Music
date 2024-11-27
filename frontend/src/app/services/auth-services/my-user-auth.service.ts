@@ -1,4 +1,4 @@
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {LoginResponse} from '../../endpoints/auth-endpoints/user-auth-login-endpoint.service';
 import {AuthTokenInfo} from './dto/auth-token-info';
@@ -10,6 +10,8 @@ import {
 import {MyConfig} from '../../my-config';
 import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {LogoutInfo} from './dto/logout-info';
+import {LogoutRequest} from './dto/logout-request';
 
 @Injectable({providedIn: 'root'})
 export class MyUserAuthService {
@@ -95,5 +97,36 @@ export class MyUserAuthService {
       refreshToken: lr.refreshToken,
       rememberMe: rememberMe
     }
+  }
+
+  public logOut():LogoutInfo {
+    let url = `${MyConfig.api_address}/api/UserLogoutEndpoint`;
+    let auth = this.getAuthToken();
+
+    let logoutInfo : LogoutInfo = {
+      requestSuccessful: false,
+      serverMessage: "Not logged in"
+    }
+
+    if(auth !== null)
+    {
+      let logoutRequest: LogoutRequest = {
+        jwtToken: auth?.token!,
+        refreshToken: auth?.refreshToken!
+      }
+      this.httpClient.post(url, logoutRequest, {responseType:"text"}).subscribe({
+        next: (data) => {
+          logoutInfo.serverMessage = data;
+          logoutInfo.requestSuccessful = true;
+          this.setLoggedInUser(null, auth?.rememberMe!);
+        },
+        error: (err:HttpErrorResponse) => {
+          logoutInfo.serverMessage = err.error;
+          logoutInfo.requestSuccessful = false;
+        }
+      });
+    }
+
+    return logoutInfo;
   }
 }
