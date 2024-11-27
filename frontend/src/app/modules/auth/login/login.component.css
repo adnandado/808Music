@@ -27,6 +27,7 @@ h2 {
 
 .form-group {
   margin-bottom: 15px;
+  flex-basis: 47%;
 }
 
 label {
@@ -36,7 +37,7 @@ label {
   color: white;
 }
 
-input {
+input, select {
   width: 100%;
   padding: 8px;
   border-radius: 4px;
@@ -75,4 +76,26 @@ input {
 a {
   text-decoration: none;
   color: palevioletred;
+}
+
+.dual-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.padder {
+  height: 0.2vh;
+  background-color: white;
+  opacity: 0.3;
+  border-radius: 15px;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+@media (max-height: 900px) {
+  .padder {
+    height: 0;
+    margin: 0;
+  }
 }

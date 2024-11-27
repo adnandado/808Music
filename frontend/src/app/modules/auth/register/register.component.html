@@ -1,1 +1,76 @@
-<p>register works!</p>
+<div class="login-page">
+  <div class="login-container">
+    <h2>Register an account with 808 Music</h2>
+    <form *ngIf="!sentRequest" class="dual-control">
+    <div class="form-group">
+      <div class="form-group dual-control">
+        <div class="form-group">
+          <label for="firstName">First name:</label>
+          <input [(ngModel)]="regData.firstName" id="firstName" name="firstName" required type="text" (input)="validateFnLn()" class="">
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input [(ngModel)]="regData.lastName" id="lastName" name="lastName" required type="text" (input)="validateFnLn()" class="">
+        </div>
+      </div>
+
+      <div class="padder"></div>
+
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input [(ngModel)]="regData.username" id="username" name="username" required type="text" (input)="validateUsername()" class="">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input [(ngModel)]="regData.email" id="email" name="email" required type="text" (input)="validateEmail()" class="">
+      </div>
+
+    </div>
+      <div class="form-group">
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input [(ngModel)]="regData.password" id="password" name="password" required type="text" (input)="validatePassword()" class="">
+      </div>
+
+      <div class="form-group">
+        <label for="repeatPassword">Repeat password:</label>
+        <input [(ngModel)]="repeatPassword" id="repeatPassword" name="repeatPassword" required type="text" (input)="validateIfSamePassword()" class="">
+      </div>
+
+      <div class="padder"></div>
+
+      <div class="form-group">
+        <label for="dateOfBirth">Date of birth</label>
+        <input [(ngModel)]="regData.dateOfBirth" id="dateOfBirth" name="dateOfBirth" required type="date" (input)="validateDOB()" class="">
+      </div>
+
+      <div class="form-group">
+        <label>Country:</label>
+        <select [(ngModel)]="regData.countryId" name="countryId">
+          @for (c of countries; track c.id)
+          {
+            <option [value]="c.id">{{c.name}}</option>
+          }
+        </select>
+      </div>
+
+
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      </div>
+    </form>
+
+    <div *ngIf="!sentRequest" class="dual-control">
+      <button  class="login-button sec-opt-btn" routerLink="/">Back to home</button>
+      <button class="login-button" (click)="registerUser()" [disabled]="checkButton()">Register</button>
+    </div>
+
+    <div *ngIf="sentRequest" class="success-div">
+      <h6>{{ successText }}</h6>
+      <button class="login-button" routerLink="../login">Go to login</button>
+    </div>
+
+    <!--<button class="login-button" type="submit" (click)="LogData()">Show me</button>-->
+  </div>
+</div>

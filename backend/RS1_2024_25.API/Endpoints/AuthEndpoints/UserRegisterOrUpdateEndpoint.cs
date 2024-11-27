@@ -57,6 +57,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
             user.DateOfBirth = request.DateOfBirth;
             user.Username = request.Username;
             user.CountryId = request.CountryId;
+            user.IsActive = true;
 
             string passHash = BCrypt.Net.BCrypt.EnhancedHashPassword(request.Password);
             user.Password = passHash;
