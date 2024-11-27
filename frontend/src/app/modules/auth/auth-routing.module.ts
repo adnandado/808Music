@@ -6,15 +6,19 @@ import {TwoFactorComponent} from './two-factor/two-factor.component';
 import {AdminErrorPageComponent} from '../admin/admin-error-page/admin-error-page.component';
 import {AuthLayoutComponent} from './auth-layout/auth-layout.component';
 import {LogoutComponent} from './logout/logout.component';
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
+import {RegisterComponent} from './register/register.component';
 
 const routes: Routes = [
   {
     path: '', component: AuthLayoutComponent, children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},
-      {path: 'login', component: LoginComponent},
+      {path: 'login', component: LoginComponent},//half-done
       {path: 'logout', component: LogoutComponent},
-      {path: 'forget-password', component: ForgetPasswordComponent},
+      {path: 'forgot-password', component: ForgetPasswordComponent}, //done
       {path: 'two-factor', component: TwoFactorComponent},
+      {path: 'reset-password', component: ResetPasswordComponent},
+      {path: 'register', component: RegisterComponent},
       {path: '**', component: AdminErrorPageComponent}  // Default ruta koja vodi na public
     ]
   }

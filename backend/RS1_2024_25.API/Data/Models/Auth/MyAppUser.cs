@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace RS1_2024_25.API.Data.Models.Auth;
@@ -14,7 +15,15 @@ public class MyAppUser
     // Additional properties
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public string Email { get; set; }
+    public DateTime DateOfBirth { get; set; }
 
+    [ForeignKey(nameof(Country))]
+    public int CountryId { get; set; }
+    public Country Country { get; set; }
+    public bool IsActive { get; set; }
+
+    //public bool Gender { get; set; }
 
     //----------------
     public bool IsAdmin { get; set; }

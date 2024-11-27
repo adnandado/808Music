@@ -1,34 +1,42 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthLoginEndpointService, LoginRequest} from '../../../endpoints/auth-endpoints/auth-login-endpoint.service';
+import {AuthLoginEndpointService} from '../../../endpoints/auth-endpoints/auth-login-endpoint.service';
 import {AlbumInsertRequest} from '../../../endpoints/album-endpoints/album-insert-or-update-endpoint.service';
+import {
+  LoginRequest,
+  UserAuthLoginEndpointService
+} from '../../../endpoints/auth-endpoints/user-auth-login-endpoint.service';
+import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  loginRequest: LoginRequest = {username: 'admin1', password: 'admin123'};
+export class LoginComponent implements OnInit {
+  loginRequest: LoginRequest = {username: 'admin', password: 'admin123', rememberMe: false};
   errorMessage: string | null = null;
 
-  albumData: AlbumInsertRequest = {
-    albumTypeId: 0,
-    isActive: false,
-    artistId: 0,
-    distributor: "",
-    releaseDate: "",
-    title:""
-  };
+  constructor(private authLoginService: UserAuthLoginEndpointService,
+              private router: Router,
+              private auth: MyUserAuthService) {
+  }
 
-  constructor(private authLoginService: AuthLoginEndpointService, private router: Router) {
+  ngOnInit(): void {
+    if(this.auth.isLoggedIn())
+    {
+      alert("Already logged in.")
+      this.router.navigate(['/artist/album']);
+    }
   }
 
   onLogin(): void {
     this.authLoginService.handleAsync(this.loginRequest).subscribe({
-      next: () => {
+      next: (lr) => {
         console.log('Login successful');
-        this.router.navigate(['/admin']); // Redirect to
+        console.log(lr)
+        // Redirect to
+        this.router.navigate(['/admin']);
       },
       error: (error: any) => {
         this.errorMessage = 'Incorrect username or password';
@@ -39,6 +47,7 @@ export class LoginComponent {
 
   LogData(): void {
     alert(this.loginRequest.username);
-    alert(this.albumData.title);
+    alert(this.loginRequest.password);
+    alert(this.loginRequest.rememberMe);
   }
 }

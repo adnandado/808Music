@@ -156,9 +156,22 @@ namespace RS1_2024_25.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
@@ -179,6 +192,8 @@ namespace RS1_2024_25.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("MyAppUsers");
                 });
@@ -210,6 +225,56 @@ namespace RS1_2024_25.API.Migrations
                     b.HasIndex("MyAppUserId");
 
                     b.ToTable("MyAuthenticationTokens");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyRefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MyAppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MyAppUserId");
+
+                    b.ToTable("MyRefreshTokens");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyResetToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MyAppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ResetToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MyAppUserId");
+
+                    b.ToTable("MyResetTokens");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.City", b =>
@@ -507,7 +572,40 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("Track");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyAppUser", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyAuthenticationToken", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
+                        .WithMany()
+                        .HasForeignKey("MyAppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("MyAppUser");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyRefreshToken", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
+                        .WithMany()
+                        .HasForeignKey("MyAppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("MyAppUser");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyResetToken", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
                         .WithMany()

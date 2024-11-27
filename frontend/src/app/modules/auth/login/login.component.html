@@ -1,3 +1,34 @@
+<div class="login-page">
+  <!--<div><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spotify_logo_with_text.svg/640px-Spotify_logo_with_text.svg.png" width="500" height="150"></div>-->
+  <div class="login-container">
+    <h2>Login - 808 Music</h2>
+    <form (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input [(ngModel)]="loginRequest.username" id="username" name="username" required type="text">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input [(ngModel)]="loginRequest.password" id="password" name="password" required type="password">
+        <a routerLink="/auth/forgot-password">Forgot password?</a>
+      </div>
+
+      <div class="form-group">
+        <label for="rememberMe">Remember me </label>
+        <input [(ngModel)]="loginRequest.rememberMe" id="rememberMe" name="rememberMe" required type="checkbox">
+      </div>
+
+      <button class="login-button" type="submit">Login</button>
+
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+    <!--<button class="login-button" type="submit" (click)="LogData()">Show me</button>-->
+    <button class="login-button" routerLink="/">Back to home</button>
+  </div>
+</div>
+
+<!--
 <div class="login-container">
   <h2>Login</h2>
   <form (ngSubmit)="onLogin()">
@@ -22,3 +53,4 @@
   </form>
   <button class="login-button" type="submit" (click)="LogData()">Show me</button>
 </div>
+-->

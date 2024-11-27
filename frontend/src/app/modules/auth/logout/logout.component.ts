@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MyConfig} from '../../../my-config';
 import {MyAuthService} from '../../../services/auth-services/my-auth.service';
+import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
 
 @Component({
   selector: 'app-logout',
@@ -13,29 +14,17 @@ export class LogoutComponent implements OnInit {
   private apiUrl = `${MyConfig.api_address}/auth/logout`;
 
   constructor(
-    private httpClient: HttpClient,
-    private authService: MyAuthService,
+    private authService: MyUserAuthService,
     private router: Router
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.logout();
   }
 
   logout(): void {
-    this.httpClient.post<void>(this.apiUrl, {}).subscribe({
-      next: () => this.handleLogoutSuccessOrError(),
-      error: (error) => {
-        console.error('Error during logout:', error);
-        this.handleLogoutSuccessOrError();
-      }
-    });
-  }
-
-  // Metoda za zajedničko uklanjanje tokena i preusmjeravanje
-  private handleLogoutSuccessOrError(): void {
-    this.authService.setLoggedInUser(null);
+    let info = this.authService.logOut();
+    //alert(JSON.stringify(info));
     setTimeout(() => {
       this.router.navigate(['/auth/login']); // Preusmjeravanje na login nakon 3 sekunde
     }, 3000);

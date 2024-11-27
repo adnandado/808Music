@@ -1,9 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using RS1_2024_25.API.Data;
-using RS1_2024_25.API.Helper;
+using RS1_2024_25.API.Data.Models.Mail;
 using RS1_2024_25.API.Helper.Auth;
 using RS1_2024_25.API.Services;
+using RS1_2024_25.API.Services.Interfaces;
+using System.Text;
 using static RS1_2024_25.API.Endpoints.CityEndpoints.ProductGetAllEndpoint;
 
 
@@ -21,12 +26,53 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(x => x.OperationFilter<MyAuthorizationSwaggerHeader>());
+builder.Services.AddSwaggerGen(x => {
+    x.OperationFilter<MyAuthorizationSwaggerHeader>();
+    var security = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        In = ParameterLocation.Header,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        Description = "Enter your JWT for authorization.",
+    };
+    x.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, security);
+
+    x.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                        Id = JwtBearerDefaults.AuthenticationScheme
+                }
+            },
+            []
+        }
+    });
+});
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!)),
+            ClockSkew = TimeSpan.Zero
+        };
+    }
+);
 
 //dodajte vaše servise
 builder.Services.AddTransient<MyAuthService>();
 builder.Services.AddTransient<FileHandler>();
+builder.Services.AddSingleton<TokenProvider>();
+builder.Services.AddTransient<IMyMailService, MailService>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 
 var app = builder.Build();
 
@@ -41,6 +87,7 @@ app.UseCors(
         .AllowAnyHeader()
         .AllowCredentials()
 ); //This needs to set everything allowed
+
 
 app.MapGet("/api/ProductGetAll", async (ApplicationDbContext db) =>
 {
@@ -65,6 +112,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/media"
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

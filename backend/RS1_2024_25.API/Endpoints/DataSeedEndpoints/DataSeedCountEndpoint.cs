@@ -1,5 +1,6 @@
 ﻿namespace RS1_2024_25.API.Endpoints.DataSeed
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RS1_2024_25.API.Data;
     using RS1_2024_25.API.Helper.Api;
@@ -15,6 +16,7 @@
             .WithResult<Dictionary<string, int>>
         {
             [HttpGet]
+            [Authorize(Roles = "Admin")]
             public override async Task<Dictionary<string, int>> HandleAsync(CancellationToken cancellationToken = default)
             {
                 Dictionary<string, int> dataCounts = new ()
