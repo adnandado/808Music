@@ -78,7 +78,7 @@
 
 .headline-card-thumbnail {
   height: 50%;
-  background-image: url("C:/808Music/frontend/public/images/4lander.png");
+  background-image: url("../../../../../public/images/4lander.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
