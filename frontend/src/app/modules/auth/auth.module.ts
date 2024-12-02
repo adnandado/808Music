@@ -15,6 +15,7 @@ import {MatHeaderRow} from '@angular/material/table';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatCard, MatCardContent} from "@angular/material/card";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { PassStrengthMeterComponent } from './pass-strength-meter/pass-strength-meter.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     TwoFactorComponent,
     LogoutComponent,
     AuthLayoutComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    PassStrengthMeterComponent
   ],
   imports: [
     CommonModule,

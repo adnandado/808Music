@@ -1,0 +1,90 @@
+.base-page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.headline-card {
+  height: 70%;
+  width: 70vw;
+  background-color: #242424;
+  border-radius: 50px;
+  padding: 2vw;
+  position: relative;
+}
+
+.headline-card h1 {
+  padding-top: 1vh;
+  font-weight: 500;
+  line-height: 1.3;
+  position: relative;
+  z-index: 5;
+}
+
+.headline-card h6 {
+  padding-top: 5vh;
+}
+
+.headline-card p {
+  color: #A9A9A9;
+  text-align: right;
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.btn8m-prim {
+  margin-top: 20px;
+  background-color: #E178F7;
+  color: #242424;
+  text-align: right;
+  padding: 0.8vw;
+  font-weight: bold;
+  border-radius: 30px;
+  padding-right: 30px;
+  font-size: 20px;
+}
+
+.btn8m-prim:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.btn8m-sec {
+  background-color: #333333;;
+  color: white;
+  text-align: right;
+  padding: 0.8vw;
+  font-weight: bold;
+  border-radius: 30px;
+  padding-right: 30px;
+  font-size: 20px;
+}
+
+.btn8m-sec:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.wpercent30 {
+  width: 30%;
+}
+
+.headline-card-thumbnail {
+  height: 50%;
+  background-image: url("C:/808Music/frontend/public/images/4lander.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 60%;
+  position: absolute;
+  right: 0;
+  top: 20px;
+  z-index: 2;
+}
