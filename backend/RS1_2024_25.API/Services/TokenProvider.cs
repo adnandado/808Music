@@ -22,7 +22,8 @@ namespace RS1_2024_25.API.Services
                 Subject = new System.Security.Claims.ClaimsIdentity([
                     new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, user.ID.ToString()),
                     new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin": "None")
+                    new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin": "None"),
+                    new Claim("Username", user.Username)
                 ]),
                 Audience = cfg["Jwt:Audience"],
                 Issuer = cfg["Jwt:Issuer"],

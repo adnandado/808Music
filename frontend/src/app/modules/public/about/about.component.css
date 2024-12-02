@@ -1,0 +1,33 @@
+.headline-card-thumbnail {
+  background-image: url("../../../../../public/images/808AboutUsImage.webp");
+  background-size: cover;
+  top: 40px;
+  right: 40px;
+  border-radius: 20px;
+  width: 55%;
+}
+.headline-card {
+  overflow-y: scroll;
+}
+
+.headline-card p {
+  padding-top: 0;
+  font-size: 14px;
+  text-align: left;
+  color: white;
+}
+
+.headline-card-signature {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+  z-index: 2;
+}
+
+.headline-card-signature h1 {
+  font-family: Monoton;
+  font-size: 100px;
+}

@@ -1,0 +1,4 @@
+.two-cols {
+  display: flex;
+  gap: 10vw;
+}

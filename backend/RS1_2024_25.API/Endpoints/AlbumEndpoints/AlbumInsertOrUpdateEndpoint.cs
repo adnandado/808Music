@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper;
@@ -11,6 +12,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 {
     public class AlbumInsertOrUpdateEndpoint(ApplicationDbContext db, FileHandler fh) : MyEndpointBaseAsync.WithRequest<AlbumInsertRequest>.WithActionResult<AlbumInsertResponse>
     {
+        [Authorize]
         [HttpPost]
         public override async Task<ActionResult<AlbumInsertResponse>> HandleAsync([FromForm]AlbumInsertRequest request, CancellationToken cancellationToken = default)
         {
@@ -53,7 +55,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
                 Title = a.Title,
                 IsActive = a.IsActive,
                 ReleaseDate = a.ReleaseDate,
-                ByArtist = (await db.Artists.FindAsync(a.ArtistId, cancellationToken))?.Name ?? "Unknown"
+                ByArtist = (await db.Artists.FindAsync(a.ArtistId, cancellationToken))?.Name ?? "Unknown",
             };
 
             return Ok(response);
