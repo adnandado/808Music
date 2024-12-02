@@ -7,12 +7,13 @@ import {BlogComponent} from './blog/blog.component';
 import {ContactUsComponent} from './contact-us/contact-us.component';
 import {TravelsComponent} from './travels/travels.component';
 import {AlbumCreateComponent} from '../artist/album/album-create/album-create.component';
+import {NewHomeComponent} from './new-home/new-home.component';
 
 const routes: Routes = [
   {
     path: '', component: PublicLayoutComponent, children: [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'home', component: HomeComponent},
+      {path: 'home', component: NewHomeComponent},
       {path: 'about', component: AboutComponent},
       {path: 'blog', component: BlogComponent},
       {path: 'contact-us', component: ContactUsComponent},

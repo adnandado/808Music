@@ -1,0 +1,21 @@
+.s-component {
+  width: 100%;
+}
+
+.s-meter {
+  height: 1vh;
+  width: 100%;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.s-value {
+  height: 100%;
+  width: 80%;
+  border-radius: 12px;
+  transition: width 0.2s;
+}
+
+.s-text {
+  color: white;
+}
