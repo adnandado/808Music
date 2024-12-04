@@ -1,2 +1,35 @@
-<router-outlet></router-outlet>
-
+<div class="base-page">
+  <div>
+    <h1>Select Artist Profile</h1>
+  </div>
+  <mat-card appearance="outlined" class="artist-card">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>New profile</mat-card-title>
+        <mat-icon>add_circle</mat-icon>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content></mat-card-content>
+  </mat-card>
+  @for (a of artists; track a.id)
+  {
+    <mat-card appearance="outlined" class="artist-card">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>{{a.name}}</mat-card-title>
+          <mat-card-subtitle>Role: {{a.role}}</mat-card-subtitle>
+          <img mat-card-avatar *ngIf="url+a.pfpPath"  [src]="url+a.pfpPath" class="avatar-image">
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-icon-button aria-label="Delete artist profile">
+          <mat-icon *ngIf="a.role != 'Owner'" >logout</mat-icon>
+          <mat-icon *ngIf="a.role == 'Owner'" >delete</mat-icon>
+        </button>
+        <button mat-flat-button (click)="SelectProfile(a)">
+          Select profile
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>

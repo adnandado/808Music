@@ -28,6 +28,7 @@ namespace RS1_2024_25.API.Endpoints.UserArtistEndpoints
             if(ua == null)
             {
                 ua = new UserArtist();
+                ua.IsUserOwner = false;
                 await db.UserArtists.AddAsync(ua);
             }
 

@@ -6,16 +6,17 @@ import {AlbumCreateComponent} from './album/album-create/album-create.component'
 import {AlbumListComponent} from './album/album-list/album-list.component';
 import {UnauthorizedComponent} from '../shared/unauthorized/unauthorized.component';
 import {ChooseProfileComponent} from './choose-profile/choose-profile.component';
+import {ArtistLayoutComponent} from './artist-layout/artist-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChooseProfileComponent,
+    component: ArtistLayoutComponent,
     children: [
       {
         path: 'album',
         loadChildren: () => import("./album/album.module").then(m => m.AlbumModule)
-      }
+      },
     ]
   },
   {

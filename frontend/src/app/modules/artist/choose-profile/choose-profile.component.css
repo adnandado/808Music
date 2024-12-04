@@ -1,0 +1,24 @@
+.base-page {
+  height: 100%;
+  color: white;
+  padding: 5vh;
+}
+
+.artist-card {
+  width: 20vw;
+  color: white;
+}
+
+mat-card-actions {
+  justify-content: right;
+  justify-items: center;
+}
+
+.avatar-image {
+  width: 60px;
+  height: 60px;
+}
+
+mat-card-subtitle {
+  color: #A9A9A9;
+}

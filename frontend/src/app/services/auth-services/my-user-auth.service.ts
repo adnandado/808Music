@@ -67,7 +67,13 @@ export class MyUserAuthService {
           return null;
         }
         //tries to get a new jwt from the server with the refresh token
-        this.getNewJwt(auth).subscribe();
+        this.getNewJwt(auth).subscribe({
+          error: (err :HttpErrorResponse) => {
+            alert(err.error);
+            this.setLoggedInUser(null, auth.rememberMe);
+            window.location.reload();
+          }
+        });
       }
       return auth;
     }
@@ -83,7 +89,7 @@ export class MyUserAuthService {
       jwtToken: auth.token,
       refreshToken: auth.refreshToken
     }).pipe(tap(response => {
-      this.setLoggedInUser(response, auth.rememberMe)
+      this.setLoggedInUser(response, auth.rememberMe);
     }));
   }
 
