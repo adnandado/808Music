@@ -1,0 +1,50 @@
+<div class="base-page">
+  <div>
+    @if(artist.id != undefined)
+    {
+      <h1>Edit Artist</h1>
+    } @else {
+      <h1>Create Artist Profile</h1>
+    }
+  </div>
+  <form class="artistForm">
+    <div [ngStyle]="{'width':'100%'}">
+      <h6>Name*</h6>
+    <mat-form-field class="artist-name" [ngStyle]="{'width':'100%'}">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="artist.name" placeholder="Enter you artist name" name="name" id="name">
+    </mat-form-field>
+    </div>
+
+    <div [ngStyle]="{'width':'100%'}">
+      <h6>Bio*</h6>
+    <mat-form-field class="artist-bio" [ngStyle]="{'width':'100%'}">
+      <mat-label>Bio</mat-label>
+      <textarea matInput [(ngModel)]="artist.bio" placeholder="Tell us about yourself..." name="bio" id="bio"></textarea>
+    </mat-form-field>
+    </div>
+
+    <div [ngStyle]="artist.profilePhoto != undefined ? {'margin-bottom': '22vh'} : {}">
+      <h6>Profile Picture</h6>
+      <app-artist-pic-dragzone [file]="artist.profilePhoto ?? null" title="Profile Picture" (imageEmit)="selectPfpFile($event)"></app-artist-pic-dragzone>
+    </div>
+    <div [ngStyle]="artist.profileBackground != undefined ? {'margin-bottom': '35vh'} : {}">
+      <h6>Banner</h6>
+      <app-artist-pic-dragzone [file]="artist.profileBackground ?? null" title="Banner" type="banner"
+                               (imageEmit)="selectBgFile($event)"></app-artist-pic-dragzone>
+    </div>
+    <div class="controls">
+      <button mat-button (click)="emitCancel()">
+        Cancel
+      </button>
+      <button mat-flat-button type="submit" (click)="createArtist()">
+        @if (artist.id)
+        {
+          Update
+        } @else {
+          Create
+        }
+      </button>
+    </div>
+  </form>
+</div>

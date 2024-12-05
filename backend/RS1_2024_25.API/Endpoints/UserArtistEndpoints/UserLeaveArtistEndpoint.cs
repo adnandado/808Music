@@ -16,7 +16,7 @@ namespace RS1_2024_25.API.Endpoints.UserArtistEndpoints
         {
             int userId = int.Parse(tp.GetJwtSub(Request));
 
-            UserArtist? ua = await db.UserArtists.FirstOrDefaultAsync(x => x.ArtistId == id && x.MyAppUserId == userId, cancellationToken);
+            UserArtist? ua = await db.UserArtists.FirstOrDefaultAsync(x => x.ArtistId == id && x.MyAppUserId == userId && !x.IsUserOwner, cancellationToken);
             if (ua == null)
             {
                 return BadRequest("Users role in managing this artist not found");

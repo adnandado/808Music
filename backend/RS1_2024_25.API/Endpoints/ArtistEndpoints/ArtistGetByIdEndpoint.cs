@@ -14,9 +14,8 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
         [HttpGet("{id}")]
         public override async Task<ActionResult<ArtistDetailResponse>> HandleAsync(int id, CancellationToken cancellationToken = default)
         {
-            int userId = int.Parse(tp.GetJwtSub(Request));
 
-            ArtistDetailResponse? response = await db.UserArtists.Where(ua => ua.ArtistId == id && ua.MyAppUserId == userId).Select(a => new ArtistDetailResponse
+            ArtistDetailResponse? response = await db.UserArtists.Where(ua => ua.ArtistId == id).Select(a => new ArtistDetailResponse
             {
                 Id = id,
                 Bio = a.Artist.Bio,

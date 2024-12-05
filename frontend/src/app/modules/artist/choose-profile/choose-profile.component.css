@@ -1,7 +1,9 @@
 .base-page {
   height: 100%;
   color: white;
-  padding: 5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .artist-card {
@@ -21,4 +23,24 @@ mat-card-actions {
 
 mat-card-subtitle {
   color: #A9A9A9;
+}
+
+.base-page {
+  height: 100%;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.title h1 {
+  font-weight: 500;
+  padding-top: 5vh;
+}
+
+.add-new-card:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

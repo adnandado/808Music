@@ -1,0 +1,17 @@
+.base-page {
+  height: 100vh;
+  padding: 2vh;
+}
+.flex-side {
+  display: flex;
+  justify-content: space-between;
+}
+.edit{
+  width: 1000px;
+  overflow-y: auto;
+  flex-basis: 35%;
+}
+
+.flex-container {
+  flex-basis: 70%;
+}

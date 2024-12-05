@@ -1,0 +1,42 @@
+* {
+  color: white;
+}
+
+div h6 {
+  color: #EEDEE7;
+}
+
+.base-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  overflow-y: auto;
+  background: #242424;
+  border-radius: 35px;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+.base-page h1{
+  padding-top: 2vh;
+  font-weight: 500;
+  color: #EEDEE7;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  gap: 1vw;
+}
+
+

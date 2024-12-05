@@ -17,6 +17,12 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
         {
             int userId = int.Parse(tp.GetJwtSub(Request));
 
+            Artist? check = await db.Artists.FirstOrDefaultAsync(a => a.Name.ToLower() == request.Name.ToLower(),cancellationToken);
+            if(check != null)
+            {
+                return BadRequest("Artist with this name already exists");
+            }
+
             string profilePhotoPath = string.Empty;
             string profileBackgroundPath = string.Empty;
             Artist? a = null;
@@ -55,8 +61,14 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
 
             a!.Name = request.Name;
             a!.Bio = request.Bio;
-            a!.ProfilePhotoPath = profilePhotoPath;
-            a!.ProfileBackgroundPath = profileBackgroundPath;
+            if(profilePhotoPath != string.Empty)
+            {
+                a!.ProfilePhotoPath = profilePhotoPath;
+            }
+            if(profileBackgroundPath != string.Empty)
+            {
+                a!.ProfileBackgroundPath = profileBackgroundPath;
+            }
 
             await db.SaveChangesAsync(cancellationToken);
 

@@ -7,6 +7,8 @@ import {AlbumListComponent} from './album/album-list/album-list.component';
 import {UnauthorizedComponent} from '../shared/unauthorized/unauthorized.component';
 import {ChooseProfileComponent} from './choose-profile/choose-profile.component';
 import {ArtistLayoutComponent} from './artist-layout/artist-layout.component';
+import {AlbumListMaterialComponent} from './album/album-list-material/album-list-material.component';
+import {ArtistCreateOrEditComponent} from './artist-create-or-edit/artist-create-or-edit.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,10 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: AlbumCreateComponent
+  },
+  {
+    path: 'new-profile',
+    component: ArtistCreateOrEditComponent,
   }
 ];
 
