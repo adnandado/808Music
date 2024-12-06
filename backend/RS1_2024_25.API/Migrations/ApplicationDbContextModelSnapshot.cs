@@ -534,6 +534,46 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("TrackGenres");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserArtist", b =>
+                {
+                    b.Property<int>("MyAppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsUserOwner")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MyAppUserId", "ArtistId");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserArtists");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserArtistRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserArtistRoles");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Album", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.AlbumType", "AlbumType")
@@ -707,6 +747,33 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("Genre");
 
                     b.Navigation("Track");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserArtist", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("MyAppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.UserArtistRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

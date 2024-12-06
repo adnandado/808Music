@@ -1,0 +1,30 @@
+<div class="base-page">
+@if (!selectedArtist){
+  <div class="flex-side">
+  <div class="flex-container">
+    <app-choose-profile [refresh]="shouldRefresh" (selected)="SetSelectedArtist($event)"
+                        (editEvent)="SetEditState($event)"
+                        (createEvent)="setCreateState($event)"
+                        (manageEvent)="setManageState($event)"></app-choose-profile>
+  </div>
+    @if (isEditingId)
+    {
+      <div class="edit">
+        <app-artist-create-or-edit [artist]="isEditingId"
+                                   (cancelEvent)="SetEditState($event)" (successOpEvent)="refreshProfiles($event)"></app-artist-create-or-edit>
+      </div>
+    } @else if(isCreating){
+      <div class="edit">
+        <app-artist-create-or-edit (cancelEvent)="setCreateState($event)" (successOpEvent)="refreshProfiles($event)"></app-artist-create-or-edit>
+      </div>
+    } @else if (isManaging)
+    {
+      <div class="edit">
+        <app-manage-users [artist]="isManaging" (cancelEvent)="setManageState($event)"></app-manage-users>
+      </div>
+    }
+  </div>
+} @else {
+    <router-outlet></router-outlet>
+}
+</div>

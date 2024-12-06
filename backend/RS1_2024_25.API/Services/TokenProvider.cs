@@ -35,6 +35,23 @@ namespace RS1_2024_25.API.Services
             return jwtHandler.CreateToken(tokenDescriptor);
         }
 
+        public JwtSecurityToken GetDecodedJwt(HttpRequest request)
+        {
+            string token = request.Headers.Authorization.ToString().Replace("Bearer ", "");
+            if (token == string.Empty)
+            {
+                throw new Exception("JSON Web Token not found");
+            }
+            var handler = new JwtSecurityTokenHandler();
+            return handler.ReadJwtToken(token);
+        }
+
+        public string GetJwtSub(HttpRequest request)
+        {
+            var decodedToken = GetDecodedJwt(request);
+            return decodedToken.Claims.FirstOrDefault(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub)?.Value!;
+        }
+
         public string CreateRefreshToken()
         {
             byte[] bytes = new byte[64];

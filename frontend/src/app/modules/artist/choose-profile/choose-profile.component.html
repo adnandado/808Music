@@ -1,2 +1,50 @@
-<router-outlet></router-outlet>
-
+<div class="base-page">
+  <div class="title">
+    <h1>Select Artist Profile</h1>
+  </div>
+  <div class="flex-controls">
+  <mat-card appearance="outlined" class="artist-card add-new-card" (click)="emitCreate()">
+    <mat-card-header>
+      <mat-card-title-group (click)="SelectProfile()">
+        <mat-card-title>New profile</mat-card-title>
+        <mat-icon>add_circle</mat-icon>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content></mat-card-content>
+  </mat-card>
+    <a mat-stroked-button routerLink="/auth/logout">
+      Log out
+    </a>
+  </div>
+  <div class="flex-container">
+  @for (a of artists; track a.id)
+  {
+    <mat-card appearance="outlined" class="artist-card" >
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>{{a.name}}</mat-card-title>
+          <mat-card-subtitle>Role: {{a.role}}</mat-card-subtitle>
+          <img mat-card-avatar *ngIf="url+a.pfpPath"  [src]="url+a.pfpPath" class="avatar-image">
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-actions>
+        <button *ngIf="a.role != 'Owner'" mat-icon-button aria-label="Leave artist profile" (click)="leaveProfile(a.id)">
+          <mat-icon >logout</mat-icon>
+        </button>
+        <button *ngIf="a.role == 'Owner'" mat-icon-button aria-label="Delete artist profile">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Manage users" *ngIf="a.role == 'Owner'" (click)="EmitManage(a.id)">
+          <mat-icon>group</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Edit artist profile" *ngIf="a.role == 'Owner'" (click)="EmitEdit(a.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-flat-button (click)="SelectProfile(a)">
+          Select profile
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+  </div>
+</div>

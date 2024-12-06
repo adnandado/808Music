@@ -83,20 +83,44 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             }
         };
 
+        var artistRoles = new List<UserArtistRole>
+        {
+            new UserArtistRole
+            {
+                RoleName="Owner"
+            },
+            new UserArtistRole
+            {
+                RoleName="General Manager"
+            },
+            new UserArtistRole
+            {
+                RoleName="Streaming Manager"
+            },
+            new UserArtistRole
+            {
+                RoleName="Shop Manager"
+            },
+            new UserArtistRole
+            {
+                RoleName="Viewer"
+            }
+        };
+
         var artists = new List<Artist> {
             new Artist
             {
-                Name = "Artist2",
+                Name = "The Weeknd",
                 Bio = "bio of artist 2"
             },
             new Artist
             {
-                Name = "Artist3",
+                Name = "Ariana Grande",
                 Bio = "bio of artist 3"
             },
             new Artist
             {
-                Name = "Artist4",
+                Name = "Bruno Mars",
                 Bio = "bio of artist 3"
             }
         };
@@ -121,11 +145,12 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         };
 
         // Dodavanje podataka u bazu
-        //await db.Countries.AddRangeAsync(countries, cancellationToken);
-        //await db.Cities.AddRangeAsync(cities, cancellationToken);
+        await db.Countries.AddRangeAsync(countries, cancellationToken);
+        await db.Cities.AddRangeAsync(cities, cancellationToken);
         await db.MyAppUsers.AddRangeAsync(users, cancellationToken);
-        //await db.AlbumTypes.AddRangeAsync(albumTypes, cancellationToken);
-        //await db.Artists.AddRangeAsync(artists, cancellationToken);
+        await db.UserArtistRoles.AddRangeAsync(artistRoles, cancellationToken);
+        await db.AlbumTypes.AddRangeAsync(albumTypes, cancellationToken);
+        await db.Artists.AddRangeAsync(artists, cancellationToken);
 
 
         await db.SaveChangesAsync(cancellationToken);

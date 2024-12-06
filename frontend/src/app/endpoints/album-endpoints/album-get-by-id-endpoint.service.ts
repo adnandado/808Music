@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
-import {Artist} from '../../services/auth-services/dto/artist-dto';
 import {AlbumType} from './album-type-get-all-endpoint.service';
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
 import { Observable } from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {MyAuthService} from '../../services/auth-services/my-auth.service';
 import {MyConfig} from '../../my-config';
+
+export interface Artist {
+  id: number;
+  name: string;
+  bio: string;
+  profilePhotoPath: string;
+  profileBackgroundPath: string;
+  followers: number;
+}
 
 export interface AlbumGetResponse {
   id: number;

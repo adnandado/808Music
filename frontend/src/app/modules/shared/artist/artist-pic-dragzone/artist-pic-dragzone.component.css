@@ -1,0 +1,41 @@
+.img-drag-drop {
+  width: 100%;
+  height: 14vh;
+  border: 1px solid #EEDEE7;
+  border-radius: 30px;
+  position: relative;
+  color: #EEDEE7;
+}
+
+.dd-landing {
+  position: relative;
+  margin-bottom: 4vh;
+}
+
+.dd-landing p, .dd-landing h6 {
+  text-align: center;
+}
+
+.dd-landing h6 {
+  padding-top: 1.5vh;
+}
+
+.file {
+  width: 100%;
+  height: 14vh;
+  opacity: 0;
+  position: absolute;
+}
+
+mat-card-header img {
+  width: 70px;
+  height: 70px;
+}
+
+mat-card-subtitle {
+  color: #A9A9A9;
+}
+
+mat-card {
+  overflow-x: auto;
+}

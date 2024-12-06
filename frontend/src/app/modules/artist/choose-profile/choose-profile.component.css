@@ -1,0 +1,52 @@
+.base-page {
+  height: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.artist-card {
+  width: 20vw;
+  color: white;
+}
+
+mat-card-actions {
+  justify-content: right;
+  justify-items: center;
+}
+
+.avatar-image {
+  width: 60px;
+  height: 60px;
+}
+
+mat-card-subtitle {
+  color: #A9A9A9;
+}
+
+.base-page {
+  height: 100%;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.title h1 {
+  font-weight: 500;
+  padding-top: 5vh;
+}
+
+.add-new-card:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.flex-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}

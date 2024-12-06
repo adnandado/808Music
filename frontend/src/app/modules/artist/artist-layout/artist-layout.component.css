@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+.base-page {
+  height: 100vh;
+  padding: 2vh;
+}
+.flex-side {
+  display: flex;
+  justify-content: space-between;
+}
+.edit{
+  width: 1000px;
+  overflow-y: auto;
+  flex-basis: 35%;
+  height: 100%;
+}
+
+.flex-container {
+  flex-basis: 70%;
+  flex-grow: 1;
+}
