@@ -15,6 +15,7 @@ export class ArtistLayoutComponent implements OnInit {
   isEditingId: ArtistInsertRequest | null = null;
   isCreating : boolean | null  = false;
   shouldRefresh: boolean = false;
+  isManaging: ArtistInsertRequest | null = null;
 
   constructor(private router: Router,
               private auth: MyUserAuthService,
@@ -37,6 +38,7 @@ export class ArtistLayoutComponent implements OnInit {
     if(id)
     {
       this.isCreating = false;
+      this.isManaging = null;
     }
     this.isEditingId = id;
   }
@@ -45,11 +47,21 @@ export class ArtistLayoutComponent implements OnInit {
     if(creating)
     {
       this.isEditingId = null;
+      this.isManaging = null;
     }
     this.isCreating = creating;
   }
 
   refreshProfiles(e: boolean) {
     this.shouldRefresh = e;
+  }
+
+  setManageState(a: ArtistDetailResponse | null) {
+    if(a)
+    {
+      this.isCreating = false;
+      this.isEditingId = null;
+    }
+    this.isManaging = a;
   }
 }

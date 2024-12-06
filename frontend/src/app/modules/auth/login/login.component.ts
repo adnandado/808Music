@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         console.log('Login successful');
         console.log(lr)
         // Redirect to
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/artist']);
       },
       error: (error: any) => {
         this.errorMessage = 'Incorrect username or password';

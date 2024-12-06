@@ -13,7 +13,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
         [HttpPost]
         public override async Task<ActionResult<TokenResponse>> HandleAsync([FromBody] TokenRequest request, CancellationToken cancellationToken = default)
         {
-            MyRefreshToken myRefToken = await db.MyRefreshTokens.SingleOrDefaultAsync(t => t.Token == request.RefreshToken && t.ExpiryTime > DateTime.UtcNow, cancellationToken);
+            MyRefreshToken? myRefToken = await db.MyRefreshTokens.SingleOrDefaultAsync(t => t.Token == request.RefreshToken && t.ExpiryTime > DateTime.UtcNow, cancellationToken);
             if(myRefToken == null)
             {
                 return BadRequest("Refresh token not valid (Could be expired).");

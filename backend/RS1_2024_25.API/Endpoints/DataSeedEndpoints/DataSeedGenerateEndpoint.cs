@@ -99,7 +99,7 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             },
             new UserArtistRole
             {
-                RoleName="ShopManager"
+                RoleName="Shop Manager"
             },
             new UserArtistRole
             {

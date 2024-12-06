@@ -1,0 +1,36 @@
+.flex-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.flex-controls h6, .flex-controls h1 {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+mat-form-field label{
+  color: #EEDEE7;
+}
+
+mat-card-actions {
+  justify-content: right;
+  justify-items: center;
+}
+
+.flex-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2vh;
+}
+
+#errorMessage {
+  color: crimson;
+}

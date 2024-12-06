@@ -1,7 +1,4 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {
-  ArtistGetAllByUserEndpointService
-} from '../../../endpoints/user-artist-endpoints/artist-get-all-by-user-endpoint.service';
 import {ArtistSimpleDto} from '../../../services/auth-services/dto/artist-dto';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
@@ -14,6 +11,9 @@ import {
 import {
   UserLeaveArtistEndpointService
 } from '../../../endpoints/user-artist-endpoints/user-leave-artist-endpoint.service';
+import {
+  ArtistGetAllByUserEndpointService
+} from '../../../endpoints/artist-endpoints/artist-get-all-by-user-endpoint.service';
 
 @Component({
   selector: 'app-choose-profile',
@@ -29,6 +29,7 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
   @Output() selected: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() editEvent = new EventEmitter<ArtistDetailResponse>();
   @Output() createEvent = new EventEmitter<boolean>();
+  @Output() manageEvent = new EventEmitter<ArtistDetailResponse>();
 
   constructor(private artistGetAll: ArtistGetAllByUserEndpointService,
               private artistHandler: ArtistHandlerService,
@@ -95,5 +96,16 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
         }
       })
     }
+  }
+
+  EmitManage(id: number) {
+    let artist = this.artistById.handleAsync(id).subscribe({
+      next: data => {
+        this.manageEvent.emit(data);
+      },
+      error: (err: HttpErrorResponse) => {
+        alert(err.error);
+      }
+    })
   }
 }

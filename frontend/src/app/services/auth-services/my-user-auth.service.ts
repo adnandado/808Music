@@ -19,8 +19,6 @@ export class MyUserAuthService {
   }
 
   isLoggedIn(): boolean {
-
-
     return this.getAuthToken() != null;
   }
 
@@ -83,7 +81,6 @@ export class MyUserAuthService {
   }
 
   private getNewJwt(auth: AuthTokenInfo): Observable<LoginResponse> {
-
     let url = `${MyConfig.api_address}/api/UserGetNewTokenEndpoint`;
     return this.httpClient.post<LoginResponse>(url,{
       jwtToken: auth.token,

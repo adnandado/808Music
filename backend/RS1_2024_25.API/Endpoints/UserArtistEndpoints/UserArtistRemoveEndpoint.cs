@@ -23,7 +23,7 @@ namespace RS1_2024_25.API.Endpoints.UserArtistEndpoints
                 return Unauthorized();
             }
 
-            UserArtist? ua = await db.UserArtists.FirstOrDefaultAsync(x => x.ArtistId == request.ArtistId && x.MyAppUserId == request.UserId, cancellationToken);
+            UserArtist? ua = await db.UserArtists.FirstOrDefaultAsync(x => x.ArtistId == request.ArtistId && x.MyAppUserId == request.UserId && !x.IsUserOwner, cancellationToken);
             if (ua == null)
             {
                 return BadRequest("Users role in managing this artist not found");

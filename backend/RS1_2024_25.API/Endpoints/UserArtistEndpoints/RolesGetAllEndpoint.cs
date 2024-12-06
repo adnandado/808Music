@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 
 namespace RS1_2024_25.API.Endpoints.UserArtistEndpoints
 {
-    public class RoledGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync.WithoutRequest.WithActionResult<List<UserArtistRole>>
+    public class RolesGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync.WithoutRequest.WithActionResult<List<UserArtistRole>>
     {
         [HttpGet]
         public override async Task<ActionResult<List<UserArtistRole>>> HandleAsync(CancellationToken cancellationToken = default)

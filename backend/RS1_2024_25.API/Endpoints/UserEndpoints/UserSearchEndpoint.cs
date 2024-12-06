@@ -12,17 +12,28 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
         [HttpGet]
         public override async Task<ActionResult<List<UserSearchResponse>>> HandleAsync([FromQuery] UserSearchRequest request, CancellationToken cancellationToken = default)
         {
-            return await db.MyAppUsers.Where(u => u.Username.ToLower().Contains(request.SearchString.ToLower())).Select(a => new UserSearchResponse
+            if(request.SearchString != string.Empty)
             {
-                Id = a.ID,
-                Username = a.Username
-            }).ToListAsync();
+                return Ok(await db.MyAppUsers.AsQueryable().Where(u => u.Username.ToLower().Contains(request.SearchString.ToLower())).Take(5).Select(a => new UserSearchResponse
+                {
+                    Id = a.ID,
+                    Username = a.Username
+                }).ToListAsync());
+            }
+            else
+            {
+                return Ok(await db.MyAppUsers.AsQueryable().Take(5).Select(a => new UserSearchResponse
+                {
+                    Id = a.ID,
+                    Username = a.Username
+                }).ToListAsync());
+            }
         }
     }
 
     public class UserSearchRequest
     {
-        public string SearchString {  get; set; } = string.Empty;
+        public string SearchString { get; set; } = string.Empty;
     }
 
     public class UserSearchResponse

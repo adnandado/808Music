@@ -34,7 +34,7 @@ export class ArtistCreateOrEditComponent {
   createArtist() {
     this.artistCreate.handleAsync(this.artist).subscribe({
       next: value => {
-        alert("Succesfully created/updated artist profile!");
+        alert("Successfully created/updated artist profile!");
         this.successOpEvent.emit(true);
         this.emitCancel();
       },

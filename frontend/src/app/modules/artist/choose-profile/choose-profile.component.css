@@ -44,3 +44,9 @@ mat-card-subtitle {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.flex-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}

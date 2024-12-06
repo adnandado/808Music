@@ -35,6 +35,9 @@ import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {SharedModule} from '../shared/shared.module';
 import {MatTabLabel} from '@angular/material/tabs';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
+import {MatSelect} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import {MatTabLabel} from '@angular/material/tabs';
     ProductsCreateComponent,
     ProductListComponent,
     ArtistLayoutComponent,
-    ArtistCreateOrEditComponent
+    ArtistCreateOrEditComponent,
+    ManageUsersComponent
   ],
   imports: [
     CommonModule,
@@ -82,7 +86,11 @@ import {MatTabLabel} from '@angular/material/tabs';
     MatFormField,
     MatInput,
     SharedModule,
-    MatTabLabel
+    MatTabLabel,
+    MatAutocomplete,
+    MatOption,
+    MatSelect,
+    MatAutocompleteTrigger
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
