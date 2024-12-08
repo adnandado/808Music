@@ -22,7 +22,7 @@ export class ArtistHandlerService {
     }
   }
 
-  getSelectedArtist() {
+  getSelectedArtist():ArtistSimpleDto | null {
     let artist: ArtistSimpleDto | null = null;
     let artistString = window.sessionStorage.getItem("artist") ?? '';
     if(artistString === '')

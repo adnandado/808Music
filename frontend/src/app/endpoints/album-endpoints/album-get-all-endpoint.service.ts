@@ -5,11 +5,14 @@ import {HttpClient} from '@angular/common/http';
 import {MyAuthService} from '../../services/auth-services/my-auth.service';
 import {MyConfig} from '../../my-config';
 import {buildHttpParams} from '../../helper/http-params.helper';
+import {AlbumInsertRequest} from './album-insert-or-update-endpoint.service';
+import {MyPagedRequest} from '../../helper/my-paged-request';
 
 
 export interface AlbumPagedRequest {
   pageNumber?: number;
   pageSize?: number;
+  artistId?: number;
 }
 
 export interface AlbumGetAllResponse {

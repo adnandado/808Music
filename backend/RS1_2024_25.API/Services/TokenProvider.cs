@@ -1,5 +1,7 @@
 ﻿using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using RS1_2024_25.API.Data;
+using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Data.Models.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
@@ -8,7 +10,7 @@ using System.Text;
 
 namespace RS1_2024_25.API.Services
 {
-    public class TokenProvider(IConfiguration cfg)
+    public class TokenProvider(IConfiguration cfg, ApplicationDbContext db)
     {
         private Random rnd = new Random();
         public string Create(MyAppUser user)
@@ -18,13 +20,24 @@ namespace RS1_2024_25.API.Services
 
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var tokenDescriptor = new SecurityTokenDescriptor{
-                Subject = new System.Security.Claims.ClaimsIdentity([
+            var claims = new System.Security.Claims.ClaimsIdentity([
                     new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, user.ID.ToString()),
                     new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin": "None"),
                     new Claim("Username", user.Username)
-                ]),
+                ]);
+
+            List<UserArtistRole> roles = db.UserArtistRoles.ToList();
+            IQueryable<UserArtist> uas = db.UserArtists.Where(a => a.MyAppUserId == user.ID);
+
+            foreach (UserArtistRole role in roles)
+            {
+                string artistIds = string.Join(",",uas.Where(ua => ua.RoleId == role.Id).Select(ua => ua.ArtistId).ToList());
+                claims.AddClaim(new Claim(role.RoleName, artistIds));
+            }
+
+            var tokenDescriptor = new SecurityTokenDescriptor{
+                Subject = claims,
                 Audience = cfg["Jwt:Audience"],
                 Issuer = cfg["Jwt:Issuer"],
                 Expires = DateTime.Now.AddHours(cfg.GetValue<int>("Jwt:ExpirationInHours")),
@@ -52,12 +65,34 @@ namespace RS1_2024_25.API.Services
             return decodedToken.Claims.FirstOrDefault(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub)?.Value!;
         }
 
+        public bool AuthorizeUserArtist(HttpRequest request, int artistToCheck, string[] roleNames)
+        {
+            var jwt = GetDecodedJwt(request);
+            for (int i = 0; i < roleNames.Length; i++) {
+                string artistIds = jwt.Claims.FirstOrDefault(c => c.Type == roleNames[i])?.Value ?? string.Empty;
+                if(artistIds == string.Empty)
+                {
+                    continue;
+                }
+                string[] aIdsArray = artistIds.Split(",");
+                for (int j = 0; j < aIdsArray.Length; j++)
+                {
+                    if (int.Parse(aIdsArray[j]) == artistToCheck)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public string CreateRefreshToken()
         {
             byte[] bytes = new byte[64];
             rnd.NextBytes(bytes);
             return Convert.ToBase64String(bytes);
         }
+
 
         public string CreateResetToken()
         {

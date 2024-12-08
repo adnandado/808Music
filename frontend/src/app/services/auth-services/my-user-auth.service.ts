@@ -122,6 +122,7 @@ export class MyUserAuthService {
           logoutInfo.serverMessage = data;
           logoutInfo.requestSuccessful = true;
           this.setLoggedInUser(null, auth?.rememberMe!);
+          window.sessionStorage.clear();
         },
         error: (err:HttpErrorResponse) => {
           logoutInfo.serverMessage = err.error;

@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 
 namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 {
-    public class AlbumInsertOrUpdateEndpoint(ApplicationDbContext db, FileHandler fh) : MyEndpointBaseAsync.WithRequest<AlbumInsertRequest>.WithActionResult<AlbumInsertResponse>
+    public class AlbumInsertOrUpdateEndpoint(ApplicationDbContext db, FileHandler fh, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<AlbumInsertRequest>.WithActionResult<AlbumInsertResponse>
     {
         [Authorize]
         [HttpPost]
@@ -19,6 +21,20 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             if(!request.HandleValidation())
             {
                 return BadRequest("Data not valid");
+            }
+
+            var jwt = tp.GetDecodedJwt(Request);
+            bool isAdmin = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)!.Value == "Admin";
+            int userId = int.Parse(jwt.Subject);
+            //bool allowedToCreate = (await db.UserArtists.Where(ua => ua.ArtistId == request.ArtistId
+            //                        && ua.MyAppUserId == userId
+            //                        && (ua.Role.RoleName == "Owner" || ua.Role.RoleName == "General Manager" || ua.Role.RoleName == "Streaming Manager")).FirstOrDefaultAsync()) != null;
+
+            bool allowedToCreate = tp.AuthorizeUserArtist(Request, request.ArtistId, ["Owner", "General Manager", "Streaming Manager"]);
+
+            if (!isAdmin && !allowedToCreate)
+            {
+                return Unauthorized();
             }
 
             Album a;

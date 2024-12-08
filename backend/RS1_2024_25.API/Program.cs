@@ -70,7 +70,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 //dodajte vaše servise
 builder.Services.AddTransient<MyAuthService>();
 builder.Services.AddTransient<FileHandler>();
-builder.Services.AddSingleton<TokenProvider>();
+builder.Services.AddTransient<TokenProvider>();
 builder.Services.AddTransient<IMyMailService, MailService>();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 
