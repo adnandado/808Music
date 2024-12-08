@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper.Api;
@@ -7,6 +8,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 {
     public class AlbumGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult<AlbumGetResponse>
     {
+        [Authorize]
         [HttpGet("{id}")]
         public override async Task<ActionResult<AlbumGetResponse>> HandleAsync(int id, CancellationToken cancellationToken = default)
         {

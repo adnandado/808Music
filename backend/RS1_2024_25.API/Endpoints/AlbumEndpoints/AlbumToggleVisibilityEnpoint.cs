@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper.Api;
@@ -8,6 +9,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 {
     public class AlbumToggleVisibilityEnpoint(ApplicationDbContext db) : MyEndpointBaseAsync.WithRequest<AlbumVisibilityRequest>.WithActionResult
     {
+        [Authorize]
         [HttpGet]
         public override async Task<ActionResult> HandleAsync([FromQuery] AlbumVisibilityRequest request, CancellationToken cancellationToken = default)
         {
