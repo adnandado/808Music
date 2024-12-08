@@ -10,37 +10,43 @@ using System.Security.Claims;
 
 namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 {
-    public class AlbumDeleteEndpoint(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<int>.WithoutResult
+    public class AlbumDeleteEndpoint(ApplicationDbContext db, TokenProvider tp, FileHandler fh, IConfiguration cfg) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult
     {
         [Authorize]
         [HttpDelete("{id}")]
-        public override async Task HandleAsync(int id, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult> HandleAsync(int id, CancellationToken cancellationToken = default)
         {
-            Album a = await db.Albums.FindAsync(id);
+            Album? a = await db.Albums.FindAsync(id);
 
             if (a == null)
             {
-                throw new KeyNotFoundException("Album not found");
+                return BadRequest("Album not found");
             }
 
-            var jwt = tp.GetDecodedJwt(Request);
-            bool isAdmin = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)!.Value == "Admin";
-            if (isAdmin)
+            bool isAdmin = tp.GetJwtRoleClaimValue(Request) == "Admin";
+            bool allowedToDelete = tp.AuthorizeUserArtist(Request, a.ArtistId, ["Owner"]);
+            if (!isAdmin && !allowedToDelete)
             {
-                db.Albums.Remove(a);
+                return Unauthorized();
             }
-            else
+
+            HttpResponseMessage? response = null;
+            using (var client = new HttpClient())
             {
-                int userId = int.Parse(jwt.Subject);
-                UserArtist? uaCheck = await db.UserArtists.FirstOrDefaultAsync(ua => ua.MyAppUserId == userId && ua.ArtistId == a.ArtistId && ua.IsUserOwner);
-                if (uaCheck == null)
-                {                   
-                    throw new KeyNotFoundException("Artist not found");
+                client.DefaultRequestHeaders.Add("Authorization", Request.Headers.Authorization.ToString());
+                var tracks = await db.Tracks.Where(t => t.AlbumId == id).ToListAsync();
+                foreach (Track track in tracks)
+                {
+                    response = await client.DeleteAsync(cfg["backendUrl"] + "api/TrackDeleteEndpoint/" + track.Id, cancellationToken);  
                 }
-                db.Albums.Remove(a);
             }
+
+            fh.DeleteFile(cfg["StaticFilePaths:AlbumCovers"] + a.CoverPath);
+            db.Albums.Remove(a);                
+
 
             await db.SaveChangesAsync();
+            return Ok();
         }
     }
 }

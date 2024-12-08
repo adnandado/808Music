@@ -22,77 +22,84 @@
       </mat-form-field>
       <p id="errorMessage">{{errorMessage}}</p>
     </div>
-
-    <div [ngStyle]="{'width':'100%'}">
-      <h6>Send invites</h6>
-      <div class="flex-list">
-        @if (selectedUsers) {
-          @for (cu of selectedUsers; track cu.id) {
+    @if(selectedUsers!.length > 0)
+    {
+      <div [ngStyle]="{'width':'100%'}">
+        <h6>Send invites</h6>
+        <div class="flex-list">
+          @if (selectedUsers) {
+            @for (cu of selectedUsers; track cu.id) {
+              <mat-card appearance="outlined">
+                <mat-card-content class="flex-content">
+                  <div class="flex-controls">
+                    <button mat-icon-button aria-label="Leave artist profile" (click)="removeFromInviteList(cu)">
+                      <mat-icon>remove</mat-icon>
+                    </button>
+                    <h6>{{ cu.username }}</h6>
+                  </div>
+                  <div class="flex-controls">
+                    @if (cu.roleId)
+                    {
+                      <button mat-flat-button (click)="sendInvite(cu)">
+                        Invite
+                      </button>
+                    }
+                    <mat-form-field>
+                      <label>Role</label>
+                      <mat-select (selectionChange)="setRole(cu,$event)">
+                        @for (r of roles; track r.id) {
+                          <mat-option [value]="r.id">{{r.roleName}}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            }
+          }
+        </div>
+      </div>
+    }
+    @if (currentUsers!.length > 0) {
+      <div [ngStyle]="{'width':'100%'}">
+        <h6>Manage users</h6>
+        <div class="flex-list">
+        @if (currentUsers) {
+          @for (cu of currentUsers; track cu.id) {
             <mat-card appearance="outlined">
               <mat-card-content class="flex-content">
                 <div class="flex-controls">
-                  <button mat-icon-button aria-label="Leave artist profile" (click)="removeFromInviteList(cu)">
-                    <mat-icon>remove</mat-icon>
+                  <button mat-icon-button aria-label="Leave artist profile" (click)="removeUser(cu)">
+                    <mat-icon>person_remove</mat-icon>
                   </button>
                   <h6>{{ cu.username }}</h6>
                 </div>
                 <div class="flex-controls">
-                  @if (cu.roleId)
+                  @if (cu.rolesChanged)
                   {
-                    <button mat-flat-button (click)="sendInvite(cu)">
-                      Invite
+                    <button mat-flat-button (click)="updateRole(cu)">
+                      Save
                     </button>
                   }
-                  <mat-form-field>
-                    <label>Role</label>
-                    <mat-select (selectionChange)="setRole(cu,$event)">
-                      @for (r of roles; track r.id) {
-                        <mat-option [value]="r.id">{{r.roleName}}</mat-option>
-                      }
-                    </mat-select>
-                  </mat-form-field>
+                <mat-form-field>
+                  <label>Role</label>
+                <mat-select [placeholder]="cu.role.roleName" (selectionChange)="changeRole(cu.id,$event)">
+                  @for (r of roles; track r.id) {
+                    <mat-option [value]="r.roleName">{{r.roleName}}</mat-option>
+                  }
+                </mat-select>
+                </mat-form-field>
                 </div>
               </mat-card-content>
             </mat-card>
           }
         }
+        </div>
       </div>
-    </div>
-
-    <div [ngStyle]="{'width':'100%'}">
-      <h6>Manage users</h6>
-      <div class="flex-list">
-      @if (currentUsers) {
-        @for (cu of currentUsers; track cu.id) {
-          <mat-card appearance="outlined">
-            <mat-card-content class="flex-content">
-              <div class="flex-controls">
-                <button mat-icon-button aria-label="Leave artist profile" (click)="removeUser(cu)">
-                  <mat-icon>person_remove</mat-icon>
-                </button>
-                <h6>{{ cu.username }}</h6>
-              </div>
-              <div class="flex-controls">
-                @if (cu.rolesChanged)
-                {
-                  <button mat-flat-button (click)="updateRole(cu)">
-                    Save
-                  </button>
-                }
-              <mat-form-field>
-                <label>Role</label>
-              <mat-select [placeholder]="cu.role.roleName" (selectionChange)="changeRole(cu.id,$event)">
-                @for (r of roles; track r.id) {
-                  <mat-option [value]="r.roleName">{{r.roleName}}</mat-option>
-                }
-              </mat-select>
-              </mat-form-field>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        }
-      }
+    } @else {
+      <div class="user-info">
+        <p>Add users to the profile to manage their roles.</p>
       </div>
-    </div>
+    }
   </form>
 </div>

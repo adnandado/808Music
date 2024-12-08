@@ -22,5 +22,10 @@ namespace RS1_2024_25.API.Services
             }
             return fileName;
         }
+
+        public void DeleteFile(string path)
+        {
+            File.Delete(path);
+        }
     }
 }

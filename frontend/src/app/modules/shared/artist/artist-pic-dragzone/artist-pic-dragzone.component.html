@@ -27,6 +27,7 @@
     <mat-card appearance="outlined">
       <mat-card-header>
         <mat-card-title-group>
+          <mat-card-title *ngIf="file != null">{{file.name}}</mat-card-title>
           <mat-card-subtitle *ngIf="file != null">Preview of {{title}}</mat-card-subtitle>
           <mat-card-subtitle *ngIf="file == null">Current {{title}}</mat-card-subtitle>
         </mat-card-title-group>

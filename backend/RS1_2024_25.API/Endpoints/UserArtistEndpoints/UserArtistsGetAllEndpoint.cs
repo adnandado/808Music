@@ -23,7 +23,7 @@ namespace RS1_2024_25.API.Endpoints.UserArtistEndpoints
                 return BadRequest("Artist not found");
             }
 
-            return Ok(await db.UserArtists.Where(ua => ua.ArtistId == id).Select(ua => new UserArtistGetAllResponse
+            return Ok(await db.UserArtists.Where(ua => ua.ArtistId == id && !ua.IsUserOwner).Select(ua => new UserArtistGetAllResponse
             {
                 Id = ua.MyAppUserId,
                 Username = ua.User!.Username,

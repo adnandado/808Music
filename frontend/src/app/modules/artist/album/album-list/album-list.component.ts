@@ -34,8 +34,8 @@ export class AlbumListComponent implements OnInit {
 
     this.albumService.handleAsync({artistId: artist?.id ?? undefined}).subscribe(
       a => {
-        this.albums = a
-        console.log(JSON.stringify(a[0]))
+        this.albums = a.dataItems
+        console.log(JSON.stringify(a.dataItems[0]))
       }
     )
   }
