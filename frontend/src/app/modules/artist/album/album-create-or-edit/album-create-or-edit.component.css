@@ -1,0 +1,16 @@
+.base-page > div > h1 {
+  margin: 0;
+}
+
+
+.current-cover {
+  width: 32vh;
+  height: 32vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 30px;
+  background-clip: border-box;
+  background-position: center;
+  margin-right: auto;
+  margin-left: auto;
+}

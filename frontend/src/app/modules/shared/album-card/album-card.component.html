@@ -1,0 +1,23 @@
+<mat-card appearance="outlined" class="album-mat-card">
+    <img [src]="imageUrl" matCardImage alt="Album Cover" (error)="replaceWithPlaceholder()" id="thumbnail">
+  <mat-card-header>
+    <mat-card-title>{{title}}</mat-card-title>
+    <mat-card-subtitle class="album-mat-card-subtitle">{{subtitle}}</mat-card-subtitle>
+  </mat-card-header>
+  @if (hasControls)
+  {
+    <mat-card-actions class="album-mat-card-controls">
+      <button mat-icon-button (click)="emitDelete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="emitStats()">
+        <mat-icon>bar_chart</mat-icon>
+      </button>
+      <button mat-icon-button (click)="emitEdit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-actions>
+  } @else {
+    <mat-card-content></mat-card-content>
+  }
+</mat-card>

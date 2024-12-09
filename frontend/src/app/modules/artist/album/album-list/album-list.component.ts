@@ -32,7 +32,7 @@ export class AlbumListComponent implements OnInit {
 
     let artist = this.artistHandler.getSelectedArtist();
 
-    this.albumService.handleAsync({artistId: artist?.id ?? undefined}).subscribe(
+    this.albumService.handleAsync({artistId: artist?.id ?? undefined, title: ""}).subscribe(
       a => {
         this.albums = a.dataItems
         console.log(JSON.stringify(a.dataItems[0]))

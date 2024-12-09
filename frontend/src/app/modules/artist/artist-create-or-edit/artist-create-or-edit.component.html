@@ -26,12 +26,12 @@
 
     <div [ngStyle]="artist.profilePhoto != undefined ? {'margin-bottom': '22vh'} : {}">
       <h6>Profile Picture</h6>
-      <app-artist-pic-dragzone [file]="artist.profilePhoto ?? null" title="Profile Picture" (imageEmit)="selectPfpFile($event)"></app-artist-pic-dragzone>
+      <app-artist-pic-dragzone title="Profile Picture" (imageEmit)="selectPfpFile($event)" [control]="artist.id"></app-artist-pic-dragzone>
     </div>
     <div [ngStyle]="artist.profileBackground != undefined ? {'margin-bottom': '35vh'} : {}">
       <h6>Banner</h6>
-      <app-artist-pic-dragzone [file]="artist.profileBackground ?? null" title="Banner" type="banner"
-                               (imageEmit)="selectBgFile($event)"></app-artist-pic-dragzone>
+      <app-artist-pic-dragzone title="Banner" type="banner"
+                               (imageEmit)="selectBgFile($event)" [control]="artist.id"></app-artist-pic-dragzone>
     </div>
     <div class="controls">
       <button mat-button (click)="emitCancel()">

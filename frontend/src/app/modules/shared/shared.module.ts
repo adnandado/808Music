@@ -7,8 +7,8 @@ import { ArtistPicDragzoneComponent } from './artist/artist-pic-dragzone/artist-
 import {
   MatCard,
   MatCardActions,
-  MatCardAvatar, MatCardContent,
-  MatCardHeader,
+  MatCardAvatar, MatCardContent, MatCardFooter,
+  MatCardHeader, MatCardImage,
   MatCardTitle,
   MatCardTitleGroup
 } from "@angular/material/card";
@@ -23,13 +23,15 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component';
+import { AlbumCardComponent } from './album-card/album-card.component';
 
 @NgModule({
   declarations: [
     UnauthorizedComponent,
     ArtistPicDragzoneComponent,
     ConfirmDialogComponent,
-    InfoDialogComponent, // Dodajemo UnauthorizedComponent u deklaracije
+    InfoDialogComponent,
+    AlbumCardComponent, // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
     CommonModule,
@@ -50,14 +52,17 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    MatDialogClose
+    MatDialogClose,
+    MatCardFooter,
+    MatCardImage
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ArtistPicDragzoneComponent
+    ArtistPicDragzoneComponent,
+    AlbumCardComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
