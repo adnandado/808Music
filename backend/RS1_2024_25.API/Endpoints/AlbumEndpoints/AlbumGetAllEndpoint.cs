@@ -71,7 +71,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             */
 
             var pagedList = await MyPagedList<AlbumGetAllResponse>.CreateAsync(albumsResponse, request, cancellationToken);
-            return Ok(albumsResponse);
+            return Ok(pagedList);
         }
     }
 

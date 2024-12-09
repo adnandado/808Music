@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ArtistSimpleDto} from '../../../services/auth-services/dto/artist-dto';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
@@ -14,6 +14,9 @@ import {
 import {
   ArtistGetAllByUserEndpointService
 } from '../../../endpoints/artist-endpoints/artist-get-all-by-user-endpoint.service';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ConfirmDialogComponent} from '../../shared/dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-choose-profile',
@@ -23,6 +26,9 @@ import {
 export class ChooseProfileComponent implements OnInit, OnChanges {
   artists: ArtistSimpleDto[] | null = null;
   readonly url = MyConfig.api_address;
+
+  readonly matDialog = inject(MatDialog);
+  readonly snackBar = inject(MatSnackBar);
 
   @Input() refresh: boolean = false;
 
@@ -85,17 +91,27 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
   }
 
   leaveProfile(id: number) {
-    if(confirm("Are you sure you want to leave this artist profile?")) {
-      this.leaveArtist.handleAsync(id).subscribe({
-        next: data => {
-          alert(data);
-          this.ngOnInit();
+    let matDialogRef = this.matDialog.open(ConfirmDialogComponent, {data:
+        {
+          title: "Leave this profile",
+          content: "You will lose access to this profile until the owner invites you again."
         },
-        error: (err: HttpErrorResponse) => {
-          alert(err.error)
+      hasBackdrop: true});
+    matDialogRef.afterClosed().subscribe({
+      next: data => {
+        if(data)
+        {
+          this.leaveArtist.handleAsync(id).subscribe({
+            next: data => {
+              this.snackBar.open(data, "Dismiss", {duration: 3500});
+              this.ngOnInit();
+            },
+            error: (err: HttpErrorResponse) => {
+              this.snackBar.open(err.error, "Dismiss", {duration: 3500});
+            }
+          })
         }
-      })
-    }
+      }})
   }
 
   EmitManage(id: number) {

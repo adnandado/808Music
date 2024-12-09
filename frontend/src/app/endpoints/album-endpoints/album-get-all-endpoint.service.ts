@@ -7,6 +7,7 @@ import {MyConfig} from '../../my-config';
 import {buildHttpParams} from '../../helper/http-params.helper';
 import {AlbumInsertRequest} from './album-insert-or-update-endpoint.service';
 import {MyPagedRequest} from '../../helper/my-paged-request';
+import {MyPagedList} from '../../services/auth-services/dto/my-paged-list';
 
 
 export interface AlbumPagedRequest {
@@ -26,14 +27,14 @@ export interface AlbumGetAllResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class AlbumGetAllEndpointService implements MyBaseEndpointAsync<AlbumPagedRequest, AlbumGetAllResponse[]> {
+export class AlbumGetAllEndpointService implements MyBaseEndpointAsync<AlbumPagedRequest, MyPagedList<AlbumGetAllResponse>> {
   readonly url = `${MyConfig.api_address}/api/AlbumGetAllEndpoint`;
 
   constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {
   }
 
-  handleAsync(request: AlbumPagedRequest): Observable<AlbumGetAllResponse[]> {
+  handleAsync(request: AlbumPagedRequest): Observable<MyPagedList<AlbumGetAllResponse>> {
         const params = buildHttpParams(request);
-        return this.httpClient.get<AlbumGetAllResponse[]>(this.url, {params});
+        return this.httpClient.get<MyPagedList<AlbumGetAllResponse>>(this.url, {params});
     }
 }

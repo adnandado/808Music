@@ -65,6 +65,18 @@ namespace RS1_2024_25.API.Services
             return decodedToken.Claims.FirstOrDefault(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub)?.Value!;
         }
 
+        public string GetJwtRoleClaimValue(HttpRequest request)
+        {
+            var decodedToken = GetDecodedJwt(request);
+            return decodedToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value!;
+        }
+
+        public string GetJwtClaimValue(HttpRequest request, string claimName)
+        {
+            var decodedToken = GetDecodedJwt(request);
+            return decodedToken.Claims.FirstOrDefault(x => x.Type == claimName)?.Value ?? string.Empty;
+        }
+
         public bool AuthorizeUserArtist(HttpRequest request, int artistToCheck, string[] roleNames)
         {
             var jwt = GetDecodedJwt(request);

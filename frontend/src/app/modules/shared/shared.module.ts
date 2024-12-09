@@ -13,12 +13,23 @@ import {
   MatCardTitleGroup
 } from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
+import {
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContainer,
+  MatDialogContent,
+  MatDialogTitle
+} from '@angular/material/dialog';
+import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component';
 
 @NgModule({
   declarations: [
     UnauthorizedComponent,
-    ArtistPicDragzoneComponent, // Dodajemo UnauthorizedComponent u deklaracije
+    ArtistPicDragzoneComponent,
+    ConfirmDialogComponent,
+    InfoDialogComponent, // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
     CommonModule,
@@ -33,7 +44,13 @@ import {MatIconButton} from "@angular/material/button";
     MatIcon,
     MatIconButton,
     MatCardTitleGroup,
-    MatCardContent
+    MatCardContent,
+    MatDialogContainer,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent

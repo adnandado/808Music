@@ -34,3 +34,11 @@ mat-card-actions {
 #errorMessage {
   color: crimson;
 }
+
+.user-info {
+  width: 100%;
+}
+
+.user-info p {
+  color: #EEDEE7;
+}
