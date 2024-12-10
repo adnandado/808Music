@@ -5,10 +5,11 @@ using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services;
+using RS1_2024_25.API.Services.Interfaces;
 
 namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 {
-    public class TrackDeleteEndpoint(ApplicationDbContext db, TokenProvider tp, FileHandler fh, IConfiguration cfg) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult
+    public class TrackDeleteEndpoint(ApplicationDbContext db, TokenProvider tp, IMyFileHandler fh, IConfiguration cfg, DeleteService ds) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult
     {
         [Authorize]
         [HttpDelete("{id}")]
@@ -29,26 +30,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                 return Unauthorized();
             }
 
-            var artistTracks = await db.ArtistsTracks.Where(at => at.TrackId == id).ToListAsync();
-            var trackGenres = await db.TrackGenres.Where(at => at.TrackId == id).ToListAsync();
-            var credits = await db.Credits.FindAsync(id);
-            //also remove from playlists when added
-
-            db.ArtistsTracks.RemoveRange(artistTracks);
-            db.TrackGenres.RemoveRange(trackGenres);
-            if(credits != null)
-            {
-                db.Credits.Remove(credits);
-            }
-
-            await db.SaveChangesAsync();
-
-            fh.DeleteFile(cfg["StaticFilePaths:Tracks"] + track.TrackPath);
-
-            db.Tracks.Remove(track);
-
-            await db.SaveChangesAsync();
-
+            await ds.DeleteTrackAsync(track);
             return Ok();
         }
     }

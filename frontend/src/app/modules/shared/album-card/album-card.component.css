@@ -6,6 +6,7 @@
 
 .album-mat-card {
   transition: 250ms background-color;
+  overflow-x: hidden;
 }
 
 .album-mat-card:hover {
@@ -20,4 +21,9 @@
 
 .album-mat-card-subtitle {
   color: #A9A9A9;
+  font-size: 14px;
+}
+
+.album-mat-card-title {
+  font-size: 20px;
 }

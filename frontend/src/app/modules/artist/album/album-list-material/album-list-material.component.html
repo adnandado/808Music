@@ -78,7 +78,7 @@
                        [pageSize]="defaultPageSize" [pageSizeOptions]="[10, 15, 20, 50]"
                        (page)="switchPage($event)"></mat-paginator>
     </div>
-    @if (selectedAlbum) {
+    @if (!isHome) {
         <div class="flex-side">
             <router-outlet></router-outlet>
         </div>

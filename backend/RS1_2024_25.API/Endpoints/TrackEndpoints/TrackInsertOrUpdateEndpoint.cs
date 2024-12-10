@@ -7,12 +7,13 @@ using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services;
+using RS1_2024_25.API.Services.Interfaces;
 using System.Linq;
 using System.Security.Claims;
 
 namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 {
-    public class TrackInsertOrUpdateEndpoint(ApplicationDbContext db, TokenProvider tp, FileHandler fh, IConfiguration cfg) : MyEndpointBaseAsync.WithRequest<TrackInsertRequest>.WithActionResult<TrackInsertResponse>
+    public class TrackInsertOrUpdateEndpoint(ApplicationDbContext db, TokenProvider tp, IMyFileHandler fh, IConfiguration cfg) : MyEndpointBaseAsync.WithRequest<TrackInsertRequest>.WithActionResult<TrackInsertResponse>
     {
         [Authorize]
         [HttpPost]

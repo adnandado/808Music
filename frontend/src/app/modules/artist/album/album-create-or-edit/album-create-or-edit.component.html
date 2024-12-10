@@ -1,7 +1,7 @@
 <div class="base-page">
   <div>
     @if (album.id != undefined) {
-      <h1>Edit Release {{ album.title }}</h1>
+      <h1>Edit Release <br> {{ getTitle() }}</h1>
     } @else {
       <h1>Create Release</h1>
     }
@@ -32,12 +32,10 @@
         <h6>Release Date*</h6>
         <mat-form-field [ngStyle]="{'width':'100%'}">
           <mat-label>Choose a date</mat-label>
-          <input matInput [matDatepicker]="picker">
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker">
-            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input matInput type="text" [matDatepicker]="datepicker" (dateInput)="setDate($event)" [value]="album.releaseDate" placeholder="Enter/Select a date">
+          <mat-hint>MM/DD/YYYY - (Your album will publicly release on this date)</mat-hint>
+          <mat-datepicker-toggle [for]="datepicker" matIconSuffix></mat-datepicker-toggle>
+          <mat-datepicker #datepicker disabled="false"></mat-datepicker>
         </mat-form-field>
       </div>
     }
@@ -45,7 +43,7 @@
     <div [ngStyle]="{'width':'100%'}">
       <h6>Type*</h6>
       <mat-form-field class="artist-name" [ngStyle]="{'width':'100%'}">
-        <mat-select [(value)]="album.albumTypeId">
+        <mat-select [(value)]="album.albumTypeId" placeholder="Select album type">
           @for (type of albumTypes; track type.id) {
             <mat-option [value]="type.id">{{type.type}}</mat-option>
           }

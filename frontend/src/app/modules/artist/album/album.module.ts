@@ -21,9 +21,15 @@ import {SharedModule} from '../../shared/shared.module';
 import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import {MatDivider} from '@angular/material/divider';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatFormField} from '@angular/material/form-field';
+import {MatFormField, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
+import {
+  MatCalendar,
+  MatDatepicker,
+  MatDatepickerContent,
+  MatDatepickerInput,
+  MatDatepickerToggle
+} from '@angular/material/datepicker';
 import {MatOption, MatSelect} from '@angular/material/select';
 
 
@@ -61,7 +67,10 @@ import {MatOption, MatSelect} from '@angular/material/select';
     MatDatepicker,
     MatDatepickerInput,
     MatSelect,
-    MatOption
+    MatOption,
+    MatCalendar,
+    MatDatepickerContent,
+    MatSuffix
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

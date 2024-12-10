@@ -1,9 +1,10 @@
 ﻿using Azure.Core;
+using RS1_2024_25.API.Services.Interfaces;
 using System.Threading;
 
 namespace RS1_2024_25.API.Services
 {
-    public class FileHandler(IWebHostEnvironment env)
+    public class FileHandler(IWebHostEnvironment env) : IMyFileHandler
     {
         public async Task<string> UploadFile(string path, IFormFile file, int maxFileSizeInBytes = 0, CancellationToken cancellationToken = default)
         {

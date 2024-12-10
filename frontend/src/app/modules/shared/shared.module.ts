@@ -24,6 +24,10 @@ import {
 } from '@angular/material/dialog';
 import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component';
 import { AlbumCardComponent } from './album-card/album-card.component';
+import {MatTooltip} from "@angular/material/tooltip";
+import { MyMatInputComponent } from './my-mat-input/my-mat-input.component';
+import {MatFormField} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { AlbumCardComponent } from './album-card/album-card.component';
     ArtistPicDragzoneComponent,
     ConfirmDialogComponent,
     InfoDialogComponent,
-    AlbumCardComponent, // Dodajemo UnauthorizedComponent u deklaracije
+    AlbumCardComponent,
+    MyMatInputComponent, // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
     CommonModule,
@@ -54,7 +59,10 @@ import { AlbumCardComponent } from './album-card/album-card.component';
     MatButton,
     MatDialogClose,
     MatCardFooter,
-    MatCardImage
+    MatCardImage,
+    MatTooltip,
+    MatFormField,
+    MatInput
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent

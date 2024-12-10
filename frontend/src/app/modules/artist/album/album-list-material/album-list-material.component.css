@@ -7,13 +7,15 @@
   justify-content: space-between;
   flex-direction: row;
   padding: 0;
-  height: 100vh;
+  height: 97vh;
+  overflow-y: hidden;
 }
 
 .select-page {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow-y: auto;
 }
 
 app-album-card {
@@ -73,10 +75,7 @@ div > h6 {
 .flex-side {
   flex-basis: 35vw;
   height: auto;
-}
-
-.flex-side .base-page{
-  width: 35vw;
+  display: block;
 }
 
 @media only screen and (max-width: 1300px) {

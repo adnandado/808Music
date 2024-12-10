@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 {
-    public class AlbumDeleteEndpoint(ApplicationDbContext db, TokenProvider tp, FileHandler fh, IConfiguration cfg) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult
+    public class AlbumDeleteEndpoint(ApplicationDbContext db, TokenProvider tp, DeleteService ds) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult
     {
         [Authorize]
         [HttpDelete("{id}")]
@@ -30,22 +30,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
                 return Unauthorized();
             }
 
-            HttpResponseMessage? response = null;
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("Authorization", Request.Headers.Authorization.ToString());
-                var tracks = await db.Tracks.Where(t => t.AlbumId == id).ToListAsync();
-                foreach (Track track in tracks)
-                {
-                    response = await client.DeleteAsync(cfg["backendUrl"] + "api/TrackDeleteEndpoint/" + track.Id, cancellationToken);  
-                }
-            }
-
-            fh.DeleteFile(cfg["StaticFilePaths:AlbumCovers"] + a.CoverPath);
-            db.Albums.Remove(a);                
-
-
-            await db.SaveChangesAsync();
+            await ds.DeleteAlbumAsync(a);
             return Ok();
         }
     }

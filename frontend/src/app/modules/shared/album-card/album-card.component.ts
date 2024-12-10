@@ -31,4 +31,8 @@ export class AlbumCardComponent {
   emitEdit() {
     this.onEdit.emit(this.id);
   }
+
+  getTitle() {
+    return this.title.length > 9 ? this.title.slice(0,9) + "..." : this.title;
+  }
 }

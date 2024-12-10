@@ -1,10 +1,10 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, HostListener, inject, OnInit} from '@angular/core';
 import {
   AlbumGetAllEndpointService,
   AlbumGetAllResponse, AlbumPagedRequest
 } from '../../../../endpoints/album-endpoints/album-get-all-endpoint.service';
 import {AlbumDeleteEndpointService} from '../../../../endpoints/album-endpoints/album-delete-endpoint.service';
-import {NavigationStart, Router} from '@angular/router';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
 import {ArtistHandlerService} from '../../../../services/artist-handler.service';
 import {MyPagedList} from '../../../../services/auth-services/dto/my-paged-list';
@@ -39,26 +39,20 @@ export class AlbumListMaterialComponent implements OnInit {
   }
   defaultPageSize = 20;
 
+  isHome = false;
+
   constructor(private albumService: AlbumGetAllEndpointService,
               private albumDeleteService: AlbumDeleteEndpointService,
               private router: Router,
               private auth: MyUserAuthService,
               private artistHandler: ArtistHandlerService,
-              private albumTypeGet : AlbumTypeGetAllEndpointService )
+              private albumTypeGet : AlbumTypeGetAllEndpointService,
+              private route : ActivatedRoute)
   {
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe(event => {
-      if(event instanceof NavigationStart)
-      {
-        if(event.url == "/artist/album")
-        {
-          this.reloadData();
-        }
-      }
-    })
-
+    this.checkIfHome();
     this.pagedRequest.artistId = this.artistHandler.getSelectedArtist()?.id;
     this.pagedRequest.pageNumber = 1;
     this.pagedRequest.pageSize = this.defaultPageSize;
@@ -92,7 +86,7 @@ export class AlbumListMaterialComponent implements OnInit {
         this.albumDeleteService.handleAsync(id).subscribe({
           error: () => { alert("Album deletion failed."); },
           complete: () => {
-            this.snackBar.open(album?.title ?? "" + "deleted successfully.", "Dismiss", {
+            this.snackBar.open(album?.title + " deleted successfully.", "Dismiss", {
               duration: 3000
             });
             this.ngOnInit();
@@ -184,5 +178,22 @@ export class AlbumListMaterialComponent implements OnInit {
 
   fitlerSearch() {
     this.reloadData();
+  }
+
+  checkIfHome() {
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationStart)
+      {
+        if(event.url == "/artist/album")
+        {
+          this.reloadData();
+          this.isHome = true;
+          console.log(event.url);
+        }
+        else {
+          this.isHome = false;
+        }
+      }
+    })
   }
 }
