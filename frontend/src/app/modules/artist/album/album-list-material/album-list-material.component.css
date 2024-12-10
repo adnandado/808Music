@@ -1,3 +1,93 @@
-.full-width-table {
-  width: 100%;
+* {
+  color: white;
+  box-sizing: border-box;
 }
+.flex-page {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 0;
+  height: 97vh;
+  overflow-y: hidden;
+}
+
+.select-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+app-album-card {
+  width: 10vw;
+}
+
+.flex-container {
+  align-items: end;
+  flex-grow: 0;
+  flex-basis: auto;
+}
+
+mat-paginator {
+  border-radius: 15px;
+}
+div > h6 {
+  color: #EEDEE7;
+  font-size: 20px;
+}
+
+.dual-control {
+  display: flex;
+  gap: 20px;
+}
+
+.search-bar-input {
+  background-color: #161215;
+  border-radius: 30px;
+  padding: 16px;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  color: #EEDEE7;
+  padding-left: 3.5vw;
+  font-size: 16px;
+  border: #EEDEE7 solid 1px;
+}
+
+.search-bar {
+  width: 25vw;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar > div > mat-icon{
+  position: absolute;
+  left:10px;
+  top:15px;
+  color: #EEDEE7;
+}
+
+.title > h1 {
+  padding-top: 1vh;
+}
+
+.flex-side {
+  flex-basis: 35vw;
+  height: auto;
+  display: block;
+}
+
+@media only screen and (max-width: 1300px) {
+  app-album-card {
+    width: 15vw;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  app-album-card {
+    width: 25vw;
+  }
+}
+
+

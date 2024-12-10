@@ -1,0 +1,29 @@
+.album-mat-card:hover > mat-card-actions {
+  opacity: 1;
+  transition: 250ms opacity;
+  cursor: pointer;
+}
+
+.album-mat-card {
+  transition: 250ms background-color;
+  overflow-x: hidden;
+}
+
+.album-mat-card:hover {
+  background-color: #4D3D50;
+  transition: 150ms background-color;
+}
+
+.album-mat-card-controls {
+  opacity: 0;
+  transition: 150ms opacity;
+}
+
+.album-mat-card-subtitle {
+  color: #A9A9A9;
+  font-size: 14px;
+}
+
+.album-mat-card-title {
+  font-size: 20px;
+}

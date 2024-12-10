@@ -8,12 +8,16 @@ import {buildHttpParams} from '../../helper/http-params.helper';
 import {AlbumInsertRequest} from './album-insert-or-update-endpoint.service';
 import {MyPagedRequest} from '../../helper/my-paged-request';
 import {MyPagedList} from '../../services/auth-services/dto/my-paged-list';
+import {AlbumType} from './album-type-get-all-endpoint.service';
 
 
 export interface AlbumPagedRequest {
   pageNumber?: number;
   pageSize?: number;
   artistId?: number;
+  typeId?: number;
+  isReleased?: boolean;
+  title: string;
 }
 
 export interface AlbumGetAllResponse {
@@ -22,6 +26,7 @@ export interface AlbumGetAllResponse {
   coverArt: string;
   releaseDate: string;
   artist: string;
+  type: string;
 }
 
 @Injectable({

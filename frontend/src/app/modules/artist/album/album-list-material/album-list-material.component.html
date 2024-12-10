@@ -1,26 +1,86 @@
-<div class="mat-elevation-z2">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{row.id}}</td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row">{{row.name}}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator #paginator
-      [length]="dataSource.data.length"
-      [pageIndex]="0"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 20]"
-      aria-label="Select page">
-  </mat-paginator>
+<div class="base-page flex-page">
+    <div class="select-page">
+        <div class="title">
+            <h1>Your releases</h1>
+        </div>
+        <div>
+            <div class="search-bar">
+                <div>
+                    <input class="search-bar-input" type="text" [(ngModel)]="pagedRequest.title" placeholder="Search for releases">
+                    <mat-icon>search</mat-icon>
+                </div>
+                <div>
+                    <button mat-fab extended (click)="fitlerSearch()">
+                        <mat-icon>keyboard_return</mat-icon>
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="dual-control">
+            <mat-divider [vertical]="true"></mat-divider>
+            <div>
+                <h6>Release Type:</h6>
+                <mat-chip-listbox>
+                    <mat-chip-option [id]="'0'" (selectionChange)="filterSelectedType($event)"
+                                     [selected]="pagedRequest.typeId == undefined">All
+                    </mat-chip-option>
+                    <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+                    @for (type of albumTypes; track type.id) {
+                        <mat-chip-option [id]="type.id.toString()" [value]="type"
+                                         (selectionChange)="filterSelectedType($event)">{{ type.type }}
+                        </mat-chip-option>
+                    }
+                </mat-chip-listbox>
+            </div>
+            <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+            <div>
+                <h6>Release Status:</h6>
+                <mat-chip-listbox>
+                    <mat-chip-option [id]="'0'" (selectionChange)="filterReleaseStatus($event)"
+                                     [selected]="pagedRequest.isReleased == undefined">All
+                    </mat-chip-option>
+                    <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+                    <mat-chip-option [id]="'1'" (selectionChange)="filterReleaseStatus($event)" [value]="true">
+                        Released
+                    </mat-chip-option>
+                    <mat-chip-option [id]="'2'" (selectionChange)="filterReleaseStatus($event)" [value]="false">
+                        Upcoming
+                    </mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+            <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+        </div>
+        <div class="flex-controls">
+            <mat-card appearance="outlined" class="artist-card add-new-card"
+                      (click)="openCreate('/artist/album/create')">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title>New release</mat-card-title>
+                        <mat-icon>add_circle</mat-icon>
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content></mat-card-content>
+            </mat-card>
+            <a mat-stroked-button routerLink="/auth/logout">
+                Log out
+            </a>
+        </div>
+        <div class="flex-container">
+            @for (a of albums; track a.id) {
+                <app-album-card [title]="a.title" [subtitle]="a.type + ' • ' + getReleaseYear(a.releaseDate)"
+                                [imageUrl]="MyConfig.api_address + a.coverArt" [id]="a.id"
+                                [hasControls]="true" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
+                                (onStats)="showStats($event)"></app-album-card>
+            }
+        </div>
+        <mat-paginator [length]="pagedList?.totalCount"
+                       [pageSize]="defaultPageSize" [pageSizeOptions]="[10, 15, 20, 50]"
+                       (page)="switchPage($event)"></mat-paginator>
+    </div>
+    @if (!isHome) {
+        <div class="flex-side">
+            <router-outlet></router-outlet>
+        </div>
+    }
 </div>

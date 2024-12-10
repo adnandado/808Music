@@ -6,13 +6,14 @@ using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services;
+using RS1_2024_25.API.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
 namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 {
-    public class AlbumInsertOrUpdateEndpoint(ApplicationDbContext db, FileHandler fh, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<AlbumInsertRequest>.WithActionResult<AlbumInsertResponse>
+    public class AlbumInsertOrUpdateEndpoint(ApplicationDbContext db, IMyFileHandler fh, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<AlbumInsertRequest>.WithActionResult<AlbumInsertResponse>
     {
         [Authorize]
         [HttpPost]

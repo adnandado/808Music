@@ -5,7 +5,6 @@ import {MyConfig} from '../../../../my-config';
 const ALLOWED_FILE_TYPES = [
   'image/jpeg',
   'image/png',
-  'image/svg+xml',
 ];
 
 @Component({
@@ -13,13 +12,17 @@ const ALLOWED_FILE_TYPES = [
   templateUrl: './artist-pic-dragzone.component.html',
   styleUrl: './artist-pic-dragzone.component.css'
 })
-export class ArtistPicDragzoneComponent {
+export class ArtistPicDragzoneComponent implements OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+      this.removeFile();
+  }
   readonly url = MyConfig.api_address;
   @Output() imageEmit: EventEmitter<File | undefined> = new EventEmitter<File | undefined>();
   @Input() title: string = "";
-  @Input() file : File | null = null;
+  file : File | null = null;
   @Input() type: string = "pfp";
-  @Input() fileUrl = "";
+  fileUrl = "";
+  @Input() control : any;
   allowedFileTypes = ALLOWED_FILE_TYPES;
 
   selectFile(e: any) {

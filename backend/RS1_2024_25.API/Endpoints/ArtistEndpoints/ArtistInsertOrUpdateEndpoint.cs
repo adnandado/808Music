@@ -5,11 +5,12 @@ using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services;
+using RS1_2024_25.API.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
 {
-    public class ArtistInsertOrUpdateEndpoint(ApplicationDbContext db, FileHandler fh, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<ArtistInsertRequest>.WithActionResult<ArtistInsertResponse>
+    public class ArtistInsertOrUpdateEndpoint(ApplicationDbContext db, IMyFileHandler fh, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<ArtistInsertRequest>.WithActionResult<ArtistInsertResponse>
     {
         [Authorize]
         [HttpPost]

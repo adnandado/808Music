@@ -42,7 +42,7 @@ namespace RS1_2024_25.API.Endpoints.UserArtistEndpoints
             ua.MyAppUserId = request.AddUserId;
             ua.RoleId = request.RoleId;
 
-            MyAppUser user = await db.MyAppUsers.FindAsync(request.AddUserId, cancellationToken);
+            MyAppUser? user = await db.MyAppUsers.FindAsync(request.AddUserId, cancellationToken);
             if (user == null)
             {
                 return BadRequest("User not found");
