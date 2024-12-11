@@ -8,10 +8,10 @@ namespace RS1_2024_25.API.Data
         DbContextOptions options) : DbContext(options)
     {
         public DbSet<City> Cities { get; set; }
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<MyAppUser> MyAppUsers { get; set; }
         public DbSet<MyAuthenticationToken> MyAuthenticationTokens { get; set; }
 
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<MyAppUser> MyAppUsers { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<TrackGenre> TrackGenres { get; set; }
@@ -28,6 +28,7 @@ namespace RS1_2024_25.API.Data
         public DbSet<AlbumType> AlbumTypes { get; set; }
         public DbSet<MyRefreshToken> MyRefreshTokens { get; set; }
         public DbSet<MyResetToken> MyResetTokens { get; set; }
+        public DbSet<MyUserArtistInvite> MyUserArtistInvites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -21,6 +21,10 @@ import {AlbumDeleteEndpointService} from '../../../endpoints/album-endpoints/alb
 import {
   ArtistFlagForDeletionEndpointService
 } from '../../../endpoints/artist-endpoints/artist-flag-for-deletion-endpoint.service';
+import {TextInputDialogComponent} from '../../shared/dialogs/text-input-dialog/text-input-dialog.component';
+import {
+  UserInviteAcceptEndpointService
+} from '../../../endpoints/user-artist-invite-endpoints/user-invite-accept-endpoint.service';
 
 @Component({
   selector: 'app-choose-profile',
@@ -46,7 +50,8 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
               private auth: MyUserAuthService,
               private artistById: ArtistGetByIdEndpointService,
               private leaveArtist: UserLeaveArtistEndpointService,
-              private artistDeleteService: ArtistFlagForDeletionEndpointService,) {
+              private artistDeleteService: ArtistFlagForDeletionEndpointService,
+              private userInviteService : UserInviteAcceptEndpointService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -141,6 +146,30 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
         if(data)
         {
           this.artistDeleteService.handleAsync(artist.id).subscribe({
+            next: data => {
+              this.snackBar.open(data, "Dismiss", {duration: 3500});
+              this.ngOnInit();
+            }
+          })
+        }
+      }
+    })
+  }
+
+  handleJoin() {
+    let matRef = this.matDialog.open(TextInputDialogComponent, {data:{
+      title: "Join artist profile with invite code",
+        content: "Input your invite code.",
+        inputLabel: "Invite code",
+        type:"text",
+        placeholder: "Enter you invite code",
+      }, hasBackdrop: true});
+
+    matRef.afterClosed().subscribe({
+      next: value => {
+        if(value != null)
+        {
+          this.userInviteService.handleAsync({inviteToken:value}).subscribe({
             next: data => {
               this.snackBar.open(data, "Dismiss", {duration: 3500});
               this.ngOnInit();

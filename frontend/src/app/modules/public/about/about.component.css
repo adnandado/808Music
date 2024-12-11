@@ -7,7 +7,7 @@
   width: 55%;
 }
 .headline-card {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .headline-card p {
