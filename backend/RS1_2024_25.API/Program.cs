@@ -74,6 +74,7 @@ builder.Services.AddTransient<TokenProvider>();
 builder.Services.AddTransient<IMyMailService, MailService>();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 builder.Services.AddTransient<DeleteService>();
+builder.Services.AddHostedService<MyBackgroundService>();
 
 var app = builder.Build();
 

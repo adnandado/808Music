@@ -188,7 +188,6 @@ export class AlbumListMaterialComponent implements OnInit {
         {
           this.reloadData();
           this.isHome = true;
-          console.log(event.url);
         }
         else {
           this.isHome = false;

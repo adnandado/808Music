@@ -10,6 +10,7 @@ import {SharedModule} from './modules/shared/shared.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {FormsModule} from '@angular/forms';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
+import {MyErrorInterceptorService} from './services/my-error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,11 @@ import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core'
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MyAuthInterceptor,
+      multi: true // Ensures multiple interceptors can be used if needed
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyErrorInterceptorService,
       multi: true // Ensures multiple interceptors can be used if needed
     },
     provideNativeDateAdapter(),

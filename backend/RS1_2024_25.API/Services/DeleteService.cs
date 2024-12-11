@@ -54,5 +54,30 @@ namespace RS1_2024_25.API.Services
 
             return true;
         }
+
+        public async Task<bool> DeleteArtistAsync(Artist artist)
+        {
+            var userArtistsToDelete = await db.UserArtists.Where(ua => ua.ArtistId == artist.Id).ToListAsync();
+            //also delete from followers table when added
+
+            db.UserArtists.RemoveRange(userArtistsToDelete);
+            await db.SaveChangesAsync();
+
+            var albums = await db.Albums.Where(a => a.ArtistId == artist.Id).ToListAsync();
+            foreach(Album album in albums)
+            {
+                bool res = await this.DeleteAlbumAsync(album);
+                if(!res)
+                {
+                    return false;
+                }
+            }
+            await db.SaveChangesAsync();
+
+            db.Artists.Remove(artist);
+            await db.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

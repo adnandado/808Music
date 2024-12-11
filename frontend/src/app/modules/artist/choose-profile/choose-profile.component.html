@@ -31,13 +31,18 @@
         <button *ngIf="a.role != 'Owner'" mat-icon-button aria-label="Leave artist profile" (click)="leaveProfile(a.id)">
           <mat-icon >logout</mat-icon>
         </button>
-        <button *ngIf="a.role == 'Owner'" mat-icon-button aria-label="Delete artist profile">
-          <mat-icon>delete</mat-icon>
+        <button *ngIf="a.role == 'Owner'" mat-icon-button aria-label="Delete artist profile" (click)="deleteArtist(a)">
+          @if (a.isFlaggedForDeletion)
+          {
+            <mat-icon [ngStyle]="{'color':'red'}" [matTooltip]="'Cancel deletion planned for ' + a.deletionDate">auto_delete</mat-icon>
+          } @else {
+            <mat-icon matTooltip="Flag for deletion">delete</mat-icon>
+          }
         </button>
-        <button mat-icon-button aria-label="Manage users" *ngIf="a.role == 'Owner'" (click)="EmitManage(a.id)">
+        <button mat-icon-button aria-label="Manage users" *ngIf="a.role == 'Owner'" (click)="EmitManage(a.id)" matTooltip="Manage users">
           <mat-icon>group</mat-icon>
         </button>
-        <button mat-icon-button aria-label="Edit artist profile" *ngIf="a.role == 'Owner'" (click)="EmitEdit(a.id)">
+        <button mat-icon-button aria-label="Edit artist profile" *ngIf="a.role == 'Owner'" (click)="EmitEdit(a.id)" matTooltip="Edit profile">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-flat-button (click)="SelectProfile(a)">

@@ -1,5 +1,8 @@
 <div class="base-page">
-  <div>
+  <div class="flex-controls">
+    <button mat-icon-button (click)="emitCancel()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     @if(artist.id != undefined)
     {
       <h1>Edit Artist</h1>
