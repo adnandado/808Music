@@ -13,6 +13,7 @@
   border-radius: 50px;
   padding: 2vw;
   position: relative;
+  overflow-y: auto;
 }
 
 .headline-card h1 {

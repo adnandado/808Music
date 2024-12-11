@@ -106,11 +106,32 @@ namespace RS1_2024_25.API.Services
         }
 
 
-        public string CreateResetToken()
+        public string CreateResetToken(int size = 32)
         {
-            byte[] bytes = new byte[32];
+            byte[] bytes = new byte[size];
             rnd.NextBytes(bytes);
             return Convert.ToHexString(bytes);
+        }
+        public string GenerateReferralCode()
+        {
+            const string uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string digits = "0123456789";
+            const string lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+            StringBuilder referralCode = new StringBuilder();
+
+            for (int block = 0; block < 3; block++)
+            {
+                referralCode.Append(uppercaseLetters[rnd.Next(uppercaseLetters.Length)]);
+                referralCode.Append(digits[rnd.Next(digits.Length)]);
+                referralCode.Append(lowercaseLetters[rnd.Next(lowercaseLetters.Length)]);
+
+                if (block < 2) // Add a dash between blocks
+                {
+                    referralCode.Append('-');
+                }
+            }
+
+            return referralCode.ToString();
         }
     }
 }

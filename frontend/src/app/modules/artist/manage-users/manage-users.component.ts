@@ -26,6 +26,9 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../../shared/dialogs/confirm-dialog/confirm-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {
+  UserInviteSendEndpointService
+} from '../../../endpoints/user-artist-invite-endpoints/user-invite-send-endpoint.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -91,7 +94,8 @@ export class ManageUsersComponent implements OnInit, OnChanges {
               private getCurrentUsers: UserArtistsGetAllEndpointService,
               private getRoles: RolesGetAllEndpointService,
               private updateRoleService: UserArtistAddOrUpdateRoleEndpointService,
-              private removeUserService: UserArtistRemoveEndpointService) {
+              private removeUserService: UserArtistRemoveEndpointService,
+              private userInviteService : UserInviteSendEndpointService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -178,24 +182,19 @@ export class ManageUsersComponent implements OnInit, OnChanges {
   }
 
   sendInvite(cu: UserSearchResponse) {
-    this.updateRoleService.handleAsync({
+    this.userInviteService.handleAsync({
       artistId: this.artist.id!,
-      addUserId: cu.id,
-      roleId: cu.roleId!
+      roleId: cu.roleId!,
+      myAppUserId: cu.id
     }).subscribe({
       next: data => {
         this.removeFromInviteList(cu);
         this.ngOnInit();
-        this.snackBar.open("Successfully invited " + data.username + " as " + data.role + "!", "Dismiss", {
-          duration: 3500
-        })
-      },
-      error: (err: HttpErrorResponse) => {
-        this.snackBar.open(err.error, "Dismiss", {
+        this.snackBar.open(data, "Dismiss", {
           duration: 3500
         })
       }
-    })
+    });
   }
 
   displayUsername(u: UserSearchResponse) :string {

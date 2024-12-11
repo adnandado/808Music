@@ -5,6 +5,7 @@ import {AuthGuard} from './auth-guards/auth-guard.service';
 import { ProductsCreateComponent } from './modules/artist/products/products-create/products-create.component';
 import { ProductListComponent } from './modules/artist/products/product-list/product-list.component';
 import {ArtistLayoutComponent} from './modules/artist/artist-layout/artist-layout.component';
+import {TextInputDialogComponent} from './modules/shared/dialogs/text-input-dialog/text-input-dialog.component';
 const routes: Routes = [
   {path: 'unauthorized', component: UnauthorizedComponent},
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'product-list',
     component: ProductListComponent
+  },
+  {
+    path: 'dialogTesting',
+    component: TextInputDialogComponent
   },
   {
     path: 'public',

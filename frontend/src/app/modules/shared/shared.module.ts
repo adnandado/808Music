@@ -28,6 +28,7 @@ import {MatTooltip} from "@angular/material/tooltip";
 import { MyMatInputComponent } from './my-mat-input/my-mat-input.component';
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
+import { TextInputDialogComponent } from './dialogs/text-input-dialog/text-input-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {MatInput} from '@angular/material/input';
     ConfirmDialogComponent,
     InfoDialogComponent,
     AlbumCardComponent,
-    MyMatInputComponent, // Dodajemo UnauthorizedComponent u deklaracije
+    MyMatInputComponent,
+    TextInputDialogComponent, // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
     CommonModule,

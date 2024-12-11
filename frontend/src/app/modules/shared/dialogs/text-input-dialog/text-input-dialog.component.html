@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{data.title}}?</h2>
+<mat-dialog-content>
+  <p>{{data.content}}</p>
+  <mat-form-field class="dialog-input" [ngStyle]="{'width':'100%'}">
+    <mat-label>{{data.inputLabel}}</mat-label>
+    <input matInput [formControl]="inputValue" [placeholder]="data.placeholder" [type]="data.type" name="inputValue">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="closeDialog(false)">Cancel</button>
+  <button mat-flat-button (click)="closeDialog(true)">Confirm</button>
+</mat-dialog-actions>
