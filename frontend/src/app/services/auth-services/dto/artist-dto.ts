@@ -3,4 +3,6 @@ export interface ArtistSimpleDto {
   name: string;
   pfpPath: string;
   role: string;
+  isFlaggedForDeletion: boolean;
+  deletionDate: string;
 }

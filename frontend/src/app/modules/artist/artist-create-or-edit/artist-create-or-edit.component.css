@@ -40,4 +40,9 @@ form {
   gap: 1vw;
 }
 
+.flex-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 

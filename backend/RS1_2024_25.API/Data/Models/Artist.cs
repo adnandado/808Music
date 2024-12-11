@@ -11,5 +11,7 @@ namespace RS1_2024_25.API.Data.Models
         public string ProfilePhotoPath { get; set; } = string.Empty;
         public string ProfileBackgroundPath { get; set; } = string.Empty;
         public int Followers { get; set; }
+        public bool IsFlaggedForDeletion { get; set; }
+        public DateTime DeletionDate { get; set; }
     }
 }

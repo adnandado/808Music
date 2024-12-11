@@ -53,7 +53,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             a.Distributor = request.Distributor;
             a.ReleaseDate = request.ReleaseDate;
             a.AlbumTypeId = request.AlbumTypeId;
-            a.IsActive = request.IsActive;
+            a.IsActive = request.ReleaseDate < DateTime.Now;
             a.ArtistId = request.ArtistId;
 
             if(request.CoverImage != null)

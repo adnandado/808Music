@@ -17,6 +17,10 @@ import {
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ConfirmDialogComponent} from '../../shared/dialogs/confirm-dialog/confirm-dialog.component';
+import {AlbumDeleteEndpointService} from '../../../endpoints/album-endpoints/album-delete-endpoint.service';
+import {
+  ArtistFlagForDeletionEndpointService
+} from '../../../endpoints/artist-endpoints/artist-flag-for-deletion-endpoint.service';
 
 @Component({
   selector: 'app-choose-profile',
@@ -41,7 +45,8 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
               private artistHandler: ArtistHandlerService,
               private auth: MyUserAuthService,
               private artistById: ArtistGetByIdEndpointService,
-              private leaveArtist: UserLeaveArtistEndpointService) {
+              private leaveArtist: UserLeaveArtistEndpointService,
+              private artistDeleteService: ArtistFlagForDeletionEndpointService,) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -57,6 +62,7 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
         this.artistGetAll.handleAsync().subscribe({
           next: data => {
             this.artists = data;
+            console.log(data);
           },
           error: (err:HttpErrorResponse) => {
             alert(err);
@@ -121,6 +127,26 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
       },
       error: (err: HttpErrorResponse) => {
         alert(err.error);
+      }
+    })
+  }
+
+  deleteArtist(artist: ArtistSimpleDto) {
+    let matRef = this.matDialog.open(ConfirmDialogComponent, {data:{
+      title: artist.isFlaggedForDeletion ? "Cancel planned deletion of this profile" : "Are you sure you want to flag this profile for deletion!",
+        content: artist.isFlaggedForDeletion ? "This will stop your profile from being deleted on the day it was planned" : "This will remove this artist profile and its entire catalogue on the day of the deletion.",
+      }, hasBackdrop: true});
+    matRef.afterClosed().subscribe({
+      next: data => {
+        if(data)
+        {
+          this.artistDeleteService.handleAsync(artist.id).subscribe({
+            next: data => {
+              this.snackBar.open(data, "Dismiss", {duration: 3500});
+              this.ngOnInit();
+            }
+          })
+        }
       }
     })
   }

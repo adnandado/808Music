@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Mozilla;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Endpoints.TemporaryEndpoints;
 using RS1_2024_25.API.Helper.Api;
@@ -21,7 +22,9 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
                 Id = ua.ArtistId,
                 Name = ua.Artist.Name,
                 PfpPath = $"/media/Images/ArtistPfps/{ua.Artist.ProfilePhotoPath}",
-                Role = ua.Role.RoleName
+                Role = ua.Role.RoleName,
+                IsFlaggedForDeletion = ua.Artist.IsFlaggedForDeletion,
+                DeletionDate = ua.Artist.DeletionDate.ToShortDateString()
             }).ToListAsync();
         }
     }
@@ -32,5 +35,7 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
         public string Name { get; set; }
         public string PfpPath { get; set; }
         public string Role { get; set; }
+        public bool IsFlaggedForDeletion { get; set; }
+        public string DeletionDate { get; set; }
     }
 }
