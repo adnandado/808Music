@@ -1,5 +1,5 @@
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Injectable} from "@angular/core";
+import {inject, Injectable} from "@angular/core";
 import {LoginResponse} from '../../endpoints/auth-endpoints/user-auth-login-endpoint.service';
 import {AuthTokenInfo} from './dto/auth-token-info';
 import {jwtDecode} from "jwt-decode"
@@ -12,10 +12,12 @@ import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {LogoutInfo} from './dto/logout-info';
 import {LogoutRequest} from './dto/logout-request';
+import {Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class MyUserAuthService {
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private router: Router) {
   }
 
   isLoggedIn(): boolean {
@@ -72,6 +74,8 @@ export class MyUserAuthService {
             window.location.reload();
           }
         });
+        this.router.navigate(["/please-wait-a-moment"]);
+
       }
       return auth;
     }
@@ -80,7 +84,7 @@ export class MyUserAuthService {
     }
   }
 
-  private getNewJwt(auth: AuthTokenInfo): Observable<LoginResponse> {
+  public getNewJwt(auth: AuthTokenInfo): Observable<LoginResponse> {
     let url = `${MyConfig.api_address}/api/UserGetNewTokenEndpoint`;
     return this.httpClient.post<LoginResponse>(url,{
       jwtToken: auth.token,

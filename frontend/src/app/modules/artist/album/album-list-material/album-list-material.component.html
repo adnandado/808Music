@@ -71,7 +71,7 @@
                 <app-album-card [title]="a.title" [subtitle]="a.type + ' • ' + getReleaseYear(a.releaseDate)"
                                 [imageUrl]="MyConfig.api_address + a.coverArt" [id]="a.id"
                                 [hasControls]="true" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
-                                (onStats)="showStats($event)"></app-album-card>
+                                (onStats)="showStats($event)" (onClick)="checkoutTracks($event)"></app-album-card>
             }
         </div>
         <mat-paginator [length]="pagedList?.totalCount"

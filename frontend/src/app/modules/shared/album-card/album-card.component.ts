@@ -15,6 +15,7 @@ export class AlbumCardComponent {
   @Output() onEdit: EventEmitter<number> = new EventEmitter();
   @Output() onStats: EventEmitter<number> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
+  @Output() onClick: EventEmitter<number> = new EventEmitter();
 
   replaceWithPlaceholder() {
     document.getElementById("thumbnail")!.classList.add("album-mat-card-placeholder");
@@ -33,6 +34,10 @@ export class AlbumCardComponent {
   }
 
   getTitle() {
-    return this.title.length > 9 ? this.title.slice(0,9) + "..." : this.title;
+    return this.title.length > 15 ? this.title.slice(0,10) + "..." : this.title;
+  }
+
+  emitClick() {
+    this.onClick.emit(this.id);
   }
 }

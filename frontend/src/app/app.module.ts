@@ -11,6 +11,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {FormsModule} from '@angular/forms';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {MyErrorInterceptorService} from './services/my-error-interceptor.service';
+import {RouterModule} from '@angular/router';
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 @NgModule({
   declarations: [

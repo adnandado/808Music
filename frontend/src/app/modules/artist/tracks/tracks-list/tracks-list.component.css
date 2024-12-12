@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+
+.tracks-page {
+  padding-top: 1vh;
+  padding-left: 1vw;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+.tracks-list {
+  flex-basis: 65vw;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.track-page-controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dual-control {
+  display: flex;
+  gap:10px
+}
+
+.side-island {
+  background-color: #fff;
+}
+
+.album-cover {
+  height: 25vh;
+  width: 25vh;
+  flex-basis: 25vh;
+  background-color: #A9A9A9;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+}
+
+.album-info {
+  display: flex;
+  gap: 15px;
+}
+
+.album-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: space-evenly;
+}
+
+.album-details h2, .album-details h6, .album-details p {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.album-details p {
+  color: #A9A9A9;
+}
+
+.album-title {
+  font-weight: 500;
+}
+
+.go-back-arrow {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+.go-back-button {
+  width: fit-content;
+  height: fit-content;
+}

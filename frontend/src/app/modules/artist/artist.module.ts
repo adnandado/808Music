@@ -39,6 +39,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {MatSelect} from "@angular/material/select";
 import {MatTooltip} from "@angular/material/tooltip";
+import { JoinArtistProfileComponent } from './join-artist-profile/join-artist-profile.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatTooltip} from "@angular/material/tooltip";
     ProductListComponent,
     ArtistLayoutComponent,
     ArtistCreateOrEditComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    JoinArtistProfileComponent
   ],
     imports: [
         CommonModule,

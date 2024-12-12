@@ -195,4 +195,8 @@ export class AlbumListMaterialComponent implements OnInit {
       }
     })
   }
+
+  checkoutTracks(e: number) {
+    this.router.navigate(["/artist/tracks/", e])
+  }
 }

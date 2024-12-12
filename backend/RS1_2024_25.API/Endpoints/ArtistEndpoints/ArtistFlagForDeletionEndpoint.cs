@@ -41,7 +41,7 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
 
             await db.SaveChangesAsync(cancellationToken);
 
-            return Ok(a.IsFlaggedForDeletion ? $"Artist profile and all of its catalogue will be deleted on {DateTime.Now.AddHours(1).ToShortDateString()}" 
+            return Ok(a.IsFlaggedForDeletion ? $"Artist profile and all of its catalogue will be deleted on {a.DeletionDate.ToShortDateString()}" 
                 : "Artist profile planned deletion cancelled.");
 
             //bool res = await ds.DeleteArtistAsync(a);

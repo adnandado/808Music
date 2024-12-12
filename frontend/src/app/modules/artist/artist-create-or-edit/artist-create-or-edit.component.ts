@@ -6,6 +6,7 @@ import {
 } from '../../../endpoints/artist-endpoints/artist-insert-or-update-endpoint.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
 
 @Component({
   selector: 'app-artist-create-or-edit',
@@ -24,7 +25,8 @@ export class ArtistCreateOrEditComponent implements OnChanges {
   readonly snackBar = inject(MatSnackBar);
 
   constructor(private frmBulider: FormBuilder,
-              private artistCreate: ArtistInsertOrUpdateEndpointService) {
+              private artistCreate: ArtistInsertOrUpdateEndpointService,
+              private auth: MyUserAuthService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,7 +49,6 @@ export class ArtistCreateOrEditComponent implements OnChanges {
         else {
           this.snackBar.open("Successfully created artist profile " + value.name + "!", "Dismiss", {duration: 3500});
         }
-
         this.successOpEvent.emit(true);
         this.emitCancel();
       },

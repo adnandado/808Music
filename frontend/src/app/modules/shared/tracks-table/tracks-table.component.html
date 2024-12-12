@@ -1,0 +1,34 @@
+<table mat-table [dataSource]="tracks!">
+
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef> #</th>
+    <td mat-cell *matCellDef="let track"> {{ getPosition(track.id) }}</td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef> Title</th>
+    <td mat-cell *matCellDef="let track">
+      <div>
+        <p>{{ track.title }}</p>
+        <div class="track-artists">
+          <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
+          <app-clickable-featured-artists [artists]="track.artists" (onArtistClick)="goToArtistProfile($event)"></app-clickable-featured-artists>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="duration">
+    <th mat-header-cell *matHeaderCellDef class="track-table-duration-cell"> Duration</th>
+    <td mat-cell *matCellDef="let track" class="track-table-duration-cell"> {{ getDuration(track.id) }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="streams">
+    <th mat-header-cell *matHeaderCellDef class="track-table-streams-cell"> Streams</th>
+    <td mat-cell *matCellDef="let track" class="track-table-streams-cell"> {{ track.streams }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
