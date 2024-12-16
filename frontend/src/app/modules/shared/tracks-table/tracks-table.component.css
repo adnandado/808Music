@@ -1,0 +1,64 @@
+.track-table-streams-cell {
+  text-align: center;
+}
+
+.track-table-duration-cell {
+  text-align: center;
+}
+
+table p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.track-artists {
+  color: #A9A9A9;
+  font-style: italic;
+  font-size: 14px;
+  display: flex;
+  gap: 3px;
+}
+
+.tracks-explicit-icon {
+  font-size: 17px;
+  height: 15px;
+  width: 17px;
+  text-align: start;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border: none;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+  background-color: #4D3D50;
+}
+
+.mat-column-main-control {
+  padding: 0;
+  width: 1vw;
+}
+
+.mat-column-main-control mat-icon{
+  font-size: 25px;
+  text-align: center;
+}
+
+.mat-column-position {
+  width: 3vw;
+  color: #A9A9A9;
+  text-align: center;
+}
+
+.mat-column-artist-controls {
+  padding: 0;
+  width: 7vw;
+  color: #A9A9A9;
+}
+
+.tracks-search-bar {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}

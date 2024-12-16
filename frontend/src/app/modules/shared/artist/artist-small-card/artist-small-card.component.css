@@ -1,0 +1,27 @@
+.artist-small {
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.artist-small-header {
+  padding: 0;
+  align-items: center;
+  gap: 5px;
+}
+
+.artist-small img, .artist-small h6 {
+  margin: 0;
+}
+
+.artist-small-card mat-icon {
+  text-align: center;
+  color: lightcoral;
+}
+
+.artist-small-card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

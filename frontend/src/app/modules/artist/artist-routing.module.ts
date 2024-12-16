@@ -10,6 +10,7 @@ import {ArtistLayoutComponent} from './artist-layout/artist-layout.component';
 import {AlbumListMaterialComponent} from './album/album-list-material/album-list-material.component';
 import {ArtistCreateOrEditComponent} from './artist-create-or-edit/artist-create-or-edit.component';
 import {ManageUsersComponent} from './manage-users/manage-users.component';
+import {JoinArtistProfileComponent} from './join-artist-profile/join-artist-profile.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
         path: 'album',
         loadChildren: () => import("./album/album.module").then(m => m.AlbumModule)
       },
+      {
+        path: 'tracks',
+        loadChildren: () => import("./tracks/tracks.module").then(m => m.TracksModule)
+      }
     ]
   },
   {

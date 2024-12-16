@@ -6,6 +6,8 @@ import { ProductsCreateComponent } from './modules/artist/products/products-crea
 import { ProductListComponent } from './modules/artist/products/product-list/product-list.component';
 import {ArtistLayoutComponent} from './modules/artist/artist-layout/artist-layout.component';
 import {TextInputDialogComponent} from './modules/shared/dialogs/text-input-dialog/text-input-dialog.component';
+import {JoinArtistProfileComponent} from './modules/artist/join-artist-profile/join-artist-profile.component';
+import {PleaseWaitAMomentComponent} from './modules/shared/please-wait-amoment/please-wait-amoment.component';
 const routes: Routes = [
   {path: 'unauthorized', component: UnauthorizedComponent},
   {
@@ -13,6 +15,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {isAdmin: true}, // Proslijeđivanje potrebnih prava pristupa, ako je potrebno
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)  // Lazy load  modula
+  },
+  {
+    path: 'artist/join',
+    component: JoinArtistProfileComponent
   },
   {
     path: 'artist',
@@ -27,8 +33,8 @@ const routes: Routes = [
     component: ProductListComponent
   },
   {
-    path: 'dialogTesting',
-    component: TextInputDialogComponent
+    path: 'please-wait-a-moment',
+    component: PleaseWaitAMomentComponent
   },
   {
     path: 'public',

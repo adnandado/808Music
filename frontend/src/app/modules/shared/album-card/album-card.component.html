@@ -1,10 +1,10 @@
 <mat-card appearance="outlined" class="album-mat-card"
-          [matTooltip]="title"
+          [matTooltip]="tooltip"
           matTooltipPosition="above"
           matTooltipShowDelay="500" matTooltipHideDelay="250">
     <img [src]="imageUrl" matCardImage alt="Album Cover" (error)="replaceWithPlaceholder()" id="thumbnail">
-  <mat-card-header>
-    <mat-card-title class="album-mat-card-title">{{getTitle()}}</mat-card-title>
+  <mat-card-header class="album-mat-card-header">
+    <mat-card-title class="album-mat-card-title" (click)="emitClick()">{{getTitle()}}</mat-card-title>
     <mat-card-subtitle class="album-mat-card-subtitle">{{subtitle}}</mat-card-subtitle>
   </mat-card-header>
   @if (hasControls)

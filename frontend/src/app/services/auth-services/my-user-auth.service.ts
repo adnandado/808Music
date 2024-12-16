@@ -1,5 +1,5 @@
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Injectable} from "@angular/core";
+import {inject, Injectable} from "@angular/core";
 import {LoginResponse} from '../../endpoints/auth-endpoints/user-auth-login-endpoint.service';
 import {AuthTokenInfo} from './dto/auth-token-info';
 import {jwtDecode} from "jwt-decode"
@@ -12,10 +12,15 @@ import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {LogoutInfo} from './dto/logout-info';
 import {LogoutRequest} from './dto/logout-request';
+import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmDialogComponent} from '../../modules/shared/dialogs/confirm-dialog/confirm-dialog.component';
 
 @Injectable({providedIn: 'root'})
 export class MyUserAuthService {
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private router: Router,
+              private myDialog: MatDialog,) {
   }
 
   isLoggedIn(): boolean {
@@ -59,7 +64,7 @@ export class MyUserAuthService {
       let auth: AuthTokenInfo = JSON.parse(tokenString);
       //Decode and check if the jwt has expired
       let decodedJwt = jwtDecode(auth!.token);
-      if(Date.now() > decodedJwt.exp! * 1000) {
+      if(Date.now() > decodedJwt.exp! * 1000 && !dontRefresh) {
         //if the caller doesn't want to refresh the token (ex. the http req interceptor)
         if(dontRefresh) {
           return null;
@@ -72,6 +77,7 @@ export class MyUserAuthService {
             window.location.reload();
           }
         });
+        this.router.navigate(["/please-wait-a-moment"]);
       }
       return auth;
     }
@@ -80,7 +86,7 @@ export class MyUserAuthService {
     }
   }
 
-  private getNewJwt(auth: AuthTokenInfo): Observable<LoginResponse> {
+  public getNewJwt(auth: AuthTokenInfo): Observable<LoginResponse> {
     let url = `${MyConfig.api_address}/api/UserGetNewTokenEndpoint`;
     return this.httpClient.post<LoginResponse>(url,{
       jwtToken: auth.token,

@@ -19,3 +19,18 @@
   margin-right: auto;
   margin-left: auto;
 }
+
+.dual-control {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.dual-control mat-icon {
+  color: #EEDEE7;
+}
+
+.dual-control h1 {
+  padding-top: 0;
+  margin-bottom: 0;
+}

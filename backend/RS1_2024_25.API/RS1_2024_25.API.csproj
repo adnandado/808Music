@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="TrackFiles\" />
-    <Folder Include="wwwroot\Images\AlbumCovers\" />
     <Folder Include="wwwroot\Images\ArtistPfps\" />
     <Folder Include="wwwroot\Images\ArtistBgs\" />
   </ItemGroup>

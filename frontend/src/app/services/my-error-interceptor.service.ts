@@ -25,12 +25,7 @@ export class MyErrorInterceptorService implements HttpInterceptor {
       this.snackBar.open(`Client issue: ${err.error.message}`, "Dismiss", {duration: 3500});
     }
     else {
-      if(err.error.message != undefined) {
-        this.snackBar.open(`Server issue: ${err.error.message}`, "Dismiss", {duration: 3500});
-      }
-      else {
-        this.snackBar.open(`Server issue: ${err.error.message}`, "Dismiss", {duration: 3500});
-      }
+      this.snackBar.open(`Server issue: ${err.status} - ${err.message}`, "Dismiss", {duration: 3500});
     }
   }
 }

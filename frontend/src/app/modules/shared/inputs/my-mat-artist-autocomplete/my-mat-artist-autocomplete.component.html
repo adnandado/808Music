@@ -1,0 +1,26 @@
+<div [ngStyle]="{'width':'100%'}">
+  <h6>Add featured artists</h6>
+  <mat-form-field class="user-to-add" [ngStyle]="{'width':'100%'}">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search for artists" name="searchString" id="searchString" [matAutocomplete]="auto" (input)="updateOptions($event)" >
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="emitSelection($event)" [displayWith]="display">
+      @for(u of options; track u.id)
+      {
+        <mat-option [value]="u">
+          {{u.name}}
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+  <p id="errorMessage">{{errorMessage}}</p>
+  <!--
+  @if(selectedArtists.length > 0) {
+    <h6>Featured artists</h6>
+    <div class="flex-options">
+      @for (artist of selectedArtists; track artist.id) {
+        <app-artist-small-card [artist]="artist" [interactive]="true" (onRemove)="removeArtist($event, $index)"></app-artist-small-card>
+      }
+    </div>
+  }
+  -->
+</div>

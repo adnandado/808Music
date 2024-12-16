@@ -1,0 +1,90 @@
+<div class="tracks-base-page">
+  <div class="tracks-dual-controls">
+    <button mat-icon-button (click)="emitCancel()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    @if(oldTrack != null)
+    {
+      <h1>Edit Song</h1>
+    } @else {
+      <h1>Create Song</h1>
+    }
+  </div>
+
+  <form [formGroup]="trackForm">
+    <div [ngStyle]="this.trackForm.get('trackFile')?.value != undefined ? {'margin-bottom': '19vh'} : {}">
+      @if (oldTrack)
+      {
+        <h6>New song file</h6>
+      } @else {
+        <h6>Song file*</h6>
+      }
+      <app-music-track-dragzone [title]="'Song'" (imageEmit)="setTrackFile($event)" [ngStyle]="newTrack?.trackFile != undefined ? {'margin-bottom': '15vh'} : {}"></app-music-track-dragzone>
+    </div>
+
+
+    @if (oldTrack != null)
+    {
+      <app-my-mat-input name="title"
+                        title="Title*"
+                        [placeholder]="'Enter song title'"
+                        formControlName="title"
+                        [initialValue]="oldTrack!.title">
+      </app-my-mat-input>
+    } @else {
+      <app-my-mat-input name="title"
+                        title="Title*"
+                        [placeholder]="'Enter song title'"
+                        formControlName="title">
+      </app-my-mat-input>
+    }
+
+    <div class="tracks-explicit-control">
+      <div class="tracks-dual-controls">
+        <h6>Explicit</h6>
+        <mat-icon>explicit</mat-icon>
+      </div>
+      <mat-slide-toggle formControlName="isExplicit"></mat-slide-toggle>
+    </div>
+
+    @if(oldTrack != null){
+      <div>
+      <app-my-mat-artist-autocomplete [trackId]="oldTrack.id" (onSelected)="addArtist($event)">
+      </app-my-mat-artist-autocomplete>
+        @if (this.selectedArtists.length > 0) {
+          <div class="flex-options">
+          <h6>Featured artists</h6>
+          @for (a of selectedArtists; track a.id) {
+            <app-artist-small-card [interactive]="true" [artist]="a" (onRemove)="removeArtist(a)"></app-artist-small-card>
+          }
+          </div>
+        }
+      </div>
+
+    } @else {
+      <app-my-mat-artist-autocomplete (onSelected)="addArtist($event)">
+      </app-my-mat-artist-autocomplete>
+      @if (selectedArtists.length > 0) {
+        <div class="flex-options">
+          <h6>Featured artists</h6>
+          @for (a of selectedArtists; track a.id) {
+            <app-artist-small-card [interactive]="true" [artist]="a" (onRemove)="removeArtist(a)"></app-artist-small-card>
+          }
+        </div>
+      }
+    }
+
+  </form>
+  <div class="controls">
+    <button mat-button (click)="emitCancel()">
+      Cancel
+    </button>
+    <button mat-flat-button type="submit" (click)="createTrack()">
+      @if (oldTrack?.id) {
+        Update
+      } @else {
+        Create
+      }
+    </button>
+  </div>
+</div>

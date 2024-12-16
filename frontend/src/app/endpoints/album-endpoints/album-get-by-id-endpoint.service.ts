@@ -25,6 +25,8 @@ export interface AlbumGetResponse {
   numOfTracks: number;
   artist: Artist;
   isActive: boolean;
+  isExplicit: boolean;
+  lengthInSeconds : number;
 }
 
 @Injectable({

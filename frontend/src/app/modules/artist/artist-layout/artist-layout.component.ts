@@ -58,6 +58,7 @@ export class ArtistLayoutComponent implements OnInit {
 
   refreshProfiles(e: boolean) {
     this.shouldRefresh = e;
+    this.auth.getNewJwt(this.auth.getAuthToken()!).subscribe()
   }
 
   setManageState(a: ArtistDetailResponse | null) {

@@ -11,6 +11,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {FormsModule} from '@angular/forms';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {MyErrorInterceptorService} from './services/my-error-interceptor.service';
+import {RouterModule} from '@angular/router';
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {MyImgCompressInterceptorService} from './services/my-img-compress-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,11 @@ import {MyErrorInterceptorService} from './services/my-error-interceptor.service
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MyErrorInterceptorService,
+      multi: true // Ensures multiple interceptors can be used if needed
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyImgCompressInterceptorService,
       multi: true // Ensures multiple interceptors can be used if needed
     },
     provideNativeDateAdapter(),

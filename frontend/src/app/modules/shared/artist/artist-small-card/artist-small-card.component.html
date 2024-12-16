@@ -1,0 +1,14 @@
+<div class="artist-small-card">
+
+  <mat-card class="artist-small">
+    <mat-card-header class="artist-small-header">
+      <h6>{{ artist?.name }}</h6>
+      <img mat-card-avatar [src]="MyConfig.api_address+artist?.pfpPath">
+    </mat-card-header>
+  </mat-card>
+  @if (interactive) {
+    <button mat-icon-button (click)="emitClick()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  }
+</div>

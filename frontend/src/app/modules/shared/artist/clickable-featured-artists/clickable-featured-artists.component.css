@@ -1,0 +1,12 @@
+.clickable-artists {
+  display: flex;
+}
+
+.clickable-artist:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+div {
+  white-space: preserve;
+}
