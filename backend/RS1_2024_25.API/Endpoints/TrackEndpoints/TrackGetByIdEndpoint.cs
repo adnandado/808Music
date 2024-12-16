@@ -27,7 +27,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                 Id = at.ArtistId,
                 Name = at.Artist!.Name,
                 IsLead = at.IsLead,
-                ProfilePhotoPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath
+                PfpPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath
             }).ToListAsync();
 
             var response = new TrackGetResponse
@@ -60,7 +60,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string ProfilePhotoPath { get; set; } = string.Empty;
+        public string PfpPath { get; set; } = string.Empty;
         public bool IsLead { get; set; }
     }
 }

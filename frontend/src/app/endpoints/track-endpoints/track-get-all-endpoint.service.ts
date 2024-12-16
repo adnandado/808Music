@@ -13,6 +13,7 @@ export interface TrackGetAllRequest {
   albumId?: number
   leadArtistId?: number
   featuredArtists?: number[]
+  title?: string
 }
 
 @Injectable({

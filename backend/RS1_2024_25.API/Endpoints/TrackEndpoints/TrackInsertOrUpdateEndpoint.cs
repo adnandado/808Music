@@ -90,6 +90,8 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                 await db.ArtistsTracks.AddAsync(at);
             }
 
+            await db.SaveChangesAsync();
+
             List<int> currentArtists = await db.ArtistsTracks.Where(atracks => !atracks.IsLead && atracks.TrackId == t.Id).Select(atracks => atracks.ArtistId).ToListAsync();
 
             foreach(int artistId in currentArtists)
@@ -106,7 +108,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
             
             foreach (int artistId in request.ArtistIds)
             {
-                ArtistTrack? featuredArtist = await db.ArtistsTracks.FirstOrDefaultAsync(atracks => !atracks.IsLead && atracks.TrackId == t.Id && atracks.ArtistId == artistId);
+                ArtistTrack? featuredArtist = await db.ArtistsTracks.FirstOrDefaultAsync(atracks => atracks.TrackId == t.Id && atracks.ArtistId == artistId);
                 if (featuredArtist == null)
                 {
                     featuredArtist = new ArtistTrack()
@@ -152,7 +154,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 
     public class TrackInsertResponse
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string MainArtist {  get; set; }
 

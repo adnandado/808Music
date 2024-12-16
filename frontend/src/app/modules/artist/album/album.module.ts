@@ -7,7 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { AlbumCreateOrEditComponent } from './album-create-or-edit/album-create-or-edit.component';
-import {MatAnchor, MatButton, MatFabButton} from '@angular/material/button';
+import {MatAnchor, MatButton, MatFabButton, MatIconAnchor, MatIconButton} from '@angular/material/button';
 import {
   MatCard, MatCardActions,
   MatCardContent,
@@ -70,7 +70,9 @@ import {MatOption, MatSelect} from '@angular/material/select';
     MatOption,
     MatCalendar,
     MatDatepickerContent,
-    MatSuffix
+    MatSuffix,
+    MatIconButton,
+    MatIconAnchor
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

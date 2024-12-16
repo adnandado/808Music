@@ -11,6 +11,7 @@ export class AlbumCardComponent {
   @Input() imageUrl: string = "";
   @Input() hasControls: boolean = false;
   @Input() id: number = 0;
+  @Input() tooltip = "";
 
   @Output() onEdit: EventEmitter<number> = new EventEmitter();
   @Output() onStats: EventEmitter<number> = new EventEmitter();

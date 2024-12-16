@@ -1,34 +1,70 @@
-<table mat-table [dataSource]="tracks!">
+<div class="tracks-table">
+  <div class="tracks-search-bar">
+    <app-search-bar [placeholder]="'Search for a song'" (onSearchChange)="searchTracks($event)"></app-search-bar>
+    @if (inArtistMode)
+    {
+      <button mat-fab extended (click)="emitCreate()"><mat-icon>add</mat-icon>Add new song</button>
+    }
+  </div>
+  <table mat-table matSort [dataSource]="tracks!">
 
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> #</th>
-    <td mat-cell *matCellDef="let track"> {{ getPosition(track.id) }}</td>
-  </ng-container>
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+      <td mat-cell *matCellDef="let track">{{ getPosition(track.id) }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="main-control">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let track">
+        <button mat-icon-button (click)="emitTrack(track.id)">
+          <mat-icon>{{ inArtistMode ? "edit" : "play_arrow" }}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
 
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef> Title</th>
-    <td mat-cell *matCellDef="let track">
-      <div>
-        <p>{{ track.title }}</p>
-        <div class="track-artists">
-          <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
-          <app-clickable-featured-artists [artists]="track.artists" (onArtistClick)="goToArtistProfile($event)"></app-clickable-featured-artists>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title</th>
+      <td mat-cell *matCellDef="let track">
+        <div>
+          <p>{{ track.title }}</p>
+          <div class="track-artists">
+            <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
+            <app-clickable-featured-artists [artists]="track.artists"
+                                            (onArtistClick)="goToArtistProfile($event)"></app-clickable-featured-artists>
+          </div>
         </div>
-      </div>
-    </td>
-  </ng-container>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="duration">
-    <th mat-header-cell *matHeaderCellDef class="track-table-duration-cell"> Duration</th>
-    <td mat-cell *matCellDef="let track" class="track-table-duration-cell"> {{ getDuration(track.id) }}</td>
-  </ng-container>
+    <ng-container matColumnDef="artist-controls">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let track">
+        @if (inArtistMode) {
+          <button mat-icon-button (click)="emitTrack(track.id)">
+            <mat-icon>bar_chart</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteTrack(track.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="streams">
-    <th mat-header-cell *matHeaderCellDef class="track-table-streams-cell"> Streams</th>
-    <td mat-cell *matCellDef="let track" class="track-table-streams-cell"> {{ track.streams }}</td>
-  </ng-container>
+    <ng-container matColumnDef="duration">
+      <th mat-header-cell *matHeaderCellDef class="track-table-duration-cell" mat-sort-header> Duration</th>
+      <td mat-cell *matCellDef="let track" class="track-table-duration-cell"> {{ getDuration(track.id) }}</td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <ng-container matColumnDef="streams">
+      <th mat-header-cell *matHeaderCellDef class="track-table-streams-cell" mat-sort-header> Streams</th>
+      <td mat-cell *matCellDef="let track" class="track-table-streams-cell"
+          (click)="displayControls(true)"> {{ track.streams }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator showFirstLastButtons [pageSize]="10" [length]="pagedResponse?.totalCount" [pageSizeOptions]="paginationOptions" (page)="setPageOpitions($event)"></mat-paginator>
+</div>

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ArtistInsertRequest} from '../../../../endpoints/artist-endpoints/artist-insert-or-update-endpoint.service';
 import {MyConfig} from '../../../../my-config';
+import imageCompression, {Options} from 'browser-image-compression';
 
 const ALLOWED_FILE_TYPES = [
   'image/jpeg',
@@ -26,16 +27,30 @@ export class ArtistPicDragzoneComponent implements OnChanges {
   allowedFileTypes = ALLOWED_FILE_TYPES;
 
   selectFile(e: any) {
-    if (this.allowedFileTypes.indexOf((e.target.files[0] as File).type) === -1) {
+    let temp = (e.target.files[0] as File)
+    if (this.allowedFileTypes.indexOf(temp.type) === -1) {
       alert('File type is not allowed.');
       return;
     }
-
-    this.file = e.target.files[0] as File;
-
-
+    this.file = temp;
+    /*
+    console.log(this.file);
     this.fileUrl = URL.createObjectURL(this.file);
     this.imageEmit.emit(this.file);
+    */
+
+    const options : Options = {
+      maxSizeMB:5,
+      alwaysKeepResolution: true,
+    }
+
+
+    imageCompression(temp, options).then(val => {
+      console.log(this.file);
+      this.file = new File([val as Blob],val.name);
+      this.fileUrl = URL.createObjectURL(this.file);
+      this.imageEmit.emit(this.file);
+    });
   }
 
   removeFile() {

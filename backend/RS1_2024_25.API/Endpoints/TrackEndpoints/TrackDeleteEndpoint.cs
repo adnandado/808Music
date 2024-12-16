@@ -31,7 +31,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
             }
 
             await ds.DeleteTrackAsync(track);
-            return Ok();
+            return Ok($"Track {track.Title} deleted successfully!");
         }
     }
 }

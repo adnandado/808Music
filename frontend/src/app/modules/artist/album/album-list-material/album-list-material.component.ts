@@ -20,6 +20,7 @@ import {
 import {MatChipSelectionChange} from "@angular/material/chips";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatCheckboxChange} from "@angular/material/checkbox";
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-album-list-material',
@@ -38,6 +39,7 @@ export class AlbumListMaterialComponent implements OnInit {
     title: ""
   }
   defaultPageSize = 20;
+  albumTitleQuery = new FormControl("");
 
   isHome = false;
 
@@ -176,7 +178,8 @@ export class AlbumListMaterialComponent implements OnInit {
     })
   }
 
-  fitlerSearch() {
+  filterSearch(queryString: string) {
+    this.pagedRequest.title = queryString ?? "";
     this.reloadData();
   }
 

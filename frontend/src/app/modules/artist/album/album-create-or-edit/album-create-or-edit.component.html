@@ -1,7 +1,10 @@
 <div class="base-page">
-  <div>
+  <div class="dual-control">
+    <a mat-icon-button routerLink="/artist/album">
+      <mat-icon>arrow_back</mat-icon>
+    </a>
     @if (album.id != undefined) {
-      <h1>Edit Release <br> {{ getTitle() }}</h1>
+      <h1>Edit Release</h1>
     } @else {
       <h1>Create Release</h1>
     }

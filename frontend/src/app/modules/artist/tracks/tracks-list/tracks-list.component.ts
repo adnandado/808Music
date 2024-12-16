@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {
   AlbumGetByIdEndpointService,
   AlbumGetResponse
@@ -29,8 +29,12 @@ export class TracksListComponent implements OnInit {
   pagedRequest : TrackGetAllRequest = {
 
   }
-  displayedColumns = ["title", "duration", "streams"]
   location = inject(Location)
+  selectedTrack: TrackGetResponse | null = null;
+  protected readonly MyConfig = MyConfig;
+  isHome: boolean = false;
+  private albumId = -1;
+  reloadTable = false;
 
   constructor(private router: Router,
               private route : ActivatedRoute,
@@ -40,25 +44,31 @@ export class TracksListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.artist = this.artistHandler.getSelectedArtist();
-
-        this.route.params.subscribe(params => {
-          this.albumGetService.handleAsync(params['id']).subscribe({
-            next: data => {
-              this.album = data;
-            }
-          });
-          this.tracksGetAllService.handleAsync({albumId: params['id']}).subscribe({
-            next: data => {
-              this.tracks = data.dataItems;
-              this.pagedResponse = data;
-              console.log(data);
-            }
-          })
-        })
+    this.checkIfHome();
+    this.reloadData();
   }
 
-  protected readonly MyConfig = MyConfig;
+  reloadData() {
+    this.artist = this.artistHandler.getSelectedArtist();
+    this.route.params.subscribe(params => {
+      let id: number = params["id"];
+      this.pagedRequest.albumId = id;
+
+      this.albumGetService.handleAsync(id).subscribe({
+        next: data => {
+          this.album = data;
+        }
+      });
+
+      this.tracksGetAllService.handleAsync(this.pagedRequest).subscribe({
+        next: data => {
+          this.tracks = data.dataItems;
+          this.pagedResponse = data;
+          console.log(data);
+        }
+      })
+    })
+  }
 
   getYear() {
     return new Date(this.album?.releaseDate!).getFullYear();
@@ -86,6 +96,38 @@ export class TracksListComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back();
+    this.router.navigate(['/artist/album']);
+  }
+
+  logData(track: TrackGetResponse) {
+    console.log(track);
+  }
+
+  editTrack(e: number) {
+    this.router.navigate(["edit",e], {relativeTo:this.route, queryParams: {albumId: this.album!.id}});
+    //this.router.navigate(["/artist/tracks/"+this.album!.id+"/edit/"+e.id], { queryParams: {albumId: this.album!.id}});
+  }
+
+  addNew() {
+    this.router.navigate(["create"], {relativeTo:this.route, queryParams: {albumId: this.album!.id}});
+  }
+
+  checkIfHome() {
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationStart)
+      {
+        if(event.url == "/artist/tracks/"+this.pagedRequest.albumId)
+        {
+          console.log(event.url, "/artist/tracks/"+this.pagedRequest.albumId)
+          this.reloadData();
+          this.reloadTable = true;
+          this.isHome = true;
+        }
+        else {
+          this.isHome = false;
+          this.reloadTable = false;
+        }
+      }
+    })
   }
 }

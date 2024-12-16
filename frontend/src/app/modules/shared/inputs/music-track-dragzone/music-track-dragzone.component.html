@@ -1,0 +1,26 @@
+<div class="img-drag-drop">
+  <div class="dd-landing">
+    <input type="file" (change)="selectFile($event)" class="file" accept=".mp3,.wav,">
+    <h6>Drag & drop <b>{{title}}</b> file here</h6>
+    <p>(MP3, WAV)</p>
+    <p>Or click the dropzone to browse files</p>
+  </div>
+  @if (file != null && type == "pfp")
+  {
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>{{getFileName(file)}}</mat-card-title>
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content>
+        <audio [src]="fileUrl" controls></audio>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button (click)="removeFile()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>

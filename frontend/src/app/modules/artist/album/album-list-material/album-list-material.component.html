@@ -4,18 +4,7 @@
             <h1>Your releases</h1>
         </div>
         <div>
-            <div class="search-bar">
-                <div>
-                    <input class="search-bar-input" type="text" [(ngModel)]="pagedRequest.title" placeholder="Search for releases">
-                    <mat-icon>search</mat-icon>
-                </div>
-                <div>
-                    <button mat-fab extended (click)="fitlerSearch()">
-                        <mat-icon>keyboard_return</mat-icon>
-                        Search
-                    </button>
-                </div>
-            </div>
+          <app-search-bar placeholder="Search for a release" (onSearchChange)="filterSearch($event)"></app-search-bar>
         </div>
         <div class="dual-control">
             <mat-divider [vertical]="true"></mat-divider>
@@ -71,11 +60,11 @@
                 <app-album-card [title]="a.title" [subtitle]="a.type + ' • ' + getReleaseYear(a.releaseDate)"
                                 [imageUrl]="MyConfig.api_address + a.coverArt" [id]="a.id"
                                 [hasControls]="true" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
-                                (onStats)="showStats($event)" (onClick)="checkoutTracks($event)"></app-album-card>
+                                (onStats)="showStats($event)" (onClick)="checkoutTracks($event)" [tooltip]="a.title + ' - ' + getDateString(a.releaseDate)"></app-album-card>
             }
         </div>
         <mat-paginator [length]="pagedList?.totalCount"
-                       [pageSize]="defaultPageSize" [pageSizeOptions]="[10, 15, 20, 50]"
+                       [pageSize]="defaultPageSize" [pageSizeOptions]="[10, 15, 20, 50]" showFirstLastButtons
                        (page)="switchPage($event)"></mat-paginator>
     </div>
     @if (!isHome) {

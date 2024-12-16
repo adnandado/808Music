@@ -41,33 +41,6 @@ div > h6 {
   gap: 20px;
 }
 
-.search-bar-input {
-  background-color: #161215;
-  border-radius: 30px;
-  padding: 16px;
-  width: 100%;
-  font-family: 'Roboto', sans-serif;
-  color: #EEDEE7;
-  padding-left: 3.5vw;
-  font-size: 16px;
-  border: #EEDEE7 solid 1px;
-}
-
-.search-bar {
-  width: 25vw;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.search-bar > div > mat-icon{
-  position: absolute;
-  left:10px;
-  top:15px;
-  color: #EEDEE7;
-}
-
 .title > h1 {
   padding-top: 1vh;
 }

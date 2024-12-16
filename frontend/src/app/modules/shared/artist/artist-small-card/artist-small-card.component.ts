@@ -1,6 +1,7 @@
 import {Component, EventEmitter, input, Input, Output} from '@angular/core';
 import {ArtistSimpleDto} from '../../../../services/auth-services/dto/artist-dto';
 import {MyConfig} from '../../../../my-config';
+import {ArtistTrackDto} from '../../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 
 @Component({
   selector: 'app-artist-small-card',
@@ -8,10 +9,10 @@ import {MyConfig} from '../../../../my-config';
   styleUrl: './artist-small-card.component.css'
 })
 export class ArtistSmallCardComponent {
-  @Input() artist : ArtistSimpleDto | null = null;
+  @Input() artist : ArtistSimpleDto | ArtistTrackDto | null = null;
   @Input() interactive: boolean = false;
 
-  @Output() onRemove: EventEmitter<ArtistSimpleDto> = new EventEmitter<ArtistSimpleDto>();
+  @Output() onRemove: EventEmitter<ArtistSimpleDto | ArtistTrackDto> = new EventEmitter<ArtistSimpleDto | ArtistTrackDto>();
 
   protected readonly MyConfig = MyConfig;
 

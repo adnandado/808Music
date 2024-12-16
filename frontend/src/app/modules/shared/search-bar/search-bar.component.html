@@ -1,0 +1,12 @@
+<div class="search-bar">
+  <div>
+    <input class="search-bar-input" type="text" [formControl]="queryString" [placeholder]="placeholder">
+    <mat-icon>search</mat-icon>
+  </div>
+  <div>
+    <button mat-fab extended (click)="fitlerSearch()">
+      <mat-icon>keyboard_return</mat-icon>
+      Search
+    </button>
+  </div>
+</div>

@@ -11,10 +11,12 @@
 }
 
 .tracks-list {
+  height: 97vh;
   flex-basis: 65vw;
   display: flex;
   flex-direction: column;
   gap: 35px;
+  overflow-y: auto;
 }
 
 .track-page-controls {
@@ -28,7 +30,9 @@
 }
 
 .side-island {
-  background-color: #fff;
+  flex-basis: 30vw;
+  gap: 15px;
+  height: 94vh;
 }
 
 .album-cover {

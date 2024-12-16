@@ -35,6 +35,10 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                 tracks = tracks.Where(t => t.Album.ArtistId == request.LeadArtistId);
             }
 
+            if(request.Title != string.Empty)
+            {
+                tracks = tracks.Where(t => t.Title.ToLower().Contains(request.Title.ToLower()));
+            }
 
             var filteredTracks = tracks.Select(t => new TrackGetResponse
             {
@@ -49,7 +53,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                     Id = at.ArtistId,
                     IsLead = at.IsLead,
                     Name = at.Artist.Name,
-                    ProfilePhotoPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath,
+                    PfpPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath,
                 }).ToList()
             });
 
@@ -62,5 +66,6 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
         public int? AlbumId { get; set; }
         public int? LeadArtistId { get; set; }
         public List<int>? FeaturedArtists { get; set; }
+        public string Title { get; set; } = string.Empty;
     }
 }

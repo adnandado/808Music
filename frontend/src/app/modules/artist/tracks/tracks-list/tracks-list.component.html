@@ -1,5 +1,5 @@
 <div class="tracks-page">
-  <div class="tracks-list">
+  <div class="tracks-list" [ngStyle]="isHome ? {'flex-basis':'100vw'} : {}">
     <div class="track-page-controls">
       <button mat-icon-button class="go-back-button" (click)="goBack()">
         <mat-icon class="go-back-arrow">arrow_back</mat-icon>
@@ -30,11 +30,10 @@
       </div>
     </div>
 
-    <app-tracks-table [tracks]="tracks"></app-tracks-table>
-
+    <app-tracks-table [pagedRequest]="pagedRequest" (onMainClick)="editTrack($event)" [inArtistMode]="true" (onCreateClick)="addNew()" [reload]="reloadTable"></app-tracks-table>
   </div>
 
-  <div class="side-island">
+  <div class="side-island" [ngStyle]="isHome ? {'flex-basis':'0'} : {}">
     <router-outlet></router-outlet>
   </div>
 </div>
