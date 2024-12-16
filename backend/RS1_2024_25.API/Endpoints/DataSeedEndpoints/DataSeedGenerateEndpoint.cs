@@ -38,6 +38,8 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             new City { Name = "New York", Country = countries[4] },
             new City { Name = "Los Angeles", Country = countries[4] }
         };
+        await db.Countries.AddRangeAsync(countries, cancellationToken);
+        await db.SaveChangesAsync();
 
         // Kreiranje korisnika s ulogama
         var users = new List<MyAppUser>
@@ -145,7 +147,6 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         };
 
         // Dodavanje podataka u bazu
-        await db.Countries.AddRangeAsync(countries, cancellationToken);
         await db.Cities.AddRangeAsync(cities, cancellationToken);
         await db.MyAppUsers.AddRangeAsync(users, cancellationToken);
         await db.UserArtistRoles.AddRangeAsync(artistRoles, cancellationToken);
