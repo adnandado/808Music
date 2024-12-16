@@ -2,31 +2,41 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
+using RS1_2024_25.API.Data.Models.Auth;
 using RS1_2024_25.API.Helper.Api;
+using RS1_2024_25.API.Services.Interfaces;
 
 namespace RS1_2024_25.API.Endpoints.UserEndpoints
 {
-    public class UserSearchEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync.WithRequest<UserSearchRequest>.WithActionResult<List<UserSearchResponse>>
+    public class UserSearchEndpoint(ApplicationDbContext db, IMyCacheService cs) : MyEndpointBaseAsync.WithRequest<UserSearchRequest>.WithActionResult<List<UserSearchResponse>>
     {
         [Authorize]
         [HttpGet]
         public override async Task<ActionResult<List<UserSearchResponse>>> HandleAsync([FromQuery] UserSearchRequest request, CancellationToken cancellationToken = default)
         {
+            var users = await cs.GetAsync<List<MyAppUser>>("users", async () =>
+            {
+                List<MyAppUser> users = await db.MyAppUsers.ToListAsync();
+                return users;
+            }, cancellationToken);
+
+            var queryable = users.AsQueryable();
+
             if(request.SearchString != string.Empty)
             {
-                return Ok(await db.MyAppUsers.AsQueryable().Where(u => u.Username.ToLower().Contains(request.SearchString.ToLower())).Take(5).Select(a => new UserSearchResponse
+                return Ok(queryable.Where(u => u.Username.ToLower().Contains(request.SearchString.ToLower())).Take(5).Select(a => new UserSearchResponse
                 {
                     Id = a.ID,
                     Username = a.Username
-                }).ToListAsync());
+                }).ToList());
             }
             else
             {
-                return Ok(await db.MyAppUsers.AsQueryable().Take(5).Select(a => new UserSearchResponse
+                return Ok(queryable.Take(5).Select(a => new UserSearchResponse
                 {
                     Id = a.ID,
                     Username = a.Username
-                }).ToListAsync());
+                }).ToList());
             }
         }
     }
