@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product List</title>
-  <link rel="stylesheet" href="product-details.component.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 </head>
+<body>
 <app-sidenav></app-sidenav>
 
 <div class="product-container">
@@ -19,20 +17,19 @@
       class="carousel-image">
     <button class="next" (click)="nextSlide()">❯</button>
   </div>
+
   <div class="thumbnails">
     <div *ngFor="let photoPath of product?.photoPaths; let i = index" class="thumbnail" (click)="changeSlide(i)">
       <img [src]="'http://localhost:7000/media' + photoPath" alt="Thumbnail" class="thumbnail-image">
     </div>
   </div>
 
-  <div class="product-header">
-    <h1 class="product-title">{{ product?.title }}</h1>
-    <p class="price">Price: {{ product?.price | currency }}</p>
-  </div>
-
-  <p class="product-description">A HIGH-QUALITY PRODUCT TO MEET ALL YOUR NEEDS AND EXPECTATIONS.</p>
-  <p class="quantity" [ngStyle]="{ color: (product?.quantity ?? 0) > 0 ? '#95AD10' : 'red' }">
+  <h1>{{ product?.title }}</h1>
+  <p class="price">Price: {{ product?.price | currency }}</p>
+  <p class="quantity" [ngStyle]="{ color: (product?.quantity ?? 0) > 0 ? 'green' : 'red' }">
     {{ (product?.quantity ?? 0) > 0 ? 'In Stock' : 'Out of Stock' }}
   </p>
 </div>
 
+
+</body>
