@@ -1,3 +1,11 @@
+body {
+  background-color: #1E1E1E;
+  color: #FFFFFF;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .product-container {
   padding: 20px;
   display: flex;
@@ -12,7 +20,7 @@
   position: relative;
   max-width: 600px;
   width: 100%;
-  margin: 20px 0;
+  margin: 5px 0;
   display: flex;
   justify-content: center;
 }
@@ -26,14 +34,13 @@
   object-fit: contain;
   margin-bottom: 20px;
 }
-
 .thumbnails {
   display: flex;
   justify-content: center;
+  gap: 5px;
 }
 
 .thumbnail {
-  margin: 0 5px;
   cursor: pointer;
 }
 
@@ -41,7 +48,6 @@
   width: 60px;
   height: 60px;
   object-fit: cover;
-  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
 }
@@ -50,32 +56,77 @@
   transform: scale(1.1);
 }
 
+
+
 button.prev,
 button.next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.5);
   border: none;
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
   z-index: 10;
+  font-size: 20px;
+  transition: color 0.3s ease;
 }
 
 button.prev {
-  left: 10px;
+  left: 20px;
 }
 
 button.next {
-  right: 10px;
+  right: 20px;
 }
 
 button.prev:hover,
 button.next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 1);
 }
-body  {
-  background-color: #1E1E1E;
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 10px 0;
 }
+
+.product-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  text-align: left;
+  color: white;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  text-align: right;
+  color: white;
+}
+
+.product-description {
+  color: #B0B0B0;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin: 10px 0 5px;
+  text-align: left;
+  width: 100%;
+  max-width: 500px;
+}
+
+.quantity {
+  font-size: 1rem;
+  margin: 5px 0 0;
+  text-align: left;
+  width: 100%;
+  max-width: 500px;
+}
+
