@@ -8,9 +8,11 @@ namespace RS1_2024_25.API.Data.Models
         [Key]
         public int Id { get; set; }
         public string Title { get; set; }
-        public int QtyInStock { get; set; } = 1; 
+        public int QtyInStock { get; set; } = 1;
         public float Price { get; set; }
         public bool IsDigital { get; set; } = false;
+        public ICollection<ProductPhoto> Photos { get; set; } = new List<ProductPhoto>();
+        public string Slug { get; set; }
 
         //[ForeignKey(nameof(Artist))]
         //public int ArtistId { get; set; }

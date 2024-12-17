@@ -9,6 +9,7 @@ import {TextInputDialogComponent} from './modules/shared/dialogs/text-input-dial
 import {JoinArtistProfileComponent} from './modules/artist/join-artist-profile/join-artist-profile.component';
 import {PleaseWaitAMomentComponent} from './modules/shared/please-wait-amoment/please-wait-amoment.component';
 import {StripeComponent} from './modules/shared/stripe/stripe.component';
+import {ProductDetailsComponent} from './modules/artist/products/product-details/product-details.component';
 const routes: Routes = [
   {path: 'unauthorized', component: UnauthorizedComponent},
   {
@@ -21,6 +22,9 @@ const routes: Routes = [
     path: 'artist/join',
     component: JoinArtistProfileComponent
   },
+  { path: 'product/:slug', component: ProductDetailsComponent }
+  ,
+
   {
   path: 'stripe-test',
   component: StripeComponent

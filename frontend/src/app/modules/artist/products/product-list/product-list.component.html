@@ -1,36 +1,62 @@
-<h1>Product List</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List</title>
+</head>
+<body>
+<!-- Navbar -->
+<app-sidenav></app-sidenav>
+<div class="container">
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" placeholder="Search for a product..." class="search-input">
+      <button class="search-button">Search</button>
+      <select class="sort-dropdown">
+        <option>Featured</option>
+        <option>Most Popular</option>
+        <option>Lowest Price</option>
+        <option>Highest Price</option>
+        <option>Release Date</option>
+      </select>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products">
+      <div *ngFor="let product of products" class="product">
+        <div *ngIf="!isEditing[product.slug]">
+          <img [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="product-image">
+          <p class="product-name">{{ product.title }}</p>
+          <p class="product-price">{{ product.price }}$</p>
+          <button class="product-button" (click)="toggleEdit(product.slug)">Edit</button>
+          <button class="product-button" (click)="deleteProduct(product.slug)">Delete</button>
+          <button class="product-button" (click)="viewProduct(product.slug)">View Details</button>
+        </div>
+
+        <!-- Edit Mode -->
+        <div *ngIf="isEditing[product.slug]">
+          <input [(ngModel)]="product.title" class="product-input" placeholder="Title">
+          <input [(ngModel)]="product.price" class="product-input" type="number" placeholder="Price">
+          <input [(ngModel)]="product.quantity" class="product-input" type="number" placeholder="Quantity">
+          <div class="image-edit">
+            <label for="image-upload">Change Image</label>
+            <input type="file" id="image-upload" (change)="onImageChange($event, product)">
+            <div *ngIf="newImagePreview">
+              <p>Preview:</p>
+              <img [src]="newImagePreview" alt="Image preview" class="image-preview">
+            </div>
+          </div>
+          <button class="product-button" (click)="saveProduct(product)">Save</button>
+          <button class="product-button" (click)="toggleEdit(product.slug)">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
 
 
-<div *ngIf="loading">Loading...</div>
-
-
-<div *ngIf="errorMessage">{{ errorMessage }}</div>
-
-
-<table *ngIf="!loading && !errorMessage">
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Is Digital</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let product of products">
-    <td>{{ product.title }}</td>
-    <td>{{ product.price }}</td>
-    <td>{{ product.quantity }}</td>
-    <td>{{ product.isDigital ? 'Yes' : 'No' }}</td>
-    <td>
-      <!-- Edit button -->
-      <button (click)="editProduct(product)">Edit</button>
-      <!-- Delete button -->
-      <button (click)="deleteProduct(product.id)">Delete</button>
-    </td>
-  </tr>
-  </tbody>
-</table>
-
-<button (click)="createNewProduct()">CREATE NEW PRODUCT</button>
+</body>
+</html>

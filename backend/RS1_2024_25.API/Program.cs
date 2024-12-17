@@ -93,22 +93,6 @@ app.UseCors(
 ); //This needs to set everything allowed
 
 
-app.MapGet("/api/ProductGetAll", async (ApplicationDbContext db) =>
-{
-    var result = await db.Products
-                         .Select(p => new ProductGetAllResponse
-                         {
-                             ID = p.Id,
-                             Title = p.Title,
-                             Price = p.Price,
-                             Quantity = p.QtyInStock,
-                             isDigital = p.IsDigital
-                         })
-                         .ToArrayAsync();
-
-    return result;
-});
-
 
 app.UseStaticFiles(new StaticFileOptions
 {

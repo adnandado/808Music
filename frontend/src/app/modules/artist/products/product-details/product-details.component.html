@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List</title>
+</head>
+<body>
+<div class="product-container">
+  <div class="carousel-container">
+    <button class="prev" (click)="prevSlide()">❮</button>
+    <img
+      [src]="'http://localhost:7000/media' + (product?.photoPaths?.[currentSlide] ?? '')"
+      alt="Product Image"
+      class="carousel-image">
+    <button class="next" (click)="nextSlide()">❯</button>
+  </div>
+
+  <div class="thumbnails">
+    <div *ngFor="let photoPath of product?.photoPaths; let i = index" class="thumbnail" (click)="changeSlide(i)">
+      <img [src]="'http://localhost:7000/media' + photoPath" alt="Thumbnail" class="thumbnail-image">
+    </div>
+  </div>
+
+  <h1>{{ product?.title }}</h1>
+  <p class="price">Price: {{ product?.price | currency }}</p>
+  <p class="quantity" [ngStyle]="{ color: (product?.quantity ?? 0) > 0 ? 'green' : 'red' }">
+    {{ (product?.quantity ?? 0) > 0 ? 'In Stock' : 'Out of Stock' }}
+  </p>
+</div>
+
+
+</body>

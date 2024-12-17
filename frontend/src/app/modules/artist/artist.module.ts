@@ -40,6 +40,7 @@ import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/mater
 import {MatSelect} from "@angular/material/select";
 import {MatTooltip} from "@angular/material/tooltip";
 import { JoinArtistProfileComponent } from './join-artist-profile/join-artist-profile.component';
+import { ProductDetailsComponent } from './products/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { JoinArtistProfileComponent } from './join-artist-profile/join-artist-pr
     ArtistLayoutComponent,
     ArtistCreateOrEditComponent,
     ManageUsersComponent,
-    JoinArtistProfileComponent
+    JoinArtistProfileComponent,
+    ProductDetailsComponent
   ],
     imports: [
         CommonModule,
