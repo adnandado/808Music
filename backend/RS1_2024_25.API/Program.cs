@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models.Mail;
+using RS1_2024_25.API.Data.Models.Stripe;
 using RS1_2024_25.API.Helper.Auth;
 using RS1_2024_25.API.Services;
 using RS1_2024_25.API.Services.Interfaces;
@@ -23,6 +24,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(config.GetConnectionString("db1")));
 
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

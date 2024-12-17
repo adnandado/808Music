@@ -8,6 +8,7 @@ import {ArtistLayoutComponent} from './modules/artist/artist-layout/artist-layou
 import {TextInputDialogComponent} from './modules/shared/dialogs/text-input-dialog/text-input-dialog.component';
 import {JoinArtistProfileComponent} from './modules/artist/join-artist-profile/join-artist-profile.component';
 import {PleaseWaitAMomentComponent} from './modules/shared/please-wait-amoment/please-wait-amoment.component';
+import {StripeComponent} from './modules/shared/stripe/stripe.component';
 const routes: Routes = [
   {path: 'unauthorized', component: UnauthorizedComponent},
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
     path: 'artist/join',
     component: JoinArtistProfileComponent
   },
+  {
+  path: 'stripe-test',
+  component: StripeComponent
+},
   {
     path: 'artist',
     loadChildren: () => import('./modules/artist/artist.module').then(m => m.ArtistModule)

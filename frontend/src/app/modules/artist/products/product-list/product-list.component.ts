@@ -60,9 +60,10 @@ export class ProductListComponent implements OnInit {
     if (confirm('Are you sure you want to delete this product?')) {
       this.deleteService.handleAsync(id).subscribe({
         next: () => {
-          alert('Product deleted successfully!');
+
           this.loadProducts();
-        },
+          alert('Product deleted successfully!');
+          },
         error: (err : HttpErrorResponse) => {
           alert('Failed to delete product.');
           console.error('Error deleting product:', err);
