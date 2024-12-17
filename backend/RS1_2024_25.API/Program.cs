@@ -69,6 +69,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     }
 );
 
+builder.Services.AddStackExchangeRedisCache(opt =>
+{
+    opt.Configuration = config.GetConnectionString("Redis");
+});
+
 //dodajte vaše servise
 builder.Services.AddTransient<MyAuthService>();
 builder.Services.AddTransient<IMyFileHandler,FileHandler>();
@@ -77,6 +82,7 @@ builder.Services.AddTransient<IMyMailService, MailService>();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 builder.Services.AddTransient<DeleteService>();
 builder.Services.AddHostedService<MyBackgroundService>();
+builder.Services.AddSingleton<IMyCacheService, MyRedisCacheService>();
 
 var app = builder.Build();
 
