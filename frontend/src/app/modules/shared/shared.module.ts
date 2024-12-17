@@ -50,6 +50,7 @@ import {NgxAudioPlayerModule} from '@khajegan/ngx-audio-player';
 import { MyMatArtistAutocompleteComponent } from './inputs/my-mat-artist-autocomplete/my-mat-artist-autocomplete.component';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import { StripeComponent } from './stripe/stripe.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { StripeComponent } from './stripe/stripe.component';
     SearchBarComponent,
     MusicTrackDragzoneComponent,
     MyMatArtistAutocompleteComponent,
-    StripeComponent // Dodajemo UnauthorizedComponent u deklaracije
+    StripeComponent,
+    SidenavComponent // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
     CommonModule,
@@ -126,7 +128,8 @@ import { StripeComponent } from './stripe/stripe.component';
     MyMatInputComponent,
     MusicTrackDragzoneComponent,
     MyMatArtistAutocompleteComponent,
-    StripeComponent
+    StripeComponent,
+    SidenavComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

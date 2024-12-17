@@ -1,5 +1,4 @@
 .product-container {
-  margin-left: 250px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -76,4 +75,7 @@ button.next {
 button.prev:hover,
 button.next:hover {
   background-color: rgba(0, 0, 0, 0.8);
+}
+body  {
+  background-color: #1E1E1E;
 }
