@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
-import {Observable, throwError} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {MyAuthService} from '../../services/auth-services/my-auth.service';
-import {MyConfig} from '../../my-config';
+import { MyBaseEndpointAsync } from '../../helper/my-base-endpoint-async.interface';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { MyAuthService } from '../../services/auth-services/my-auth.service';
+import { MyConfig } from '../../my-config';
 
 export interface ProductAddRequest {
-  id?: number;
   title: string;
   price: number;
   quantity: number;
   isDigital: boolean;
+  photos?: File[];
+  photoPaths?: string[];
+  removePhotoIds?: number[];
 }
 
 export interface ProductAddResponse {
@@ -18,6 +20,7 @@ export interface ProductAddResponse {
   quantity: number;
   isDigital: boolean;
   price: number;
+  slug: string;
 }
 
 @Injectable({
@@ -26,21 +29,26 @@ export interface ProductAddResponse {
 export class ProductAddEndpointService implements MyBaseEndpointAsync<ProductAddRequest, ProductAddResponse> {
   readonly url = `${MyConfig.api_address}/api/ProductAddEndpoint`;
 
-  constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {}
+  constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {
+  }
 
   handleAsync(request: ProductAddRequest): Observable<ProductAddResponse> {
-    if (!request.title || !request.price ) {
-      // Vraća grešku ako bilo koji od parametara nije prisutan
-      return throwError(() => new Error('All fields are required.'));}
-    const headers = { 'Content-Type': 'application/json' };
+    if (!request.title || !request.price) {
+      return throwError(() => new Error('All fields are required.'));
+    }
 
-    const body = {
-      title: request.title,
-      price: request.price,
-      quantity: request.quantity,
-      isDigital: request.isDigital
-    };
+    const formData = new FormData();
+    formData.append('title', request.title);
+    formData.append('price', request.price.toString());
+    formData.append('quantity', request.quantity.toString());
+    formData.append('isDigital', request.isDigital.toString());
 
-    return this.httpClient.post<ProductAddResponse>(this.url, body, { headers });
+    if (request.photos && request.photos.length > 0) {
+      for (let i = 0; i < request.photos.length; i++) {
+        formData.append('photos', request.photos[i]);
+      }
+    }
+
+    return this.httpClient.post<ProductAddResponse>(this.url, formData);
   }
 }

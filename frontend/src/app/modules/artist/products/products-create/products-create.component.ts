@@ -1,7 +1,7 @@
-import {Component, ErrorHandler} from '@angular/core';
+import { Component } from '@angular/core';
 import { ProductAddEndpointService, ProductAddRequest, ProductAddResponse } from '../../../../endpoints/products-endpoints/product-create-endpoint.service';
 import { Router } from '@angular/router';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-create',
@@ -14,7 +14,8 @@ export class ProductsCreateComponent {
     title: '',
     price: 0,
     quantity: 0,
-    isDigital: false
+    isDigital: false,
+    photos: []
   };
 
   constructor(
@@ -25,10 +26,9 @@ export class ProductsCreateComponent {
   createProduct() {
     this.productService.handleAsync(this.productData).subscribe({
       next: (response: ProductAddResponse) => {
-
         this.router.navigate(['/product-list']);
       },
-      error: (err : HttpErrorResponse) => {
+      error: (err: HttpErrorResponse) => {
         console.error("Error creating product:", err);
         if (err.status) {
           console.error(`Error status: ${err.status}`);
@@ -41,5 +41,12 @@ export class ProductsCreateComponent {
 
   backToList() {
     this.router.navigate(['/product-list']);
+  }
+
+  onFilesSelected(event: any): void {
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      this.productData.photos = Array.from(files);
+    }
   }
 }

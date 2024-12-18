@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/html">
+  <app-sidenav></app-sidenav>
 
   <h1>Create Product</h1>
-
   <form>
     <div>
       <label>Title:</label>
@@ -23,9 +23,14 @@
       <input type="checkbox" [(ngModel)]="productData.isDigital" name="isDigital">
     </div>
 
+    <div>
+      <label>Photos:</label>
+      <input type="file" (change)="onFilesSelected($event)" multiple>
+    </div>
+
     <div class="control-btns">
-      <button (click)="createProduct()">Create</button>
-      <button (click)="backToList()">Cancel</button>
+      <button type="button" (click)="createProduct()">Create</button>
+      <button type="button" (click)="backToList()">Cancel</button>
     </div>
   </form>
 </div>

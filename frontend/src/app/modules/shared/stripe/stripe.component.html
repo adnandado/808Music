@@ -1,0 +1,28 @@
+<div class="stripe-container">
+  <h2></h2>
+
+  <form (ngSubmit)="handleSubmit(amount)">
+    <label for="amount">Amount (in EUR):</label>
+    <input
+      type="number"
+      id="amount"
+      [(ngModel)]="amount"
+      name="amount"
+      required
+      min="1"
+    />
+    <div id="card-element">
+    </div>
+    <button type="submit" [disabled]="!amount">Submit Payment</button>
+  </form>
+
+
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="paymentSuccess" class="payment-success">
+    Payment successful!
+  </div>
+</div>
