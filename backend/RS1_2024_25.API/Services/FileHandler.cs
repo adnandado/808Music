@@ -6,7 +6,7 @@ namespace RS1_2024_25.API.Services
 {
     public class FileHandler(IWebHostEnvironment env) : IMyFileHandler
     {
-        public async Task<string> UploadFile(string path, IFormFile file, int maxFileSizeInBytes = 0, CancellationToken cancellationToken = default)
+        public async Task<string> UploadFileAsync(string path, IFormFile file, int maxFileSizeInBytes = 0, CancellationToken cancellationToken = default)
         {
             string fullPath = Path.Combine(env.ContentRootPath, path);
 
@@ -27,6 +27,18 @@ namespace RS1_2024_25.API.Services
         public void DeleteFile(string path)
         {
             File.Delete(path);
+        }
+
+        public async Task<Stream> GetFileAsStreamAsync(string path, CancellationToken cancellationToken = default)
+        {
+            Stream stream = new MemoryStream();
+            using (var reader = new FileStream(Path.Combine(path),FileMode.Open,FileAccess.Read))
+            {
+                await reader.CopyToAsync(stream, cancellationToken);
+                await reader.FlushAsync(cancellationToken);
+            }
+            stream.Position = 0;
+            return stream;
         }
     }
 }

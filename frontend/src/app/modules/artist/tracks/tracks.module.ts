@@ -25,6 +25,7 @@ import {MatSelect} from '@angular/material/select';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {NgxAudioPlayerModule} from '@khajegan/ngx-audio-player';
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
+import {AppModule} from "../../../app.module";
 
 
 @NgModule({
@@ -62,7 +63,7 @@ import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocom
         MatSlideToggle,
         NgxAudioPlayerModule,
         MatAutocomplete,
-        MatAutocompleteTrigger
+        MatAutocompleteTrigger,
     ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

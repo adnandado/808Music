@@ -7,6 +7,11 @@
   cursor: pointer;
 }
 
+.clickable-artist {
+  color: #A9A9A9;
+}
+
 div {
   white-space: preserve;
+  color: #A9A9A9;
 }

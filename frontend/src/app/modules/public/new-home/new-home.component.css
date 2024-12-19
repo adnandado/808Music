@@ -89,3 +89,9 @@
   top: 20px;
   z-index: 2;
 }
+
+@media only screen and (max-height: 900px) {
+  .headline-card h1 {
+    font-size: 45px;
+  }
+}
