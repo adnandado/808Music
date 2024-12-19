@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {UnauthorizedComponent} from './modules/shared/unauthorized/unauthorized.component';
 import {AuthGuard} from './auth-guards/auth-guard.service';
 import { ProductsCreateComponent } from './modules/artist/products/products-create/products-create.component';
-import { ProductListComponent } from './modules/artist/products/product-list/product-list.component';
+import { ProductListComponent } from './modules/public/products/product-list/product-list.component';
 import {ArtistLayoutComponent} from './modules/artist/artist-layout/artist-layout.component';
 import {TextInputDialogComponent} from './modules/shared/dialogs/text-input-dialog/text-input-dialog.component';
 import {JoinArtistProfileComponent} from './modules/artist/join-artist-profile/join-artist-profile.component';
@@ -32,10 +32,6 @@ const routes: Routes = [
   {
     path: 'artist',
     loadChildren: () => import('./modules/artist/artist.module').then(m => m.ArtistModule)
-  },
-  {
-    path: 'product-create',
-    component: ProductsCreateComponent
   },
   {
     path: 'product-list',

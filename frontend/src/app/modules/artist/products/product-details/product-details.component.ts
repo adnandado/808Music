@@ -62,10 +62,4 @@ export class ProductDetailsComponent implements OnInit {
   changeSlide(index: number): void {
     this.currentSlide = index;
   }
-  
 }
-
-
-
-
-

@@ -1,45 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsGetAllService, ProductsGetAllResponse } from '../../../../endpoints/products-endpoints/product-get-all-endpoint.service';
+import { ProductGetByArtistIdService, Product } from '../../../../endpoints/products-endpoints/product-get-by-artist-id.service';
 import { Router } from '@angular/router';
 import { ProductDeleteEndpointService } from '../../../../endpoints/products-endpoints/product-delete-endpoint.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProductUpdateEndpointService, ProductUpdateResponse } from '../../../../endpoints/products-endpoints/product-update-endpoint.service';
-
+import { ArtistHandlerService } from '../../../../services/artist-handler.service';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  products: ProductsGetAllResponse[] = [];
+  products: Product[] = [];
   loading: boolean = true;
   errorMessage: string = '';
   selectedFiles: FileList | null = null;
-  isEditing: { [key: string]: boolean } = {};
+  isEditing: { [key: string]: boolean } = {};  // Koristimo slug kao ključ
   newImagePreview: string | null = null;
+  artistId: number = 1; // Na primer, ID umetnika
 
   constructor(
-    private productService: ProductsGetAllService,
+    private productService: ProductGetByArtistIdService, // Koristi novi servis
     private updateService: ProductUpdateEndpointService,
     private deleteService: ProductDeleteEndpointService,
-    private router: Router
+    private router: Router,
+  private artistHandlerService: ArtistHandlerService
   ) {}
 
   ngOnInit(): void {
-    this.loadProducts();
+    const selectedArtist = this.artistHandlerService.getSelectedArtist();
+    if (selectedArtist) {
+      this.artistId = selectedArtist.id;
+      this.loadProducts();
+    } else {
+      this.errorMessage = 'No artist selected';
+      this.loading = false;
+    }
   }
 
   viewProduct(slug: string): void {
-    this.router.navigate(['/product', slug]);
+    this.router.navigate(['/product', slug]); // Povezivanje sa proizvodom putem sluga
   }
 
   loadProducts(): void {
-    this.productService.handleAsync().subscribe({
-      next: (data) => {
+    this.productService.getProductsByArtist(this.artistId).subscribe({
+      next: (data: Product[]) => {
         this.products = data;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         this.errorMessage = 'Failed to load products';
         this.loading = false;
         console.error(err);
@@ -52,9 +61,9 @@ export class ProductListComponent implements OnInit {
     this.newImagePreview = null;
   }
 
-  saveProduct(product: ProductsGetAllResponse): void {
+  saveProduct(product: Product): void {
     const formData = new FormData();
-    formData.append('slug', product.slug);
+    formData.append('slug', product.slug);  // Vraćamo slug kao jedinstveni identifikator proizvoda
     formData.append('title', product.title);
     formData.append('price', product.price.toString());
     formData.append('quantity', product.quantity.toString());
@@ -70,7 +79,7 @@ export class ProductListComponent implements OnInit {
       next: (response: ProductUpdateResponse) => {
         alert('Product updated successfully!');
         this.loadProducts();
-        this.toggleEdit(product.slug);
+        this.toggleEdit(product.slug);  // Pozivamo toggleEdit sa slug
       },
       error: (err: HttpErrorResponse) => {
         alert('Failed to update product.');
@@ -79,7 +88,7 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  onImageChange(event: Event, product: ProductsGetAllResponse): void {
+  onImageChange(event: Event, product: Product): void {
     const input = event.target as HTMLInputElement;
     if (input?.files) {
       this.selectedFiles = input.files;

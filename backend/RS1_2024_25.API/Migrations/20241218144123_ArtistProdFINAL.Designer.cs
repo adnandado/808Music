@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RS1_2024_25.API.Data;
 
@@ -11,9 +12,11 @@ using RS1_2024_25.API.Data;
 namespace RS1_2024_25.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241218144123_ArtistProdFINAL")]
+    partial class ArtistProdFINAL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -457,51 +460,6 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Playlist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CoverPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("NumOfTracks")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Playlists");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.PlaylistTracks", b =>
-                {
-                    b.Property<int>("PlaylistId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrackId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrackOrder")
-                        .HasColumnType("int");
-
-                    b.HasKey("PlaylistId", "TrackId");
-
-                    b.HasIndex("TrackId");
-
-                    b.ToTable("PlaylistTracks");
-                });
-
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -691,27 +649,6 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("UserArtistRoles");
                 });
 
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserPlaylist", b =>
-                {
-                    b.Property<int>("MyAppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlaylistId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsFavorite")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsOwner")
-                        .HasColumnType("bit");
-
-                    b.HasKey("MyAppUserId", "PlaylistId");
-
-                    b.HasIndex("PlaylistId");
-
-                    b.ToTable("UserPlaylist");
-                });
-
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Album", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.AlbumType", "AlbumType")
@@ -873,25 +810,6 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.PlaylistTracks", b =>
-                {
-                    b.HasOne("RS1_2024_25.API.Data.Models.Playlist", "Playlist")
-                        .WithMany("PlaylistTracks")
-                        .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("RS1_2024_25.API.Data.Models.Track", "Track")
-                        .WithMany("PlaylistTracks")
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Playlist");
-
-                    b.Navigation("Track");
-                });
-
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Product", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
@@ -971,45 +889,9 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserPlaylist", b =>
-                {
-                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "User")
-                        .WithMany("UserPlaylists")
-                        .HasForeignKey("MyAppUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("RS1_2024_25.API.Data.Models.Playlist", "Playlist")
-                        .WithMany("UserPlaylists")
-                        .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Playlist");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyAppUser", b =>
-                {
-                    b.Navigation("UserPlaylists");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Playlist", b =>
-                {
-                    b.Navigation("PlaylistTracks");
-
-                    b.Navigation("UserPlaylists");
-                });
-
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Product", b =>
                 {
                     b.Navigation("Photos");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Track", b =>
-                {
-                    b.Navigation("PlaylistTracks");
                 });
 #pragma warning restore 612, 618
         }

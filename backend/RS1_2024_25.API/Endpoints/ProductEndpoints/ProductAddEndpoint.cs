@@ -6,10 +6,17 @@ using System.IO;
 using System.Linq;
 using static ProductAddEndpoint;
 
-public class ProductAddEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+public class ProductAddEndpoint : MyEndpointBaseAsync
     .WithRequest<ProductAddRequest>
     .WithResult<ProductAddResponse>
 {
+    private readonly ApplicationDbContext _db;
+
+    public ProductAddEndpoint(ApplicationDbContext db)
+    {
+        _db = db;
+    }
+
     [HttpPost]
     public override async Task<ProductAddResponse> HandleAsync([FromForm] ProductAddRequest request, CancellationToken cancellationToken = default)
     {
@@ -19,12 +26,12 @@ public class ProductAddEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
             Price = request.Price,
             QtyInStock = request.Quantity,
             IsDigital = request.isDigital,
-            Slug = GenerateRandomSlug()
+            Slug = GenerateRandomSlug(),
+            ArtistId = request.ArtistId
         };
 
-        db.Products.Add(product);
-        await db.SaveChangesAsync(cancellationToken);
-
+        _db.Products.Add(product);
+        await _db.SaveChangesAsync(cancellationToken);
 
         if (request.Photos != null && request.Photos.Any())
         {
@@ -44,10 +51,10 @@ public class ProductAddEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
                     ProductId = product.Id
                 };
 
-                db.ProductPhotos.Add(productPhoto);
+                _db.ProductPhotos.Add(productPhoto);
             }
 
-            await db.SaveChangesAsync(cancellationToken);
+            await _db.SaveChangesAsync(cancellationToken);
         }
 
         return new ProductAddResponse
@@ -76,6 +83,7 @@ public class ProductAddEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         public int Quantity { get; set; }
         public bool isDigital { get; set; }
         public List<IFormFile> Photos { get; set; } = new();
+        public int ArtistId { get; set; }
     }
 
     public class ProductAddResponse
@@ -86,5 +94,7 @@ public class ProductAddEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         public int Quantity { get; set; }
         public bool isDigital { get; set; }
         public string Slug { get; set; }
+        public int ArtistId { get; set; }
+
     }
 }

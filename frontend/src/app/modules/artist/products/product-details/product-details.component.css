@@ -1,43 +1,49 @@
 body {
-  background-color: #1E1E1E;
   color: #FFFFFF;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background: red;
 }
 
 .product-container {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-height: 100vh;
-  overflow-y: auto;
+  align-items: flex-start;
+  text-align: left;
+  background-color: #1E1E1E;
+  width: 40%;
+  margin-left: 30%;
+  border-radius: 12px;
+  height: 90%;
 }
 
 .carousel-container {
-  position: relative;
-  max-width: 600px;
   width: 100%;
-  margin: 5px 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .carousel-image {
   width: 100%;
-  height: 300px;
-  max-width: 500px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  object-fit: contain;
-  margin-bottom: 20px;
+  height: auto;
+  max-height: 300px;
+  border-radius: 4px;
+  object-fit: cover;
 }
+
 .thumbnails {
   display: flex;
-  justify-content: center;
-  gap: 5px;
+  gap: 10px;
+  overflow-x: auto;
 }
 
 .thumbnail {
@@ -48,15 +54,70 @@ body {
   width: 60px;
   height: 60px;
   object-fit: cover;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
 }
 
 .thumbnail-image:hover {
-  transform: scale(1.1);
+  border-color: #914edf;
 }
 
+.product-header {
+  display: flex;
+  justify-content: space-between; /* Naziv i cijena sa strane */
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #444; /* Linija ispod */
+  margin-bottom: 15px;
+  padding-bottom: 0;
+}
 
+.product-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #FFFFFF;
+}
+
+.price {
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.artist-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.artist-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.artist-name {
+  font-size: 1.1rem;
+  color: #FFFFFF;
+}
+
+/* Opis proizvoda */
+.product-description {
+  font-size: 0.85rem; /* Manji font */
+  text-transform: uppercase; /* Sve velikim slovima */
+  color: #B0B0B0;
+}
+
+.quantity {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #95AD10;
+}
+
+.quantity.out-of-stock {
+  color: red;
+}
 
 button.prev,
 button.next {
@@ -64,69 +125,22 @@ button.next {
   top: 50%;
   transform: translateY(-50%);
   background-color: transparent;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(191, 191, 191, 0.42);
   border: none;
-  padding: 10px;
-  border-radius: 50%;
+  padding: 5px;
   cursor: pointer;
   z-index: 10;
-  font-size: 20px;
-  transition: color 0.3s ease;
 }
 
 button.prev {
-  left: 20px;
+  left: 5px;
 }
 
 button.next {
-  right: 20px;
+  right: 5px;
 }
 
 button.prev:hover,
 button.next:hover {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 0.9);
 }
-
-.product-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 500px;
-  margin: 10px 0;
-}
-
-.product-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin: 0;
-  text-align: left;
-  color: white;
-}
-
-.price {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 0;
-  text-align: right;
-  color: white;
-}
-
-.product-description {
-  color: #B0B0B0;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  margin: 10px 0 5px;
-  text-align: left;
-  width: 100%;
-  max-width: 500px;
-}
-
-.quantity {
-  font-size: 1rem;
-  margin: 5px 0 0;
-  text-align: left;
-  width: 100%;
-  max-width: 500px;
-}
-
