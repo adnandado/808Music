@@ -14,13 +14,14 @@ namespace RS1_2024_25.API.Services.Interfaces
             StripeConfiguration.ApiKey = _secretKey;
         }
 
-        public async Task<string> CreatePaymentIntent(int amount)
+        public async Task<string> CreatePaymentIntent(int amount, string email)
         {
             var options = new PaymentIntentCreateOptions
             {
                 Amount = amount,
                 Currency = "eur",
                 PaymentMethodTypes = new List<string> { "card" },
+                ReceiptEmail = email
             };
             var service = new PaymentIntentService();
             PaymentIntent paymentIntent = await service.CreateAsync(options);
