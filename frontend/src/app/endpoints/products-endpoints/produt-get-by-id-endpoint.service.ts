@@ -12,13 +12,16 @@ export interface ProductGetResponse {
   isDigital: boolean;
   slug: string;
   photoPaths?: string[];
+  artistPhoto?: string;
+  artistName?: string;
 }
 
+// Produkt servis koji već podržava artist podatke
 @Injectable({
   providedIn: 'root'
 })
-export class ProductGetByIdEndpointService implements MyBaseEndpointAsync<string, ProductGetResponse> { // Promijenjeno na string za slug
-  readonly url = `${MyConfig.api_address}/api/ProductGetByIdEndpoint`; // Promijenjeno na endpoint koji koristi slug
+export class ProductGetByIdEndpointService implements MyBaseEndpointAsync<string, ProductGetResponse> {
+  readonly url = `${MyConfig.api_address}/api/ProductGetByIdEndpoint`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -26,3 +29,4 @@ export class ProductGetByIdEndpointService implements MyBaseEndpointAsync<string
     return this.httpClient.get<ProductGetResponse>(`${this.url}/${request}`);
   }
 }
+

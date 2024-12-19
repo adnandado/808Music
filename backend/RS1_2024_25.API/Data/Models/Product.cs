@@ -14,8 +14,8 @@ namespace RS1_2024_25.API.Data.Models
         public ICollection<ProductPhoto> Photos { get; set; } = new List<ProductPhoto>();
         public string Slug { get; set; }
 
-        //[ForeignKey(nameof(Artist))]
-        //public int ArtistId { get; set; }
-        //public Artist? Artist { get; set; }
+        [ForeignKey(nameof(Artist))]
+        public int ArtistId { get; set; }
+        public Artist? Artist { get; set; }
     }
 }

@@ -4,18 +4,20 @@ import { Observable } from 'rxjs';
 
 // Definisanje tipa odgovora
 export interface Product {
+  id: number;
   title: string;
   price: number;
   quantity: number;
   isDigital: boolean;
   photoPaths: string[];
+  slug: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
-  private apiUrl = 'http://localhost:7000/api/ProductGetByArtist'; // tvoj backend URL
+export class ProductGetByArtistIdService {
+  private apiUrl = 'http://localhost:7000/api/ProductGetByArtistEndpoint/api/ProductGetByArtist'; // Tvoj backend URL
 
   constructor(private http: HttpClient) {}
 
