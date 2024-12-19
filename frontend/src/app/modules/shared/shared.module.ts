@@ -50,6 +50,9 @@ import {NgxAudioPlayerModule} from '@khajegan/ngx-audio-player';
 import { MyMatArtistAutocompleteComponent } from './inputs/my-mat-artist-autocomplete/my-mat-artist-autocomplete.component';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import { StripeComponent } from './stripe/stripe.component';
+import {AppModule} from '../../app.module';
+import {SecondsToDurationStringPipe} from '../../services/pipes/seconds-to-string.pipe';
+import {LongDurationStringPipe} from '../../services/pipes/long-duration-string.pipe';
 
 @NgModule({
   declarations: [
@@ -67,6 +70,8 @@ import { StripeComponent } from './stripe/stripe.component';
     SearchBarComponent,
     MusicTrackDragzoneComponent,
     MyMatArtistAutocompleteComponent,
+    SecondsToDurationStringPipe,
+    LongDurationStringPipe,
     StripeComponent // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
@@ -111,7 +116,7 @@ import { StripeComponent } from './stripe/stripe.component';
     NgxAudioPlayerModule,
     MatAutocomplete,
     MatAutocompleteTrigger,
-    MatOption
+    MatOption,
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
@@ -126,7 +131,10 @@ import { StripeComponent } from './stripe/stripe.component';
     MyMatInputComponent,
     MusicTrackDragzoneComponent,
     MyMatArtistAutocompleteComponent,
-    StripeComponent
+    StripeComponent,
+    ClickableFeaturedArtistsComponent,
+    SecondsToDurationStringPipe,
+    LongDurationStringPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -14,10 +14,12 @@ import {MyErrorInterceptorService} from './services/my-error-interceptor.service
 import {RouterModule} from '@angular/router';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {MyImgCompressInterceptorService} from './services/my-img-compress-interceptor.service';
+import { SecondsToDurationStringPipe } from './services/pipes/seconds-to-string.pipe';
+import { LongDurationStringPipe } from './services/pipes/long-duration-string.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import {MyImgCompressInterceptorService} from './services/my-img-compress-interc
     MyAuthService,
     provideAnimationsAsync() // Ensure MyAuthService is available for the interceptor
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 }

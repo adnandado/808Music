@@ -1,4 +1,4 @@
-<div class="clickable-artists">
+<div class="clickable-artists" (contextmenu)="handleRightClick($event)">
   @for (artist of artists; track artist.id; let i = $index) {
       <div *ngIf="i != 0">{{separator}}</div>
       <div class="clickable-artist" (click)="emitArtist(artist)">{{artist.name}}</div>
