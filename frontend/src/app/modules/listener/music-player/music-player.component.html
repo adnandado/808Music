@@ -2,7 +2,7 @@
 
   <div class="now-playing">
     <h3>Now playing...</h3>
-    <h6>{{track?.title}}</h6>
+    <h6 [routerLink]="musicPlayerService.queueSource.value" routerLinkActive>{{musicPlayerService.queueSource.display}}</h6>
   </div>
 
   <div class="cover" [ngStyle]="{'background-image':'url('+MyConfig.api_address + track?.coverPath +')'}"></div>
@@ -16,7 +16,7 @@
     <app-clickable-featured-artists [artists]="track?.artists ?? null"></app-clickable-featured-artists>
   </div>
 
-  <app-music-controller class="music-controls" [track]="track" [trackLocation]="'http://localhost:7000/api/TrackStreamEndpoint/'+track?.id"></app-music-controller>
+  <app-music-controller class="music-controls"></app-music-controller>
 
   <div class="control-bar">
     <button mat-icon-button matTooltip="Share">
@@ -28,11 +28,14 @@
     <button mat-icon-button matTooltip="Add to playlist">
       <mat-icon>library_add</mat-icon>
     </button>
+    <button mat-icon-button matTooltip="Add to playlist">
+      <mat-icon>queue_music</mat-icon>
+    </button>
   </div>
   <mat-form-field>
     <input type="number" name="trackId" [(ngModel)]="newTrackId" matInput>
 
   </mat-form-field>
-  <button mat-stroked-button (click)="setNewSong()">Get song</button>
+  <button mat-stroked-button (click)="setNewSong()">Get album</button>
 </div>
 
