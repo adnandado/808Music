@@ -33,6 +33,10 @@ export class MusicControllerComponent implements OnInit {
       this.musicPlayerService.trackEvent.subscribe({
         next: value => {
           this.track = value;
+          if(!this.playingState)
+          {
+            this.changePlayerState();
+          }
         }
       })
 
@@ -51,7 +55,9 @@ export class MusicControllerComponent implements OnInit {
       }
       else {
         this.playingState = true;
-        this.player.play();
+        this.player.play().catch((error: Error) => {
+          console.error(error);
+        });
       }
     }
   }

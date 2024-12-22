@@ -16,6 +16,8 @@ export class MusicPlayerService {
   private playedIndexes : number[] = []
   private trackPlayEvent = new Subject<TrackGetResponse>();
   trackEvent = this.trackPlayEvent.asObservable();
+  private trackAddEvent = new Subject<TrackGetResponse>();
+  trackAdd = this.trackAddEvent.asObservable();
 
   constructor() { }
 
@@ -24,15 +26,29 @@ export class MusicPlayerService {
       this.queue = queue;
       this.playedIndexes = []
       this.playNext();
+      this.queueSource = source;
     }
     else {
       this.queue.push(...queue);
+      this.trackAddEvent.next(queue[0]);
     }
-    this.queueSource = source;
   }
 
   addToQueue(queueTrack : TrackGetResponse) {
       this.queue.push(queueTrack);
+      this.trackAddEvent.next(queueTrack);
+  }
+
+  removeFromQueue(queueTrack : TrackGetResponse) {
+    let i = this.queue.indexOf(queueTrack);
+    if(i > -1 && !this.playedIndexes.includes(i)) {
+      this.queue.splice(i, 1);
+      this.trackAddEvent.next(queueTrack);
+    }
+  }
+
+  getQueue() {
+    return this.queue.filter((t,i) => !this.playedIndexes.includes(i));
   }
 
   playNext() {
@@ -77,6 +93,19 @@ export class MusicPlayerService {
     }
     this.playedIndexes.push(i);
     this.trackPlayEvent.next(this.queue[i]);
+  }
+
+  skipTo(track : TrackGetResponse) {
+    let index = this.queue.indexOf(track);
+    if(index > -1)
+    {
+      for(let i = 0; i < index; i++)
+      {
+        this.playedIndexes.push(i);
+      }
+      this.playedIndexes.push(index);
+      this.trackPlayEvent.next(this.queue[index]);
+    }
   }
 
   getRandomInt(min :number, max:number) {

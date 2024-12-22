@@ -6,24 +6,25 @@ import {
   MatPaginatorIntl,
   MatPaginatorModule,
   PageEvent
-} from "./chunk-LNQFLJDD.js";
-import "./chunk-MIXMY6DH.js";
-import "./chunk-JUVVHPG4.js";
-import "./chunk-SI37XD76.js";
-import "./chunk-KW3DK5ED.js";
-import "./chunk-HMF2MILT.js";
-import "./chunk-LWPTKG7R.js";
-import "./chunk-ZYDYGR2O.js";
-import "./chunk-MBA7WTI7.js";
-import "./chunk-B7QVM4I7.js";
-import "./chunk-NHXS2ZHO.js";
-import "./chunk-RCVN4C6T.js";
-import "./chunk-DTRZVJQ6.js";
-import "./chunk-KIHTX5Y7.js";
+} from "./chunk-SSLQA73V.js";
+import "./chunk-SLXXDCYX.js";
+import "./chunk-S4VFZOYM.js";
+import "./chunk-MKT23XCK.js";
+import "./chunk-3DPK3XBX.js";
+import "./chunk-6GHIGCU7.js";
+import "./chunk-5R5EFTVZ.js";
+import "./chunk-OD6TZ43K.js";
+import "./chunk-JMFDBPIT.js";
+import "./chunk-FLZCUEDC.js";
+import "./chunk-3DOXRULP.js";
+import "./chunk-K6PURZBX.js";
+import "./chunk-RFHO6K6J.js";
+import "./chunk-YZ7L3Q7O.js";
+import "./chunk-OWGXKZX7.js";
 import "./chunk-5OPE3T2R.js";
 import "./chunk-4N4GOYJH.js";
 import "./chunk-FHTVLBLO.js";
-import "./chunk-WDMUDEB6.js";
+import "./chunk-TXDUYLVM.js";
 export {
   MAT_PAGINATOR_DEFAULT_OPTIONS,
   MAT_PAGINATOR_INTL_PROVIDER,
