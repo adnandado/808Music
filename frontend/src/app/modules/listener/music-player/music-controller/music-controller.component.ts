@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TrackGetResponse} from '../../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 import {SecondsToDurationStringPipe} from '../../../../services/pipes/seconds-to-string.pipe';
 import {MatSliderDragEvent} from '@angular/material/slider';
+import {MusicPlayerService} from '../../../../services/music-player.service';
 
 @Component({
   selector: 'app-music-controller',
@@ -9,12 +10,16 @@ import {MatSliderDragEvent} from '@angular/material/slider';
   styleUrl: './music-controller.component.css'
 })
 export class MusicControllerComponent implements OnInit {
-  @Input() track : TrackGetResponse | null = null;
-  @Input() trackLocation = "";
+  track : TrackGetResponse | null = null;
+  trackLocation = 'http://localhost:7000/api/TrackStreamEndpoint/';
   secondsPipe = new SecondsToDurationStringPipe();
   currentPlaybackTime: number = 0;
   playingState = false;
+  isShuffled = false;
   player : HTMLAudioElement | null = null;
+
+  constructor(private musicPlayerService: MusicPlayerService) {
+  }
 
   ngOnInit(): void {
       this.player = document.getElementById("player") as HTMLAudioElement;
@@ -24,6 +29,17 @@ export class MusicControllerComponent implements OnInit {
       {
         this.player.volume = previousVolume;
       }
+
+      this.musicPlayerService.trackEvent.subscribe({
+        next: value => {
+          this.track = value;
+          if(!this.playingState)
+          {
+            this.changePlayerState();
+          }
+        }
+      })
+
   }
 
   setCurrentPlaybackTime(e: number) {
@@ -39,7 +55,9 @@ export class MusicControllerComponent implements OnInit {
       }
       else {
         this.playingState = true;
-        this.player.play();
+        this.player.play().catch((error: Error) => {
+          console.error(error);
+        });
       }
     }
   }
@@ -81,8 +99,11 @@ export class MusicControllerComponent implements OnInit {
       {
         this.player.currentTime = 0;
       }
+      else if (!this.isShuffled) {
+        this.musicPlayerService.playNext();
+      }
       else {
-
+        this.musicPlayerService.shufflePlay();
       }
     }
   }
@@ -95,8 +116,16 @@ export class MusicControllerComponent implements OnInit {
         this.player.currentTime = 0;
       }
       else {
-
+        this.musicPlayerService.playPrev();
       }
     }
+  }
+
+  getVolumeSliderValue(event: Event) {
+    return Number.parseInt((event.target as HTMLInputElement).value)/100
+  }
+
+  setShuffleState() {
+    this.isShuffled = !this.isShuffled;
   }
 }

@@ -12,6 +12,7 @@
 
 .tracks-list {
   height: 97vh;
+  width: 100%;
   flex-basis: 65vw;
   display: flex;
   flex-direction: column;

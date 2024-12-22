@@ -50,14 +50,14 @@ export class TracksTableComponent implements OnInit, OnChanges {
   pagedResponse: MyPagedList<TrackGetResponse> | null = null;
   @Input() pagedRequest: TrackGetAllRequest = {
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 20,
   }
   @Output() onCreateClick: EventEmitter<void> = new EventEmitter();
-  paginationOptions = [10, 20, 50]
+  paginationOptions = [20, 35, 50]
   @Input() reload = true;
   shouldDisplayControls = false;
 
-  @ViewChild(MatSort) sort: MatSort = new MatSort();
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private getTrackService: TrackGetByIdEndpointService,
               private deleteTrackService: TrackDeleteEndpointService,
@@ -105,6 +105,13 @@ export class TracksTableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.dataSource.sortingDataAccessor = (item, prop) => {
+      switch (prop)
+      {
+        case 'position': return item.position;
+      }
+      return '';
+    }
     this.dataSource.sort = this.sort;
     this.reloadData();
   }
@@ -143,7 +150,7 @@ export class TracksTableComponent implements OnInit, OnChanges {
     console.log(this.shouldDisplayControls);
   }
 
-  emitTrack(id:number) {
+  emitTrack(id: number) {
     /*
     this.getTrackService.handleAsync(id).subscribe({
       next: data => {

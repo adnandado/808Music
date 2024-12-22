@@ -53,6 +53,11 @@ import { StripeComponent } from './stripe/stripe.component';
 import {AppModule} from '../../app.module';
 import {SecondsToDurationStringPipe} from '../../services/pipes/seconds-to-string.pipe';
 import {LongDurationStringPipe} from '../../services/pipes/long-duration-string.pipe';
+import { QueueViewBottomSheetComponent } from './bottom-sheets/queue-view-bottom-sheet/queue-view-bottom-sheet.component';
+import {MatNavList} from '@angular/material/list';
+import {MatDivider} from '@angular/material/divider';
+import { ShareBottomSheetComponent } from './bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
+import {QRCodeModule} from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -72,7 +77,9 @@ import {LongDurationStringPipe} from '../../services/pipes/long-duration-string.
     MyMatArtistAutocompleteComponent,
     SecondsToDurationStringPipe,
     LongDurationStringPipe,
-    StripeComponent // Dodajemo UnauthorizedComponent u deklaracije
+    StripeComponent,
+    QueueViewBottomSheetComponent,
+    ShareBottomSheetComponent // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
     CommonModule,
@@ -117,6 +124,9 @@ import {LongDurationStringPipe} from '../../services/pipes/long-duration-string.
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatOption,
+    MatNavList,
+    MatDivider,
+    QRCodeModule,
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent

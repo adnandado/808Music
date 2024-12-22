@@ -1,0 +1,38 @@
+.share-sheet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.link {
+  background-color: #242424;
+  padding: 15px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+/* Put this code in your CSS file, e.g. app.component.css */
+
+/* The div container */
+.qrcodeImage {
+  display: flex;
+  flex: 1;
+}
+
+/* Add custom styles here */
+.center {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.share-sheet > button{
+  width: 90%;
+}

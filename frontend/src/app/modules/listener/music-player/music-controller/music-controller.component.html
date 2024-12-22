@@ -1,5 +1,6 @@
 <div class="music-controller">
-  <audio [src]="trackLocation" id="player" (timeupdate)="setSliderValue($event)" [autoplay]="playingState"></audio>
+  <audio [src]="trackLocation + track?.id" id="player" (timeupdate)="setSliderValue($event)"
+         [autoplay]="playingState" (ended)="skipNext()"></audio>
     <mat-slider min="0" [max]="track?.length" discrete class="seekable-slider" [displayWith]="secondsPipe.transform">
       <input matSliderThumb (valueChange)="setCurrentPlaybackTime($event)" [(value)]="currentPlaybackTime" (dragEnd)="userSetSlider($event)">
     </mat-slider>
@@ -31,7 +32,14 @@
       </mat-icon>
     </div>
     <button mat-icon-button (click)="skipNext()"><mat-icon>skip_next</mat-icon></button>
-    <button mat-icon-button><mat-icon>shuffle</mat-icon></button>
+    <button mat-icon-button (click)="setShuffleState()"><mat-icon>
+      @if(!isShuffled)
+      {
+        shuffle
+      } @else {
+        shuffle_on
+      }
+    </mat-icon></button>
   </div>
   <div class="volume-slider">
     <button mat-icon-button matTooltip="Mute" (click)="setVolume(0)"><mat-icon>volume_mute</mat-icon></button>
