@@ -1,0 +1,17 @@
+<div class="artist-music-page">
+  <div class="lander">
+    <div class="spotlight">
+      <h5>SPOTLIGHT</h5>
+      <div class="album-cover">
+        <div class="spotlight-info">
+          <h6>Check it out</h6>
+          <button mat-fab><mat-icon>play_arrow</mat-icon></button>
+        </div>
+      </div>
+    </div>
+    <div class="popular">
+      <h5>POPULAR</h5>
+    <app-tracks-table [inArtistMode]="false" (onMainClick)="createQueue($event)" [tracks]="tracks" [pagedRequest]="myPagedRequest"></app-tracks-table>
+    </div>
+  </div>
+</div>

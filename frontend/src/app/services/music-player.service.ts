@@ -18,6 +18,9 @@ export class MusicPlayerService {
   trackEvent = this.trackPlayEvent.asObservable();
   private trackAddEvent = new Subject<TrackGetResponse>();
   trackAdd = this.trackAddEvent.asObservable();
+  private shuffleToggleEvent = new Subject<boolean>();
+  shuffleToggled = this.shuffleToggleEvent.asObservable();
+  isShuffled : boolean = false;
 
   constructor() { }
 
@@ -25,7 +28,14 @@ export class MusicPlayerService {
     if(!append || this.queue.length == 0) {
       this.queue = queue;
       this.playedIndexes = []
-      this.playNext();
+      if(!this.isShuffled)
+      {
+        this.playNext();
+      }
+      else
+      {
+        this.shufflePlay()
+      }
       this.queueSource = source;
     }
     else {
@@ -112,5 +122,10 @@ export class MusicPlayerService {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+  }
+
+  toggleShuffle() {
+    this.isShuffled = !this.isShuffled;
+    this.shuffleToggleEvent.next(this.isShuffled);
   }
 }

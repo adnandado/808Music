@@ -19,6 +19,7 @@ export interface TrackGetResponse {
   isExplicit: boolean;
   coverPath: string;
   artists: ArtistTrackDto[];
+  albumId: number;
 }
 
 @Injectable({

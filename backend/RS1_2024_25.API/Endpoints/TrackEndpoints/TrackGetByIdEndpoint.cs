@@ -38,7 +38,8 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                 isExplicit = track.isExplicit,
                 Length = track.Length,
                 Streams = track.Streams,
-                CoverPath = "/media/Images/AlbumCovers/" + track.Album.CoverPath
+                CoverPath = "/media/Images/AlbumCovers/" + track.Album.CoverPath,
+                AlbumId = track.Album.Id
             };
 
             return Ok(response);
@@ -54,6 +55,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
         public bool isExplicit { get; set; }
         public string CoverPath { get; set; } = string.Empty;
         public List<ArtistTrackDto> Artists { get; set; }
+        public int AlbumId { get; set; }
     }
 
     public class ArtistTrackDto

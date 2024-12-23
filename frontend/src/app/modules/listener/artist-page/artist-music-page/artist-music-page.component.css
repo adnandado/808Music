@@ -1,0 +1,41 @@
+.artist-music-page {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  margin-top: 3vh;
+}
+ h5 {
+  font-weight: 500;
+}
+
+.album-cover {
+  box-sizing: border-box;
+  position:relative;
+  width: 22vw;
+  height: 22vw;
+  background-color: #00B2A9;
+  border-radius: 10px;
+  padding: 1vw;
+}
+
+.spotlight-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spotlight-info > h6 {
+  margin-bottom: 0;
+}
+
+.lander {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popular {
+  height: 55vh;
+  flex-basis: 45vw;
+  overflow-y: auto;
+}

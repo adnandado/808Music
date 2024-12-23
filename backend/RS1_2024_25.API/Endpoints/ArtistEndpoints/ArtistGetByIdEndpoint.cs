@@ -22,6 +22,7 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
                 Name = a.Artist.Name,
                 ProfileBackgroundPath = $"/media/Images/ArtistBgs/{a.Artist.ProfileBackgroundPath}",
                 ProfilePhotoPath = $"/media/Images/ArtistPfps/{a.Artist.ProfilePhotoPath}",
+                Followers = a.Artist.Followers,
             }).FirstOrDefaultAsync(cancellationToken);
 
             if(response == null)
@@ -40,5 +41,6 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
         public string Bio { get; set; } = string.Empty;
         public string ProfilePhotoPath { get; set; } = string.Empty;
         public string ProfileBackgroundPath { get; set; } = string.Empty;
+        public int Followers { get; set; }
     }
 }
