@@ -4,12 +4,15 @@
       <button mat-icon-button class="go-back-button" (click)="goBack()">
         <mat-icon class="go-back-arrow">arrow_back</mat-icon>
       </button>
-      <div class="dual-control">
-        <button mat-stroked-button>Cancel</button>
-        <button mat-flat-button>Save changes
-          <mat-icon>save</mat-icon>
-        </button>
-      </div>
+      @if(artistMode)
+      {
+        <div class="dual-control">
+          <button mat-stroked-button>Cancel</button>
+          <button mat-flat-button>Save changes
+            <mat-icon>save</mat-icon>
+          </button>
+        </div>
+      }
     </div>
 
     <div class="album-info">
@@ -24,17 +27,18 @@
         <div>
           <h2 class="album-title">{{ album?.title }}</h2>
           <h6>{{album!.type!.type}} • {{getYear()}}</h6>
-          <p>{{album?.numOfTracks}} tracks • {{getAlbumDuration(album?.lengthInSeconds)}}</p>
+          <p>{{album?.numOfTracks}} tracks • {{album?.lengthInSeconds | longDurationString}}</p>
         </div>
         <app-artist-small-card [artist]="artist"></app-artist-small-card>
       </div>
     </div>
 
-    <app-tracks-table [pagedRequest]="pagedRequest" (onMainClick)="editTrack($event)" [inArtistMode]="true" (onCreateClick)="addNew()" [reload]="reloadTable"></app-tracks-table>
+    <app-tracks-table [pagedRequest]="pagedRequest" (onMainClick)="editTrack($event)" [inArtistMode]="artistMode" (onCreateClick)="addNew()" [reload]="reloadTable"></app-tracks-table>
   </div>
-
-  <div class="side-island" [ngStyle]="isHome ? {'flex-basis':'0'} : {}">
-    <router-outlet></router-outlet>
-  </div>
+  @if (artistMode) {
+    <div class="side-island" [ngStyle]="isHome ? {'flex-basis':'0'} : {}">
+      <router-outlet></router-outlet>
+    </div>
+  }
 </div>
 

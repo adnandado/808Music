@@ -2,7 +2,8 @@
 {
     public interface IMyFileHandler
     {
-        public Task<string> UploadFile(string path, IFormFile file, int maxFileSizeInBytes = 0, CancellationToken cancellationToken = default);
+        public Task<string> UploadFileAsync(string path, IFormFile file, int maxFileSizeInBytes = 0, CancellationToken cancellationToken = default);
         public void DeleteFile(string path);
+        public Task<Stream> GetFileAsStreamAsync(string path, CancellationToken cancellationToken = default);
     }
 }

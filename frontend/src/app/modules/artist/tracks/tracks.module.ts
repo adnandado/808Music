@@ -25,6 +25,7 @@ import {MatSelect} from '@angular/material/select';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {NgxAudioPlayerModule} from '@khajegan/ngx-audio-player';
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
+import {AppModule} from "../../../app.module";
 
 
 @NgModule({
@@ -33,37 +34,40 @@ import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocom
     TracksLayoutComponent,
     TracksCreateOrEditComponent
   ],
-    imports: [
-        CommonModule,
-        TracksRoutingModule,
-        MatIcon,
-        MatButton,
-        MatIconButton,
-        MatTable,
-        MatColumnDef,
-        MatHeaderCell,
-        MatCell,
-        MatHeaderCellDef,
-        MatCellDef,
-        MatHeaderRow,
-        MatRow,
-        MatRowDef,
-        MatHeaderRowDef,
-        SharedModule,
-        MatAnchor,
-        MatDatepicker,
-        MatDatepickerInput,
-        MatDatepickerToggle,
-        MatFormField,
-        MatInput,
-        MatOption,
-        MatSelect,
-        MatSuffix,
-        MatSlideToggle,
-        NgxAudioPlayerModule,
-        MatAutocomplete,
-        MatAutocompleteTrigger
-    ],
+  imports: [
+    CommonModule,
+    TracksRoutingModule,
+    MatIcon,
+    MatButton,
+    MatIconButton,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRow,
+    MatRow,
+    MatRowDef,
+    MatHeaderRowDef,
+    SharedModule,
+    MatAnchor,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatFormField,
+    MatInput,
+    MatOption,
+    MatSelect,
+    MatSuffix,
+    MatSlideToggle,
+    NgxAudioPlayerModule,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+  ],
+  exports: [
+    TracksListComponent
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TracksModule { }

@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+  color: white;
+}
+
+.base-page {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  padding: 2vh;
+}
+
+.routed-content {
+  flex-basis: 72vw;
+}
+
+.player {
+  height: 98vh;
+  overflow-y: auto;
+}
