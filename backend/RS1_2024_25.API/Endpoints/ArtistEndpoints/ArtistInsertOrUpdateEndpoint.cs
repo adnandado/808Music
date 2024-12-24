@@ -45,7 +45,7 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
 
             if(request.ProfilePhoto != null)
             {
-                profilePhotoPath = await fh.UploadFile(@"wwwroot\Images\ArtistPfps", request.ProfilePhoto!, 0, cancellationToken);
+                profilePhotoPath = await fh.UploadFileAsync(@"wwwroot\Images\ArtistPfps", request.ProfilePhoto!, 0, cancellationToken);
                 if(profilePhotoPath == string.Empty)
                 {
                     return BadRequest("Issue with files");
@@ -53,7 +53,7 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
             }
             if (request.ProfilePhoto != null)
             {
-                profileBackgroundPath = await fh.UploadFile(@"wwwroot\Images\ArtistBgs", request.ProfileBackground!, 0, cancellationToken);
+                profileBackgroundPath = await fh.UploadFileAsync(@"wwwroot\Images\ArtistBgs", request.ProfileBackground!, 0, cancellationToken);
                 if (profileBackgroundPath == string.Empty)
                 {
                     return BadRequest("Issue with files");

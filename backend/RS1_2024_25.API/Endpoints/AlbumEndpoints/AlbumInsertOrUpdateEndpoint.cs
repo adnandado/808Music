@@ -58,7 +58,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 
             if(request.CoverImage != null)
             {
-                var path = await fh.UploadFile(@"wwwroot\Images\AlbumCovers", request.CoverImage, 0, cancellationToken);
+                var path = await fh.UploadFileAsync(@"wwwroot\Images\AlbumCovers", request.CoverImage, 0, cancellationToken);
                 if (path == string.Empty)
                 {
                     return BadRequest("Issue with file...");

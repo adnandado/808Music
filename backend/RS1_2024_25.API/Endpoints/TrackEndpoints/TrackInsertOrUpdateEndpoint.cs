@@ -59,7 +59,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 
             if (request.TrackFile != null)
             {
-                trackName = await fh.UploadFile(cfg["StaticFilePaths:Tracks"]!, request.TrackFile, 0, cancellationToken);
+                trackName = await fh.UploadFileAsync(cfg["StaticFilePaths:Tracks"]!, request.TrackFile, 0, cancellationToken);
                 if(trackName == string.Empty)
                 {
                     return BadRequest("Invalid track file!");

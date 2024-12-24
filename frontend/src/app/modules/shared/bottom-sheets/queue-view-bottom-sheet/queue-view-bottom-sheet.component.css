@@ -1,0 +1,43 @@
+.queue-remove-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 3px;
+  height: 7vh;
+}
+
+.queue-cover {
+  width: 44px;
+  height: 44px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+}
+
+.track-card {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+}
+
+.track-title {
+  font-size: 18px;
+}
+
+.position {
+  font-size: 13px;
+  color: #A9A9A9;
+}
+
+.queue-title {
+  padding: 0;
+  text-align: center;
+}
+
+.dual-control {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 10px;
+}

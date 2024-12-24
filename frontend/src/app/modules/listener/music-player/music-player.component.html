@@ -1,0 +1,46 @@
+<div class="music-player" [ngStyle]="musicPlayerService.queue.length > 0 ? {'display': 'flex'} : {'display': 'none'}">
+    <div class="now-playing">
+      <h3>Now playing...</h3>
+      <h6 [routerLink]="musicPlayerService.queueSource.value" routerLinkActive>{{musicPlayerService.queueSource.display}}</h6>
+    </div>
+
+    <div class="cover" [ngStyle]="{'background-image':'url('+MyConfig.api_address + track?.coverPath +')'}"></div>
+
+    <div class="music-info">
+      @if (track?.isExplicit)
+      {
+        <mat-icon>explicit</mat-icon>
+      }
+      <h6>{{track?.title}}</h6>
+      <app-clickable-featured-artists [artists]="track?.artists ?? null"></app-clickable-featured-artists>
+    </div>
+
+    <app-music-controller class="music-controls"></app-music-controller>
+
+    <div class="control-bar">
+      <button mat-icon-button matTooltip="Share" (click)="openShareSheet()">
+        <mat-icon>share</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Send to users">
+        <mat-icon>send</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Add to playlist">
+        <mat-icon>library_add</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Manage queue" (click)="openQueueManager()">
+        <mat-icon>queue_music</mat-icon>
+      </button>
+    </div>
+  <!--
+    <mat-form-field>
+      <input type="number" name="trackId" [(ngModel)]="newTrackId" matInput>
+
+    </mat-form-field>
+    <button mat-stroked-button (click)="setNewSong()">Add to queue</button>
+    -->
+</div>
+<div class="music-player music-player2" [ngStyle]="musicPlayerService.queue.length <= 0 ? {'display': 'flex'} : {'display': 'none'}">
+  <h3>Your queue is empty!</h3>
+  <mat-divider></mat-divider>
+  <h6>Explore your home page or search for songs to start a queue</h6>
+</div>

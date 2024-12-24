@@ -19,6 +19,22 @@ const routes: Routes = [
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)  // Lazy load  modula
   },
   {
+    path: 'artist',
+    loadChildren: () => import('./modules/artist/artist.module').then(m => m.ArtistModule)
+  },
+  {
+    path: 'public',
+    loadChildren: () => import('./modules/public/public.module').then(m => m.PublicModule)  // Lazy load  modula
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)  // Lazy load  modula
+  },
+  {
+    path: 'listener',
+    loadChildren: () => import('./modules/listener/listener.module').then(m => m.ListenerModule)  // Lazy load  modula
+  },
+  {
     path: 'artist/join',
     component: JoinArtistProfileComponent
   },
@@ -30,11 +46,9 @@ const routes: Routes = [
   component: StripeComponent
 },
   {
-    path: 'artist',
-    loadChildren: () => import('./modules/artist/artist.module').then(m => m.ArtistModule)
+    path: 'product-create',
+    component: ProductsCreateComponent
   },
-
-
   {
     path: 'product-list',
     component: ProductListComponent
@@ -42,14 +56,6 @@ const routes: Routes = [
   {
     path: 'please-wait-a-moment',
     component: PleaseWaitAMomentComponent
-  },
-  {
-    path: 'public',
-    loadChildren: () => import('./modules/public/public.module').then(m => m.PublicModule)  // Lazy load  modula
-  },
-  {
-    path: 'auth',
-    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)  // Lazy load  modula
   },
   {path: '**', redirectTo: 'public', pathMatch: 'full'}  // Default ruta koja vodi na public
 ];

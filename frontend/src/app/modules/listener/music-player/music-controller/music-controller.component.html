@@ -1,0 +1,51 @@
+<div class="music-controller">
+  <audio [src]="trackLocation + track?.id" id="player" (timeupdate)="setSliderValue($event)"
+         [autoplay]="playingState" (ended)="skipNext()"></audio>
+    <mat-slider min="0" [max]="track?.length" discrete class="seekable-slider" [displayWith]="secondsPipe.transform">
+      <input matSliderThumb (valueChange)="setCurrentPlaybackTime($event)" [(value)]="currentPlaybackTime" (dragEnd)="userSetSlider($event)">
+    </mat-slider>
+  <div class="track-duration-info">
+    <div>
+      {{ currentPlaybackTime | secondsToDurationString}}
+    </div>
+    <div>
+      {{track!.length | secondsToDurationString}}
+    </div>
+  </div>
+  <div class="control-bar">
+    <button mat-icon-button (click)="setLoopState()"><mat-icon>
+      @if (!player?.loop)
+      {
+        repeat
+      } @else {
+        repeat_on
+      }
+    </mat-icon></button>
+    <button mat-icon-button (click)="skipPrevious()"><mat-icon>skip_previous</mat-icon></button>
+    <div class="play-button" (click)="changePlayerState()">
+      <mat-icon>@if (playingState)
+      {
+        pause
+      } @else {
+        play_arrow
+      }
+      </mat-icon>
+    </div>
+    <button mat-icon-button (click)="skipNext()"><mat-icon>skip_next</mat-icon></button>
+    <button mat-icon-button (click)="setShuffleState()"><mat-icon>
+      @if(!isShuffled)
+      {
+        shuffle
+      } @else {
+        shuffle_on
+      }
+    </mat-icon></button>
+  </div>
+  <div class="volume-slider">
+    <button mat-icon-button matTooltip="Mute" (click)="setVolume(0)"><mat-icon>volume_mute</mat-icon></button>
+    <mat-slider min="0" max="100" discrete class="volume">
+      <input matSliderThumb (dragEnd)="setVolume($event.value/100)" [value]="player!.volume*100">
+    </mat-slider>
+    <button mat-icon-button matTooltip="Max volume" (click)="setVolume(1)"><mat-icon>volume_up</mat-icon></button>
+  </div>
+</div>

@@ -61,4 +61,5 @@ table p {
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
+  padding-right: 5px;
 }

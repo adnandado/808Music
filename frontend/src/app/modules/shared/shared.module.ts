@@ -50,9 +50,14 @@ import {NgxAudioPlayerModule} from '@khajegan/ngx-audio-player';
 import { MyMatArtistAutocompleteComponent } from './inputs/my-mat-artist-autocomplete/my-mat-artist-autocomplete.component';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import { StripeComponent } from './stripe/stripe.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { PlaylistCardComponent } from './playlist-card/playlist-card.component';
-import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
+import {AppModule} from '../../app.module';
+import {SecondsToDurationStringPipe} from '../../services/pipes/seconds-to-string.pipe';
+import {LongDurationStringPipe} from '../../services/pipes/long-duration-string.pipe';
+import { QueueViewBottomSheetComponent } from './bottom-sheets/queue-view-bottom-sheet/queue-view-bottom-sheet.component';
+import {MatNavList} from '@angular/material/list';
+import {MatDivider} from '@angular/material/divider';
+import { ShareBottomSheetComponent } from './bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
+import {QRCodeModule} from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -70,10 +75,11 @@ import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/
     SearchBarComponent,
     MusicTrackDragzoneComponent,
     MyMatArtistAutocompleteComponent,
+    SecondsToDurationStringPipe,
+    LongDurationStringPipe,
     StripeComponent,
-    SidenavComponent,
-    PlaylistCardComponent,
-    DeleteConfirmationDialogComponent
+    QueueViewBottomSheetComponent,
+    ShareBottomSheetComponent // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
     CommonModule,
@@ -117,7 +123,10 @@ import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/
     NgxAudioPlayerModule,
     MatAutocomplete,
     MatAutocompleteTrigger,
-    MatOption
+    MatOption,
+    MatNavList,
+    MatDivider,
+    QRCodeModule,
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
@@ -133,9 +142,9 @@ import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/
     MusicTrackDragzoneComponent,
     MyMatArtistAutocompleteComponent,
     StripeComponent,
-    SidenavComponent,
-    PlaylistCardComponent,
-    DeleteConfirmationDialogComponent
+    ClickableFeaturedArtistsComponent,
+    SecondsToDurationStringPipe,
+    LongDurationStringPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
