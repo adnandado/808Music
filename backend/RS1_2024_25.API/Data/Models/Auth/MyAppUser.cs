@@ -17,6 +17,7 @@ public class MyAppUser
     public string LastName { get; set; }
     public string Email { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public ICollection<UserPlaylist> UserPlaylists { get; set; }
 
     [ForeignKey(nameof(Country))]
     public int CountryId { get; set; }

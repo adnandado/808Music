@@ -5,12 +5,14 @@
   justify-content: flex-start;
   width: 60px;
   height: 100vh;
-  background-color: palevioletred;
+  background-color: #E692F8;
   color: white;
   align-items: center;
   z-index: 1000;
-  margin-right: 30px;
+  margin-right: 30px; /* Možete smanjiti ovu vrijednost ako želite manji razmak s desne strane */
   overflow: visible;
+  left: 0; /* Dodano da bude uvijek fiksiran lijevo */
+  top: 0;  /* Dodano da bude fiksiran na vrhu */
 }
 
 .sidenav-icons {
@@ -23,7 +25,7 @@
 
 .sidenav-icons button {
   font-size: 21px;
-  background: #d85f8d;
+  background: #E178F7;
   border: none;
   cursor: pointer;
   padding: 10px;
@@ -37,7 +39,7 @@
 }
 
 .sidenav-icons button:hover {
-  background-color: #c15679;
+  background-color: #E178F7;
 }
 
 .mat-icon {
@@ -129,3 +131,9 @@
   border-top: 1px solid #ccc;
   margin: 10px 0;
 }
+
+/* Dodajte marginu desnom sadržaju da ne ulazi u sidenav */
+body {
+  margin-left: 60px; /* Ovdje možete promijeniti marginu da bude odgovarajući razmak od sidenav-a */
+}
+

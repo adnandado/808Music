@@ -36,6 +36,7 @@ export class ProductListComponent implements OnInit {
       this.errorMessage = 'No artist selected';
       this.loading = false;
     }
+    console.log('PlaylistListMaterialComponent initialized');
   }
 
   viewProduct(slug: string): void {

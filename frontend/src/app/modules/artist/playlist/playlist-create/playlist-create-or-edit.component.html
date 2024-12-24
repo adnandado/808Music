@@ -1,0 +1,42 @@
+<div class="base-page">
+  <div class="dual-control">
+    <a mat-icon-button routerLink="/artist/playlist">
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+    <h1>{{ playlist.id ? 'Edit Playlist' : 'Create New Playlist' }}</h1>
+  </div>
+  <form class="artistForm">
+    <div *ngIf="playlist.coverPath" [ngStyle]="{'width':'100%'}">
+      <h6>Current Cover</h6>
+      <div class="current-cover" [ngStyle]="{'background-image': 'url(' + getPath() + ')'}"></div>
+    </div>
+    <div [ngStyle]="{'margin-bottom': '33vh'}">
+      <h6>New Cover</h6>
+      <app-artist-pic-dragzone title="Cover" type="banner"
+                               (imageEmit)="selectCoverFile($event)" [control]="playlist.id"></app-artist-pic-dragzone>
+    </div>
+
+    <div [ngStyle]="{'width':'100%'}">
+      <h6>Title*</h6>
+      <mat-form-field class="artist-name" [ngStyle]="{'width':'100%'}">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="playlist.title" placeholder="Enter a title for your playlist" name="title" id="title">
+      </mat-form-field>
+    </div>
+
+    <div [ngStyle]="{'width':'100%'}">
+      <h6>Is Public*</h6>
+      <mat-slide-toggle [(ngModel)]="playlist.isPublic" name="isPublic">Public</mat-slide-toggle>
+    </div>
+
+    <div class="controls">
+      <a mat-button routerLink="/artist/playlist">
+        Cancel
+      </a>
+      <button mat-flat-button type="submit" (click)="createOrUpdatePlaylist()">
+        <ng-container *ngIf="playlist.id">Update</ng-container>
+        <ng-container *ngIf="!playlist.id">Create</ng-container>
+      </button>
+    </div>
+  </form>
+</div>

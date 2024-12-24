@@ -699,12 +699,6 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<int>("PlaylistId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsFavorite")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsOwner")
-                        .HasColumnType("bit");
-
                     b.HasKey("MyAppUserId", "PlaylistId");
 
                     b.HasIndex("PlaylistId");

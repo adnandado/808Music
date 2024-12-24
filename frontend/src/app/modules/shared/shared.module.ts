@@ -51,6 +51,8 @@ import { MyMatArtistAutocompleteComponent } from './inputs/my-mat-artist-autocom
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import { StripeComponent } from './stripe/stripe.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { PlaylistCardComponent } from './playlist-card/playlist-card.component';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MusicTrackDragzoneComponent,
     MyMatArtistAutocompleteComponent,
     StripeComponent,
-    SidenavComponent // Dodajemo UnauthorizedComponent u deklaracije
+    SidenavComponent,
+    PlaylistCardComponent,
+    DeleteConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
@@ -129,7 +133,9 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MusicTrackDragzoneComponent,
     MyMatArtistAutocompleteComponent,
     StripeComponent,
-    SidenavComponent
+    SidenavComponent,
+    PlaylistCardComponent,
+    DeleteConfirmationDialogComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

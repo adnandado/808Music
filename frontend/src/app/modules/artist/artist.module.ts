@@ -41,6 +41,7 @@ import {MatSelect} from "@angular/material/select";
 import {MatTooltip} from "@angular/material/tooltip";
 import { JoinArtistProfileComponent } from './join-artist-profile/join-artist-profile.component';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import {PlaylistCreateOrEditComponent} from './playlist/playlist-create/playlist-create-or-edit.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { ProductDetailsComponent } from './products/product-details/product-deta
     ArtistCreateOrEditComponent,
     ManageUsersComponent,
     JoinArtistProfileComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
   ],
     imports: [
         CommonModule,

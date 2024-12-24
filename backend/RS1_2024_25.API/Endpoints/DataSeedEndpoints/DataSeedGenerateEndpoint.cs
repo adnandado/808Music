@@ -122,7 +122,7 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             },
             new Artist
             {
-                Name = "Bruno Mars",
+                Name = "MF DOOM",
                 Bio = "bio of artist 3"
             }
         };

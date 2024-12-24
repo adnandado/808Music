@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import {ArtistHandlerService} from '../../../services/artist-handler.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class SidenavComponent {
   isMenuVisible: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private artistHandlerService: ArtistHandlerService) {}
 
   toggleMenu(): void {
     console.log('Toggling menu visibility...');
@@ -17,7 +18,19 @@ export class SidenavComponent {
   }
 
   navigateTo(destination: string): void {
-    this.router.navigate([destination]);
+    if (destination === 'products') {
+      const selectedArtistName = this.artistHandlerService.getSelectedArtist();
+      console.log('Selected Artist Name:', selectedArtistName);
+
+      if (selectedArtistName) {
+        this.router.navigate([`/artist/${selectedArtistName.name}/products`]);
+      } else {
+        console.error('No artist selected');
+        alert('No artist selected.');
+      }
+    } else {
+      this.router.navigate([destination]);
+    }
     this.isMenuVisible = false;
   }
 

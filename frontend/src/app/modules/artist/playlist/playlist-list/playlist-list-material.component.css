@@ -1,0 +1,82 @@
+* {
+  color: white;
+  box-sizing: border-box;
+  margin-left: 25px;
+}
+
+.flex-page {
+  display: flex;
+  justify-content: space-between;  /* Raspodjela prostora između lijevog i desnog dijela */
+  flex-direction: row;  /* Omogućava horizontalno postavljanje */
+  padding: 0;
+  height: 100vh;  /* Postavlja visinu na cijeli ekran */
+  overflow-y: hidden;
+}
+
+.select-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+app-album-card {
+  width: 10vw;
+}
+
+.flex-container {
+  position: relative;
+  align-items: end;
+  flex-grow: 0;
+  flex-basis: auto;
+}
+
+mat-paginator {
+  border-radius: 15px;
+}
+
+div > h6 {
+  color: #EEDEE7;
+  font-size: 20px;
+}
+
+.dual-control {
+  display: flex;
+  gap: 20px;
+}
+
+.title > h1 {
+  padding-top: 1vh;
+}
+
+.flex-side {
+  flex-basis: 35vw;  /* Desni dio zauzima 35% širine */
+  height: auto;
+  display: block;
+}
+
+@media only screen and (max-width: 1300px) {
+  app-album-card {
+    width: 15vw;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  app-album-card {
+    width: 25vw;
+  }
+}
+.playlist-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.mat-menu-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.more-options {
+  cursor: pointer;
+}

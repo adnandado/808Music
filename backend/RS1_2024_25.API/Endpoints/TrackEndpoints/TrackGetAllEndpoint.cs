@@ -7,7 +7,9 @@ using RS1_2024_25.API.Helper.Api;
 
 namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 {
-    public class TrackGetAllEndpoint(ApplicationDbContext db, IConfiguration cfg) : MyEndpointBaseAsync.WithRequest<TrackGetAllRequest>.WithActionResult<MyPagedList<TrackGetResponse>>
+    public class TrackGetAllEndpoint(ApplicationDbContext db, IConfiguration cfg) : MyEndpointBaseAsync
+        .WithRequest<TrackGetAllRequest>
+        .WithActionResult<MyPagedList<TrackGetResponse>>
     {
         [Authorize]
         [HttpGet]

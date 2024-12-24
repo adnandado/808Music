@@ -21,7 +21,6 @@ export class ProductGetByArtistIdService {
 
   constructor(private http: HttpClient) {}
 
-  // Funkcija za dobijanje proizvoda prema artistId
   getProductsByArtist(artistId: number): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/${artistId}`);
   }

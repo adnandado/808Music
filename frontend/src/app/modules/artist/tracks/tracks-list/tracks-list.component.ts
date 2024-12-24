@@ -16,7 +16,7 @@ import {MyPagedList} from '../../../../services/auth-services/dto/my-paged-list'
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 @Component({
-  selector: 'app-tracks-list',
+  selector: 'app-tracks-page',
   templateUrl: './tracks-list.component.html',
   styleUrl: './tracks-list.component.css',
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}]

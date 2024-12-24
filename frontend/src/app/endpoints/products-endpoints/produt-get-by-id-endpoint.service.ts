@@ -16,7 +16,6 @@ export interface ProductGetResponse {
   artistName?: string;
 }
 
-// Produkt servis koji već podržava artist podatke
 @Injectable({
   providedIn: 'root'
 })

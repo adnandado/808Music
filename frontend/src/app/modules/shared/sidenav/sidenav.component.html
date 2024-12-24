@@ -10,10 +10,10 @@
     <button mat-icon-button routerLink="/search" aria-label="Search">
       <mat-icon>search</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/product-list" aria-label="Shopping Cart">
+    <button mat-icon-button (click)="navigateTo('products')" aria-label="Shopping Cart">
       <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/playlist" aria-label="Playlists">
+    <button mat-icon-button routerLink="/artist/playlist" aria-label="Playlists">
       <mat-icon>library_music</mat-icon>
     </button>
     <button mat-icon-button routerLink="/library" aria-label="Library">
@@ -41,7 +41,7 @@
         <li (click)="navigateTo('settings')">Settings</li>
         <hr />
         <li (click)="navigateTo('artist')">808 for Artist</li>
-        <li>Log Out</li>
+        <li (click)="navigateTo('/auth/logout')">Log Out</li>
       </ul>
     </div>
   </div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Data.Models.Auth;
+using RS1_2024_25.API.Data.Models.Stripe;
 
 namespace RS1_2024_25.API.Data
 {
@@ -29,6 +30,10 @@ namespace RS1_2024_25.API.Data
         public DbSet<MyRefreshToken> MyRefreshTokens { get; set; }
         public DbSet<MyResetToken> MyResetTokens { get; set; }
         public DbSet<MyUserArtistInvite> MyUserArtistInvites { get; set; }
+        public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
+        public DbSet<UserPlaylist> UserPlaylist { get; set; }
+        public DbSet<PlaylistTracks> PlaylistTracks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

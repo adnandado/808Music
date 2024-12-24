@@ -1,0 +1,39 @@
+<div class="base-page flex-page">
+  <div class="select-page">
+    <app-sidenav></app-sidenav>
+    <div class="title">
+      <h1>Your playlists</h1>
+    </div>
+
+    <div class="flex-controls">
+      <mat-card appearance="outlined" class="artist-card add-new-card" (click)="createPlaylist()">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>New Playlist</mat-card-title>
+            <mat-icon>add_circle</mat-icon>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content></mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="flex-container">
+      <div *ngFor="let playlist of playlists || []">
+        <app-playlist-card [title]="playlist.title"
+                           [imageUrl]="MyConfig.media_address + playlist.coverPath"
+                           [username]="playlist.username"
+                           [id]="playlist.id"
+                           [hasControls]="true"
+                           (onDelete)="deletePlaylist(playlist.id)"
+                           (onEdit)="editPlaylist(playlist.id)"
+                           (onClick)="openPlaylist(playlist.id)">
+        </app-playlist-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Router outlet should be on the right side -->
+  <div class="flex-side">
+    <router-outlet></router-outlet>
+  </div>
+</div>
