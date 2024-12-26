@@ -1,0 +1,81 @@
+<app-sidenav></app-sidenav>
+<div class="tracks-page">
+  <div class="tracks-list">
+    <div class="track-page-controls">
+      <button mat-icon-button class="go-back-button" (click)="goBack()">
+        <mat-icon class="go-back-arrow">arrow_back</mat-icon>
+      </button>
+      <div class="dual-control">
+        <button mat-stroked-button>Cancel</button>
+        <button mat-flat-button>Save changes
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="playlist-info">
+      <div class="playlist-cover" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + playlistDetails?.coverPath + ')'}"></div>
+      <div class="playlist-details">
+        <mat-icon *ngIf="playlist?.tracks">explicit</mat-icon>
+        <div>
+          <h2 class="playlist-title">{{ playlistDetails?.title }}</h2>
+          <h6>{{ username }}</h6>
+          <p>{{ playlistDetails?.numOfTracks }} tracks • {{ getTotalTrackLength() }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="playlist-actions">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="deletePlaylist()">
+          Delete this playlist
+        </button>
+        <button mat-menu-item (click)="sharePlaylist()">
+          Share this playlist
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="search-bar">
+      <mat-form-field class="full-width">
+        <mat-label>Search tracks</mat-label>
+        <input matInput placeholder="Search tracks" [formControl]="searchControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addTrackToPlaylist($event.option.value)">
+          <mat-option *ngFor="let track of filteredTracks" [value]="track.id">
+            {{ track.title }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <div class="tracks">
+      <h3>Tracks</h3>
+      <div class="track-header">
+        <div class="track-header-item">#</div>
+        <div class="track-header-item">Track</div>
+        <div class="track-header-item">Length</div>
+        <div class="track-header-item">Streams</div>
+      </div>
+      <ul class="track-list">
+        <li *ngFor="let track of playlist?.tracks; let i = index" class="track-item">
+          <div class="track-number">{{ i + 1 }}</div>
+          <div class="track-details">
+            <div class="track-cover-container">
+              <img [src]="coverPaths[track.id]" alt="Track Cover" *ngIf="coverPaths[track.id]" />
+              <mat-icon *ngIf="showDeleteIcon" class="delete-icon" (click)="removeTrack(track.id)">delete</mat-icon>
+            </div>
+            <div class="track-info">
+              <h4>{{ track.title }}</h4>
+            </div>
+          </div>
+          <div class="track-duration">{{ track.length }}s</div>
+          <div class="track-streams">{{ track.streams }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="side-island"></div>
+</div>

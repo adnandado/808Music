@@ -17,7 +17,7 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import {MusicPlayerService} from '../../../../services/music-player.service';
 
 @Component({
-  selector: 'app-tracks-list',
+  selector: 'app-tracks-page',
   templateUrl: './tracks-list.component.html',
   styleUrl: './tracks-list.component.css',
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}]

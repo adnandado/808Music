@@ -1,7 +1,7 @@
 <div class="stripe-container">
-  <h2></h2>
+  <h2>Payment Form</h2>
 
-  <form (ngSubmit)="handleSubmit(amount)">
+  <form (ngSubmit)="handleSubmit()">
     <label for="amount">Amount (in EUR):</label>
     <input
       type="number"
@@ -11,12 +11,24 @@
       required
       min="1"
     />
-    <div id="card-element">
+
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      id="email"
+      [(ngModel)]="email"
+      name="email"
+      required
+      [class.invalid]="!isEmailValid() && email.length > 0"
+    />
+    <div *ngIf="!isEmailValid() && email.length > 0" class="error-message">
+      Please enter a valid email address.
     </div>
-    <button type="submit" [disabled]="!amount">Submit Payment</button>
+
+    <div id="card-element"></div>
+
+    <button type="submit" [disabled]="!amount || !email || !isEmailValid()">Submit Payment</button>
   </form>
-
-
 
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}

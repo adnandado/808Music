@@ -10,7 +10,7 @@ export class StripeService {
 
   constructor(private http: HttpClient) {}
 
-  createPaymentIntent(amount: number): Observable<any> {
-    return this.http.post(this.apiUrl, { amount });
+  createPaymentIntent(amount: number, email: string): Observable<any> {
+    return this.http.post(this.apiUrl, { amount, email});
   }
 }

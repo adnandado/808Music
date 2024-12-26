@@ -24,7 +24,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(config.GetConnectionString("db1")));
 
-builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -78,6 +77,7 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 builder.Services.AddTransient<MyAuthService>();
 builder.Services.AddTransient<IMyFileHandler,FileHandler>();
 builder.Services.AddTransient<TokenProvider>();
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 builder.Services.AddTransient<IMyMailService, MailService>();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 builder.Services.AddTransient<DeleteService>();

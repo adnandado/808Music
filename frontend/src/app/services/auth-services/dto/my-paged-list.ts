@@ -6,4 +6,5 @@ export interface MyPagedList<T> {
   totalCount: number;
   hasPrevious: boolean;
   hasNext: boolean;
+
 }

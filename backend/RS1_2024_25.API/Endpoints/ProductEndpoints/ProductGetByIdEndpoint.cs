@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper.Api;
-using static RS1_2024_25.API.Endpoints.CityEndpoints.ProductGetByIdEndpoint;
-
-namespace RS1_2024_25.API.Endpoints.CityEndpoints;
+using static ProductGetByIdEndpoint;
 
 public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<string>
@@ -16,6 +14,7 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
         var product = await db.Products
                             .Where(p => p.Slug == slug)
                             .Include(p => p.Photos)
+                            .Include(p => p.Artist) 
                             .Select(p => new ProductGetByIdResponse
                             {
                                 ID = p.Id,
@@ -24,7 +23,9 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
                                 Quantity = p.QtyInStock,
                                 isDigital = p.IsDigital,
                                 Slug = p.Slug,
-                                PhotoPaths = p.Photos.Select(photo => photo.Path).ToList()
+                                PhotoPaths = p.Photos.Select(photo => photo.Path).ToList(),
+                                ArtistName = p.Artist.Name,  
+                                ArtistPhoto = p.Artist.ProfilePhotoPath 
                             })
                             .FirstOrDefaultAsync(x => x.Slug == slug, cancellationToken);
 
@@ -41,7 +42,9 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
         public required float Price { get; set; }
         public int Quantity { get; set; }
         public bool isDigital { get; set; }
-        public string Slug { get; set; }  // Dodajemo Slug u klasu
+        public string Slug { get; set; }
         public List<string> PhotoPaths { get; set; } = new();
+        public string ArtistName { get; set; } 
+        public string ArtistPhoto { get; set; }
     }
 }

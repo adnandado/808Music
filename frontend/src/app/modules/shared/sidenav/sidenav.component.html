@@ -1,0 +1,48 @@
+<div class="sidenav">
+  <div class="logo-container">
+    <img class="logo-image" src="https://cdn-0001.qstv.on.epicgames.com/tFaisIxoSaCVPpPxIm/image/screen_comp.jpeg" alt="Logo">
+    <hr class="divider">
+  </div>
+  <div class="sidenav-icons">
+    <button mat-icon-button routerLink="public/home" aria-label="Home">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/search" aria-label="Search">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button (click)="navigateTo('products')" aria-label="Shopping Cart">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/artist/playlist" aria-label="Playlists">
+      <mat-icon>library_music</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/library" aria-label="Library">
+      <mat-icon>library_books</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/notifications" aria-label="Notifications">
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/social" aria-label="Socials">
+      <mat-icon>textsms</mat-icon>
+    </button>
+  </div>
+  <div class="profile-container">
+    <img
+      class="profile-picture"
+      src="https://cdn-0001.qstv.on.epicgames.com/tFaisIxoSaCVPpPxIm/image/screen_comp.jpeg"
+      alt="Profile Picture"
+      (click)="toggleMenu()"
+    />
+    <div class="profile-menu" [ngClass]="{'show': isMenuVisible}">
+      <ul>
+        <li (click)="navigateTo('profile')">Profile</li>
+        <li (click)="navigateTo('account')">Account</li>
+        <li (click)="navigateTo('subscriptions')">Subscriptions</li>
+        <li (click)="navigateTo('settings')">Settings</li>
+        <hr />
+        <li (click)="navigateTo('artist')">808 for Artist</li>
+        <li (click)="navigateTo('/auth/logout')">Log Out</li>
+      </ul>
+    </div>
+  </div>
+</div>

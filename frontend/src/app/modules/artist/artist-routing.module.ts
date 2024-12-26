@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {Router, RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from '../public/home/home.component';
 import {AdminLayoutComponent} from '../admin/admin-layout/admin-layout.component';
 import {AlbumCreateComponent} from './album/album-create/album-create.component';
@@ -11,6 +11,12 @@ import {AlbumListMaterialComponent} from './album/album-list-material/album-list
 import {ArtistCreateOrEditComponent} from './artist-create-or-edit/artist-create-or-edit.component';
 import {ManageUsersComponent} from './manage-users/manage-users.component';
 import {JoinArtistProfileComponent} from './join-artist-profile/join-artist-profile.component';
+import {ProductsCreateComponent} from './products/products-create/products-create.component';
+import {ProductListComponent} from './products/product-list/product-list.component';
+import {ArtistHandlerService} from '../../services/artist-handler.service';
+import {ProductAddEndpointService} from '../../endpoints/products-endpoints/product-create-endpoint.service';
+import {PlaylistCreateOrEditComponent} from './playlist/playlist-create/playlist-create-or-edit.component';
+
 
 const routes: Routes = [
   {
@@ -24,12 +30,29 @@ const routes: Routes = [
       {
         path: 'tracks',
         loadChildren: () => import("./tracks/tracks.module").then(m => m.TracksModule)
-      }
+      },
+      {
+        path: 'playlist',
+        loadChildren: () => import("./playlist/playlist.module").then(m => m.PlaylistModule)
+      },
     ]
   },
   {
     path: 'create',
     component: AlbumCreateComponent
+  },
+  {
+  path: 'playlist-create',
+  component: PlaylistCreateOrEditComponent
+  },
+  {
+    path: 'product-create',
+    component: ProductsCreateComponent
+  },
+
+  {
+    path: ':artistName/products',
+    component: ProductListComponent
   },
   {
     path: 'edit/:id',

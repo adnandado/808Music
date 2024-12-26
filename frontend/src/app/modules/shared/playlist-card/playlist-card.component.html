@@ -1,0 +1,23 @@
+<mat-card appearance="outlined" class="playlist-mat-card"
+          [matTooltip]="tooltip"
+          matTooltipPosition="above"
+          matTooltipShowDelay="500" matTooltipHideDelay="250" >
+  <img [src]="imageUrl" matCardImage alt="Playlist Cover" (click)="openPlaylist()" (error)="replaceWithPlaceholder()" id="thumbnail">
+  <mat-card-header class="playlist-mat-card-header">
+    <mat-card-title class="playlist-mat-card-title" (click)="emitClick()">{{getTitle()}}</mat-card-title>
+    <mat-card-subtitle class="playlist-mat-card-subtitle">{{subtitle}}</mat-card-subtitle>
+    <mat-card-subtitle class="playlist-author" (click)="openPlaylist()">by {{getAuthor()}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions *ngIf="hasControls" class="playlist-mat-card-controls">
+    <button mat-icon-button (click)="emitDelete()">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button (click)="emitStats()">
+      <mat-icon>bar_chart</mat-icon>
+    </button>
+    <button mat-icon-button (click)="emitEdit()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-card-actions>
+  <mat-card-content *ngIf="!hasControls"></mat-card-content>
+</mat-card>

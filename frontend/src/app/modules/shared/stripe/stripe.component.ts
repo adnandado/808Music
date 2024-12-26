@@ -12,6 +12,7 @@ export class StripeComponent implements OnInit {
   elements: StripeElements | null = null;
   card: StripeCardElement | null = null;
   amount: number = 0;
+  email: string = '';
   errorMessage: string = '';
   paymentSuccess: boolean = false;
 
@@ -26,7 +27,13 @@ export class StripeComponent implements OnInit {
     }
   }
 
-  async handleSubmit(amount: number): Promise<void> {
+  // Validacija emaila
+  isEmailValid(): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(this.email);
+  }
+
+  async handleSubmit(): Promise<void> {
     if (!this.stripe || !this.elements || !this.card) {
       return;
     }
@@ -36,15 +43,19 @@ export class StripeComponent implements OnInit {
     const expiryDatePattern = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
     const cvcPattern = /^\d{3,4}$/;
 
-    // Provjeravamo da li je amount validan i pretvaramo u centima (100 centi = 1 EUR)
-    if (amount <= 0) {
+    if (this.amount <= 0) {
       this.errorMessage = 'Amount must be greater than 0.';
       return;
     }
-    const amountInCents = Math.round(amount * 100);
 
-    // Pozovi backend za kreiranje PaymentIntent-a
-    this.stripeService.createPaymentIntent(amountInCents).subscribe(
+    if (!this.isEmailValid()) {
+      this.errorMessage = 'Please enter a valid email address.';
+      return;
+    }
+
+    const amountInCents = Math.round(this.amount * 100);
+
+    this.stripeService.createPaymentIntent(amountInCents, this.email).subscribe(
       async (response) => {
         const clientSecret = response.clientSecret;
 

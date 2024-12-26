@@ -1,0 +1,54 @@
+.playlist-mat-card:hover > mat-card-actions {
+  opacity: 1;
+  transition: 250ms opacity;
+  cursor: pointer;
+}
+
+.playlist-mat-card {
+  width: 175px;
+  transition: 250ms background-color;
+  overflow-x: hidden;
+  margin: 0 auto;
+}
+
+
+.playlist-mat-card:hover {
+  background-color: #4D3D50;
+  transition: 150ms background-color;
+  cursor: pointer;
+}
+
+.playlist-mat-card-controls {
+  opacity: 0;
+  transition: 150ms opacity;
+}
+
+.playlist-mat-card-subtitle {
+  color: #A9A9A9;
+  font-size: 14px;
+}
+
+.playlist-mat-card-title {
+  font-size: 20px;
+}
+
+.playlist-mat-card-title:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+.playlist-author {
+  color: #B0B0B0;
+  font-size: 12px;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+#thumbnail {
+  width: 100%;
+  height: 150px;
+  object-fit: inherit; /* Popunjava okvir slike bez izobličenja */
+  object-position: center; /* Fokus na sredinu slike */
+  display: block; /* Rješava eventualne razmake oko slike */
+  border-radius: 4px; /* Zaobljeni rubovi za estetiku */
+}
+

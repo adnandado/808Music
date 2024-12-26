@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {buildHttpParams} from '../../helper/http-params.helper';
 import {MyPagedList} from '../../services/auth-services/dto/my-paged-list';
+export type { TrackGetResponse } from './track-get-by-id-endpoint.service';
 
 export interface TrackGetAllRequest {
   pageNumber?: number;
@@ -29,4 +30,6 @@ export class TrackGetAllEndpointService implements MyBaseEndpointAsync<TrackGetA
       let params = buildHttpParams(request);
       return this.httpClient.get<MyPagedList<TrackGetResponse>>(this.url, {params});
     }
+
 }
+

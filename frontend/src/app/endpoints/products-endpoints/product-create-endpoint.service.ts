@@ -11,8 +11,7 @@ export interface ProductAddRequest {
   quantity: number;
   isDigital: boolean;
   photos?: File[];
-  photoPaths?: string[];
-  removePhotoIds?: number[];
+  artistId: number
 }
 
 export interface ProductAddResponse {
@@ -21,6 +20,7 @@ export interface ProductAddResponse {
   isDigital: boolean;
   price: number;
   slug: string;
+  artistId: number
 }
 
 @Injectable({
@@ -42,6 +42,7 @@ export class ProductAddEndpointService implements MyBaseEndpointAsync<ProductAdd
     formData.append('price', request.price.toString());
     formData.append('quantity', request.quantity.toString());
     formData.append('isDigital', request.isDigital.toString());
+    formData.append('artistId', request.artistId.toString());
 
     if (request.photos && request.photos.length > 0) {
       for (let i = 0; i < request.photos.length; i++) {

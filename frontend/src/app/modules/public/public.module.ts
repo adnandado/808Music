@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms';
 import { AlbumCreateComponent } from '../artist/album/album-create/album-create.component';
 import {MatAnchor, MatButton} from '@angular/material/button';
 import { NewHomeComponent } from './new-home/new-home.component';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,14 +23,15 @@ import { NewHomeComponent } from './new-home/new-home.component';
     PublicLayoutComponent,
     TravelsComponent,
     AlbumCreateComponent,
-    NewHomeComponent
+    NewHomeComponent,
   ],
   imports: [
     CommonModule,
     PublicRoutingModule,
     FormsModule,
     MatButton,
-    MatAnchor
+    MatAnchor,
+    SharedModule
   ],
 
 })

@@ -1,0 +1,139 @@
+.sidenav {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 60px;
+  height: 100vh;
+  background-color: #E692F8;
+  color: white;
+  align-items: center;
+  z-index: 1000;
+  margin-right: 30px; /* Možete smanjiti ovu vrijednost ako želite manji razmak s desne strane */
+  overflow: visible;
+  left: 0; /* Dodano da bude uvijek fiksiran lijevo */
+  top: 0;  /* Dodano da bude fiksiran na vrhu */
+}
+
+.sidenav-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.sidenav-icons button {
+  font-size: 21px;
+  background: #E178F7;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+.sidenav-icons button:hover {
+  background-color: #E178F7;
+}
+
+.mat-icon {
+  font-size: 22px;
+  color: #333333;
+}
+
+.logo-container {
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.logo-image {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.divider {
+  width: 80%;
+  border: 0;
+  border-top: 1px solid #333333;
+  margin: 0 auto;
+}
+
+.profile-container {
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+  position: relative;
+}
+
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333333;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-menu {
+  position: absolute;
+  bottom: 0;
+  left: 60px;
+  background-color: #333333;
+  color: white;
+  border-radius: 8px;
+  padding: 5px;
+  width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  text-align: left;
+  font-size: 15px;
+}
+
+.profile-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s linear 0s;
+}
+
+.profile-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-menu li:hover {
+  background-color: #656464;
+}
+
+.profile-menu hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+/* Dodajte marginu desnom sadržaju da ne ulazi u sidenav */
+body {
+  margin-left: 60px; /* Ovdje možete promijeniti marginu da bude odgovarajući razmak od sidenav-a */
+}
+

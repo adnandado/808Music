@@ -1,0 +1,132 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RS1_2024_25.API.Data;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
+using RS1_2024_25.API.Services.Interfaces;
+using RS1_2024_25.API.Data.Models;
+
+namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
+{
+    [ApiController]
+    [Route("api/playlists")]
+    public class PlaylistController : ControllerBase
+    {
+        private readonly ApplicationDbContext _db;
+        private readonly IConfiguration _cfg;
+        private readonly IMyFileHandler _fh;
+
+        public PlaylistController(ApplicationDbContext db, IConfiguration cfg, IMyFileHandler fh)
+        {
+            _db = db;
+            _cfg = cfg;
+            _fh = fh;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllPlaylistsAsync(CancellationToken cancellationToken = default)
+        {
+            var playlists = await _db.Playlists
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Title,
+                    p.NumOfTracks,
+                    p.IsPublic,
+                    p.CoverPath
+                })
+                .ToListAsync(cancellationToken);
+
+            return Ok(playlists);
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPlaylistByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var playlist = await _db.Playlists
+                .Where(p => p.Id == id)
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Title,
+                    p.NumOfTracks,
+                    p.IsPublic,
+                    p.CoverPath
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (playlist == null)
+            {
+                return NotFound($"Playlist with ID {id} not found.");
+            }
+
+            return Ok(playlist);
+        }
+
+        [HttpDelete]
+        [Route("playlists-delete/{id}")]
+        public async Task<IActionResult> DeletePlaylistAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var playlist = await _db.Playlists.FindAsync(id);
+
+            if (playlist == null)
+                return NotFound($"Playlist with ID {id} not found.");
+
+            var userPlaylists = _db.UserPlaylist.Where(up => up.PlaylistId == id);
+            _db.UserPlaylist.RemoveRange(userPlaylists);
+
+            var relatedTracks = _db.PlaylistTracks.Where(pt => pt.PlaylistId == id);
+            _db.PlaylistTracks.RemoveRange(relatedTracks);
+
+            if (!string.IsNullOrEmpty(playlist.CoverPath))
+            {
+                try
+                {
+                    _fh.DeleteFile(_cfg["StaticFilePaths:CoverImages"] + playlist.CoverPath);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"Error deleting cover image: {ex.Message}");
+                }
+            }
+
+            _db.Playlists.Remove(playlist);
+            await _db.SaveChangesAsync(cancellationToken);
+
+            return Ok();
+        }
+
+        [HttpDelete("{playlistId}/tracks/{trackId}")]
+        public async Task<IActionResult> RemoveTrackFromPlaylistAsync(int playlistId, int trackId, CancellationToken cancellationToken = default)
+        {
+            var playlistTrack = await _db.PlaylistTracks
+                .FirstOrDefaultAsync(pt => pt.PlaylistId == playlistId && pt.TrackId == trackId, cancellationToken);
+            var playlist = await _db.Playlists.FindAsync(playlistId);
+            if (playlistTrack == null)
+            {
+                return NotFound($"Track with ID {trackId} not found in playlist with ID {playlistId}.");
+            }
+
+            _db.PlaylistTracks.Remove(playlistTrack);
+            
+            playlist.NumOfTracks--;
+            _db.Playlists.Update(playlist);
+            try
+            {
+                await _db.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error removing track from playlist: {ex.Message}");
+
+            }
+
+            return NoContent();
+        }
+
+
+    }
+}
