@@ -21,6 +21,9 @@ export class MyUserAuthService {
   constructor(private httpClient: HttpClient,
               private router: Router,
               private myDialog: MatDialog,) {
+    setInterval(() => {
+      console.log(this.getAuthToken());
+    },60000)
   }
 
   isLoggedIn(): boolean {
@@ -64,7 +67,7 @@ export class MyUserAuthService {
       let auth: AuthTokenInfo = JSON.parse(tokenString);
       //Decode and check if the jwt has expired
       let decodedJwt = jwtDecode(auth!.token);
-      if(Date.now() > decodedJwt.exp! * 1000 && !dontRefresh) {
+      if(Date.now() + 5 * 60 * 1000 > decodedJwt.exp! * 1000 && !dontRefresh) {
         //if the caller doesn't want to refresh the token (ex. the http req interceptor)
         if(dontRefresh) {
           return null;
@@ -77,7 +80,10 @@ export class MyUserAuthService {
             window.location.reload();
           }
         });
-        this.router.navigate(["/please-wait-a-moment"]);
+        if(Date.now() > decodedJwt.exp! * 1000)
+        {
+          this.router.navigate(["/please-wait-a-moment"]);
+        }
       }
       return auth;
     }

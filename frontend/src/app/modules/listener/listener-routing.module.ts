@@ -5,6 +5,8 @@ import {ListenerLayoutComponent} from './listener-layout/listener-layout.compone
 import {NewHomeComponent} from '../public/new-home/new-home.component';
 import {ReleaseViewComponent} from './release-view/release-view.component';
 import {PlayTrackComponent} from './play-track/play-track.component';
+import {ArtistPageComponent} from './artist-page/artist-page.component';
+import {ArtistAlbumsListComponent} from './artist-albums-list/artist-albums-list.component';
 
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
@@ -17,6 +19,12 @@ const routes: Routes = [{
     },
     {
       path: 'track/:id', component: PlayTrackComponent
+    },
+    {
+      path: 'profile/:id', component: ArtistPageComponent
+    },
+    {
+      path: 'releases/:id', component: ArtistAlbumsListComponent
     }
   ]
 }];

@@ -40,6 +40,14 @@ export class MusicControllerComponent implements OnInit {
         }
       })
 
+      this.isShuffled = this.musicPlayerService.isShuffled;
+
+      this.musicPlayerService.shuffleToggled.subscribe({
+        next: value => {
+          this.isShuffled = value;
+        }
+      })
+
   }
 
   setCurrentPlaybackTime(e: number) {

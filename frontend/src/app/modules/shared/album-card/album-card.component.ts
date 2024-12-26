@@ -17,6 +17,10 @@ export class AlbumCardComponent {
   @Output() onStats: EventEmitter<number> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
   @Output() onClick: EventEmitter<number> = new EventEmitter();
+  @Output() onPlayClick: EventEmitter<number> = new EventEmitter();
+  playBtnStyle = {
+    'display': 'none',
+  }
 
   replaceWithPlaceholder() {
     document.getElementById("thumbnail")!.classList.add("album-mat-card-placeholder");
@@ -35,10 +39,27 @@ export class AlbumCardComponent {
   }
 
   getTitle() {
-    return this.title.length > 15 ? this.title.slice(0,10) + "..." : this.title;
+    return this.title.length > 16 ? this.title.slice(0,13) + "..." : this.title;
   }
 
   emitClick() {
     this.onClick.emit(this.id);
   }
+
+  showPlayButton() {
+    this.playBtnStyle = {
+      'display': 'block',
+    }
+  }
+
+  hidePlayButton() {
+    this.playBtnStyle = {
+      'display': 'none',
+    }
+  }
+
+  emitPlayClick() {
+    this.onPlayClick.emit(this.id);
+  }
+
 }

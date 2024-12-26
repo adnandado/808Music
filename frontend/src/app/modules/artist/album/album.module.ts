@@ -34,46 +34,49 @@ import {MatOption, MatSelect} from '@angular/material/select';
 
 
 @NgModule({
-  declarations: [
-    AlbumListMaterialComponent,
-    AlbumCreateOrEditComponent
-  ],
-  imports: [
-    CommonModule,
-    AlbumRoutingModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatAnchor,
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardTitleGroup,
-    MatIcon,
-    MatCardImage,
-    MatCardActions,
-    MatButton,
-    MatCardSmImage,
-    SharedModule,
-    MatChipListbox,
-    MatChipOption,
-    MatDivider,
-    MatCheckbox,
-    MatFabButton,
-    MatFormField,
-    MatInput,
-    MatDatepickerToggle,
-    MatDatepicker,
-    MatDatepickerInput,
-    MatSelect,
-    MatOption,
-    MatCalendar,
-    MatDatepickerContent,
-    MatSuffix,
-    MatIconButton,
-    MatIconAnchor
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    declarations: [
+        AlbumListMaterialComponent,
+        AlbumCreateOrEditComponent
+    ],
+    imports: [
+        CommonModule,
+        AlbumRoutingModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatAnchor,
+        MatCard,
+        MatCardContent,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardTitleGroup,
+        MatIcon,
+        MatCardImage,
+        MatCardActions,
+        MatButton,
+        MatCardSmImage,
+        SharedModule,
+        MatChipListbox,
+        MatChipOption,
+        MatDivider,
+        MatCheckbox,
+        MatFabButton,
+        MatFormField,
+        MatInput,
+        MatDatepickerToggle,
+        MatDatepicker,
+        MatDatepickerInput,
+        MatSelect,
+        MatOption,
+        MatCalendar,
+        MatDatepickerContent,
+        MatSuffix,
+        MatIconButton,
+        MatIconAnchor
+    ],
+    exports: [
+        AlbumListMaterialComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AlbumModule { }

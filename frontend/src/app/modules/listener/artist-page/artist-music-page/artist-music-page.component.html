@@ -1,0 +1,97 @@
+<div class="artist-music-page">
+  <div class="lander">
+    <div class="spotlight">
+      <h5>SPOTLIGHT</h5>
+      <div class="album-cover" [ngStyle]="{'background-image':'url('+MyConfig.api_address+featuredAlbum?.coverArt +')'}">
+      </div>
+      <div class="album-cover banner-gradient">
+        <div class="spotlight-info">
+        <h6>{{getTitle(featuredAlbum?.title)}}</h6>
+        <button mat-fab (click)="playFeatured()">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div></div>
+    </div>
+    <div class="popular">
+      <h5>POPULAR</h5>
+      <mat-tab-group class="tab-group">
+        <mat-tab label="Originals">
+          <div class="popular-1">
+            <app-tracks-table [inArtistMode]="false" (onMainClick)="createQueue($event)"
+                              [tracks]="tracks"
+                              [pagedRequest]="myPagedRequest"
+                              [allowPagination]="false"
+            ></app-tracks-table>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Appears On">
+          <div class="popular-1">
+            <app-tracks-table [inArtistMode]="false" (onMainClick)="createFeaturedQueue($event)"
+                              [tracks]="featuredTracks"
+                              [pagedRequest]="myFeaturedRequest"
+                              [allowPagination]="false"
+            ></app-tracks-table>
+          </div>
+        </mat-tab>
+
+        <!--
+        <mat-tab label="Your top 5">
+          <div class="popular-1">
+            <app-tracks-table [inArtistMode]="false" (onMainClick)="createQueue($event)"
+                              [tracks]="featuredTracks"
+                              [pagedRequest]="myPagedRequest"
+                              [allowPagination]="false"
+            ></app-tracks-table>
+          </div>
+        </mat-tab>
+        -->
+      </mat-tab-group>
+    </div>
+  </div>
+
+  <div>
+    <h5>RELEASES</h5>
+    <div class="album-cards">
+    @for (album of albums?.dataItems; track album.id) {
+      <app-album-card [title]="album.title"
+                      [subtitle]="album.type + ' • ' + getYear(album.releaseDate)"
+                      [imageUrl]="MyConfig.api_address+album.coverArt"
+                      [id]="album.id"
+                      [tooltip]="album.title"
+                      (onClick)="goToAlbum($event)"
+                      (onPlayClick)="playAlbum($event)"
+      ></app-album-card>
+    }
+      @if (albums != null) {
+        @if (albums.dataItems.length >= 6) {
+          <div class="view-all" (click)="viewAll(false)">...</div>
+        }
+      }
+    </div>
+  </div>
+
+  @if (featuredAlbums != null && featuredAlbums.dataItems.length > 0)
+  {
+    <div class="featured-section">
+      <h5>FEATURED ON</h5>
+      <div class="album-cards">
+        @for (album of featuredAlbums.dataItems; track album.id) {
+          <app-album-card [title]="album.title"
+                          [subtitle]="album.type + ' • ' + getYear(album.releaseDate)"
+                          [imageUrl]="MyConfig.api_address+album.coverArt"
+                          [id]="album.id"
+                          [tooltip]="album.title"
+                          (onClick)="goToAlbum($event)"
+                          (onPlayClick)="playAlbum($event)"
+          ></app-album-card>
+        }
+        @if (featuredAlbums != null) {
+          @if (featuredAlbums.dataItems.length >= 6) {
+            <div class="view-all" (click)="viewAll(true)">...</div>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

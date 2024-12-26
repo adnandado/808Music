@@ -30,6 +30,9 @@ import {
 } from '../../../endpoints/track-endpoints/track-get-all-endpoint.service';
 import {MyPagedList} from '../../../services/auth-services/dto/my-paged-list';
 import {PageEvent} from '@angular/material/paginator';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {ShareBottomSheetComponent} from '../bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
+import {MusicPlayerService} from '../../../services/music-player.service';
 
 @Component({
   selector: 'app-tracks-table',
@@ -56,12 +59,16 @@ export class TracksTableComponent implements OnInit, OnChanges {
   paginationOptions = [20, 35, 50]
   @Input() reload = true;
   shouldDisplayControls = false;
+  isShuffled = false;
+  @Input() allowPagination = true;
 
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private getTrackService: TrackGetByIdEndpointService,
               private deleteTrackService: TrackDeleteEndpointService,
-              private getAllTracksService: TrackGetAllEndpointService) {
+              private getAllTracksService: TrackGetAllEndpointService,
+              private btmSheet : MatBottomSheet,
+              private musicPlayerService : MusicPlayerService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -94,7 +101,8 @@ export class TracksTableComponent implements OnInit, OnChanges {
               position: i+1,
               isExplicit: this.tracks[i].isExplicit,
               streams: this.tracks[i].streams,
-              title: this.tracks[i].title
+              title: this.tracks[i].title,
+              albumId: this.tracks[i].albumId
             });
           }
           console.log(this.tracksDto);
@@ -114,6 +122,12 @@ export class TracksTableComponent implements OnInit, OnChanges {
     }
     this.dataSource.sort = this.sort;
     this.reloadData();
+
+    this.musicPlayerService.shuffleToggled.subscribe({
+      next: data => {
+        this.isShuffled = data;
+      }
+    })
   }
 
   getPosition(id:number) {
@@ -198,5 +212,16 @@ export class TracksTableComponent implements OnInit, OnChanges {
 
   emitCreate() {
     this.onCreateClick.emit();
+  }
+
+  openShareSheet() {
+    let matRef = this.btmSheet.open(ShareBottomSheetComponent, {hasBackdrop: true, data: {
+      url: MyConfig.ui_address + "/listener/release/"+this.tracks[0].albumId,
+      }});
+
+  }
+
+  toggleShuffle() {
+    this.musicPlayerService.toggleShuffle();
   }
 }

@@ -18,6 +18,7 @@ export interface AlbumPagedRequest {
   typeId?: number;
   isReleased?: boolean;
   title: string;
+  featuredArtistId?: number;
 }
 
 export interface AlbumGetAllResponse {

@@ -1,7 +1,7 @@
 <div class="music-player" [ngStyle]="musicPlayerService.queue.length > 0 ? {'display': 'flex'} : {'display': 'none'}">
     <div class="now-playing">
       <h3>Now playing...</h3>
-      <h6 [routerLink]="musicPlayerService.queueSource.value" routerLinkActive>{{musicPlayerService.queueSource.display}}</h6>
+      <h6 (click)="redirectToSource()">{{musicPlayerService.queueSource.display}}</h6>
     </div>
 
     <div class="cover" [ngStyle]="{'background-image':'url('+MyConfig.api_address + track?.coverPath +')'}"></div>
