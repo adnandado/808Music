@@ -6,6 +6,8 @@ using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services;
+using Stripe;
+using System.Collections.Immutable;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -18,9 +20,18 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         public override async Task<ActionResult<MyPagedList<AlbumGetResponse>>> HandleAsync([FromQuery] AlbumGetAllRequest request, CancellationToken cancellationToken = default)
         {
             var albums = db.Albums.AsQueryable();
+            var allAlbums = db.Albums.AsQueryable();
             IQueryable<AlbumGetAllResponse> albumsResponse;
 
             //filters
+            if(request.FeaturedArtistId != null)
+            {
+                await db.Tracks.LoadAsync();
+                var tracks = await db.ArtistsTracks.Where(at => at.ArtistId == request.FeaturedArtistId && !at.IsLead).Select(at => at.Track.AlbumId).ToListAsync();
+                albums = albums.Where(a => tracks.Contains(a.Id));
+            }
+
+
             if(request.ArtistId != null)
             {
                 albums = albums.Where(a => a.ArtistId == request.ArtistId);
@@ -43,7 +54,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 
             await db.AlbumTypes.LoadAsync();
 
-            albumsResponse = albums.Select(a => new AlbumGetAllResponse
+            albumsResponse = albums.OrderByDescending(a => a.ReleaseDate).Select(a => new AlbumGetAllResponse
             {
                 Id = a.Id,
                 Artist = a.Artist.Name,
@@ -64,6 +75,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         public int? TypeId { get; set; }
         public bool? IsReleased { get; set; }
         public string Title { get; set; } = string.Empty;
+        public int? FeaturedArtistId { get; set; }
     }
 
     public class AlbumGetAllResponse {

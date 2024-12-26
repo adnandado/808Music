@@ -17,13 +17,14 @@ import {MusicPlayerService} from '../../../services/music-player.service';
 })
 export class ArtistPageComponent implements OnInit {
   artist: ArtistDetailResponse | null = null;
+  hasTracks: boolean = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private artistService: ArtistGetByIdEndpointService,
               private shareSheet: MatBottomSheet,
               private trackGetAllService: TrackGetAllEndpointService,
-              private musicPlayerService: MusicPlayerService) { }
+              protected musicPlayerService: MusicPlayerService) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -35,6 +36,9 @@ export class ArtistPageComponent implements OnInit {
                 console.log(this.artist);
               }
             })
+            this.trackGetAllService.handleAsync({leadArtistId: this.artist?.id, isReleased: true}).subscribe({next: data => {
+              this.hasTracks = data.totalCount > 0;
+              }})
           }
         })
     }
@@ -51,5 +55,9 @@ export class ArtistPageComponent implements OnInit {
         this.musicPlayerService.createQueue(data.dataItems, {display: this.artist?.name ?? "Artist profile", value: "/listener/profile/"+this.artist?.id});
       }
     });
+  }
+
+  shufflePlay() {
+    this.musicPlayerService.toggleShuffle();
   }
 }

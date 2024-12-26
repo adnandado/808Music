@@ -21,6 +21,8 @@ import {MatDivider} from '@angular/material/divider';
 import { ArtistPageComponent } from './artist-page/artist-page.component';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import { ArtistMusicPageComponent } from './artist-page/artist-music-page/artist-music-page.component';
+import { ArtistAlbumsListComponent } from './artist-albums-list/artist-albums-list.component';
+import {AlbumModule} from '../artist/album/album.module';
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { ArtistMusicPageComponent } from './artist-page/artist-music-page/artist
     ReleaseViewComponent,
     PlayTrackComponent,
     ArtistPageComponent,
-    ArtistMusicPageComponent
+    ArtistMusicPageComponent,
+    ArtistAlbumsListComponent
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ import { ArtistMusicPageComponent } from './artist-page/artist-music-page/artist
     MatFabButton,
     MatTabGroup,
     MatTab,
+    AlbumModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

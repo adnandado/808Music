@@ -4,7 +4,12 @@
     <div class="banner-gradient"></div>
     <div class="controls">
       <div class="name">
-        <button mat-fab (click)="playArtist()"><mat-icon>play_arrow</mat-icon></button>
+          <button mat-icon-button (click)="shufflePlay()" class="shuffley"><mat-icon>@if (musicPlayerService.isShuffled) {
+            shuffle_on
+          } @else {
+            shuffle
+          }</mat-icon></button>
+          <button mat-fab (click)="playArtist()"><mat-icon>play_arrow</mat-icon></button>
         <h2>{{artist?.name}}</h2>
       </div>
       <div class="actions">

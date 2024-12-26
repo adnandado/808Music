@@ -17,9 +17,15 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
         public override async Task<ActionResult<ArtistInsertResponse>> HandleAsync([FromForm] ArtistInsertRequest request, CancellationToken cancellationToken = default)
         {
             int userId = int.Parse(tp.GetJwtSub(Request));
+            bool authorized = true;
 
-            Artist? check = await db.Artists.FirstOrDefaultAsync(a => a.Name.ToLower() == request.Name.ToLower(),cancellationToken);
-            if(check != null)
+            if(request.Id != null)
+            { 
+                authorized = tp.AuthorizeUserArtist(Request, request.Id.Value, ["Owner", "General Manager", "Shop Manager", "Streaming Manager"]);
+            }
+
+            Artist? check = await db.Artists.FirstOrDefaultAsync(a => a.Name.ToLower() == request.Name.ToLower(), cancellationToken);
+            if(check != null && !authorized)
             {
                 return BadRequest("Artist with this name already exists");
             }
@@ -51,7 +57,7 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
                     return BadRequest("Issue with files");
                 }
             }
-            if (request.ProfilePhoto != null)
+            if (request.ProfileBackground != null)
             {
                 profileBackgroundPath = await fh.UploadFileAsync(@"wwwroot\Images\ArtistBgs", request.ProfileBackground!, 0, cancellationToken);
                 if (profileBackgroundPath == string.Empty)

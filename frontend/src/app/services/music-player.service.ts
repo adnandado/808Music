@@ -22,7 +22,17 @@ export class MusicPlayerService {
   shuffleToggled = this.shuffleToggleEvent.asObservable();
   isShuffled : boolean = false;
 
-  constructor() { }
+  constructor() {
+    /*
+    let lastQueue = window.sessionStorage.getItem("queue");
+    if(lastQueue != null && lastQueue !== "")
+    {
+      const {queue, source} = JSON.parse(lastQueue);
+      this.createQueue(queue, source);
+    }
+
+     */
+  }
 
   createQueue(queue : TrackGetResponse[], source : QueueSource = {display:"Song", value:"song"}, append : boolean = false) {
     if(!append || this.queue.length == 0) {
@@ -42,6 +52,8 @@ export class MusicPlayerService {
       this.queue.push(...queue);
       this.trackAddEvent.next(queue[0]);
     }
+
+    //window.sessionStorage.setItem("queue", JSON.stringify({queue, source}));
   }
 
   addToQueue(queueTrack : TrackGetResponse) {

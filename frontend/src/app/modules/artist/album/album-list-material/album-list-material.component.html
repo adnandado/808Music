@@ -1,7 +1,8 @@
 <div class="base-page flex-page">
     <div class="select-page">
         <div class="title">
-            <h1>Your releases</h1>
+            @if(!hasControls) {<button mat-icon-button (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>}
+            <h1>{{title}}</h1>
         </div>
         <div>
           <app-search-bar placeholder="Search for a release" (onSearchChange)="filterSearch($event)"></app-search-bar>
@@ -23,6 +24,8 @@
                 </mat-chip-listbox>
             </div>
             <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+          @if (hasControls)
+          {
             <div>
                 <h6>Release Status:</h6>
                 <mat-chip-listbox>
@@ -39,7 +42,10 @@
                 </mat-chip-listbox>
             </div>
             <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+          }
         </div>
+      @if (hasControls)
+      {
         <div class="flex-controls">
             <mat-card appearance="outlined" class="artist-card add-new-card"
                       (click)="openCreate('/artist/album/create')">
@@ -55,12 +61,14 @@
                 Log out
             </a>
         </div>
+      }
         <div class="flex-container">
             @for (a of albums; track a.id) {
                 <app-album-card [title]="a.title" [subtitle]="a.type + ' • ' + getReleaseYear(a.releaseDate)"
                                 [imageUrl]="MyConfig.api_address + a.coverArt" [id]="a.id"
-                                [hasControls]="true" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
-                                (onStats)="showStats($event)" (onClick)="checkoutTracks($event)" [tooltip]="a.title + ' - ' + getDateString(a.releaseDate)"></app-album-card>
+                                [hasControls]="hasControls" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
+                                (onStats)="showStats($event)" (onClick)="checkoutTracks($event)"
+                                [tooltip]="a.title + ' - ' + getDateString(a.releaseDate)" (onPlayClick)="playAlbum($event)"></app-album-card>
             }
         </div>
         <mat-paginator [length]="pagedList?.totalCount"

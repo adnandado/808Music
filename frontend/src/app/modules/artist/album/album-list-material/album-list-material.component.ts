@@ -1,4 +1,4 @@
-import {Component, HostListener, inject, OnInit} from '@angular/core';
+import {Component, HostListener, inject, Input, OnInit} from '@angular/core';
 import {
   AlbumGetAllEndpointService,
   AlbumGetAllResponse, AlbumPagedRequest
@@ -21,6 +21,9 @@ import {MatChipSelectionChange} from "@angular/material/chips";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {FormControl} from '@angular/forms';
+import {TrackGetAllEndpointService} from '../../../../endpoints/track-endpoints/track-get-all-endpoint.service';
+import {MusicPlayerService} from '../../../../services/music-player.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-album-list-material',
@@ -28,6 +31,8 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['../../choose-profile/choose-profile.component.css','../../artist-layout/artist-layout.component.css','./album-list-material.component.css']
 })
 export class AlbumListMaterialComponent implements OnInit {
+  @Input() title = "Your releases";
+  @Input() hasControls: boolean = true;
   selectedAlbum: boolean = true;
   pagedList : MyPagedList<AlbumGetAllResponse> | null = null;
   albums: AlbumGetAllResponse[] | null = null;
@@ -41,7 +46,7 @@ export class AlbumListMaterialComponent implements OnInit {
   defaultPageSize = 20;
   albumTitleQuery = new FormControl("");
 
-  isHome = false;
+  @Input() isHome : boolean = false;
 
   constructor(private albumService: AlbumGetAllEndpointService,
               private albumDeleteService: AlbumDeleteEndpointService,
@@ -49,13 +54,37 @@ export class AlbumListMaterialComponent implements OnInit {
               private auth: MyUserAuthService,
               private artistHandler: ArtistHandlerService,
               private albumTypeGet : AlbumTypeGetAllEndpointService,
-              private route : ActivatedRoute)
+              private route : ActivatedRoute,
+              private getTracksService: TrackGetAllEndpointService,
+              private musicPlayerService: MusicPlayerService,
+              private location: Location)
   {
   }
 
   ngOnInit(): void {
     this.checkIfHome();
-    this.pagedRequest.artistId = this.artistHandler.getSelectedArtist()?.id;
+    if(this.hasControls)
+    {
+      this.pagedRequest.artistId = this.artistHandler.getSelectedArtist()?.id;
+    }
+    else {
+      this.route.params.subscribe(params => {
+          let id = params["id"];
+          if(id)
+          {
+            this.route.queryParams.subscribe(queryParams => {
+              let featured = queryParams['featured'];
+              if(featured){
+                this.pagedRequest.featuredArtistId = id;
+              }
+              else {
+                this.pagedRequest.artistId = id;
+              }
+            })
+            this.pagedRequest.isReleased = true;
+          }
+      })
+    }
     this.pagedRequest.pageNumber = 1;
     this.pagedRequest.pageSize = this.defaultPageSize;
 
@@ -200,6 +229,29 @@ export class AlbumListMaterialComponent implements OnInit {
   }
 
   checkoutTracks(e: number) {
-    this.router.navigate(["/artist/tracks/", e])
+    if(this.hasControls)
+    {
+      this.router.navigate(["/artist/tracks/", e])
+    }
+    else {
+      this.router.navigate(["/listener/release/", e])
+    }
+  }
+
+  playAlbum(id: number) {
+    if(!this.hasControls)
+    {
+      let a = this.albums?.find(val => val.id === id)
+      this.getTracksService.handleAsync({albumId:id, pageSize:1000}).subscribe({
+        next: data => {
+          this.musicPlayerService.createQueue(data.dataItems,
+            {display: a?.title ?? "" + a?.type ?? "Album", value:"/listener/release/"+a?.id})
+        }
+      })
+    }
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

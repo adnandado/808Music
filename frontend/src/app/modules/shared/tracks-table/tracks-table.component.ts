@@ -60,6 +60,7 @@ export class TracksTableComponent implements OnInit, OnChanges {
   @Input() reload = true;
   shouldDisplayControls = false;
   isShuffled = false;
+  @Input() allowPagination = true;
 
   @ViewChild(MatSort) sort!: MatSort;
 

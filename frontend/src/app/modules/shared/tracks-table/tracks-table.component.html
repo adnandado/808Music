@@ -1,5 +1,5 @@
 <div class="tracks-table">
-  <div class="tracks-search-bar">
+  <div class="tracks-search-bar" *ngIf="allowPagination">
     <app-search-bar [placeholder]="'Search for a song'" (onSearchChange)="searchTracks($event)"></app-search-bar>
     <div class="controls">
     <button mat-icon-button><mat-icon>share</mat-icon></button>
@@ -79,5 +79,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator showFirstLastButtons [pageSize]="20" [length]="pagedResponse?.totalCount" [pageSizeOptions]="paginationOptions" (page)="setPageOpitions($event)"></mat-paginator>
+  @if (allowPagination) {
+    <mat-paginator showFirstLastButtons [pageSize]="20" [length]="pagedResponse?.totalCount" [pageSizeOptions]="paginationOptions" (page)="setPageOpitions($event)"></mat-paginator>
+  }
 </div>

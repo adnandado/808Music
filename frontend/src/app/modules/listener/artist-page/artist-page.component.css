@@ -5,6 +5,7 @@
 .artist-page {
   position: relative;
   height: 100%;
+  overflow-y: auto;
 }
 
 .banner {
@@ -45,8 +46,10 @@
 
 .name {
   display: flex;
-  gap: 15px;
+  gap: 10px;
+  align-items: center;
 }
+
 
 .actions {
   display: flex;
@@ -65,4 +68,16 @@
 .followers {
   text-align: end;
   color: #A9A9A9;
+}
+
+.shuffle > mat-icon {
+  height: 40px;
+  width: 40px;
+  font-size: 30px;
+}
+
+.shuffle {
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
 }

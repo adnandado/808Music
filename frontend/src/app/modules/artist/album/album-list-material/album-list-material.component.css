@@ -51,6 +51,19 @@ div > h6 {
   display: block;
 }
 
+.title mat-icon {
+  width: 35px;
+  height: 35px;
+  font-size: 35px;
+}
+
+.title button {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+}
+
+
 @media only screen and (max-width: 1300px) {
   app-album-card {
     width: 15vw;
