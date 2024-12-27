@@ -54,10 +54,15 @@ import {AppModule} from '../../app.module';
 import {SecondsToDurationStringPipe} from '../../services/pipes/seconds-to-string.pipe';
 import {LongDurationStringPipe} from '../../services/pipes/long-duration-string.pipe';
 import { QueueViewBottomSheetComponent } from './bottom-sheets/queue-view-bottom-sheet/queue-view-bottom-sheet.component';
-import {MatNavList} from '@angular/material/list';
+import {MatListItem, MatNavList} from '@angular/material/list';
 import {MatDivider} from '@angular/material/divider';
 import { ShareBottomSheetComponent } from './bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
 import {QRCodeModule} from 'angularx-qrcode';
+import {SidenavComponent} from './sidenav/sidenav.component';
+import {PlaylistCardComponent} from './playlist-card/playlist-card.component';
+import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { PlaylistDialogComponent } from './playlist-detail/playlist-dialog.component';
+import {ArtistSidenavComponent} from './artist-sidenav/artist-sidenav.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +84,13 @@ import {QRCodeModule} from 'angularx-qrcode';
     LongDurationStringPipe,
     StripeComponent,
     QueueViewBottomSheetComponent,
-    ShareBottomSheetComponent // Dodajemo UnauthorizedComponent u deklaracije
+    SidenavComponent,
+    PlaylistCardComponent,
+    DeleteConfirmationDialogComponent,
+    ShareBottomSheetComponent,
+    PlaylistDialogComponent,
+    ArtistSidenavComponent,
+    SidenavComponent
   ],
   imports: [
     CommonModule,
@@ -127,6 +138,7 @@ import {QRCodeModule} from 'angularx-qrcode';
     MatNavList,
     MatDivider,
     QRCodeModule,
+    MatListItem,
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
@@ -144,7 +156,13 @@ import {QRCodeModule} from 'angularx-qrcode';
     StripeComponent,
     ClickableFeaturedArtistsComponent,
     SecondsToDurationStringPipe,
-    LongDurationStringPipe
+    LongDurationStringPipe,
+    SidenavComponent,
+    PlaylistCardComponent,
+    DeleteConfirmationDialogComponent,
+    PlaylistDialogComponent,
+    ArtistSidenavComponent,
+    SidenavComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -176,7 +176,7 @@ export class TracksPageComponent implements OnInit {
         if (this.playlistDetails?.id) {
           this.deletePlaylistService.handleAsync(this.playlistDetails.id).subscribe({
             next: () => {
-              this.router.navigate(['/artist/playlist']);
+              this.router.navigate(['/listener/playlist']);
             },
             error: (error) => {
               console.error('Error deleting playlist:', error);

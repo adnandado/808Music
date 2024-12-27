@@ -12,7 +12,6 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 {
     public class TrackGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult<TrackGetResponse>
     {
-        [Authorize]
         [HttpGet("{id}")]
         public override async Task<ActionResult<TrackGetResponse>> HandleAsync(int id, CancellationToken cancellationToken = default)
         {

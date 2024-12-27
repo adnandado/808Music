@@ -189,6 +189,9 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SubscriptionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -196,6 +199,8 @@ namespace RS1_2024_25.API.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("SubscriptionId");
 
                     b.ToTable("MyAppUsers");
                 });
@@ -522,6 +527,9 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<int>("QtyInStock")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("SaleAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -591,6 +599,67 @@ namespace RS1_2024_25.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentTransactions");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("MonthlyPrice")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("ReedemsOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("RenewalOn")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubscriptionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscription");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.SubscriptionDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("SubscriptionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubscriptionDetails");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Track", b =>
@@ -752,7 +821,14 @@ namespace RS1_2024_25.API.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("RS1_2024_25.API.Data.Models.Subscription", "Subscription")
+                        .WithMany()
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Country");
+
+                    b.Navigation("Subscription");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyAuthenticationToken", b =>

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Definisanje tipa odgovora
 export interface Product {
   id: number;
   title: string;
@@ -11,6 +10,7 @@ export interface Product {
   isDigital: boolean;
   photoPaths: string[];
   slug: string;
+  saleAmount: number;
 }
 
 @Injectable({

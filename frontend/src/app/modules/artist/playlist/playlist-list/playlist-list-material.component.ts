@@ -14,9 +14,7 @@ import { PlaylistResponse } from '../../../../endpoints/playlist-endpoints/get-p
   selector: 'app-playlist-list-material',
   templateUrl: './playlist-list-material.component.html',
   styleUrls: [
-    '../../choose-profile/choose-profile.component.css',
-    '../../artist-layout/artist-layout.component.css',
-    './playlist-list-material.component.css'
+   './playlist-list-material.component.css'
   ]
 })
 export class PlaylistListMaterialComponent implements OnInit {
@@ -75,15 +73,15 @@ export class PlaylistListMaterialComponent implements OnInit {
   }
 
   openPlaylist(playlistId: number) {
-    this.router.navigate([`/artist/playlist/${playlistId}`]);
+    this.router.navigate([`/listener/playlist/${playlistId}`]);
   }
 
   editPlaylist(id: number) {
-    this.router.navigate([`/artist/playlist/edit`, id]);
+    this.router.navigate([`/listener/playlist/edit`, id]);
   }
 
   createPlaylist() {
-    this.router.navigate([`/artist/playlist/create`]);
+    this.router.navigate([`/listener/playlist/create`]);
   }
 
   getReleaseYear(releaseDate: string) {

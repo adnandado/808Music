@@ -4,6 +4,7 @@ using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper.Api;
 using static ProductUpdateEndpoint;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 public class ProductUpdateEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<ProductUpdateRequest>
@@ -22,7 +23,8 @@ public class ProductUpdateEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
         product.Price = request.Price;
         product.QtyInStock = request.Quantity;
         product.IsDigital = request.isDigital;
-
+        product.SaleAmount = (decimal)Math.Round(request.SaleAmount, 2) / 100;
+        Debug.WriteLine(product.SaleAmount.ToString());
         db.Products.Update(product);
         await db.SaveChangesAsync(cancellationToken);
 
@@ -63,7 +65,9 @@ public class ProductUpdateEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
             Title = product.Title,
             isDigital = product.IsDigital,
             Quantity = product.QtyInStock,
-            Price = product.Price
+            Price = product.Price,
+            SaleAmount = product.SaleAmount,   
+
         };
     }
 
@@ -76,6 +80,7 @@ public class ProductUpdateEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
         public bool isDigital { get; set; }
         public List<IFormFile> Photos { get; set; } = new();
         public List<int> RemovePhotoIds { get; set; } = new();
+        public decimal SaleAmount { get; set; } = 0;
     }
 
     public class ProductUpdateResponse
@@ -85,5 +90,6 @@ public class ProductUpdateEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
         public required float Price { get; set; }
         public int Quantity { get; set; }
         public bool isDigital { get; set; }
+        public decimal SaleAmount { get; set; } = 0;
     }
 }

@@ -11,7 +11,6 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
         .WithRequest<TrackGetAllRequest>
         .WithActionResult<MyPagedList<TrackGetResponse>>
     {
-        [Authorize]
         [HttpGet]
         public override async Task<ActionResult<MyPagedList<TrackGetResponse>>> HandleAsync([FromQuery]TrackGetAllRequest request, CancellationToken cancellationToken = default)
         {

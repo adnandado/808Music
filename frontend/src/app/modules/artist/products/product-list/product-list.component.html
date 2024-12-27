@@ -6,7 +6,7 @@
   <title>Product List</title>
 </head>
 <body>
-<app-sidenav></app-sidenav>
+<artist-sidenav></artist-sidenav>
 <div class="container">
   <!-- Main Content -->
   <main class="main-content">
@@ -29,7 +29,7 @@
         <div *ngIf="!isEditing[product.slug]">
           <img [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="product-image">
           <p class="product-name">{{ product.title }}</p>
-          <p class="product-price">{{ product.price }}$</p>
+          <p class="product-price">{{ updateCalculatedPrice(product)}}$</p>
           <button class="product-button" (click)="toggleEdit(product.slug)">Edit</button>
           <button class="product-button" (click)="deleteProduct(product.slug)">Delete</button>
           <button class="product-button" (click)="viewProduct(product.slug)">View Details</button>
@@ -38,8 +38,9 @@
         <!-- Edit Mode -->
         <div *ngIf="isEditing[product.slug]">
           <input [(ngModel)]="product.title" class="product-input" placeholder="Title">
-          <input [(ngModel)]="product.price" class="product-input" type="number" placeholder="Price">
+          <input [(ngModel)]="product.price" class="product-input" />
           <input [(ngModel)]="product.quantity" class="product-input" type="number" placeholder="Quantity">
+          <input [(ngModel)]="product.saleAmount" (ngModelChange)="updateSaleAmount(product)" class="product-input" type="number" placeholder="SaleAmount">
           <div class="image-edit">
             <label for="image-upload">Change Image</label>
             <input type="file" id="image-upload" (change)="onImageChange($event, product)">

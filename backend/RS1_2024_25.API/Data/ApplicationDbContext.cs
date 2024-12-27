@@ -34,7 +34,8 @@ namespace RS1_2024_25.API.Data
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<UserPlaylist> UserPlaylist { get; set; }
         public DbSet<PlaylistTracks> PlaylistTracks { get; set; }
-
+        public DbSet<Subscription> Subscription { get; set; }
+        public DbSet<SubscriptionDetails> SubscriptionDetails { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

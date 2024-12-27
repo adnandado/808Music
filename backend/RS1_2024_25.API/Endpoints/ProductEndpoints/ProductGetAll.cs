@@ -21,6 +21,8 @@ public class ProductGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
                             Price = p.Price,
                             Quantity = p.QtyInStock,
                             isDigital = p.IsDigital,
+                            SaleAmount = p.SaleAmount,
+                            
                             PhotoPaths = p.Photos.Select(photo => photo.Path).ToList()
                         })
                         .ToArrayAsync(cancellationToken);
@@ -36,5 +38,6 @@ public class ProductGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
         public int Quantity { get; set; }
         public bool isDigital { get; set; }
         public List<string> PhotoPaths { get; set; } = new();
+        public decimal SaleAmount { get; set; } = 0;
     }
 }

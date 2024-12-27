@@ -10,16 +10,7 @@ body {
   height: 100vh;
 }
 
-.sidenav {
-  width: 250px;
-  background-color: #111;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  padding: 20px;
-  color: white;
-}
+
 
 .tracks-page {
   display: flex;

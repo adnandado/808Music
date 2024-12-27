@@ -15,6 +15,14 @@ import {TrackGetResponse} from '../../../../endpoints/track-endpoints/track-get-
 import {MyPagedList} from '../../../../services/auth-services/dto/my-paged-list';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {MusicPlayerService} from '../../../../services/music-player.service';
+import {MatDialog} from '@angular/material/dialog';
+import {
+  PlaylistUpdateTracksService
+} from '../../../../endpoints/playlist-endpoints/add-track-to-playlist-endpoint.service';
+import {
+  GetPlaylistsByUserIdEndpointService, PlaylistResponse
+} from '../../../../endpoints/playlist-endpoints/get-playlist-by-user-endpoint.service';
+import {PlaylistDialogComponent} from '../../../shared/playlist-detail/playlist-dialog.component';
 
 @Component({
   selector: 'app-tracks-page',
@@ -26,6 +34,8 @@ export class TracksListComponent implements OnInit {
   album : AlbumGetResponse | null = null;
   artist : ArtistSimpleDto | null = null;
   tracks: TrackGetResponse[] = [];
+  playlists: PlaylistResponse[] = [];
+  currentUserId: number | null = null;
   pagedResponse: MyPagedList<TrackGetResponse> | null = null;
   pagedRequest : TrackGetAllRequest = {
     pageNumber:1,
@@ -44,12 +54,17 @@ export class TracksListComponent implements OnInit {
               private albumGetService : AlbumGetByIdEndpointService,
               private artistHandler : ArtistHandlerService,
               private tracksGetAllService : TrackGetAllEndpointService,
-              private musicPlayerService: MusicPlayerService,) {
+              private musicPlayerService: MusicPlayerService,
+              private dialog: MatDialog,
+              private playlistService: GetPlaylistsByUserIdEndpointService,
+              private playlistUpdateService: PlaylistUpdateTracksService,) {
   }
 
   ngOnInit(): void {
     this.checkIfHome();
     this.reloadData();
+    this.getCurrentUserId();
+    this.loadPlaylists();
   }
 
   reloadData() {
@@ -84,7 +99,70 @@ export class TracksListComponent implements OnInit {
   getYear() {
     return new Date(this.album?.releaseDate!).getFullYear();
   }
+  getCurrentUserId(): void {
+    const authToken = sessionStorage.getItem('authToken');
+    if (!authToken) {
+      throw new Error('User not authenticated.');
+    }
 
+    try {
+      const parsedToken = JSON.parse(authToken);
+      if (!parsedToken.userId) {
+        throw new Error('Invalid token: userId not found.');
+      }
+      console.log(parsedToken.userId)
+      return parsedToken.userId;
+    } catch (error) {
+      throw new Error('Failed to parse authToken.');
+    }
+  }
+
+  loadPlaylists(): void {
+    if (this.currentUserId) {
+      this.playlistService.handleAsync(this.currentUserId).subscribe({
+        next: data => {
+          this.playlists = data;
+        },
+        error: () => {
+          console.error('Error loading playlists');
+        }
+      });
+    }
+  }
+
+  openTrackMenu(track: TrackGetResponse): void {
+    if (this.playlists.length > 0) {
+      const dialogRef = this.dialog.open(PlaylistDialogComponent, {
+        width: '400px',
+        data: { track, playlists: this.playlists }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.addTrackToPlaylist(result.playlistId, track);
+        }
+      });
+    } else {
+      alert('No playlists found');
+    }
+  }
+
+  addTrackToPlaylist(playlistId: number, track: TrackGetResponse): void {
+    if (this.currentUserId) {
+      const request = {
+        playlistId,
+        trackIds: [track.id]
+      };
+
+      this.playlistUpdateService.handleAsync(request).subscribe({
+        next: () => {
+          console.log('Track added to playlist');
+        },
+        error: () => {
+          console.error('Error adding track to playlist');
+        }
+      });
+    }}
   getAlbumDuration(lengthInSeconds: number | undefined) {
     if(lengthInSeconds != undefined)
     {

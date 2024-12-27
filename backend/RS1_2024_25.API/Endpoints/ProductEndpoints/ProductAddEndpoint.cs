@@ -27,7 +27,7 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
             QtyInStock = request.Quantity,
             IsDigital = request.isDigital,
             Slug = GenerateRandomSlug(),
-            ArtistId = request.ArtistId
+            ArtistId = request.ArtistId,
         };
 
         _db.Products.Add(product);
@@ -64,7 +64,8 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
             isDigital = product.IsDigital,
             Quantity = product.QtyInStock,
             Price = product.Price,
-            Slug = product.Slug
+            Slug = product.Slug,
+            SaleAmount = product.SaleAmount,
         };
     }
 
@@ -84,6 +85,7 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
         public bool isDigital { get; set; }
         public List<IFormFile> Photos { get; set; } = new();
         public int ArtistId { get; set; }
+
     }
 
     public class ProductAddResponse
@@ -95,6 +97,7 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
         public bool isDigital { get; set; }
         public string Slug { get; set; }
         public int ArtistId { get; set; }
+        public decimal SaleAmount { get; set; } = 0;
 
     }
 }

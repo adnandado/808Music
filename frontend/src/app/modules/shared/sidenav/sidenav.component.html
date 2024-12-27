@@ -13,7 +13,7 @@
     <button mat-icon-button (click)="navigateTo('products')" aria-label="Shopping Cart">
       <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/artist/playlist" aria-label="Playlists">
+    <button mat-icon-button routerLink="/listener/playlist" aria-label="Playlists">
       <mat-icon>library_music</mat-icon>
     </button>
     <button mat-icon-button routerLink="/library" aria-label="Library">
@@ -37,7 +37,7 @@
       <ul>
         <li (click)="navigateTo('profile')">Profile</li>
         <li (click)="navigateTo('account')">Account</li>
-        <li (click)="navigateTo('subscriptions')">Subscriptions</li>
+        <li (click)="navigateTo('/listener/subscriptions')">Subscriptions</li>
         <li (click)="navigateTo('settings')">Settings</li>
         <hr />
         <li (click)="navigateTo('artist')">808 for Artist</li>

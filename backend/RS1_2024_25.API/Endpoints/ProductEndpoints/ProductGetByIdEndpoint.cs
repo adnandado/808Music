@@ -25,7 +25,8 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
                                 Slug = p.Slug,
                                 PhotoPaths = p.Photos.Select(photo => photo.Path).ToList(),
                                 ArtistName = p.Artist.Name,  
-                                ArtistPhoto = p.Artist.ProfilePhotoPath 
+                                ArtistPhoto = p.Artist.ProfilePhotoPath,
+                                SaleAmount = p.SaleAmount, 
                             })
                             .FirstOrDefaultAsync(x => x.Slug == slug, cancellationToken);
 
@@ -46,5 +47,6 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
         public List<string> PhotoPaths { get; set; } = new();
         public string ArtistName { get; set; } 
         public string ArtistPhoto { get; set; }
+        public decimal SaleAmount { get; set; } = 0;
     }
 }

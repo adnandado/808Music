@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Select Playlist</h2>
+<mat-dialog-content>
+  <div *ngIf="data.playlists.length === 0">No playlists found</div>
+  <div *ngFor="let playlist of data.playlists">
+    <mat-list-item (click)="onAddToPlaylist(playlist.id)">
+      {{ playlist.title }}
+    </mat-list-item>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>

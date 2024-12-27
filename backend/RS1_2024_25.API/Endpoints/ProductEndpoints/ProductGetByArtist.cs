@@ -32,6 +32,8 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
                     isDigital = p.IsDigital,
                     PhotoPaths = p.Photos.Select(photo => photo.Path).ToList(),
                     Name = p.Artist.Name,
+                    SaleAmount = p.SaleAmount,
+                    
                 })
                 .ToArrayAsync(cancellationToken);
 
@@ -46,6 +48,7 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
             public bool isDigital { get; set; }
             public List<string> PhotoPaths { get; set; } = new();
             public required string Name { get; set; }
+            public decimal SaleAmount { get; set; } = 0;
         }
     }
 }

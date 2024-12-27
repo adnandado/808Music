@@ -9,7 +9,7 @@
   color: white;
   align-items: center;
   z-index: 1000;
-  margin-right: 30px; /* Možete smanjiti ovu vrijednost ako želite manji razmak s desne strane */
+  margin-right: 30px;
   overflow: visible;
   left: 0; /* Dodano da bude uvijek fiksiran lijevo */
   top: 0;  /* Dodano da bude fiksiran na vrhu */

@@ -1,0 +1,41 @@
+<div class="sidenav">
+  <div class="logo-container">
+    <img class="logo-image" src="https://cdn-0001.qstv.on.epicgames.com/tFaisIxoSaCVPpPxIm/image/screen_comp.jpeg" alt="Logo">
+    <hr class="divider">
+  </div>
+  <div class="sidenav-icons">
+    <button mat-icon-button routerLink="public/home" aria-label="Home">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/search" aria-label="Search">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button (click)="navigateTo('products')" aria-label="Shopping Cart">
+      <mat-icon>store</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/artist/album" aria-label="Albums">
+      <mat-icon>album</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/dashboard" aria-label="Dashboard">
+      <mat-icon>table_chart</mat-icon>
+    </button>
+
+  </div>
+  <div class="profile-container">
+    <img
+      class="profile-picture"
+      src="https://cdn-0001.qstv.on.epicgames.com/tFaisIxoSaCVPpPxIm/image/screen_comp.jpeg"
+      alt="Profile Picture"
+      (click)="toggleMenu()"
+    />
+    <div class="profile-menu" [ngClass]="{'show': isMenuVisible}">
+      <ul>
+        <li (click)="navigateTo('profile')">Profile</li>
+        <li (click)="navigateTo('account')">Account</li>
+        <li (click)="navigateTo('settings')">Settings</li>
+        <hr />
+        <li (click)="navigateTo('/auth/logout')">Log Out</li>
+      </ul>
+    </div>
+  </div>
+</div>

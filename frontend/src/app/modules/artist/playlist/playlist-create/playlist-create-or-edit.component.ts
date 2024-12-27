@@ -89,7 +89,7 @@ export class PlaylistCreateOrEditComponent implements OnInit {
       next: (response: any) => {
         const message = `Successfully created playlist ${response.title}!`;
         this.snackBar.open(message, 'Dismiss', { duration: 3000 });
-        this.router.navigate(['/artist/playlist']);
+        this.router.navigate(['/listener/playlist']);
       },
       error: (err: HttpErrorResponse) => {
         this.snackBar.open('An error occurred. Please try again.', 'Dismiss', { duration: 3000 });
@@ -124,7 +124,7 @@ export class PlaylistCreateOrEditComponent implements OnInit {
       next: (response: any) => {
         const message = `Successfully updated playlist ${response.title}!`;
         this.snackBar.open(message, 'Dismiss', { duration: 3000 });
-        this.router.navigate(['/artist/playlist']);
+        this.router.navigate(['/listener/playlist']);
         window.location.reload();
       },
       error: (err: HttpErrorResponse) => {

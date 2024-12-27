@@ -5,6 +5,7 @@
 .base-page {
   height: 100vh;
   padding: 2vh;
+  margin-left: 100px;
 }
 .flex-side {
   display: flex;

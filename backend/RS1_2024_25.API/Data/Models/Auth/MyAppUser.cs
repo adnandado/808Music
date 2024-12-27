@@ -29,7 +29,9 @@ public class MyAppUser
     //----------------
     public bool IsAdmin { get; set; }
     public bool IsManager { get; set; }
-
+    [ForeignKey(nameof(Subscription))]
+    public int? SubscriptionId { get; set; }
+    public Subscription? Subscription { get; set; }  
     /*
      
      Ako sistem nije zamišljen da podržava česte promjene rola i 

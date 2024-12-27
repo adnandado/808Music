@@ -1,0 +1,42 @@
+<app-sidenav></app-sidenav>
+<div class="plans-container">
+<div class="stripe-container" *ngIf="selectedSubscription">
+  <h2>{{ selectedSubscription.title }}</h2>
+  <div class="stripe-form">
+  <form (ngSubmit)="handleSubmit()">
+    <label for="amount">Amount (in EUR):</label>
+    <input
+      type="text"
+      id="amount"
+      [value]="selectedSubscription.price | number:'1.2-2'"
+      disabled
+    />
+    <div *ngIf="selectedSubscription">
+
+      <div id="card-element"></div>
+    </div>
+    <button type="submit" [disabled]="!selectedSubscription">Submit Payment</button>
+  </form>
+  </div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="paymentSuccess" class="payment-success">Payment successful!</div>
+</div>
+
+  <h2>Available plans:</h2>
+  <div *ngFor="let subscription of subscriptions" class="subscription-card"
+       [ngStyle]="{'background-color': getPlanBackgroundColor(subscription.subscriptionType)}">>
+    <div class="plan-header">
+      <h3 class="subscription-title">{{ subscription.title }}</h3>
+    </div>
+    <div class="plan-body">
+      <p class="subscription-price">€{{ subscription.price | number:'1.2-2' }}</p>
+      <p class="subscription-add">per month</p>
+      <p class="subscription-description">{{ subscription.description }}</p>
+      <button class="subscribe-button" (click)="selectPlan(subscription)">Select</button>
+
+    </div>
+  </div>
+</div>
+
+<!-- Stripe Payment Form -->
+
