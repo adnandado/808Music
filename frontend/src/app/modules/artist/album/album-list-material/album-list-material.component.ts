@@ -24,11 +24,13 @@ import {FormControl} from '@angular/forms';
 import {TrackGetAllEndpointService} from '../../../../endpoints/track-endpoints/track-get-all-endpoint.service';
 import {MusicPlayerService} from '../../../../services/music-player.service';
 import {Location} from '@angular/common';
+import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-album-list-material',
   templateUrl: './album-list-material.component.html',
-  styleUrls: ['../../choose-profile/choose-profile.component.css','../../artist-layout/artist-layout.component.css','./album-list-material.component.css']
+  styleUrls: ['../../choose-profile/choose-profile.component.css','../../artist-layout/artist-layout.component.css','./album-list-material.component.css'],
+  providers: [provideNativeDateAdapter(), {provide: MAT_DATE_LOCALE, useValue: 'utc'}]
 })
 export class AlbumListMaterialComponent implements OnInit {
   @Input() title = "Your releases";
@@ -41,10 +43,12 @@ export class AlbumListMaterialComponent implements OnInit {
   dialog = inject(MatDialog);
   snackBar = inject(MatSnackBar);
   pagedRequest : AlbumPagedRequest = {
-    title: ""
+    title: "",
   }
   defaultPageSize = 20;
   albumTitleQuery = new FormControl("");
+  periodTo = new FormControl<Date | null>(null);
+  periodFrom = new FormControl<Date | null>(null);
 
   @Input() isHome : boolean = false;
 
@@ -65,7 +69,36 @@ export class AlbumListMaterialComponent implements OnInit {
     this.checkIfHome();
     if(this.hasControls)
     {
+      this.homeCheck(this.router.url);
+    }
+
+    this.periodFrom.valueChanges.subscribe(value => {
+      this.pagedRequest.periodFrom = this.getDateISOString(value) ?? undefined;
+      if(this.periodTo.value != null && value != null)
+      {
+        if(this.periodTo.value < value)
+        {
+          return;
+        }
+      }
+      this.reloadData();
+    })
+    this.periodTo.valueChanges.subscribe(value => {
+      this.pagedRequest.periodTo = this.getDateISOString(value) ?? undefined;
+      if(this.periodFrom.value != null && value != null)
+      {
+        if(this.periodFrom.value > value)
+        {
+          return;
+        }
+      }
+      this.reloadData();
+    })
+
+    if(this.hasControls)
+    {
       this.pagedRequest.artistId = this.artistHandler.getSelectedArtist()?.id;
+      this.pagedRequest.getTrackCount = true;
     }
     else {
       this.route.params.subscribe(params => {
@@ -100,6 +133,19 @@ export class AlbumListMaterialComponent implements OnInit {
       this.albumTypes = t;
     });
 
+  }
+
+  getDateISOString(value: Date | null) {
+      if(value == null)
+      {
+        return null;
+      }
+
+      let date = value as Date;
+      let z = date.getTimezoneOffset() * 60 * 1000;
+      let toLocal = date.getTime()-z;
+      let newDate = new Date(toLocal);
+      return newDate.toISOString();
   }
 
   deleteAlbum(id: number) {
@@ -216,16 +262,20 @@ export class AlbumListMaterialComponent implements OnInit {
     this.router.events.subscribe(event => {
       if(event instanceof NavigationStart)
       {
-        if(event.url == "/artist/album")
-        {
-          this.reloadData();
-          this.isHome = true;
-        }
-        else {
-          this.isHome = false;
-        }
+        this.homeCheck(event.url);
       }
     })
+  }
+
+  homeCheck(url: string) {
+    if(url == "/artist/album")
+    {
+      this.reloadData();
+      this.isHome = true;
+    }
+    else {
+      this.isHome = false;
+    }
   }
 
   checkoutTracks(e: number) {
@@ -253,5 +303,9 @@ export class AlbumListMaterialComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  removeDate(periodTo: FormControl<Date | null>) {
+    periodTo.setValue(null);
   }
 }

@@ -59,7 +59,7 @@
   display: flex;
   flex-basis: 10vw;
   gap: 20px;
-  align-items: center;
+  align-items: end;
 }
 
 app-album-card {
@@ -87,6 +87,7 @@ app-album-card {
   box-sizing: border-box;
   font-size: 27px;
   font-weight: bold;
+  align-self: center;
 }
 
 .view-all:hover {

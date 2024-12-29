@@ -19,6 +19,9 @@ export interface AlbumPagedRequest {
   isReleased?: boolean;
   title: string;
   featuredArtistId?: number;
+  getTrackCount?: boolean;
+  periodTo?: string;
+  periodFrom?: string;
 }
 
 export interface AlbumGetAllResponse {
@@ -28,6 +31,7 @@ export interface AlbumGetAllResponse {
   releaseDate: string;
   artist: string;
   type: string;
+  trackCount: number;
 }
 
 @Injectable({

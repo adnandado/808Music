@@ -2,11 +2,18 @@
   <div>
     <input class="search-bar-input" type="text" [formControl]="queryString" [placeholder]="placeholder">
     <mat-icon>search</mat-icon>
+    @if (queryString.value) {
+      <button mat-icon-button class="remove-btn" (click)="removeString()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    }
   </div>
-  <div>
-    <button mat-fab extended (click)="fitlerSearch()">
-      <mat-icon>keyboard_return</mat-icon>
-      Search
-    </button>
-  </div>
+  @if (!autoSearch) {
+    <div>
+      <button mat-fab extended (click)="fitlerSearch()">
+        <mat-icon>keyboard_return</mat-icon>
+        Search
+      </button>
+    </div>
+  }
 </div>

@@ -24,6 +24,7 @@ import {
 import {ArtistHandlerService} from '../../../../services/artist-handler.service';
 import {ArtistSimpleDto} from '../../../../services/auth-services/dto/artist-dto';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MyConfig} from '../../../../my-config';
 
 @Component({
   selector: 'app-tracks-create-or-edit',
@@ -32,7 +33,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class TracksCreateOrEditComponent implements OnInit {
   trackForm: FormGroup = new FormGroup({
-    title: new FormControl(''),
+    title: new FormControl('', [Validators.required, Validators.minLength(3)]),
     isExplicit: new FormControl(false),
     trackFile: new FormControl(),
     artistIds: new FormControl<number[]>([])
@@ -54,7 +55,8 @@ export class TracksCreateOrEditComponent implements OnInit {
               private route: ActivatedRoute,
               private artistHandler: ArtistHandlerService,
               private router: Router,
-              private postTrackService: TrackInsertOrUpdateEndpointService) {
+              private postTrackService: TrackInsertOrUpdateEndpointService,
+              ) {
   }
 
   ngOnInit(): void {
@@ -130,6 +132,9 @@ export class TracksCreateOrEditComponent implements OnInit {
         })
 
       }
+      else {
+        this.trackForm.get('trackFile')?.addValidators(Validators.required);
+      }
     })
 
     this.newTrack = {
@@ -182,4 +187,6 @@ export class TracksCreateOrEditComponent implements OnInit {
       this.snackBar.open("Error: This artist is already featured", "Dismiss", {duration: 2000});
     }
   }
+
+  protected readonly MyConfig = MyConfig;
 }

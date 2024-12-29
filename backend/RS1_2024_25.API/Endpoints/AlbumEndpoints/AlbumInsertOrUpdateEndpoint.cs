@@ -82,7 +82,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
     public class AlbumInsertRequest : IValidatable
     {
         public int? Id { get; set; }
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         public string Distributor { get; set; } = string.Empty;
         public DateTime ReleaseDate { get; set; }
         public int AlbumTypeId { get; set; } = 4;
@@ -92,6 +92,12 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 
         public bool HandleValidation()
         {
+            if (Title.Length < 3)
+                return false;
+            if (Distributor.Length < 3) 
+                return false;
+            if(AlbumTypeId < 1)
+                return false;
             return true;
         }
     }

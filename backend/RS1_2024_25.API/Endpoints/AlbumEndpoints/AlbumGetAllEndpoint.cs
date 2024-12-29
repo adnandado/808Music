@@ -52,6 +52,16 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
                 albums = albums.Where(a => a.Title.ToLower().Contains(request.Title.ToLower()));
             }
 
+            if(request.PeriodTo != null)
+            {
+                albums = albums.Where(a => request.PeriodTo.Value >= a.ReleaseDate);
+            }
+
+            if (request.PeriodFrom != null)
+            {
+                albums = albums.Where(a => request.PeriodFrom.Value <= a.ReleaseDate);
+            }
+
             await db.AlbumTypes.LoadAsync();
 
             albumsResponse = albums.OrderByDescending(a => a.ReleaseDate).Select(a => new AlbumGetAllResponse
@@ -61,7 +71,8 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
                 CoverArt = a.CoverPath != "" ? $"/media/Images/AlbumCovers/{a.CoverPath}" : "",
                 ReleaseDate = a.ReleaseDate,
                 Title = a.Title,
-                Type = a.AlbumType.Type
+                Type = a.AlbumType.Type,
+                TrackCount = request.GetTrackCount ? db.Tracks.Where(t => t.AlbumId == a.Id).Count() : -1
             });
 
             var pagedList = await MyPagedList<AlbumGetAllResponse>.CreateAsync(albumsResponse, request, cancellationToken);
@@ -76,6 +87,9 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         public bool? IsReleased { get; set; }
         public string Title { get; set; } = string.Empty;
         public int? FeaturedArtistId { get; set; }
+        public bool GetTrackCount { get; set; } = false;
+        public DateTime? PeriodFrom { get; set; }
+        public DateTime? PeriodTo { get; set; }
     }
 
     public class AlbumGetAllResponse {
@@ -85,5 +99,6 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         public DateTime ReleaseDate { get; set; }
         public string Artist { get; set; }
         public string Type { get; set; }
+        public int TrackCount { get; set; } = -1;
     }
 }

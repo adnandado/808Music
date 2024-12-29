@@ -1,7 +1,7 @@
 <div class="artist-small-card">
 
   <mat-card class="artist-small">
-    <mat-card-header class="artist-small-header">
+    <mat-card-header class="artist-small-header" (click)="!interactive ? routeToProfile() : false" [ngStyle]="interactive ? {} : {'cursor':'pointer'}">
       <h6>{{ artist?.name }}</h6>
       <img mat-card-avatar [src]="MyConfig.api_address+artist?.pfpPath">
     </mat-card-header>

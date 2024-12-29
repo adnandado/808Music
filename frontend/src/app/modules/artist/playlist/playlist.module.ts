@@ -16,31 +16,34 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 
 
 @NgModule({
-  declarations: [PlaylistListMaterialComponent, PlaylistCreateOrEditComponent, TracksPageComponent ],
-  imports: [
-    CommonModule,
-    PlaylistRoutingModule,
-    MatFormField,
-    MatSlideToggle,
-    SharedModule,
-    MatIcon,
-    MatInput,
-    MatButton,
-    MatAnchor,
-    MatCardHeader,
-    MatCard,
-    MatCardTitle,
-    MatCardContent,
-    MatCardTitleGroup,
-    MatFormFieldModule,
-    MatIconAnchor,
-    MatIconButton,
-    MatAutocomplete,
-    MatOption,
-    MatAutocompleteTrigger,
-    MatMenu,
-    MatMenuTrigger,
-    MatMenuItem
-  ]
+    declarations: [PlaylistListMaterialComponent, PlaylistCreateOrEditComponent, TracksPageComponent],
+    exports: [
+        TracksPageComponent
+    ],
+    imports: [
+        CommonModule,
+        PlaylistRoutingModule,
+        MatFormField,
+        MatSlideToggle,
+        SharedModule,
+        MatIcon,
+        MatInput,
+        MatButton,
+        MatAnchor,
+        MatCardHeader,
+        MatCard,
+        MatCardTitle,
+        MatCardContent,
+        MatCardTitleGroup,
+        MatFormFieldModule,
+        MatIconAnchor,
+        MatIconButton,
+        MatAutocomplete,
+        MatOption,
+        MatAutocompleteTrigger,
+        MatMenu,
+        MatMenuTrigger,
+        MatMenuItem
+    ]
 })
 export class PlaylistModule { }

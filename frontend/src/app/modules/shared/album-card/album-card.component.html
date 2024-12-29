@@ -10,8 +10,16 @@
     }
   <mat-card-header class="album-mat-card-header">
     <mat-card-title class="album-mat-card-title" (click)="emitClick()">{{getTitle()}}</mat-card-title>
-    <mat-card-subtitle class="album-mat-card-subtitle">{{subtitle}}</mat-card-subtitle>
+    @if (artistName != "")
+    {
+      <mat-card-subtitle class="album-mat-card-subtitle italic">{{artistName}}</mat-card-subtitle>
+    }
   </mat-card-header>
+    <mat-card-content class="album-mat-card-subtitle">{{subtitle}}</mat-card-content>
+  @if (numOfTracks != -1)
+  {
+    <mat-card-content class="album-mat-card-subtitle italic">{{numOfTracks}} tracks</mat-card-content>
+  }
   @if (hasControls)
   {
     <mat-card-actions class="album-mat-card-controls">

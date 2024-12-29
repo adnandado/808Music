@@ -12,6 +12,8 @@ export class AlbumCardComponent {
   @Input() hasControls: boolean = false;
   @Input() id: number = 0;
   @Input() tooltip = "";
+  @Input() artistName = "";
+  @Input() numOfTracks = -1;
 
   @Output() onEdit: EventEmitter<number> = new EventEmitter();
   @Output() onStats: EventEmitter<number> = new EventEmitter();

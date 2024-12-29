@@ -1,83 +1,131 @@
 <div class="base-page flex-page">
-    <div class="select-page">
-        <div class="title">
-            @if(!hasControls) {<button mat-icon-button (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>}
-            <h1>{{title}}</h1>
-        </div>
+  <div class="select-page" [ngStyle]="{'flex-basis':'100vw'}">
+    <div class="title">
+      @if (!hasControls) {
+        <button mat-icon-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      }
+      <h1>{{ title }}</h1>
+    </div>
+    <div>
+      <h6>Search:</h6>
+      <app-search-bar placeholder="Search for a release" (onSearchChange)="filterSearch($event)"></app-search-bar>
+    </div>
+
+    <div class="dual-control">
+      <mat-divider [vertical]="true"></mat-divider>
+      <div>
+        <h6>Type:</h6>
+        <mat-chip-listbox>
+          <mat-chip-option [id]="'0'" (selectionChange)="filterSelectedType($event)"
+                           [selected]="pagedRequest.typeId == undefined">All
+          </mat-chip-option>
+          <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+          @for (type of albumTypes; track type.id) {
+            <mat-chip-option [id]="type.id.toString()" [value]="type"
+                             (selectionChange)="filterSelectedType($event)">{{ type.type }}
+            </mat-chip-option>
+          }
+        </mat-chip-listbox>
+      </div>
+      <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+      @if (hasControls) {
         <div>
-          <app-search-bar placeholder="Search for a release" (onSearchChange)="filterSearch($event)"></app-search-bar>
+          <h6>Status:</h6>
+          <mat-chip-listbox>
+            <mat-chip-option [id]="'0'" (selectionChange)="filterReleaseStatus($event)"
+                             [selected]="pagedRequest.isReleased == undefined">All
+            </mat-chip-option>
+            <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+            <mat-chip-option [id]="'1'" (selectionChange)="filterReleaseStatus($event)" [value]="true">
+              Released
+            </mat-chip-option>
+            <mat-chip-option [id]="'2'" (selectionChange)="filterReleaseStatus($event)" [value]="false">
+              Upcoming
+            </mat-chip-option>
+          </mat-chip-listbox>
         </div>
+        <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+      }
+    </div>
+    @if (hasControls) {
+      <div>
+        <h6>Release Period:</h6>
         <div class="dual-control">
-            <mat-divider [vertical]="true"></mat-divider>
-            <div>
-                <h6>Release Type:</h6>
-                <mat-chip-listbox>
-                    <mat-chip-option [id]="'0'" (selectionChange)="filterSelectedType($event)"
-                                     [selected]="pagedRequest.typeId == undefined">All
-                    </mat-chip-option>
-                    <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
-                    @for (type of albumTypes; track type.id) {
-                        <mat-chip-option [id]="type.id.toString()" [value]="type"
-                                         (selectionChange)="filterSelectedType($event)">{{ type.type }}
-                        </mat-chip-option>
-                    }
-                </mat-chip-listbox>
-            </div>
-            <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
-          @if (hasControls)
-          {
-            <div>
-                <h6>Release Status:</h6>
-                <mat-chip-listbox>
-                    <mat-chip-option [id]="'0'" (selectionChange)="filterReleaseStatus($event)"
-                                     [selected]="pagedRequest.isReleased == undefined">All
-                    </mat-chip-option>
-                    <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
-                    <mat-chip-option [id]="'1'" (selectionChange)="filterReleaseStatus($event)" [value]="true">
-                        Released
-                    </mat-chip-option>
-                    <mat-chip-option [id]="'2'" (selectionChange)="filterReleaseStatus($event)" [value]="false">
-                        Upcoming
-                    </mat-chip-option>
-                </mat-chip-listbox>
-            </div>
-            <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
+          <div>
+
+            <mat-form-field>
+              <input matInput [matDatepicker]="pickerFrom" placeholder="From" [formControl]="periodFrom">
+              <mat-datepicker-toggle matIconPrefix [for]="pickerFrom"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFrom></mat-datepicker>
+              @if (periodFrom.value != null) {
+                <button mat-icon-button matIconSuffix (click)="removeDate(periodFrom)">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              }
+            </mat-form-field>
+            @if (!periodFrom.valid) {
+              <p class="error">Invalid date, needed format (dd.mm.yyyy.)</p>
+            }
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="pickerTo" placeholder="To" [formControl]="periodTo">
+              <mat-datepicker-toggle matIconPrefix [for]="pickerTo"></mat-datepicker-toggle>
+              <mat-datepicker #pickerTo></mat-datepicker>
+              @if (periodTo.value != null) {
+                <button mat-icon-button matIconSuffix (click)="removeDate(periodTo)">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              }
+            </mat-form-field>
+            @if (!periodTo.valid) {
+              <p class="error">Invalid date, needed format (dd.mm.yyyy.)</p>
+            }
+          </div>
+          @if (periodTo.value != null && periodFrom.value != null) {
+            @if (periodTo.value < periodFrom.value) {
+              <p class="error">Date From can't be larger than Date To</p>
+            }
           }
         </div>
-      @if (hasControls)
-      {
-        <div class="flex-controls">
-            <mat-card appearance="outlined" class="artist-card add-new-card"
-                      (click)="openCreate('/artist/album/create')">
-                <mat-card-header>
-                    <mat-card-title-group>
-                        <mat-card-title>New release</mat-card-title>
-                        <mat-icon>add_circle</mat-icon>
-                    </mat-card-title-group>
-                </mat-card-header>
-                <mat-card-content></mat-card-content>
-            </mat-card>
-            <a mat-stroked-button routerLink="/auth/logout">
-                Log out
-            </a>
-        </div>
-      }
-        <div class="flex-container">
-            @for (a of albums; track a.id) {
-                <app-album-card [title]="a.title" [subtitle]="a.type + ' • ' + getReleaseYear(a.releaseDate)"
-                                [imageUrl]="MyConfig.api_address + a.coverArt" [id]="a.id"
-                                [hasControls]="hasControls" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
-                                (onStats)="showStats($event)" (onClick)="checkoutTracks($event)"
-                                [tooltip]="a.title + ' - ' + getDateString(a.releaseDate)" (onPlayClick)="playAlbum($event)"></app-album-card>
-            }
-        </div>
-        <mat-paginator [length]="pagedList?.totalCount"
-                       [pageSize]="defaultPageSize" [pageSizeOptions]="[10, 15, 20, 50]" showFirstLastButtons
-                       (page)="switchPage($event)"></mat-paginator>
-    </div>
-    @if (!isHome) {
-        <div class="flex-side">
-            <router-outlet></router-outlet>
-        </div>
+      </div>
     }
+    @if (hasControls) {
+      <div class="flex-controls">
+        <mat-card appearance="outlined" class="artist-card add-new-card"
+                  (click)="openCreate('/artist/album/create')">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>New release</mat-card-title>
+              <mat-icon>add_circle</mat-icon>
+            </mat-card-title-group>
+          </mat-card-header>
+          <mat-card-content></mat-card-content>
+        </mat-card>
+        <a mat-stroked-button routerLink="/auth/logout">
+          Log out
+        </a>
+      </div>
+    }
+    <div class="flex-container">
+      @for (a of albums; track a.id) {
+        <app-album-card [title]="a.title" [subtitle]="a.type + ' • ' + getReleaseYear(a.releaseDate)"
+                        [imageUrl]="MyConfig.api_address + a.coverArt" [id]="a.id"
+                        [hasControls]="hasControls" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
+                        (onStats)="showStats($event)" (onClick)="checkoutTracks($event)"
+                        [tooltip]="a.title + ' - ' + getDateString(a.releaseDate)" (onPlayClick)="playAlbum($event)"
+                        [numOfTracks]="hasControls ? a.trackCount : -1"></app-album-card>
+      }
+    </div>
+    <mat-paginator [length]="pagedList?.totalCount"
+                   [pageSize]="defaultPageSize" [pageSizeOptions]="[10, 15, 20, 50]" showFirstLastButtons
+                   (page)="switchPage($event)"></mat-paginator>
+  </div>
+  @if (!isHome) {
+    <div class="flex-side">
+      <router-outlet></router-outlet>
+    </div>
+  }
 </div>
