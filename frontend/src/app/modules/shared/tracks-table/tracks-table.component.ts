@@ -76,7 +76,6 @@ export class TracksTableComponent implements OnInit, OnChanges {
       {
           console.log("changes");
           this.reloadData();
-
       }
     }
 

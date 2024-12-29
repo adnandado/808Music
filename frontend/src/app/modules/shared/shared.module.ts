@@ -26,7 +26,7 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
 import { AlbumCardComponent } from './album-card/album-card.component';
 import {MatTooltip} from "@angular/material/tooltip";
 import { MyMatInputComponent } from './inputs/my-mat-input/my-mat-input.component';
-import {MatFormField} from '@angular/material/form-field';
+import {MatFormField, MatPrefix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import { TextInputDialogComponent } from './dialogs/text-input-dialog/text-input-dialog.component';
 import { TracksTableComponent } from './tracks-table/tracks-table.component';
@@ -58,6 +58,11 @@ import {MatNavList} from '@angular/material/list';
 import {MatDivider} from '@angular/material/divider';
 import { ShareBottomSheetComponent } from './bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
 import {QRCodeModule} from 'angularx-qrcode';
+import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
+import {SidenavComponent} from './sidenav/sidenav.component';
+import {PlaylistCardComponent} from './playlist-card/playlist-card.component';
+import { LanguageSelectorComponent } from './language-selector/language-selector.component';
+import {MatSelect} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -79,7 +84,12 @@ import {QRCodeModule} from 'angularx-qrcode';
     LongDurationStringPipe,
     StripeComponent,
     QueueViewBottomSheetComponent,
-    ShareBottomSheetComponent // Dodajemo UnauthorizedComponent u deklaracije
+    ShareBottomSheetComponent,
+    DeleteConfirmationDialogComponent,
+    SidenavComponent,
+    PlaylistCardComponent,
+    LanguageSelectorComponent,
+// Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
     CommonModule,
@@ -127,6 +137,8 @@ import {QRCodeModule} from 'angularx-qrcode';
     MatNavList,
     MatDivider,
     QRCodeModule,
+    MatSelect,
+    MatPrefix,
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
@@ -144,7 +156,11 @@ import {QRCodeModule} from 'angularx-qrcode';
     StripeComponent,
     ClickableFeaturedArtistsComponent,
     SecondsToDurationStringPipe,
-    LongDurationStringPipe
+    LongDurationStringPipe,
+    DeleteConfirmationDialogComponent,
+    SidenavComponent,
+    PlaylistCardComponent,
+    LanguageSelectorComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

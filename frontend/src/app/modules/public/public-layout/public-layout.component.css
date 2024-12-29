@@ -35,18 +35,19 @@ h6 {
 }
 
 .navbar-cont {
-  height: 20vh;
+  height: 17vh;
   background-color: #242424;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   -webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.6);
   -moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.6);
   box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.6);
+  position: relative;
 }
 
 .nav-links {
@@ -69,3 +70,27 @@ h6 {
 .page-host {
   height: 80vh;
 }
+
+.footer {
+  height: 5vh;
+  background-color: #242424;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  color: #EEDEE7;
+}
+
+.base-page {
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.lang-select {
+  position: absolute;
+  right: 10px;
+  top: 25px;
+}
+

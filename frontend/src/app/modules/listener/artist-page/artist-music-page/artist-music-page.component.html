@@ -60,7 +60,7 @@
                       [id]="album.id"
                       [tooltip]="album.title"
                       (onClick)="goToAlbum($event)"
-                      (onPlayClick)="playAlbum($event)"
+                      (onPlayClick)="playAlbum($event,false)"
       ></app-album-card>
     }
       @if (albums != null) {
@@ -82,8 +82,9 @@
                           [imageUrl]="MyConfig.api_address+album.coverArt"
                           [id]="album.id"
                           [tooltip]="album.title"
+                          [artistName] = "album.artist"
                           (onClick)="goToAlbum($event)"
-                          (onPlayClick)="playAlbum($event)"
+                          (onPlayClick)="playAlbum($event,true)"
           ></app-album-card>
         }
         @if (featuredAlbums != null) {

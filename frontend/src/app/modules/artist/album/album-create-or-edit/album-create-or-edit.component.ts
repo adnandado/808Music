@@ -16,6 +16,7 @@ import {
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {ArtistHandlerService} from '../../../../services/artist-handler.service';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-album-create-or-edit',
@@ -31,6 +32,14 @@ export class AlbumCreateOrEditComponent implements OnInit, OnChanges {
     albumTypeId: 0,
     artistId: 0,
     isActive: true,
+  }
+
+  validForm = {
+    titleValid: false,
+    releaseDate: false,
+    distributor: false,
+    albumTypeId: false,
+    dateInputTouched: false,
   }
 
   oldTitle = "";
@@ -49,8 +58,7 @@ export class AlbumCreateOrEditComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.oldTitle = this.album.title;
-    if(this.oldTitle == "")
-    {
+    if (this.oldTitle == "") {
       this.oldTitle = this.album.title;
     }
     console.log(this.oldTitle);
@@ -66,15 +74,14 @@ export class AlbumCreateOrEditComponent implements OnInit, OnChanges {
       this.albumTypes = t;
     });
     this.oldTitle = this.album.title;
-    if(this.oldTitle == "")
-    {
+    if (this.oldTitle == "") {
       this.oldTitle = this.album.title;
     }
     console.log(this.oldTitle);
   }
 
-  loadAlbum(id:number) {
-    if(id != undefined){
+  loadAlbum(id: number) {
+    if (id != undefined) {
       this.albumGet.handleAsync(id).subscribe({
         next: value => {
           this.album.id = value.id;
@@ -87,6 +94,11 @@ export class AlbumCreateOrEditComponent implements OnInit, OnChanges {
 
           this.existingCoverPath = value.coverPath
           this.oldDate = new Date(this.album.releaseDate)
+
+          this.validForm.titleValid = true;
+          this.validForm.albumTypeId = true;
+          this.validForm.releaseDate = true;
+          this.validForm.distributor = true;
         },
         error: (err: HttpErrorResponse) => {
           this.snackBar.open(err.error, "Dismiss", {duration: 2000});
@@ -95,6 +107,9 @@ export class AlbumCreateOrEditComponent implements OnInit, OnChanges {
     }
   }
 
+  isFormValid() {
+    return this.validForm.titleValid && this.validForm.releaseDate && this.validForm.albumTypeId && this.validForm.distributor;
+  }
 
   createAlbum() {
     this.albumCreate.handleAsync(this.album).subscribe({
@@ -102,7 +117,7 @@ export class AlbumCreateOrEditComponent implements OnInit, OnChanges {
         this.album.id != undefined ?
           this.snackBar.open("Successfully updated " + value.title + "!", "Dismiss", {duration: 3000}) :
           this.snackBar.open("Successfully created " + value.title + "!", "Dismiss", {duration: 3000});
-          this.router.navigate(['/artist/album']);
+        this.router.navigate(['/artist/album']);
       }
     });
   }
@@ -114,29 +129,61 @@ export class AlbumCreateOrEditComponent implements OnInit, OnChanges {
   protected readonly MyConfig = MyConfig;
 
   getPath() {
-    return MyConfig.api_address+this.existingCoverPath;
+    return MyConfig.api_address + this.existingCoverPath;
   }
 
   logData() {
     this.snackBar.open(this.album.albumTypeId.toString(), "Dismiss", {duration: 2000});
   }
 
-  isAlreadyReleased() :boolean{
+  isAlreadyReleased(): boolean {
     return this.oldDate.getTime() < Date.now();
   }
 
   getTitle() {
-    return this.oldTitle.length > 9 ? this.oldTitle.slice(0,9) + "..." : this.oldTitle;
+    return this.oldTitle.length > 9 ? this.oldTitle.slice(0, 9) + "..." : this.oldTitle;
   }
 
   setDate(e: MatDatepickerInputEvent<any, any>) {
-    if(e.value as Date)
-    {
-      let date = e.value as Date;
+    this.validForm.dateInputTouched = true;
+    let dateString = (e.targetElement as HTMLInputElement).value;
+    if(/^\d{1,2}[.\/][ ]?\d{1,2}[.\/][ ]?\d{4}[.\/]?$/.test(dateString)) {
+      let split = dateString.split(/[.\/][ ]?/);
+      let day = Number.parseInt(split[0]);
+      let month = Number.parseInt(split[1]);
+      let year = Number.parseInt(split[2]);
+      let date = new Date(year, month-1, day);
+
       let z = date.getTimezoneOffset() * 60 * 1000;
-      let toLocal = date.getTime()-z;
+      let toLocal = date.getTime() - z;
       let newDate = new Date(toLocal);
       this.album.releaseDate = newDate.toISOString();
+      this.validForm.releaseDate = true;
+      return;
     }
+    this.validForm.releaseDate = false;
+  }
+
+  validateTitle() {
+    this.album.title.length >= 3 ? this.validForm.titleValid = true : this.validForm.titleValid = false;
+  }
+
+  validateDistributor() {
+    this.album.distributor.length >= 3 ? this.validForm.distributor = true : this.validForm.distributor = false;
+  }
+
+  validateType(e: MatSelectChange) {
+    this.validForm.albumTypeId = true;
+  }
+
+  validateDate(e: MatDatepickerInputEvent<any, any>) {
+    if (e.value != null) {
+      let date = new Date(e.value);
+      console.log(date);
+      this.validForm.releaseDate = true;
+      return;
+    }
+    this.validForm.releaseDate = false;
+    console.log(e.value);
   }
 }

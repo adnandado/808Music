@@ -58,4 +58,14 @@ export class ArtistPicDragzoneComponent implements OnChanges {
     this.file = null;
     this.imageEmit.emit(undefined);
   }
+
+  getFileName(name: string) {
+    if(name.length > 20)
+    {
+      let i = name.lastIndexOf(".");
+      return name.slice(0, 17) + "... " + name.substring(i, name.length);
+    }
+
+    return name;
+  }
 }

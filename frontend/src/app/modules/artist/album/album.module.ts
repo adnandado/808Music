@@ -21,14 +21,14 @@ import {SharedModule} from '../../shared/shared.module';
 import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import {MatDivider} from '@angular/material/divider';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatFormField, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatPrefix, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {
   MatCalendar,
   MatDatepicker,
   MatDatepickerContent,
   MatDatepickerInput,
-  MatDatepickerToggle
+  MatDatepickerToggle, MatDateRangeInput, MatDateRangePicker
 } from '@angular/material/datepicker';
 import {MatOption, MatSelect} from '@angular/material/select';
 
@@ -38,42 +38,45 @@ import {MatOption, MatSelect} from '@angular/material/select';
         AlbumListMaterialComponent,
         AlbumCreateOrEditComponent
     ],
-    imports: [
-        CommonModule,
-        AlbumRoutingModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatAnchor,
-        MatCard,
-        MatCardContent,
-        MatCardHeader,
-        MatCardTitle,
-        MatCardTitleGroup,
-        MatIcon,
-        MatCardImage,
-        MatCardActions,
-        MatButton,
-        MatCardSmImage,
-        SharedModule,
-        MatChipListbox,
-        MatChipOption,
-        MatDivider,
-        MatCheckbox,
-        MatFabButton,
-        MatFormField,
-        MatInput,
-        MatDatepickerToggle,
-        MatDatepicker,
-        MatDatepickerInput,
-        MatSelect,
-        MatOption,
-        MatCalendar,
-        MatDatepickerContent,
-        MatSuffix,
-        MatIconButton,
-        MatIconAnchor
-    ],
+  imports: [
+    CommonModule,
+    AlbumRoutingModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatAnchor,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardTitleGroup,
+    MatIcon,
+    MatCardImage,
+    MatCardActions,
+    MatButton,
+    MatCardSmImage,
+    SharedModule,
+    MatChipListbox,
+    MatChipOption,
+    MatDivider,
+    MatCheckbox,
+    MatFabButton,
+    MatFormField,
+    MatInput,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatSelect,
+    MatOption,
+    MatCalendar,
+    MatDatepickerContent,
+    MatSuffix,
+    MatIconButton,
+    MatIconAnchor,
+    MatDateRangeInput,
+    MatDateRangePicker,
+    MatPrefix
+  ],
     exports: [
         AlbumListMaterialComponent
     ],

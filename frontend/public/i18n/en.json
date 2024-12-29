@@ -1,0 +1,25 @@
+{
+  "PUBLIC-NAV": {
+    "Home": "Home",
+    "About": "About Us",
+    "Contact": "Contact",
+    "Copyright": "©808Music 2024-2025 All rights reserved."
+  },
+  "HOME": {
+    "Tagline": "Whether your an artist looking to reach a wider audience or an avid music listener 808 Music is the place to be",
+    "Login": "Log in",
+    "Register": "Register now",
+    "AlreadyRegistered": "Already a registered user?",
+    "TitleP1": "Join the",
+    "TitleP2": "Artists and Music Listeners",
+    "TitleP3": "already enjoying 808 Music"
+  },
+  "ABOUT": {
+    "P1": "At 808 Music, we believe music has the power to connect, inspire, and transform lives. That’s why we’ve created a platform where your favorite songs, artists, and playlists are always just a tap away. Whether you’re diving into chart-topping hits, discovering underground gems, or curating your personal soundtrack, our mission is to make every listening experience unforgettable.",
+    "P2": "With a vast library of tracks and products, personalized recommendations tailored to your unique taste, and seamless streaming across all your devices, we’re here to empower every moment of your day with the perfect sound.",
+    "P3": "Founded on innovation and driven by a passion for music, we aim to be more than just a streaming service. We’re a community of listeners and creators, connecting people through the universal language of music. From supporting emerging artists to collaborating with industry icons, we’re committed to shaping the future of music culture. Welcome to the ultimate destination for your listening journey. Welcome to 808 Music."
+  },
+  "LANG-SELECT": {
+    "Placeholder": "Select language"
+  }
+}

@@ -1,0 +1,10 @@
+<div class="lang-select">
+  <mat-form-field>
+  <mat-select (selectionChange)="setLang($event)" [placeholder]="placeholder">
+    <mat-option value="bs">Bosanski</mat-option>
+    <mat-option value="en">English</mat-option>
+    <mat-option value="hr">Hrvatski</mat-option>
+  </mat-select>
+    <mat-icon matIconPrefix>language</mat-icon>
+  </mat-form-field>
+</div>

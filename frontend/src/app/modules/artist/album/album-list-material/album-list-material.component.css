@@ -43,10 +43,11 @@ div > h6 {
 
 .title > h1 {
   padding-top: 1vh;
+  margin-bottom: 5px;
 }
 
 .flex-side {
-  flex-basis: 35vw;
+  flex-basis: 42vw;
   height: auto;
   display: block;
 }
@@ -63,6 +64,9 @@ div > h6 {
   text-align: center;
 }
 
+.error {
+  color: red;
+}
 
 @media only screen and (max-width: 1300px) {
   app-album-card {

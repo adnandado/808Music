@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@khajegan/ngx-audio-player": "^17.1.0",
+    "@ngx-translate/core": "^16.0.4",
+    "@ngx-translate/http-loader": "^16.0.1",
     "@stripe/stripe-js": "^5.3.0",
     "angularx-qrcode": "^18.0.2",
     "browser-image-compression": "^2.0.2",

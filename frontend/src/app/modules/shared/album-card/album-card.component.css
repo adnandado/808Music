@@ -27,6 +27,7 @@
 
 .album-mat-card-title {
   font-size: 20px;
+  text-overflow: ellipsis;
 }
 
 .album-mat-card-title:hover {
@@ -38,4 +39,12 @@
   position: absolute;
   bottom: 7vh;
   right: 10px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
 }

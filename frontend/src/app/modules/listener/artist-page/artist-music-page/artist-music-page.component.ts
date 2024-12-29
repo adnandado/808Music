@@ -49,7 +49,7 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
               private trackByIdService: TrackGetByIdEndpointService,
               private route: ActivatedRoute,
               private albumsGetService: AlbumGetAllEndpointService,
-              private getArtistService : ArtistGetByIdEndpointService) {
+              private getArtistService : ArtistGetByIdEndpointService,) {
   }
 
   ngAfterViewInit(): void {
@@ -158,10 +158,21 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
     return title;
   }
 
-  playAlbum(id: number) {
+  playAlbum(id: number, featured: boolean = false) {
+    let a = undefined;
+
+    if(featured)
+    {
+      a = this.featuredAlbums?.dataItems.find(item => item.id == id)
+    }
+    else
+    {
+      a = this.albums?.dataItems.find(item => item.id == id)
+    }
+
     this.trackGetAllService.handleAsync({albumId: id}).subscribe({
       next: value => {
-        this.musicPlayerService.createQueue(value.dataItems,{display:"album", value:"album"})
+        this.musicPlayerService.createQueue(value.dataItems,{display:a?.title + " - " + a?.type, value:"/listener/release/"+id});
       }
     })
   }

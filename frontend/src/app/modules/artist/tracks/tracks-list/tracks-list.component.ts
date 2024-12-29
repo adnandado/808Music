@@ -48,6 +48,9 @@ export class TracksListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.artistMode) {
+      this.homeCheck(this.router.url);
+    }
     this.checkIfHome();
     this.reloadData();
   }
@@ -148,17 +151,23 @@ export class TracksListComponent implements OnInit {
     this.router.events.subscribe(event => {
       if(event instanceof NavigationStart)
       {
-        if(event.url == "/artist/tracks/"+this.pagedRequest.albumId)
-        {
-          console.log(event.url, "/artist/tracks/"+this.pagedRequest.albumId)
-          this.reloadData();
-          this.reloadTable = true;
-          this.isHome = true;
-        }
-        else {
-          this.isHome = false;
-          this.reloadTable = false;
-        }
+        this.homeCheck(event.url);
+      }
+    })
+  }
+
+  homeCheck(url: string) {
+    this.route.params.subscribe(params => {
+      let id = params["id"];
+      if(url == "/artist/tracks/"+id)
+      {
+        this.reloadData();
+        this.reloadTable = true;
+        this.isHome = true;
+      }
+      else {
+        this.isHome = false;
+        this.reloadTable = false;
       }
     })
   }
