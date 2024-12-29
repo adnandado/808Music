@@ -518,11 +518,22 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<int>("ArtistId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDigital")
                         .HasColumnType("bit");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
+
+                    b.Property<string>("ProductType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QtyInStock")
                         .HasColumnType("int");
@@ -533,6 +544,9 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SoldItems")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()

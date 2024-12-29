@@ -15,6 +15,10 @@ namespace RS1_2024_25.API.Data.Models
         public ICollection<ProductPhoto> Photos { get; set; } = new List<ProductPhoto>();
         public string Slug { get; set; }
         public decimal SaleAmount { get; set; } = 0;
+        public DateTime DateCreated { get; set; }
+        public string ProductType { get; set; }
+        public string Bio { get; set; }
+        public int SoldItems { get; set; } = 0;
         [ForeignKey(nameof(Artist))]
         public int ArtistId { get; set; }
         public Artist? Artist { get; set; }

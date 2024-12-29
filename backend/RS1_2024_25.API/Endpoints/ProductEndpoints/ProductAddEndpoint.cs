@@ -28,6 +28,10 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
             IsDigital = request.isDigital,
             Slug = GenerateRandomSlug(),
             ArtistId = request.ArtistId,
+            DateCreated = DateTime.UtcNow, 
+            ProductType = request.ProductType,
+            Bio = request.Bio
+            ArtistId = request.ArtistId,
         };
 
         _db.Products.Add(product);
@@ -88,6 +92,7 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
 
     }
 
+
     public class ProductAddResponse
     {
         public required int ID { get; set; }
@@ -99,5 +104,4 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
         public int ArtistId { get; set; }
         public decimal SaleAmount { get; set; } = 0;
 
-    }
 }
