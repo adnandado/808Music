@@ -50,6 +50,11 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                 tracks = tracks.Where(t => t.Title.ToLower().Contains(request.Title.ToLower()));
             }
 
+            if(request.SortByStreams)
+            {
+                tracks = tracks.OrderByDescending(t => t.Streams);
+            }
+
             var filteredTracks = tracks.Select(t => new TrackGetResponse
             {
                 Id = t.Id,
@@ -78,5 +83,6 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
         public List<int>? FeaturedArtists { get; set; }
         public string Title { get; set; } = string.Empty;
         public bool? IsReleased { get; set; }
+        public bool SortByStreams { get; set; } = false;
     }
 }
