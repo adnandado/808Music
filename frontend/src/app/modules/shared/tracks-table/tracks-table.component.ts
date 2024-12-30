@@ -19,7 +19,7 @@ import {
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {TrackWithPositionDto} from '../../../services/auth-services/dto/TrackWithPositionDto';
 import {ArtistSimpleDto} from '../../../services/auth-services/dto/artist-dto';
-import {MatSort, MatSortModule} from '@angular/material/sort';
+import {MatSort, MatSortModule, Sort} from '@angular/material/sort';
 import {TrackDeleteEndpointService} from '../../../endpoints/track-endpoints/track-delete-endpoint.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -39,7 +39,7 @@ import {MusicPlayerService} from '../../../services/music-player.service';
   templateUrl: './tracks-table.component.html',
   styleUrl: './tracks-table.component.css',
 })
-export class TracksTableComponent implements OnInit, OnChanges {
+export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() inArtistMode = true;
   @Input() isPlaylist = false;
   protected readonly MyConfig = MyConfig;
@@ -69,6 +69,20 @@ export class TracksTableComponent implements OnInit, OnChanges {
               private getAllTracksService: TrackGetAllEndpointService,
               private btmSheet : MatBottomSheet,
               private musicPlayerService : MusicPlayerService) {
+  }
+
+  ngAfterViewInit(): void {
+    /*
+    this.dataSource.sortingDataAccessor = (item, prop) => {
+      switch (prop)
+      {
+        case 'position': console.log(item[prop]); return item[prop];
+      }
+      return '';
+    }
+
+     */
+    this.dataSource.sort = this.sort;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -112,14 +126,6 @@ export class TracksTableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.dataSource.sortingDataAccessor = (item, prop) => {
-      switch (prop)
-      {
-        case 'position': return item.position;
-      }
-      return '';
-    }
-    this.dataSource.sort = this.sort;
     this.reloadData();
 
     this.musicPlayerService.shuffleToggled.subscribe({
@@ -222,5 +228,23 @@ export class TracksTableComponent implements OnInit, OnChanges {
 
   toggleShuffle() {
     this.musicPlayerService.toggleShuffle();
+  }
+
+  sortData(sort: Sort) {
+    switch (sort.active) {
+      case "position":
+        if(sort.direction == 'asc')
+        {
+          this.tracksDto.sort((t1, t2) => t1.position - t2.position)
+        }
+        else if(sort.direction == 'desc') {
+          this.tracksDto.sort((t1, t2) => t2.position - t1.position)
+        }
+        else {
+
+        }
+        break;
+    }
+    this.dataSource.data = this.tracksDto;
   }
 }

@@ -3,6 +3,9 @@ import {TrackGetResponse} from '../../../../endpoints/track-endpoints/track-get-
 import {SecondsToDurationStringPipe} from '../../../../services/pipes/seconds-to-string.pipe';
 import {MatSliderDragEvent} from '@angular/material/slider';
 import {MusicPlayerService} from '../../../../services/music-player.service';
+import {interval} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {MyConfig} from '../../../../my-config';
 
 @Component({
   selector: 'app-music-controller',
@@ -18,7 +21,15 @@ export class MusicControllerComponent implements OnInit {
   isShuffled = false;
   player : HTMLAudioElement | null = null;
 
-  constructor(private musicPlayerService: MusicPlayerService) {
+  //Stream counting control vars
+  streamCounted = false;
+  streamedSec = 0;
+  lastStreamIncrement = 0;
+  secondsNeeded = 10;
+
+
+  constructor(private musicPlayerService: MusicPlayerService,
+              private httpClient : HttpClient) {
   }
 
   ngOnInit(): void {
@@ -37,6 +48,8 @@ export class MusicControllerComponent implements OnInit {
           {
             this.changePlayerState();
           }
+          this.streamCounted = false;
+          this.streamedSec = 0;
         }
       })
 
@@ -48,6 +61,30 @@ export class MusicControllerComponent implements OnInit {
         }
       })
 
+      setInterval(() => {
+        if(this.playingState)
+        {
+          let millis = Date.now();
+          if(millis - this.lastStreamIncrement >= 1000)
+          {
+            this.lastStreamIncrement = millis;
+            this.streamedSec++;
+            if(this.streamedSec >= this.secondsNeeded && !this.streamCounted)
+            {
+              this.httpClient.post(MyConfig.api_address+ "/api/TrackAddStreamEndpoint/"+ this.track?.id, {}).subscribe({
+                next: value => {
+                  console.log("Stream counted");
+                }
+              });
+              this.streamCounted = true;
+              this.streamedSec = 0;
+          }
+          }
+        }
+        else {
+          this.streamedSec = 0;
+        }
+      }, 250);
   }
 
   setCurrentPlaybackTime(e: number) {

@@ -30,12 +30,14 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
   myPagedRequest : TrackGetAllRequest = {
     pageSize: 5,
     pageNumber: 1,
-    isReleased: true
+    isReleased: true,
+    sortByStreams: true
   }
   myFeaturedRequest : TrackGetAllRequest =  {
     pageSize: 5,
     pageNumber: 1,
-    isReleased: true
+    isReleased: true,
+    sortByStreams: true
   }
   tracks: TrackGetResponse[] = [];
   featuredTracks: TrackGetResponse[] = [];

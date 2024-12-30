@@ -1,30 +1,58 @@
 <div class="artist-page">
   <div class="banner-controls">
-    <div class="banner" [ngStyle]="{'background-image': 'url('+ MyConfig.api_address + artist?.profileBackgroundPath+')'}"></div>
+    <div class="banner"
+         [ngStyle]="{'background-image': 'url('+ MyConfig.api_address + artist?.profileBackgroundPath+')'}"></div>
     <div class="banner-gradient"></div>
     <div class="controls">
       <div class="name">
-          <button mat-icon-button (click)="shufflePlay()" class="shuffley"><mat-icon>@if (musicPlayerService.isShuffled) {
+        <button mat-icon-button (click)="shufflePlay()" class="shuffley">
+          <mat-icon>@if (musicPlayerService.isShuffled) {
             shuffle_on
           } @else {
             shuffle
-          }</mat-icon></button>
-          <button mat-fab (click)="playArtist()"><mat-icon>play_arrow</mat-icon></button>
-        <h2>{{artist?.name}}</h2>
+          }</mat-icon>
+        </button>
+        <button mat-fab (click)="playArtist()">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+        <h2>{{ artist?.name }}</h2>
       </div>
       <div class="actions">
-        <div class="followers">{{artist?.followers}} followers</div>
+        <div class="followers">{{ artist?.followers }} followers</div>
         <div class="actions-options">
-          <button mat-icon-button (click)="shareProfile()"><mat-icon>share</mat-icon></button>
-          <button mat-icon-button><mat-icon>notifications</mat-icon></button>
-          <button mat-stroked-button class="follow-button">Follow</button>
+          <button mat-icon-button (click)="shareProfile()">
+            <mat-icon>share</mat-icon>
+          </button>
+          @if (followInfo)
+          {
+          <button mat-icon-button (click)="toggleNotifications()">
+            <mat-icon>
+              @if (followInfo.wantsNotifications) {
+                notifications_off
+              } @else {
+                notifications
+              }
+            </mat-icon>
+          </button>
+          }
+          @if (followInfo) {
+            <button mat-flat-button class="follow-button" (click)="followOrUnfollow()">
+              Unfollow
+            </button>
+          } @else {
+            <button mat-stroked-button class="follow-button" (click)="followOrUnfollow()">
+              Follow
+            </button>
+          }
         </div>
       </div>
     </div>
   </div>
   <mat-tab-group>
-    <mat-tab label="MUSIC"> <app-artist-music-page></app-artist-music-page> </mat-tab>
-    <mat-tab label="SHOP"> Content 2 </mat-tab>
-    <mat-tab label="EVENTS"> Content 3 </mat-tab>
+    <mat-tab label="MUSIC">
+      <app-artist-music-page></app-artist-music-page>
+    </mat-tab>
+    <mat-tab label="SHOP"> Content 2</mat-tab>
+    <mat-tab label="EVENTS"> Content 3</mat-tab>
   </mat-tab-group>
 </div>
