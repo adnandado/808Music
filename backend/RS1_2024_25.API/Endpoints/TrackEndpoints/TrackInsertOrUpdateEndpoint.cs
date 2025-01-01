@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 {
-    public class TrackInsertOrUpdateEndpoint(ApplicationDbContext db, TokenProvider tp, IMyFileHandler fh, IConfiguration cfg) : MyEndpointBaseAsync.WithRequest<TrackInsertRequest>.WithActionResult<TrackInsertResponse>
+    public class TrackInsertOrUpdateEndpoint(ApplicationDbContext db, TokenProvider tp, IMyFileHandler fh, IConfiguration cfg, IMyCacheService cs) : MyEndpointBaseAsync.WithRequest<TrackInsertRequest>.WithActionResult<TrackInsertResponse>
     {
         [Authorize]
         [HttpPost]
@@ -47,6 +47,11 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                 {
                     fh.DeleteFile(cfg["StaticFilePaths:Tracks"] + t.TrackPath);
                     t.TrackPath = "";
+                    Track? cachedTrack = await cs.GetAsync<Track>("track-" + request.Id);
+                    if(cachedTrack != null)
+                    {
+                        await cs.RemoveAsync<Track>("track-" + request.Id);
+                    }
                 }
             }
             else

@@ -3,6 +3,7 @@
     <div class="banner"
          [ngStyle]="{'background-image': 'url('+ MyConfig.api_address + artist?.profileBackgroundPath+')'}"></div>
     <div class="banner-gradient"></div>
+    <button mat-icon-button class="back-button" (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
     <div class="controls">
       <div class="name">
         <button mat-icon-button (click)="shufflePlay()" class="shuffley">
@@ -28,7 +29,7 @@
           <button mat-icon-button (click)="toggleNotifications()">
             <mat-icon>
               @if (followInfo.wantsNotifications) {
-                notifications_off
+                notifications_active
               } @else {
                 notifications
               }

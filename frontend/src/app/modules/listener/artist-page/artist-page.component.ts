@@ -14,11 +14,13 @@ import {CheckFollowEndpointService, Follow} from '../../../endpoints/follow-endp
 import {
   ToggleNotificationsEndpointService
 } from '../../../endpoints/follow-endpoints/toggle-notifications-endpoint.service';
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 @Component({
   selector: 'app-artist-page',
   templateUrl: './artist-page.component.html',
-  styleUrl: './artist-page.component.css'
+  styleUrl: './artist-page.component.css',
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}]
 })
 export class ArtistPageComponent implements OnInit {
   artist: ArtistDetailResponse | null = null;
@@ -33,7 +35,8 @@ export class ArtistPageComponent implements OnInit {
               protected musicPlayerService: MusicPlayerService,
               private followService : FollowOrUnfollowEndpointService,
               private checkFollowService : CheckFollowEndpointService,
-              private toggleNotiService : ToggleNotificationsEndpointService) { }
+              private toggleNotiService : ToggleNotificationsEndpointService,
+              private location: Location,) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -108,5 +111,9 @@ export class ArtistPageComponent implements OnInit {
          */
       }});
     }
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

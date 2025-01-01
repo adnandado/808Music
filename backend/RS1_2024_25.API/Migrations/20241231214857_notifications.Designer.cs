@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RS1_2024_25.API.Data;
 
@@ -11,9 +12,11 @@ using RS1_2024_25.API.Data;
 namespace RS1_2024_25.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241231214857_notifications")]
+    partial class notifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -386,22 +389,6 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.MyAppUserPreference", b =>
-                {
-                    b.Property<int>("MyAppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("AllowEmailNotifications")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("AllowPushNotifications")
-                        .HasColumnType("bit");
-
-                    b.HasKey("MyAppUserId");
-
-                    b.ToTable("MyAppUserPreferences");
-                });
-
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.MyUserArtistInvite", b =>
                 {
                     b.Property<int>("Id")
@@ -446,9 +433,6 @@ namespace RS1_2024_25.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ArtistId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ContentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -911,17 +895,6 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Artist");
-
-                    b.Navigation("MyAppUser");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.MyAppUserPreference", b =>
-                {
-                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
-                        .WithMany()
-                        .HasForeignKey("MyAppUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
 
                     b.Navigation("MyAppUser");
                 });
