@@ -1,0 +1,87 @@
+.notification-card {
+  width: 100%;
+  height: 12vh;
+  position: relative;
+  background-color: #161215;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 1vh;
+  border: 0.1rem solid #4E444B;
+  transition: background-color 0.25s ease-in-out;
+}
+
+.notification-card:hover {
+  background-color: #4D3D50;
+  transition: background-color 0.25s ease-in-out;
+}
+
+.thumbnail {
+  width: 10vh;
+  height: 10vh;
+  border-radius: 15px;
+  background-color: #EEDEE7;
+  background-position: center;
+  background-size: cover;
+}
+
+.ncard-content {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.greyed {
+  color: #A9A9A9;
+}
+
+.time {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.msg {
+  font-size: 0.9rem;
+}
+
+.title {
+  font-weight: 500;
+  letter-spacing: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.title:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.artist-name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ncard-actions {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding-right: 2vh;
+}
+
+
+.mark-as-read {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+}
+
+.mark-as-read > mat-icon {
+  padding-top: 3px;
+  text-align: start;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+}

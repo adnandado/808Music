@@ -22,6 +22,7 @@ export class AlbumCardComponent {
   @Output() onPlayClick: EventEmitter<number> = new EventEmitter();
   playBtnStyle = {
     'display': 'none',
+    'bottom': '7vh'
   }
 
   replaceWithPlaceholder() {
@@ -49,15 +50,14 @@ export class AlbumCardComponent {
   }
 
   showPlayButton() {
-    this.playBtnStyle = {
-      'display': 'block',
+    this.playBtnStyle['display'] = 'block';
+    if(this.artistName != ""){
+      this.playBtnStyle['bottom'] = '10vh';
     }
   }
 
   hidePlayButton() {
-    this.playBtnStyle = {
-      'display': 'none',
-    }
+    this.playBtnStyle['display'] = 'none';
   }
 
   emitPlayClick() {

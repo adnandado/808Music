@@ -63,6 +63,9 @@ import {SidenavComponent} from './sidenav/sidenav.component';
 import {PlaylistCardComponent} from './playlist-card/playlist-card.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import {MatSelect} from "@angular/material/select";
+import { UserPreferenceBottomSheetComponent } from './bottom-sheets/user-preference-bottom-sheet/user-preference-bottom-sheet.component';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import { ManageFollowingBottomSheetComponent } from './bottom-sheets/manage-following-bottom-sheet/manage-following-bottom-sheet.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +92,8 @@ import {MatSelect} from "@angular/material/select";
     SidenavComponent,
     PlaylistCardComponent,
     LanguageSelectorComponent,
+    UserPreferenceBottomSheetComponent,
+    ManageFollowingBottomSheetComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
@@ -139,6 +144,7 @@ import {MatSelect} from "@angular/material/select";
     QRCodeModule,
     MatSelect,
     MatPrefix,
+    MatSlideToggle,
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent

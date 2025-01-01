@@ -23,6 +23,9 @@ import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import { ArtistMusicPageComponent } from './artist-page/artist-music-page/artist-music-page.component';
 import { ArtistAlbumsListComponent } from './artist-albums-list/artist-albums-list.component';
 import {AlbumModule} from '../artist/album/album.module';
+import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
+import {MatChipListbox, MatChipOption} from '@angular/material/chips';
+import { NotificationCardComponent } from './notifications-page/notification-card/notification-card.component';
 
 
 @NgModule({
@@ -34,7 +37,9 @@ import {AlbumModule} from '../artist/album/album.module';
     PlayTrackComponent,
     ArtistPageComponent,
     ArtistMusicPageComponent,
-    ArtistAlbumsListComponent
+    ArtistAlbumsListComponent,
+    NotificationsPageComponent,
+    NotificationCardComponent
   ],
   imports: [
     CommonModule,
@@ -54,6 +59,8 @@ import {AlbumModule} from '../artist/album/album.module';
     MatTabGroup,
     MatTab,
     AlbumModule,
+    MatChipListbox,
+    MatChipOption,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

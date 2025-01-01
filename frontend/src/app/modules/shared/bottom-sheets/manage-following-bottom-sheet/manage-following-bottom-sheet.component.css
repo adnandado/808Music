@@ -1,0 +1,17 @@
+.following {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.following-page {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  box-sizing: border-box;
+  padding: 1vh;
+}
+
+h3 {
+  margin: 0;
+}

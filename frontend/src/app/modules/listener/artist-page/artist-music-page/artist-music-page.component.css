@@ -79,7 +79,7 @@ app-album-card {
 .view-all {
   width: 3vw;
   height: 12vw;
-  background-color: #242424;
+  background-color: #161215;
   border-radius: 10px;
   margin-right: 10px;
   text-align: center;
@@ -88,6 +88,7 @@ app-album-card {
   font-size: 27px;
   font-weight: bold;
   align-self: center;
+  border: 0.1rem solid #4E444B;
 }
 
 .view-all:hover {

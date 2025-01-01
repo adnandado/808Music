@@ -22,7 +22,7 @@ export class MyUserAuthService {
               private router: Router,
               private myDialog: MatDialog,) {
     setInterval(() => {
-      console.log(this.getAuthToken());
+      //console.log(this.getAuthToken());
     },60000)
   }
 

@@ -15,7 +15,7 @@
   margin: 0;
 }
 
-.artist-small-card mat-icon {
+.red mat-icon {
   text-align: center;
   color: lightcoral;
 }
@@ -23,5 +23,11 @@
 .artist-small-card{
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
   align-items: center;
 }

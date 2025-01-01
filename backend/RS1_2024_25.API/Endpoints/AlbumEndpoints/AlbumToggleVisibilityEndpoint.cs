@@ -27,9 +27,20 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
                 if (album.ReleaseDate < DateTime.Now)
                 {
                     album.IsActive = true;
+                    //Add notification to db
+                    Notification notification = new Notification
+                    {
+                        ArtistId = album.ArtistId,
+                        ContentId = album.Id,
+                        CreatedAt = DateTime.Now,
+                        Sent = false,
+                        Type = nameof(Album),
+                    };
+
+                    await db.Notifications.AddAsync(notification, cancellationToken);
                 }
             }
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync(cancellationToken);
             return Ok();
         }
     }

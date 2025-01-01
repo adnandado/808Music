@@ -81,3 +81,10 @@
   height: 40px;
   box-sizing: border-box;
 }
+
+.back-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 3;
+}

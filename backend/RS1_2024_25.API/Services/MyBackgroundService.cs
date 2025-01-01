@@ -2,6 +2,7 @@
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Endpoints.AlbumEndpoints;
 using RS1_2024_25.API.Endpoints.ArtistEndpoints;
+using RS1_2024_25.API.Endpoints.NotificationEndpoints;
 using RS1_2024_25.API.Helper;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace RS1_2024_25.API.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            timer = new Timer(Process, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            timer = new Timer(Process, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
             return Task.CompletedTask;
         }
 
@@ -49,11 +50,14 @@ namespace RS1_2024_25.API.Services
             Array tasks = Enum.GetValues(typeof(ScheduledTaskTypes));
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Add("BackgroundScheduler", cfg["BackendUrl"]);
+
+                await client.GetAsync(cfg["BackendUrl"] + "/api/" + nameof(SendArtistNotifications));
+
                 for (int i = 0; i < schedules.Count; i++)
                 {
                     if (nextRuns[i] < DateTime.Now)
                     {
-                        client.DefaultRequestHeaders.Add("BackgroundScheduler", cfg["BackendUrl"]);
                         switch (tasks.GetValue(i))
                         {
                             case ScheduledTaskTypes.Hourly:

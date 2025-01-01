@@ -1,0 +1,31 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form-controls {
+  display: flex;
+  gap: 5px;
+  justify-content: end;
+  margin-top: 30px;
+}
+
+.slider-check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+h3 {
+  margin-bottom: 50px;
+}
+
+.user-preference {
+  box-sizing: border-box;
+  padding: 1vh;
+}

@@ -1,0 +1,30 @@
+<div class="user-preference">
+  <h3>Manage preferences</h3>
+  <form [formGroup]="form">
+    <div>
+      <h6><mat-icon>stars</mat-icon> Notification Type Priority</h6>
+    <mat-form-field class="full-width">
+      <mat-select formControlName="notificationTypePriority">
+        <mat-option [id]="'0'" [value]="'None'">None</mat-option>
+        @for (type of notiTypes; track i; let i = $index) {
+          <mat-option [id]="(i+1).toString()" [value]="type">{{ type }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    </div>
+
+    <div class="slider-check">
+      <h6><mat-icon>email</mat-icon> Email Notifications</h6>
+      <mat-slide-toggle formControlName="allowEmailNotifications"></mat-slide-toggle>
+    </div>
+
+    <div class="slider-check">
+      <h6><mat-icon>cloud_download</mat-icon> Push Notifications</h6>
+    <mat-slide-toggle formControlName="allowPushNotifications"></mat-slide-toggle>
+    </div>
+    <div class="form-controls">
+      <button mat-button (click)="closeSheet(false)">Cancel</button>
+      <button mat-flat-button (click)="closeSheet(true)">Save</button>
+    </div>
+  </form>
+</div>

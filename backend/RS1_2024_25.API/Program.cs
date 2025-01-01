@@ -7,6 +7,7 @@ using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models.Mail;
 using RS1_2024_25.API.Data.Models.Stripe;
 using RS1_2024_25.API.Helper.Auth;
+using RS1_2024_25.API.Hubs;
 using RS1_2024_25.API.Services;
 using RS1_2024_25.API.Services.Interfaces;
 using System.Text;
@@ -65,8 +66,30 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!)),
             ClockSkew = TimeSpan.Zero
         };
+
+        
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // If the request is for our hub...
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    (path.StartsWithSegments("/notificationsHub")))
+                {
+                    // Read the token out of the query string
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     }
 );
+
+builder.Services.AddSignalR();
 
 builder.Services.AddStackExchangeRedisCache(opt =>
 {
@@ -83,6 +106,7 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof
 builder.Services.AddTransient<DeleteService>();
 builder.Services.AddHostedService<MyBackgroundService>();
 builder.Services.AddSingleton<IMyCacheService, MyRedisCacheService>();
+builder.Services.AddTransient<NotificationTransformerService>();
 
 var app = builder.Build();
 
@@ -110,5 +134,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<NotificationsHub>("/notificationsHub");
 
 app.Run();

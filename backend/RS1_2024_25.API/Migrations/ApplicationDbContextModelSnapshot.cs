@@ -386,6 +386,26 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("Genres");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.MyAppUserPreference", b =>
+                {
+                    b.Property<int>("MyAppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("AllowEmailNotifications")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowPushNotifications")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NotificationTypePriority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MyAppUserId");
+
+                    b.ToTable("MyAppUserPreferences");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.MyUserArtistInvite", b =>
                 {
                     b.Property<int>("Id")
@@ -419,6 +439,37 @@ namespace RS1_2024_25.API.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("MyUserArtistInvites");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ContentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Sent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Order", b =>
@@ -578,6 +629,24 @@ namespace RS1_2024_25.API.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductPhotos");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.ReadNotification", b =>
+                {
+                    b.Property<int>("MyAppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NotificationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReadAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MyAppUserId", "NotificationId");
+
+                    b.HasIndex("NotificationId");
+
+                    b.ToTable("ReadNotifications");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Stripe.PaymentTransaction", b =>
@@ -850,6 +919,17 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("MyAppUser");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.MyAppUserPreference", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
+                        .WithMany()
+                        .HasForeignKey("MyAppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("MyAppUser");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.MyUserArtistInvite", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
@@ -875,6 +955,17 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("MyAppUser");
 
                     b.Navigation("UserArtistRole");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Notification", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Artist");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Order", b =>
@@ -946,6 +1037,25 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.ReadNotification", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
+                        .WithMany()
+                        .HasForeignKey("MyAppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.Notification", "Notification")
+                        .WithMany()
+                        .HasForeignKey("NotificationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("MyAppUser");
+
+                    b.Navigation("Notification");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Track", b =>
