@@ -39,6 +39,12 @@ namespace RS1_2024_25.API.Endpoints.NotificationEndpoints
                         RichNotification richNotification = await nt.GetRichNotificationAsync(notification,cancellationToken);
                         foreach (var user in usersToSendTo)
                         {
+                            var priorityType = await db.MyAppUserPreferences.Where(p => p.MyAppUserId == user.ID).Select(f => f.NotificationTypePriority).FirstOrDefaultAsync(cancellationToken);
+                            if (priorityType != null)
+                            {
+                                richNotification.Priority = richNotification.Type == priorityType;
+                            }
+
                             //Send to connected clients
                             await nh.Clients.User(user.ID.ToString()).SendAsync("notificationReceived", richNotification, cancellationToken);
 
@@ -50,7 +56,7 @@ namespace RS1_2024_25.API.Endpoints.NotificationEndpoints
                                 {
                                     var mailBody = new StringBuilder();
                                     mailBody.Append($"Hi {user.Username},\n\n");
-                                    mailBody.Append($"{richNotification.Artist.Name} has released a new {richNotification.Type}!\n\n");
+                                    mailBody.Append($"{richNotification.Artist.Name} has released new music '{richNotification.Title}'!\n\n");
                                     mailBody.Append($"If you want to stop getting email notifications log into your account and change your preferences in the notification center.\n");
                                     mailBody.Append($"808 Music");
 

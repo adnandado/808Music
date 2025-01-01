@@ -7,7 +7,7 @@ using RS1_2024_25.API.Services;
 
 namespace RS1_2024_25.API.Endpoints.NotificationEndpoints
 {
-    public class NotificationSetPreferencesEndpoint(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<MyAppUserPreference>.WithActionResult<MyAppUserPreference>
+    public class NotificationSetPreferenceEndpoint(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<MyAppUserPreference>.WithActionResult<MyAppUserPreference>
     {
         [Authorize]
         [HttpPost]
@@ -26,6 +26,11 @@ namespace RS1_2024_25.API.Endpoints.NotificationEndpoints
 
             preferences.AllowPushNotifications = request.AllowPushNotifications;
             preferences.AllowEmailNotifications = request.AllowEmailNotifications;
+            if(request.NotificationTypePriority == "None" || request.NotificationTypePriority == "Album" 
+                || request.NotificationTypePriority == "Product" || request.NotificationTypePriority == "Message")
+            {
+                preferences.NotificationTypePriority = request.NotificationTypePriority;
+            }
 
             await db.SaveChangesAsync(cancellationToken);
             return Ok(preferences);

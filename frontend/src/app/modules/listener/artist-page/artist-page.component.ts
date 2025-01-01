@@ -15,6 +15,7 @@ import {
   ToggleNotificationsEndpointService
 } from '../../../endpoints/follow-endpoints/toggle-notifications-endpoint.service';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-artist-page',
@@ -36,7 +37,8 @@ export class ArtistPageComponent implements OnInit {
               private followService : FollowOrUnfollowEndpointService,
               private checkFollowService : CheckFollowEndpointService,
               private toggleNotiService : ToggleNotificationsEndpointService,
-              private location: Location,) { }
+              private location: Location,
+              private snackBar : MatSnackBar) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -104,6 +106,7 @@ export class ArtistPageComponent implements OnInit {
         else if(data == "Notifications Off"){
           this.followInfo!.wantsNotifications = false;
         }
+        this.snackBar.open(data, "Dismiss", {duration: 3000});
         /*
           this.checkFollowService.handleAsync(this.artist!.id).subscribe({next: data => {
               this.followInfo = data;

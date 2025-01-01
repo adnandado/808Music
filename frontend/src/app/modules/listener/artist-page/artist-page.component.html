@@ -3,7 +3,7 @@
     <div class="banner"
          [ngStyle]="{'background-image': 'url('+ MyConfig.api_address + artist?.profileBackgroundPath+')'}"></div>
     <div class="banner-gradient"></div>
-    <button mat-icon-button class="back-button" (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
+    <button mat-raised-button class="back-button" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Back</button>
     <div class="controls">
       <div class="name">
         <button mat-icon-button (click)="shufflePlay()" class="shuffley">

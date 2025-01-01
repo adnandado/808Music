@@ -45,10 +45,13 @@ namespace RS1_2024_25.API.Services
                 await this.DeleteTrackAsync(track);
             }
 
+            await DeleteNotificationsAsync(album.Id, "Album");
+
             if(album.CoverPath != "")
             {
                 fh.DeleteFile(cfg["StaticFilePaths:AlbumCovers"] + album.CoverPath);
             }
+
             db.Albums.Remove(album);
             await db.SaveChangesAsync();
 
@@ -76,6 +79,32 @@ namespace RS1_2024_25.API.Services
 
             db.Artists.Remove(artist);
             await db.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> DeleteNotificationsAsync(int? id, string? type, CancellationToken cancellationToken = default)
+        {
+            var notifications = db.Notifications.AsQueryable();
+            if (id != null && type != null)
+            {
+                switch(type) {
+                    case "Album": notifications = notifications.Where(a => a.ContentId == id && a.Type == type);
+                        break;
+                }
+            }
+
+            List<int> notiIds = notifications.Select(a => a.Id).ToList();
+            var readRemove = await db.ReadNotifications.Where(a => notiIds.Contains(a.NotificationId)).ToListAsync(cancellationToken);
+            if (readRemove != null && readRemove.Count > 0)
+            {
+                db.ReadNotifications.RemoveRange(readRemove);
+
+            }
+
+            await db.SaveChangesAsync(cancellationToken);
+            db.Notifications.RemoveRange(notifications);
+            await db.SaveChangesAsync(cancellationToken);
 
             return true;
         }

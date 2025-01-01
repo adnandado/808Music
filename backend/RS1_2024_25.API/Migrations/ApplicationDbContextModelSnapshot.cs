@@ -397,6 +397,10 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<bool>("AllowPushNotifications")
                         .HasColumnType("bit");
 
+                    b.Property<string>("NotificationTypePriority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("MyAppUserId");
 
                     b.ToTable("MyAppUserPreferences");

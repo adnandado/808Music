@@ -13,7 +13,10 @@ const ALLOWED_FILE_TYPES = [
   templateUrl: './music-track-dragzone.component.html',
   styleUrl: './music-track-dragzone.component.css'
 })
-export class MusicTrackDragzoneComponent implements OnChanges {
+export class MusicTrackDragzoneComponent implements OnChanges, OnInit {
+  ngOnInit(): void {
+    this.inputElement = document.getElementById("fileInput") as HTMLInputElement;
+  }
   ngOnChanges(changes: SimpleChanges): void {
       this.removeFile();
   }
@@ -26,6 +29,7 @@ export class MusicTrackDragzoneComponent implements OnChanges {
   fileUrl = "";
   @Input() control : any;
   allowedFileTypes = ALLOWED_FILE_TYPES;
+  inputElement: HTMLInputElement | null = null;
 
   selectFile(e: any) {
     if (this.allowedFileTypes.indexOf((e.target.files[0] as File).type) === -1) {
@@ -42,6 +46,9 @@ export class MusicTrackDragzoneComponent implements OnChanges {
   removeFile() {
     this.fileUrl = "";
     this.file = null;
+    if(this.inputElement){
+      this.inputElement.value = "";
+    }
     this.imageEmit.emit(undefined);
   }
 

@@ -8,7 +8,7 @@ using RS1_2024_25.API.Services;
 
 namespace RS1_2024_25.API.Endpoints.NotificationEndpoints
 {
-    public class NotificationMarkAsReadEnpoint(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult
+    public class NotificationMarkAsReadEndpoint(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult
     {
         [Authorize]
         [HttpPost]

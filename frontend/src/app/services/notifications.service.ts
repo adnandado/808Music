@@ -2,6 +2,21 @@ import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import {MyUserAuthService} from './auth-services/my-user-auth.service';
 import {MyConfig} from '../my-config';
+import {Artist} from '../endpoints/album-endpoints/album-get-by-id-endpoint.service';
+
+export interface RichNotification {
+  id: number;
+  contentId: number;
+  imageUrl: string;
+  type: string;
+  title: string;
+  message: string;
+  artist: Artist | null;
+  createdAt: string;
+  priority: boolean;
+  hidden?: boolean;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +46,14 @@ export class NotificationsService {
     }).catch(err => console.log(err));
   }
 
-  public addEventListener(eventName: string, callback: (message: any) => void) {
-    this.hubConnection.on(eventName, data => {
+  public addNotificationListener(callback: (message: RichNotification) => void) {
+    this.hubConnection.on("notificationReceived", data => {
       callback(data);
     });
   }
 
-  public removeEventListener(eventName: string, callback: (message: any) => void) {
-    this.hubConnection.off(eventName, callback);
+  public removeNotificationListener(callback: (message: RichNotification) => void) {
+    this.hubConnection.off("notificationReceived", callback);
   }
 
 }

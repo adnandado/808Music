@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
 import {Router} from '@angular/router';
-import {NotificationsService} from '../../../services/notifications.service';
+import {NotificationsService, RichNotification} from '../../../services/notifications.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
@@ -10,6 +10,12 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrl: './listener-layout.component.css'
 })
 export class ListenerLayoutComponent implements OnInit, OnDestroy {
+  notiCallback = (data:RichNotification) => {
+    this.snackBar.open(data.message, "", {duration: 2000});
+    let audio = new Audio('assets/notification.mp3');
+    audio.play().catch(err => {console.log(err)});
+  }
+
   constructor(private auth: MyUserAuthService,
               private router: Router,
               private notificationsService: NotificationsService,
@@ -17,7 +23,7 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-        throw new Error('Method not implemented.');
+    this.notificationsService.removeNotificationListener(this.notiCallback);
   }
 
   ngOnInit(): void {
@@ -27,12 +33,7 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
     }
 
     this.notificationsService.startConnection();
-    this.notificationsService.addEventListener("notificationReceived", (data) => {
-      this.snackBar.open(JSON.stringify(data), "", {duration: 2000});
-      console.log(data);
-      let audio = new Audio('assets/notification.mp3');
-      audio.play().catch(err => {console.log(err)});
-    })
+    this.notificationsService.addNotificationListener(this.notiCallback);
   }
 
 

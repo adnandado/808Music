@@ -7,6 +7,7 @@ import {ReleaseViewComponent} from './release-view/release-view.component';
 import {PlayTrackComponent} from './play-track/play-track.component';
 import {ArtistPageComponent} from './artist-page/artist-page.component';
 import {ArtistAlbumsListComponent} from './artist-albums-list/artist-albums-list.component';
+import {NotificationsPageComponent} from './notifications-page/notifications-page.component';
 
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
@@ -25,6 +26,9 @@ const routes: Routes = [{
     },
     {
       path: 'releases/:id', component: ArtistAlbumsListComponent
+    },
+    {
+      path: 'notifications', component: NotificationsPageComponent
     }
   ]
 }];

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace RS1_2024_25.API.Endpoints.NotificationEndpoints
 {
-    public class NotificationGetPreference(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithoutRequest.WithActionResult<MyAppUserPreference>
+    public class NotificationGetPreferenceEndpoint(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithoutRequest.WithActionResult<MyAppUserPreference>
     {
         [Authorize]
         [HttpGet]

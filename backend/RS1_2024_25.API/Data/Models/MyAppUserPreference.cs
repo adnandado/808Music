@@ -12,5 +12,6 @@ namespace RS1_2024_25.API.Data.Models
         public MyAppUser? MyAppUser { get; set; }
         public bool AllowPushNotifications { get; set; }
         public bool AllowEmailNotifications { get; set; }
+        public string NotificationTypePriority { get; set; } = "None";
     }
 }
