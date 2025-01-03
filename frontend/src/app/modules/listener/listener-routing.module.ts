@@ -8,12 +8,17 @@ import {PlayTrackComponent} from './play-track/play-track.component';
 import {ArtistPageComponent} from './artist-page/artist-page.component';
 import {ArtistAlbumsListComponent} from './artist-albums-list/artist-albums-list.component';
 import {NotificationsPageComponent} from './notifications-page/notifications-page.component';
+import {ListenerHomeComponent} from './listener-home/listener-home.component';
+import {ArtistSearchResultPageComponent} from './artist-search-result-page/artist-search-result-page.component';
 
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
   children: [
     {
-      path: 'home', component: NewHomeComponent,
+      path: '', redirectTo: 'home', pathMatch: 'full',
+    },
+    {
+      path: 'home', component: ListenerHomeComponent,
     },
     {
       path: 'release/:id', component: ReleaseViewComponent,
@@ -28,7 +33,13 @@ const routes: Routes = [{
       path: 'releases/:id', component: ArtistAlbumsListComponent
     },
     {
+      path: 'releases', component: ArtistAlbumsListComponent
+    },
+    {
       path: 'notifications', component: NotificationsPageComponent
+    },
+    {
+      path: 'artists', component: ArtistSearchResultPageComponent
     }
   ]
 }];

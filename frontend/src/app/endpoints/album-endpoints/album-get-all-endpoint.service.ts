@@ -22,6 +22,7 @@ export interface AlbumPagedRequest {
   getTrackCount?: boolean;
   periodTo?: string;
   periodFrom?: string;
+  sortByPopularity?: boolean;
 }
 
 export interface AlbumGetAllResponse {

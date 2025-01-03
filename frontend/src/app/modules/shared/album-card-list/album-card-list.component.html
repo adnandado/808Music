@@ -1,0 +1,25 @@
+<div class="artist-music-page">
+  <div>
+    <h3>{{title}}</h3>
+    <div class="album-cards">
+      @for (album of albums?.dataItems; track album.id; let i = $index) {
+        @if (i < 6) {
+        <app-album-card [title]="album.title"
+                        [subtitle]="album.type + ' • ' + getYear(album.releaseDate)"
+                        [imageUrl]="MyConfig.api_address+album.coverArt"
+                        [id]="album.id"
+                        [tooltip]="album.title"
+                        [artistName] = "album.artist"
+                        (onClick)="goToAlbum($event)"
+                        (onPlayClick)="playAlbum($event,false)"
+        ></app-album-card>
+        }
+      }
+      @if (albums != null) {
+        @if (albums.dataItems.length >= 6) {
+          <div class="view-all" (click)="viewAll(false)">...</div>
+        }
+      }
+    </div>
+  </div>
+</div>

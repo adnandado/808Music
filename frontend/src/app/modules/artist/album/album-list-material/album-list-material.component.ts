@@ -66,9 +66,9 @@ export class AlbumListMaterialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.checkIfHome();
     if(this.hasControls)
     {
+      this.checkIfHome();
       this.homeCheck(this.router.url);
     }
 
@@ -112,6 +112,16 @@ export class AlbumListMaterialComponent implements OnInit {
               }
               else {
                 this.pagedRequest.artistId = id;
+              }
+            })
+            this.pagedRequest.isReleased = true;
+          }
+          else {
+            this.route.queryParams.subscribe(queryParams => {
+              let popular = queryParams['popular'];
+              if(popular == "yes")
+              {
+                this.pagedRequest.sortByPopularity = true;
               }
             })
             this.pagedRequest.isReleased = true;

@@ -11,7 +11,7 @@
       {
         <mat-icon>explicit</mat-icon>
       }
-      <h6>{{track?.title}}</h6>
+      <h6 class="track-title" (click)="goToRelease()">{{track?.title}}</h6>
       <app-clickable-featured-artists [artists]="track?.artists ?? null"></app-clickable-featured-artists>
     </div>
 
@@ -40,7 +40,11 @@
     -->
 </div>
 <div class="music-player music-player2" [ngStyle]="musicPlayerService.queue.length <= 0 ? {'display': 'flex'} : {'display': 'none'}">
-  <h3>Your queue is empty!</h3>
+  <h3 class="queue-status-info2">Your queue is empty!</h3>
   <mat-divider></mat-divider>
-  <h6>Explore your home page or search for songs to start a queue</h6>
+  <div class="queue-status-info"><h6>Explore your </h6>
+    <h6 class="clickable" (click)="goHome()">home page</h6>
+    <h6> or </h6>
+    <h6 class="clickable" (click)="goToSearch()">search</h6>
+    <h6> for songs to start a queue</h6></div>
 </div>

@@ -1,0 +1,31 @@
+.artist-results-page {
+  height: 97vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  overflow-y: auto;
+}
+
+.artists {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.title > h1 {
+  padding-top: 1vh;
+  margin-bottom: 5px;
+}
+
+.title mat-icon {
+  width: 35px;
+  height: 35px;
+  font-size: 35px;
+  color: white;
+}
+
+.title button {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+}

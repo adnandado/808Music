@@ -66,6 +66,9 @@ import {MatSelect} from "@angular/material/select";
 import { UserPreferenceBottomSheetComponent } from './bottom-sheets/user-preference-bottom-sheet/user-preference-bottom-sheet.component';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import { ManageFollowingBottomSheetComponent } from './bottom-sheets/manage-following-bottom-sheet/manage-following-bottom-sheet.component';
+import { AlbumCardListComponent } from './album-card-list/album-card-list.component';
+import { ArtistBigCardComponent } from './artist/artist-big-card/artist-big-card.component';
+import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist-big-card-list.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +97,9 @@ import { ManageFollowingBottomSheetComponent } from './bottom-sheets/manage-foll
     LanguageSelectorComponent,
     UserPreferenceBottomSheetComponent,
     ManageFollowingBottomSheetComponent,
+    AlbumCardListComponent,
+    ArtistBigCardComponent,
+    ArtistBigCardListComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
@@ -166,7 +172,10 @@ import { ManageFollowingBottomSheetComponent } from './bottom-sheets/manage-foll
     DeleteConfirmationDialogComponent,
     SidenavComponent,
     PlaylistCardComponent,
-    LanguageSelectorComponent
+    LanguageSelectorComponent,
+    AlbumCardListComponent,
+    ArtistBigCardComponent,
+    ArtistBigCardListComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

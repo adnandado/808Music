@@ -11,6 +11,10 @@ import {tap} from 'rxjs/operators';
 export interface UserArtistSearchRequest {
   searchString: string;
   leadTrackId?: number;
+  returnAmount?: number;
+  sortByPopularity?: boolean;
+  needsToHaveSongs?: boolean;
+  sortByStreams?: boolean;
 }
 
 @Injectable({

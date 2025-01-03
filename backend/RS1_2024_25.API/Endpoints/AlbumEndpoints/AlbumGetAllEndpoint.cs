@@ -24,7 +24,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             IQueryable<AlbumGetAllResponse> albumsResponse;
 
             //filters
-            if(request.FeaturedArtistId != null)
+            if (request.FeaturedArtistId != null)
             {
                 await db.Tracks.LoadAsync();
                 var tracks = await db.ArtistsTracks.Where(at => at.ArtistId == request.FeaturedArtistId && !at.IsLead).Select(at => at.Track.AlbumId).ToListAsync();
@@ -32,7 +32,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             }
 
 
-            if(request.ArtistId != null)
+            if (request.ArtistId != null)
             {
                 albums = albums.Where(a => a.ArtistId == request.ArtistId);
             }
@@ -42,17 +42,17 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
                 albums = albums.Where(a => a.AlbumTypeId == request.TypeId);
             }
 
-            if(request.IsReleased != null)
+            if (request.IsReleased != null)
             {
                 albums = albums.Where(a => (DateTime.UtcNow > a.ReleaseDate && (bool)request.IsReleased) || (DateTime.UtcNow < a.ReleaseDate && !(bool)request.IsReleased));
             }
 
-            if(request.Title != string.Empty)
+            if (request.Title != string.Empty)
             {
                 albums = albums.Where(a => a.Title.ToLower().Contains(request.Title.ToLower()));
             }
 
-            if(request.PeriodTo != null)
+            if (request.PeriodTo != null)
             {
                 albums = albums.Where(a => request.PeriodTo.Value >= a.ReleaseDate);
             }
@@ -72,8 +72,18 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
                 ReleaseDate = a.ReleaseDate,
                 Title = a.Title,
                 Type = a.AlbumType.Type,
-                TrackCount = request.GetTrackCount ? db.Tracks.Where(t => t.AlbumId == a.Id).Count() : -1
+                TrackCount = db.Tracks.Where(t => t.AlbumId == a.Id).Count()
             });
+
+            if (request.IsReleased != null && request.IsReleased.Value)
+            {
+                albumsResponse = albumsResponse.Where(a => a.TrackCount > 0);
+            }
+
+            if (request.SortByPopularity)
+            {
+                albumsResponse = albumsResponse.OrderByDescending(a => db.Tracks.Where(t => t.AlbumId == a.Id).Sum(t => t.Streams));
+            }
 
             var pagedList = await MyPagedList<AlbumGetAllResponse>.CreateAsync(albumsResponse, request, cancellationToken);
             return Ok(pagedList);
@@ -90,6 +100,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         public bool GetTrackCount { get; set; } = false;
         public DateTime? PeriodFrom { get; set; }
         public DateTime? PeriodTo { get; set; }
+        public bool SortByPopularity { get; set; } = false;
     }
 
     public class AlbumGetAllResponse {

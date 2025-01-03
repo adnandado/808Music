@@ -37,5 +37,7 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
         public string Role { get; set; }
         public bool IsFlaggedForDeletion { get; set; }
         public string DeletionDate { get; set; }
+        public int Followers { get; set; } = 0;
+        public int Streams { get; set; } = 0;
     }
 }

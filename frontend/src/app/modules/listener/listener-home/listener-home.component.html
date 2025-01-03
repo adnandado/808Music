@@ -1,0 +1,6 @@
+<div class="artist-music-page">
+    <app-album-card-list title="Popular Releases" [albums]="popularAlbums" [queryParams]="popularParams"></app-album-card-list>
+    <app-artist-big-card-list [artists]="popularArtists" [title]="'Popular Artists'" [numberDescription]="'followers'" [queryParams]="popArtistParams"></app-artist-big-card-list>
+    <app-album-card-list title="Recent Releases" [albums]="recentAlbums" [queryParams]="recentParams"></app-album-card-list>
+    <app-artist-big-card-list [artists]="mostStreamedArtists" [title]="'Most Streamed Artists'" [numberDescription]="'streams'" [queryParams]="mostStreamedArtistParams"></app-artist-big-card-list>
+</div>

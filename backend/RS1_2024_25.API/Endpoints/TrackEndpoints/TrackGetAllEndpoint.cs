@@ -69,7 +69,8 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                     IsLead = at.IsLead,
                     Name = at.Artist.Name,
                     PfpPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath,
-                }).ToList()
+                }).ToList(),
+                AlbumId = t.AlbumId
             });
 
             return await MyPagedList<TrackGetResponse>.CreateAsync(filteredTracks, request, cancellationToken);
