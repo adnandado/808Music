@@ -110,7 +110,7 @@ export class MusicControllerComponent implements OnInit {
   setSliderValue(e: Event) {
     if(this.player != null)
     {
-      this.currentPlaybackTime = this.player.currentTime;
+      this.currentPlaybackTime = Math.floor(this.player.currentTime);
     }
   }
 
@@ -145,9 +145,17 @@ export class MusicControllerComponent implements OnInit {
         this.player.currentTime = 0;
       }
       else if (!this.isShuffled) {
+        if(this.playingState)
+        {
+          this.changePlayerState();
+        }
         this.musicPlayerService.playNext();
       }
       else {
+        if(this.playingState)
+        {
+          this.changePlayerState();
+        }
         this.musicPlayerService.shufflePlay();
       }
     }

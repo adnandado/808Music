@@ -5,4 +5,6 @@ export interface ArtistSimpleDto {
   role: string;
   isFlaggedForDeletion: boolean;
   deletionDate: string;
+  followers?: number;
+  streams?: number;
 }

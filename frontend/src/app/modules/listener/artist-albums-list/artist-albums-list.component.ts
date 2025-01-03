@@ -31,6 +31,11 @@ export class ArtistAlbumsListComponent implements OnInit {
           }
         })
       }
+      else {
+        this.route.queryParams.subscribe(params => {
+          this.title = params['title']
+        })
+      }
     })
 
     this.route.queryParams.subscribe(params => {

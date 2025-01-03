@@ -24,6 +24,9 @@ const routes: Routes = [
     component: ArtistLayoutComponent,
     children: [
       {
+        path: '', redirectTo: 'album', pathMatch: 'full',
+      },
+      {
         path: 'album',
         loadChildren: () => import("./album/album.module").then(m => m.AlbumModule)
       },

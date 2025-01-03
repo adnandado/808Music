@@ -86,4 +86,16 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   redirectToSource() {
     this.router.navigate([this.musicPlayerService.queueSource.value]);
   }
+
+  goToRelease() {
+    this.router.navigate(["/listener/release", this.track!.albumId]);
+  }
+
+  goHome() {
+    this.router.navigate(["/listener/home"]);
+  }
+
+  goToSearch() {
+    this.router.navigate(["/listener/home"]);
+  }
 }

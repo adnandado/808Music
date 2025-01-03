@@ -9,16 +9,16 @@
               [ngStyle]="playBtnStyle"><mat-icon>play_arrow</mat-icon></button>
     }
   <mat-card-header class="album-mat-card-header">
-    <mat-card-title class="album-mat-card-title" (click)="emitClick()">{{getTitle()}}</mat-card-title>
+    <mat-card-title class="album-mat-card-title hide-overflow" (click)="emitClick()">{{getTitle()}}</mat-card-title>
     @if (artistName != "")
     {
-      <mat-card-subtitle class="album-mat-card-subtitle italic">{{artistName}}</mat-card-subtitle>
+      <mat-card-subtitle class="album-mat-card-subtitle italic hide-overflow">{{artistName}}</mat-card-subtitle>
     }
   </mat-card-header>
-    <mat-card-content class="album-mat-card-subtitle">{{subtitle}}</mat-card-content>
+    <mat-card-content class="album-mat-card-subtitle hide-overflow">{{subtitle}}</mat-card-content>
   @if (numOfTracks != -1)
   {
-    <mat-card-content class="album-mat-card-subtitle italic">{{numOfTracks}} tracks</mat-card-content>
+    <mat-card-content class="album-mat-card-subtitle italic hide-overflow">{{numOfTracks}} tracks</mat-card-content>
   }
   @if (hasControls)
   {

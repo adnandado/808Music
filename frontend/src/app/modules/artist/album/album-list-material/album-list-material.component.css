@@ -41,15 +41,16 @@ div > h6 {
   gap: 20px;
 }
 
-.title > h1 {
-  padding-top: 1vh;
-  margin-bottom: 5px;
-}
 
 .flex-side {
   flex-basis: 42vw;
   height: auto;
   display: block;
+}
+
+.title > h1 {
+  padding-top: 1vh;
+  margin-bottom: 5px;
 }
 
 .title mat-icon {

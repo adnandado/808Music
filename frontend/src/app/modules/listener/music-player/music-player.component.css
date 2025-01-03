@@ -71,3 +71,28 @@ h1, h2, h3, h4, h5, h6 {
 .music-player2 {
   height: 97vh;
 }
+
+.track-title:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+h6 {
+  display: inline;
+}
+
+.clickable {
+  text-decoration: underline;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+.queue-status-info {
+  margin-top: 20px;
+}
+
+.queue-status-info2 {
+  margin-bottom: 15px;
+}

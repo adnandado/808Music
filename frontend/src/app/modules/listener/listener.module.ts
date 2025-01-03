@@ -26,6 +26,8 @@ import {AlbumModule} from '../artist/album/album.module';
 import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
 import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import { NotificationCardComponent } from './notifications-page/notification-card/notification-card.component';
+import { ListenerHomeComponent } from './listener-home/listener-home.component';
+import { ArtistSearchResultPageComponent } from './artist-search-result-page/artist-search-result-page.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { NotificationCardComponent } from './notifications-page/notification-car
     ArtistMusicPageComponent,
     ArtistAlbumsListComponent,
     NotificationsPageComponent,
-    NotificationCardComponent
+    NotificationCardComponent,
+    ListenerHomeComponent,
+    ArtistSearchResultPageComponent
   ],
   imports: [
     CommonModule,
