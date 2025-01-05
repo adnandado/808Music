@@ -69,6 +69,8 @@ import { ManageFollowingBottomSheetComponent } from './bottom-sheets/manage-foll
 import { AlbumCardListComponent } from './album-card-list/album-card-list.component';
 import { ArtistBigCardComponent } from './artist/artist-big-card/artist-big-card.component';
 import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist-big-card-list.component';
+import { SearchPageComponent } from './search-page/search-page.component';
+import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -100,6 +102,7 @@ import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist
     AlbumCardListComponent,
     ArtistBigCardComponent,
     ArtistBigCardListComponent,
+    SearchPageComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
@@ -151,6 +154,8 @@ import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist
     MatSelect,
     MatPrefix,
     MatSlideToggle,
+    MatChipListbox,
+    MatChipOption,
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent

@@ -46,6 +46,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .music-info {
   padding-top: 3vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.music-info > mat-icon {
+  margin-bottom: 10px;
 }
 
 .control-bar {

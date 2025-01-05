@@ -96,6 +96,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   goToSearch() {
-    this.router.navigate(["/listener/home"]);
+    this.router.navigate(["/listener/search"]);
   }
 }
