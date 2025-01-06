@@ -28,6 +28,10 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.products.forEach(product => {
+      // Pomnoži vrijednost s 100 da bi se prikazala kao cijeli broj
+      product.saleAmount = product.saleAmount * 100;
+    });
     const selectedArtist = this.artistHandlerService.getSelectedArtist();
     if (selectedArtist) {
       this.artistId = selectedArtist.id;
@@ -46,10 +50,14 @@ export class ProductListComponent implements OnInit {
   loadProducts(): void {
     this.productService.getProductsByArtist(this.artistId).subscribe({
       next: (data: Product[]) => {
-        this.products = data.map(product => ({
-          ...product,
-          calculatedPrice: product.saleAmount > 0 ? product.price * (1 - product.saleAmount) : product.price
-        }));
+        this.products = data.map(product => {
+          product.saleAmount = product.saleAmount * 100; // ovo množi za 100
+          return {
+            ...product,
+            calculatedPrice: product.saleAmount > 0 ? product.price * (1 - (product.saleAmount / 100)) : product.price,
+            visualSaleAmount: product.saleAmount > 0 ? product.saleAmount : 0,
+          };
+        });
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
@@ -59,6 +67,7 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
+
 
   toggleEdit(slug: string): void {
     this.isEditing[slug] = !this.isEditing[slug];
@@ -73,7 +82,7 @@ export class ProductListComponent implements OnInit {
     formData.append('quantity', product.quantity.toString());
     formData.append('isDigital', product.isDigital.toString());
     formData.append('SaleAmount', product.saleAmount.toString());
-
+    formData.append('bio', product.bio);
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
         formData.append('photos', this.selectedFiles[i], this.selectedFiles[i].name);
@@ -110,7 +119,7 @@ export class ProductListComponent implements OnInit {
   }
   updateCalculatedPrice(product: Product): number {
     const calculatedPrice = product.saleAmount > 0
-      ? product.price * (1 - product.saleAmount)
+      ? product.price * (1 - product.saleAmount/100)
       : product.price;
     return parseFloat(calculatedPrice.toFixed(2));
   }
@@ -142,9 +151,8 @@ export class ProductListComponent implements OnInit {
 
   }
 
-  updateSaleAmount(product: Product): number {
-    var calculatedSale = product.saleAmount * 100
-    return calculatedSale;
+  updateSaleAmount(product: Product): void {
+    product.saleAmount = product.saleAmount * 100;
   }
 
 }

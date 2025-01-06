@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {ClothesType, ProductType} from './product-create-endpoint.service';
 
 export interface Product {
   id: number;
@@ -11,6 +12,9 @@ export interface Product {
   photoPaths: string[];
   slug: string;
   saleAmount: number;
+  bio: string;
+  productType: ProductType;
+  clothesType: ClothesType;
 }
 
 @Injectable({

@@ -10,6 +10,7 @@ export interface ProductUpdateResponse {
   isDigital: boolean;
   price: number;
   SaleAmount: number;
+  bio: string;
 }
 
 @Injectable({

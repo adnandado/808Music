@@ -9,6 +9,7 @@
   gap: 3px;
   overflow-y: auto;
   overflow-x: hidden;
+
   /*
   uncomment when there's alternate ways to play songs
   flex-wrap: wrap;

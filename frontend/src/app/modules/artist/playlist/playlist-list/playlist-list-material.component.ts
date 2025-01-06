@@ -107,20 +107,24 @@ export class PlaylistListMaterialComponent implements OnInit {
     });
   }
 
-  private getUserIdFromToken(): number | null {
-    const authToken = sessionStorage.getItem('authToken');
+  private getUserIdFromToken(): number {
+    let authToken = sessionStorage.getItem('authToken');
+
     if (!authToken) {
-      throw new Error('User not authenticated.');
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
     }
 
     try {
       const parsedToken = JSON.parse(authToken);
-      if (!parsedToken.userId) {
-        throw new Error('Invalid token: userId not found.');
-      }
       return parsedToken.userId;
     } catch (error) {
-      throw new Error('Failed to parse authToken.');
+      console.error('Error parsing authToken:', error);
+      return 0;
     }
   }
+
 }

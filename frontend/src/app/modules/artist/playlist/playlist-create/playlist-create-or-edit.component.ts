@@ -82,7 +82,7 @@ export class PlaylistCreateOrEditComponent implements OnInit {
       isPublic: formData.get('isPublic') === 'true',
       trackIds: JSON.parse(formData.get('trackIds') as string) || [],
       coverImage: formData.get('coverImage') as File,
-      userId: userId // Dodajemo userId u zahtjev
+      userId: userId
     };
 
     this.playlistCreateService.handleAsync(playlistRequest).subscribe({
@@ -98,22 +98,44 @@ export class PlaylistCreateOrEditComponent implements OnInit {
   }
 
   getCurrentUserId(): number {
-    const authToken = sessionStorage.getItem('authToken');
+    let authToken = sessionStorage.getItem('authToken');
+
     if (!authToken) {
-      throw new Error('User not authenticated.');
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
     }
 
     try {
       const parsedToken = JSON.parse(authToken);
-      if (!parsedToken.userId) {
-        throw new Error('Invalid token: userId not found.');
-      }
-      return parsedToken.userId; // Dohvaćanje userId iz parsiranog tokena
+      return parsedToken.userId;
     } catch (error) {
-      throw new Error('Failed to parse authToken.');
+      console.error('Error parsing authToken:', error);
+      return 0;
     }
   }
 
+  private getUserIdFromToken(): number {
+    let authToken = sessionStorage.getItem('authToken');
+
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
+    }
+
+    try {
+      const parsedToken = JSON.parse(authToken);
+      return parsedToken.userId;
+    } catch (error) {
+      console.error('Error parsing authToken:', error);
+      return 0;
+    }
+  }
 
 
 

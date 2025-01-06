@@ -58,7 +58,6 @@ export class UserSubscriptionComponent implements OnInit {
         this.card.mount('#card-element');
       }
 
-      // Detektiraj promjene nakon montaže
       this.cdr.detectChanges();
     } else {
       console.error('Stripe ili Elements nisu inicijalizirani');
@@ -108,7 +107,12 @@ export class UserSubscriptionComponent implements OnInit {
     }
   }
   private getUserIdFromToken(): number {
-    const authToken = sessionStorage.getItem('authToken');
+    let authToken = sessionStorage.getItem('authToken');
+
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
     if (!authToken) {
       return 0;
     }
@@ -121,9 +125,10 @@ export class UserSubscriptionComponent implements OnInit {
       return 0;
     }
   }
+
   subscribe(subscription: SubscriptionDetails): void {
     this.selectedSubscription = subscription;
-    const userId = this.getUserIdFromToken(); // Function to get user ID
+    const userId = this.getUserIdFromToken();
     if (!userId) {
       this.errorMessage = 'User ID not found.';
       return;

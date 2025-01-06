@@ -1,1 +1,153 @@
-<p>store-home works!</p>
+<div class="container">
+
+  <div class="logo-container">
+    <img src="http://localhost:7000/media/webshop_logo.png" alt="Logo" class="logo">
+  </div>
+
+  <div class="search-bar">
+    <mat-form-field class="full-width">
+      <mat-label>Search products</mat-label>
+      <input #searchInput type="text" matInput placeholder="Did Kanye drop something again?" [formControl]="searchControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="viewProduct($event.option.value)">
+        <mat-option class = "Adnan" *ngFor="let product of filteredProducts" [value]="product.slug">
+          <img [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="autocomplete-product-image">
+          {{ product.title }}
+          <p class = "price-opt">{{ updateCalculatedPrice(product)}}$ </p>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button class="search-button" (click)="searchProducts(searchInput.value)">
+
+      <mat-icon class="lupa">search</mat-icon>
+    </button>
+  </div>
+
+
+  <div class="category-shortcuts">
+    <a [routerLink]="['/listener/product-type']" [queryParams]="{ productType: 0 }">Clothes</a>
+    <a [routerLink]="['/listener/product-type']" [queryParams]="{ productType: 1 }">Vinyls</a>
+    <a [routerLink]="['/listener/product-type']" [queryParams]="{ productType: 2 }">CDS</a>
+    <a [routerLink]="['/listener/product-type']" [queryParams]="{ productType: 3 }">Posters</a>
+    <a [routerLink]="['/listener/product-type']" [queryParams]="{ productType: 4 }">Accessories</a>
+    <a [routerLink]="['/listener/product-type']" [queryParams]="{ productType: 5 }">Miscellaneous</a>
+  </div>
+
+
+  <div class="products">
+    <h2>On Sale</h2>
+    <div class="product-row">
+      <div
+        *ngFor="let product of onSaleProducts"
+        class="product"
+        (click)="viewProduct(product.slug)"
+      >
+        <div class="sale-badge" *ngIf="product.saleAmount > 0">
+          -{{ (product.saleAmount * 100).toFixed(0) }}%
+        </div>
+        <img
+          [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]"
+          alt="{{ product.title }}"
+          class="product-image"
+        >
+        <div class="product-info">
+          <p class="product-name">{{ product.title }}</p>
+          <p class="product-price">{{ updateCalculatedPrice(product) }}$</p>
+        </div>
+        <div
+          class="wishlist-icon"
+          (click)="toggleWishlist($event, product)">
+          <mat-icon>{{ isOnWishlist(product) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <h2>Newest Products</h2>
+    <div class="product-row">
+      <div
+        *ngFor="let product of newestProducts"
+        class="product"
+        (click)="viewProduct(product.slug)"
+      >
+        <div class="sale-badge" *ngIf="product.saleAmount > 0">
+          -{{ (product.saleAmount * 100).toFixed(0) }}%
+        </div>
+        <img
+          [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]"
+          alt="{{ product.title }}"
+          class="product-image"
+        >
+        <div class="product-info">
+          <p class="product-name">{{ product.title }}</p>
+          <p class="product-price">{{ updateCalculatedPrice(product) }}$</p>
+        </div>
+        <div
+          class="wishlist-icon"
+          (click)="toggleWishlist($event, product)">
+          <mat-icon>{{ isOnWishlist(product) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <h2>Best Selling Products</h2>
+    <div class="product-row">
+      <div
+        *ngFor="let product of bestSellingProducts"
+        class="product"
+        (click)="viewProduct(product.slug)"
+      >
+        <div class="sale-badge" *ngIf="product.saleAmount > 0">
+          -{{ (product.saleAmount * 100).toFixed(0) }}%
+        </div>
+        <img
+          [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]"
+          alt="{{ product.title }}"
+          class="product-image"
+        >
+        <div class="product-info">
+          <p class="product-name">{{ product.title }}</p>
+          <p class="product-price">{{ updateCalculatedPrice(product) }}$</p>
+        </div>
+        <div
+          class="wishlist-icon"
+          (click)="toggleWishlist($event, product)">
+          <mat-icon (click)="checkIfOnWishlist(product)">
+            {{ isWishlistItem ? 'favorite' : 'favorite_border' }}
+          </mat-icon>
+
+        </div>
+      </div>
+    </div>
+
+    <h2>EXPLORE 808 PRODUCTS</h2>
+    <div class="product-row">
+      <div
+        *ngFor="let product of randomProducts"
+        class="product"
+        (click)="viewProduct(product.slug)"
+      >
+        <div class="sale-badge" *ngIf="product.saleAmount > 0">
+          -{{ (product.saleAmount * 100).toFixed(0) }}%
+        </div>
+        <img
+          [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]"
+          alt="{{ product.title }}"
+          class="product-image"
+        >
+        <div class="product-info">
+          <p class="product-name">{{ product.title }}</p>
+          <p class="product-price">{{ updateCalculatedPrice(product) }}$</p>
+        </div>
+        <div
+          class="wishlist-icon"
+          (click)="toggleWishlist($event, product)">
+          <mat-icon (click)="checkIfOnWishlist(product)">
+            {{ isWishlistItem ? 'favorite' : 'favorite_border' }}
+          </mat-icon>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-wishlist></app-wishlist>
+  <app-shopping-cart> </app-shopping-cart>
+</div>

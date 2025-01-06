@@ -2,7 +2,7 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 import { ArtistPicDragzoneComponent } from './artist/artist-pic-dragzone/artist-pic-dragzone.component';
 import {
   MatCard,
@@ -63,6 +63,8 @@ import {PlaylistCardComponent} from './playlist-card/playlist-card.component';
 import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { PlaylistDialogComponent } from './playlist-detail/playlist-dialog.component';
 import {ArtistSidenavComponent} from './artist-sidenav/artist-sidenav.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
@@ -90,56 +92,59 @@ import {ArtistSidenavComponent} from './artist-sidenav/artist-sidenav.component'
     ShareBottomSheetComponent,
     PlaylistDialogComponent,
     ArtistSidenavComponent,
-    SidenavComponent
+    SidenavComponent,
+    ShoppingCartComponent,
+    WishlistComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterLink,
-    MatCard,
-    MatCardActions,
-    MatCardAvatar,
-    MatCardHeader,
-    MatCardTitle,
-    MatIcon,
-    MatIconButton,
-    MatCardTitleGroup,
-    MatCardContent,
-    MatDialogContainer,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    MatCardFooter,
-    MatCardImage,
-    MatTooltip,
-    MatFormField,
-    MatInput,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatCell,
-    MatHeaderRow,
-    MatRow,
-    MatRowDef,
-    MatHeaderRowDef,
-    MatSort,
-    MatSortHeader,
-    MatPaginator,
-    MatFabButton,
-    NgxAudioPlayerModule,
-    MatAutocomplete,
-    MatAutocompleteTrigger,
-    MatOption,
-    MatNavList,
-    MatDivider,
-    QRCodeModule,
-    MatListItem,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterLink,
+        MatCard,
+        MatCardActions,
+        MatCardAvatar,
+        MatCardHeader,
+        MatCardTitle,
+        MatIcon,
+        MatIconButton,
+        MatCardTitleGroup,
+        MatCardContent,
+        MatDialogContainer,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatButton,
+        MatDialogClose,
+        MatCardFooter,
+        MatCardImage,
+        MatTooltip,
+        MatFormField,
+        MatInput,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatHeaderCellDef,
+        MatCell,
+        MatHeaderRow,
+        MatRow,
+        MatRowDef,
+        MatHeaderRowDef,
+        MatSort,
+        MatSortHeader,
+        MatPaginator,
+        MatFabButton,
+        NgxAudioPlayerModule,
+        MatAutocomplete,
+        MatAutocompleteTrigger,
+        MatOption,
+        MatNavList,
+        MatDivider,
+        QRCodeModule,
+        MatListItem,
+        RouterLinkActive,
+    ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
     CommonModule,
@@ -162,7 +167,9 @@ import {ArtistSidenavComponent} from './artist-sidenav/artist-sidenav.component'
     DeleteConfirmationDialogComponent,
     PlaylistDialogComponent,
     ArtistSidenavComponent,
-    SidenavComponent
+    SidenavComponent,
+    ShoppingCartComponent,
+    WishlistComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

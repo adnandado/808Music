@@ -19,7 +19,8 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
 
     [HttpPost]
     public override async Task<ProductAddResponse> HandleAsync([FromForm] ProductAddRequest request, CancellationToken cancellationToken = default)
-    {
+    {   
+
         var product = new Product
         {
             Title = request.Title,
@@ -28,12 +29,15 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
             IsDigital = request.isDigital,
             Slug = GenerateRandomSlug(),
             ArtistId = request.ArtistId,
-            DateCreated = DateTime.UtcNow, 
-            ProductType = request.ProductType,
-            Bio = request.Bio
-            ArtistId = request.ArtistId,
+            DateCreated = DateTime.UtcNow,
+            Bio = request.Bio,
+            ProductType = request.ProductType, 
+            ClothesType = request.ClothesType 
         };
-
+        if (request.ProductType != ProductType.Clothes && request.ClothesType != null)
+        {
+            return null ;
+        }
         _db.Products.Add(product);
         await _db.SaveChangesAsync(cancellationToken);
 
@@ -69,9 +73,11 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
             Quantity = product.QtyInStock,
             Price = product.Price,
             Slug = product.Slug,
-            SaleAmount = product.SaleAmount,
+            ArtistId = product.ArtistId
         };
     }
+
+
 
     private string GenerateRandomSlug(int length = 8)
     {
@@ -89,8 +95,11 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
         public bool isDigital { get; set; }
         public List<IFormFile> Photos { get; set; } = new();
         public int ArtistId { get; set; }
-
+        public string? Bio { get; set; }
+        public ProductType ProductType { get; set; } 
+        public ClothesType? ClothesType { get; set; } 
     }
+
 
 
     public class ProductAddResponse
@@ -103,5 +112,9 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
         public string Slug { get; set; }
         public int ArtistId { get; set; }
         public decimal SaleAmount { get; set; } = 0;
+        public string? Bio { get; set; } 
+        public ProductType ProductType { get; set; }
+        public ClothesType? ClothesType { get; set; }
 
+    }
 }

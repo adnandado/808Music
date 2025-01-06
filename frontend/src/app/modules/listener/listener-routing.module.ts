@@ -12,6 +12,13 @@ import {UserSubscriptionComponent} from './user-subscription/user-subscription.c
 import {PlaylistListMaterialComponent} from '../artist/playlist/playlist-list/playlist-list-material.component';
 import {PlaylistCreateOrEditComponent} from '../artist/playlist/playlist-create/playlist-create-or-edit.component';
 import {TracksPageComponent} from '../artist/playlist/tracks-page/tracks-page.component';
+import {WebStoreComponent} from './web-store/store-home/store-home.component';
+import {ProductListComponent} from '../artist/products/product-list/product-list.component';
+import {ProductDetailsComponent} from '../artist/products/product-details/product-details.component';
+import {ProductWishlistComponent} from './web-store/product-wishlist/product-wishlist.component';
+import {StoreSearchComponent} from './web-store/store-search/store-search.component';
+import {CheckoutComponent} from './web-store/checkout/checkout.component';
+import {BytypeComponent} from './web-store/bytype/bytype.component';
 
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
@@ -30,9 +37,19 @@ const routes: Routes = [{
       path: 'playlist',
       loadChildren: () => import("../artist/playlist/playlist.module").then(m => m.PlaylistModule)
     },
-
+    {path: 'store-home',
+      component: WebStoreComponent
+    },
+    {path: 'product/:slug',
+      component: ProductDetailsComponent
+    },
+    {path: 'product-wishlist',
+      component: ProductWishlistComponent
+    },
+    { path: 'product-search', component: StoreSearchComponent },
+    { path: 'checkout', component: CheckoutComponent },
+    { path: 'product-type', component: BytypeComponent },
   ]},
-
 
 
 

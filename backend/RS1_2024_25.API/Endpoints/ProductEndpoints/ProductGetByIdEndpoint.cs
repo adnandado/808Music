@@ -27,6 +27,10 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
                                 ArtistName = p.Artist.Name,  
                                 ArtistPhoto = p.Artist.ProfilePhotoPath,
                                 SaleAmount = p.SaleAmount, 
+                                Bio = p.Bio,
+                                DiscountedPrice = p.SaleAmount > 0
+                ? (decimal)p.Price * (1 - p.SaleAmount)
+                : (decimal)p.Price,
                             })
                             .FirstOrDefaultAsync(x => x.Slug == slug, cancellationToken);
 
@@ -47,6 +51,10 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
         public List<string> PhotoPaths { get; set; } = new();
         public string ArtistName { get; set; } 
         public string ArtistPhoto { get; set; }
+        public string Bio { get; set; }
+        public decimal DiscountedPrice { get; internal set; }
+
+
         public decimal SaleAmount { get; set; } = 0;
     }
 }

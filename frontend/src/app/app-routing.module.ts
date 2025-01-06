@@ -37,8 +37,7 @@ const routes: Routes = [
     path: 'artist/join',
     component: JoinArtistProfileComponent
   },
-  { path: 'product/:slug', component: ProductDetailsComponent }
-  ,
+
 
   {
   path: 'stripe-test',

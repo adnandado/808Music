@@ -11,30 +11,56 @@ export interface ProductAddRequest {
   quantity: number;
   isDigital: boolean;
   photos?: File[];
-  artistId: number
+  artistId: number;
+  bio?: string;
+  productType: ProductType;
+  clothesType?: ClothesType | null;
 }
 
 export interface ProductAddResponse {
+  id: number;
   title: string;
+  price: number;
   quantity: number;
   isDigital: boolean;
-  price: number;
   slug: string;
-  artistId: number
+  artistId: number;
+  bio?: string;
+  productType: ProductType;
+  clothesType?: ClothesType;
+}
+
+export enum ProductType {
+  Clothes = 0,
+  Vinyls = 1,
+  CDS = 2,
+  Posters = 3,
+  Accessories = 4,
+  Miscellaneous = 5,
+}
+
+export enum ClothesType {
+  Shirt = 0,
+  Jacket = 1,
+  Top = 2,
+  Hat = 3,
+  Hoodie = 4,
+  Socks = 5,
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ProductAddEndpointService implements MyBaseEndpointAsync<ProductAddRequest, ProductAddResponse> {
+export class ProductAddEndpointService
+  implements MyBaseEndpointAsync<ProductAddRequest, ProductAddResponse>
+{
   readonly url = `${MyConfig.api_address}/api/ProductAddEndpoint`;
 
-  constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {
-  }
+  constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {}
 
   handleAsync(request: ProductAddRequest): Observable<ProductAddResponse> {
-    if (!request.title || !request.price) {
-      return throwError(() => new Error('All fields are required.'));
+    if (!request.title || !request.price || !request.productType) {
+      return throwError(() => new Error('All required fields must be provided.'));
     }
 
     const formData = new FormData();
@@ -43,6 +69,16 @@ export class ProductAddEndpointService implements MyBaseEndpointAsync<ProductAdd
     formData.append('quantity', request.quantity.toString());
     formData.append('isDigital', request.isDigital.toString());
     formData.append('artistId', request.artistId.toString());
+    if (request.bio) {
+      formData.append('bio', request.bio);
+    }
+    formData.append('productType', request.productType.toString());
+    if (request.clothesType != null) {
+      formData.append('clothesType', request.clothesType.toString());
+    } else {
+      formData.append('clothesType', '');
+    }
+
 
     if (request.photos && request.photos.length > 0) {
       for (let i = 0; i < request.photos.length; i++) {

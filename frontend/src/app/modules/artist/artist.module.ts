@@ -52,7 +52,6 @@ import { ProductDetailsComponent } from './products/product-details/product-deta
     ArtistCreateOrEditComponent,
     ManageUsersComponent,
     JoinArtistProfileComponent,
-    ProductDetailsComponent,
   ],
   imports: [
     CommonModule,

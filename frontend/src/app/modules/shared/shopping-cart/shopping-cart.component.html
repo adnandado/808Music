@@ -1,0 +1,38 @@
+<div class="shopping-cart">
+  <button class="cart-icon" (click)="isCartVisible = !isCartVisible">
+    <mat-icon>shopping_cart</mat-icon>
+    <span class="item-count" *ngIf="cartItems.length > 0">{{ cartItems.length }}</span>
+  </button>
+
+  <div *ngIf="isCartVisible" class="cart-details">
+    <h3 class="Rdy">Ready to order?</h3>
+
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <div class="product-info">
+        <img class="product-img" [src]="MyConfig.media_address + item.productPhoto" alt="{{ item.productTitle }}">
+        <button class="remove-item" (click)="removeItem(item.productId)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <div class="title-quantity">
+          <div class="product-title">{{ item.productTitle }}</div>
+          <div class="quantity-all">
+            <div>Quantity: </div>
+            <button class = "minus" (click)="updateQuantity(item.productId, item.quantity - 1)" [disabled]="item.quantity <= 1">-</button>
+            <div>{{ item.quantity }}</div>
+            <button class = "plus" (click)="updateQuantity(item.productId, item.quantity + 1)">+</button>
+          </div>
+        </div>
+        <div class="product-price">
+          {{ item.totalPrice | currency: 'EUR': true: '1.2-2' }}
+
+        </div>
+      </div>
+    </div>
+
+    <div class="total-price">
+      <strong>TOTAL: {{ totalPrice | currency: 'EUR': true: '1.2-2' }}</strong>
+    </div>
+
+    <button class="checkout-button" (click)="proceedToCheckout()">Proceed to Checkout</button>
+  </div>
+</div>

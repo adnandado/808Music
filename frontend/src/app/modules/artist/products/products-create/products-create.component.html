@@ -1,4 +1,4 @@
-<div xmlns="http://www.w3.org/1999/html">
+<div>
   <artist-sidenav></artist-sidenav>
   <h1>Create Product</h1>
   <form>
@@ -9,13 +9,14 @@
 
     <div>
       <label>Price:</label>
-      <input type="number" [(ngModel)]="productData.price" name="price">
+      <input type="number" [(ngModel)]="productData.price" name="price" min="0">
     </div>
 
     <div>
       <label>Quantity:</label>
-      <input type="number" [(ngModel)]="productData.quantity" name="quantity">
+      <input type="number" [(ngModel)]="productData.quantity" name="quantity" min="0">
     </div>
+
 
     <div>
       <label>Is Digital?</label>
@@ -23,9 +24,35 @@
     </div>
 
     <div>
+      <label>Product Type:</label>
+      <select [(ngModel)]="productData.productType" (change)="onProductTypeChange($event)" name="productType">
+        <option *ngFor="let type of productTypes" [value]="type.id">{{ type.name }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Clothes Type:</label>
+      <select [(ngModel)]="productData.clothesType" name="clothesType" [disabled]="!showClothesType">
+        <option *ngFor="let type of clothesTypes" [value]="type.id">{{ type.name }}</option>
+      </select>
+    </div>
+
+
+
+
+    <div>
+      <label>Bio:</label>
+      <textarea [(ngModel)]="productData.bio" name="bio"></textarea>
+    </div>
+
+    <div>
       <label>Photos:</label>
       <input type="file" (change)="onFilesSelected($event)" multiple>
+      <div class="photo-preview" *ngIf="previewPhotos.length > 0">
+        <img *ngFor="let photo of previewPhotos" [src]="photo" alt="Photo preview">
+      </div>
     </div>
+
 
     <div class="control-btns">
       <button type="button" (click)="createProduct()">Create</button>

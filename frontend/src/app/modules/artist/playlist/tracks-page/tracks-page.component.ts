@@ -143,7 +143,7 @@ export class TracksPageComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router
+    this.router.navigate([`/listener/playlist/create`]);
   }
 
     getTotalTrackLength(): string {
@@ -194,7 +194,12 @@ export class TracksPageComponent implements OnInit {
   }
 
   private getUserIdFromToken(): number {
-    const authToken = sessionStorage.getItem('authToken');
+    let authToken = sessionStorage.getItem('authToken');
+
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
     if (!authToken) {
       return 0;
     }

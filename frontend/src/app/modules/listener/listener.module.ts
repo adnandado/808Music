@@ -42,8 +42,14 @@
   import {MatTabLabel} from '@angular/material/tabs';
   import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
   import {MatSelect} from '@angular/material/select';
-import { StoreHomeComponent } from './web-store/store-home/store-home.component';
+import { WebStoreComponent } from './web-store/store-home/store-home.component';
   import {StoreArtistPageComponent} from './web-store/store-artist-page/store-artist-page.component';
+  import {ProductDetailsComponent} from '../artist/products/product-details/product-details.component';
+import { ProductWishlistComponent } from './web-store/product-wishlist/product-wishlist.component';
+import { StoreSearchComponent } from './web-store/store-search/store-search.component';
+import { CheckoutComponent } from './web-store/checkout/checkout.component';
+import { OrderConfirmationDialogComponent } from './web-store/checkout/order-confirmation-dialog/order-confirmation-dialog.component';
+import { BytypeComponent } from './web-store/bytype/bytype.component';
 
 
   @NgModule({
@@ -54,8 +60,14 @@ import { StoreHomeComponent } from './web-store/store-home/store-home.component'
       ReleaseViewComponent,
       PlayTrackComponent,
       UserSubscriptionComponent,
-      StoreHomeComponent,
-      StoreArtistPageComponent
+      WebStoreComponent,
+      StoreArtistPageComponent,
+      ProductDetailsComponent,
+      ProductWishlistComponent,
+      StoreSearchComponent,
+      CheckoutComponent,
+      OrderConfirmationDialogComponent,
+      BytypeComponent
     ],
     imports: [
       CommonModule,

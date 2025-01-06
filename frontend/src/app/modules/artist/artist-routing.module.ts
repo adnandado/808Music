@@ -35,21 +35,22 @@ const routes: Routes = [
         path: 'playlist',
         loadChildren: () => import("./playlist/playlist.module").then(m => m.PlaylistModule)
       },
+      {
+        path: 'product-create',
+        component: ProductsCreateComponent
+      },
+
+      {
+        path: ':artistName/products',
+        component: ProductListComponent
+      },
     ]
   },
   {
     path: 'create',
     component: AlbumCreateComponent
   },
-  {
-    path: 'product-create',
-    component: ProductsCreateComponent
-  },
 
-  {
-    path: ':artistName/products',
-    component: ProductListComponent
-  },
   {
     path: 'edit/:id',
     component: AlbumCreateComponent

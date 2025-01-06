@@ -10,20 +10,8 @@
 <div class="container">
   <!-- Main Content -->
   <main class="main-content">
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <input type="text" placeholder="Search for a product..." class="search-input">
-      <button class="search-button">Search</button>
-      <select class="sort-dropdown">
-        <option>Featured</option>
-        <option>Most Popular</option>
-        <option>Lowest Price</option>
-        <option>Highest Price</option>
-        <option>Release Date</option>
-      </select>
-    </div>
 
-    <!-- Products Grid -->
+
     <div class="products">
       <div *ngFor="let product of products" class="product">
         <div *ngIf="!isEditing[product.slug]">
@@ -40,7 +28,8 @@
           <input [(ngModel)]="product.title" class="product-input" placeholder="Title">
           <input [(ngModel)]="product.price" class="product-input" />
           <input [(ngModel)]="product.quantity" class="product-input" type="number" placeholder="Quantity">
-          <input [(ngModel)]="product.saleAmount" (ngModelChange)="updateSaleAmount(product)" class="product-input" type="number" placeholder="SaleAmount">
+          <input [(ngModel)]="product.saleAmount" class="product-input" type="number" placeholder="SaleAmount">
+          <input [(ngModel)]="product.bio" class="product-input" placeholder="bio">
           <div class="image-edit">
             <label for="image-upload">Change Image</label>
             <input type="file" id="image-upload" (change)="onImageChange($event, product)">
