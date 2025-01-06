@@ -21,7 +21,8 @@
       <mat-icon class="lupa">search</mat-icon>
     </button>
   </div>
-
+  <app-wishlist></app-wishlist>
+  <app-shopping-cart> </app-shopping-cart>
 
   <div class="category-shortcuts">
     <a [routerLink]="['/listener/product-type']" [queryParams]="{ productType: 0 }">Clothes</a>
@@ -148,6 +149,5 @@
       </div>
     </div>
   </div>
-  <app-wishlist></app-wishlist>
-  <app-shopping-cart> </app-shopping-cart>
+
 </div>
