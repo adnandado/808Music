@@ -42,6 +42,21 @@ const routes: Routes = [{
 
     },
     {
+      path: 'profile/:id', component: ArtistPageComponent
+    },
+    {
+      path: 'releases/:id', component: ArtistAlbumsListComponent
+    },
+    {
+      path: 'releases', component: ArtistAlbumsListComponent
+    },
+    {
+      path: 'notifications', component: NotificationsPageComponent
+    },
+    {
+      path: 'artists', component: ArtistSearchResultPageComponent
+    },
+    {
       path: 'playlist',
       loadChildren: () => import("../artist/playlist/playlist.module").then(m => m.PlaylistModule)
     },
@@ -70,24 +85,8 @@ const routes: Routes = [{
     component: PlaylistListMaterialComponent,
   },
 ];
-    },
-    {
-      path: 'profile/:id', component: ArtistPageComponent
-    },
-    {
-      path: 'releases/:id', component: ArtistAlbumsListComponent
-    },
-    {
-      path: 'releases', component: ArtistAlbumsListComponent
-    },
-    {
-      path: 'notifications', component: NotificationsPageComponent
-    },
-    {
-      path: 'artists', component: ArtistSearchResultPageComponent
-    }
-  ]
-}];
+
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -60,14 +60,10 @@ import { ShareBottomSheetComponent } from './bottom-sheets/share-bottom-sheet/sh
 import {QRCodeModule} from 'angularx-qrcode';
 import {SidenavComponent} from './sidenav/sidenav.component';
 import {PlaylistCardComponent} from './playlist-card/playlist-card.component';
-import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { PlaylistDialogComponent } from './playlist-detail/playlist-dialog.component';
 import {ArtistSidenavComponent} from './artist-sidenav/artist-sidenav.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { WishlistComponent } from './wishlist/wishlist.component';
-import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
-import {SidenavComponent} from './sidenav/sidenav.component';
-import {PlaylistCardComponent} from './playlist-card/playlist-card.component';
+import { WishlistComponent } from './wishlist/wishlist.component';import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import {MatSelect} from "@angular/material/select";
 import { UserPreferenceBottomSheetComponent } from './bottom-sheets/user-preference-bottom-sheet/user-preference-bottom-sheet.component';
@@ -105,7 +101,7 @@ import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist
     ArtistSidenavComponent,
     SidenavComponent,
     ShoppingCartComponent,
-    WishlistComponent
+    WishlistComponent,
     ShareBottomSheetComponent,
     DeleteConfirmationDialogComponent,
     SidenavComponent,
@@ -168,55 +164,7 @@ import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist
     MatPrefix,
     MatSlideToggle,
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterLink,
-        MatCard,
-        MatCardActions,
-        MatCardAvatar,
-        MatCardHeader,
-        MatCardTitle,
-        MatIcon,
-        MatIconButton,
-        MatCardTitleGroup,
-        MatCardContent,
-        MatDialogContainer,
-        MatDialogTitle,
-        MatDialogContent,
-        MatDialogActions,
-        MatButton,
-        MatDialogClose,
-        MatCardFooter,
-        MatCardImage,
-        MatTooltip,
-        MatFormField,
-        MatInput,
-        MatTable,
-        MatColumnDef,
-        MatHeaderCell,
-        MatCellDef,
-        MatHeaderCellDef,
-        MatCell,
-        MatHeaderRow,
-        MatRow,
-        MatRowDef,
-        MatHeaderRowDef,
-        MatSort,
-        MatSortHeader,
-        MatPaginator,
-        MatFabButton,
-        NgxAudioPlayerModule,
-        MatAutocomplete,
-        MatAutocompleteTrigger,
-        MatOption,
-        MatNavList,
-        MatDivider,
-        QRCodeModule,
-        MatListItem,
-        RouterLinkActive,
-    ],
+
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
     CommonModule,
@@ -241,7 +189,7 @@ import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist
     ArtistSidenavComponent,
     SidenavComponent,
     ShoppingCartComponent,
-    WishlistComponent
+    WishlistComponent,
     DeleteConfirmationDialogComponent,
     SidenavComponent,
     PlaylistCardComponent,

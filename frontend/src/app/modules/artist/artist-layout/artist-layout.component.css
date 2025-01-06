@@ -5,7 +5,15 @@
 .base-page {
   height: 100vh;
   padding: 2vh;
-  margin-left: 100px;
+  padding-left: 0;
+  padding-top: 0;
+  display:flex;
+}
+.routed-content{
+  flex-basis: 98vw;
+  padding-top: 3vh;
+  height: 100vh;
+  overflow-y: hidden;
 }
 .flex-side {
   display: flex;
