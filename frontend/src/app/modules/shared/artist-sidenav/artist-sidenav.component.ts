@@ -1,16 +1,22 @@
-import { Component, HostListener } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
+import {MyConfig} from '../../../my-config';
 
 @Component({
   selector: 'artist-sidenav',
   templateUrl: './artist-sidenav.component.html',
   styleUrls: ['./artist-sidenav.component.css']
 })
-export class ArtistSidenavComponent {
+export class ArtistSidenavComponent implements OnInit {
   isMenuVisible: boolean = false;
+  pathToPfp: string = `${MyConfig.api_address}`;
 
   constructor(private router: Router, private artistHandlerService: ArtistHandlerService) {}
+
+  ngOnInit(): void {
+    this.pathToPfp += this.artistHandlerService.getSelectedArtist()?.pfpPath;
+  }
 
   toggleMenu(): void {
     console.log('Toggling menu visibility...');
@@ -46,3 +52,4 @@ export class ArtistSidenavComponent {
     }
   }
 }
+

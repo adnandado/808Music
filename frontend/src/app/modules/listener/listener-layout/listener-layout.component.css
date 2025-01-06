@@ -15,7 +15,7 @@
 .routed-content {
   flex-basis: 69vw;
   padding-top: 3vh;
-  height: 98vh;
+  height: 100vh;
   overflow-y: auto;
 }
 
@@ -23,5 +23,5 @@
   height: 98vh;
   overflow-y: auto;
   padding-top: 1vh;
-box-sizing: border-box;
+  box-sizing: border-box;
 }
