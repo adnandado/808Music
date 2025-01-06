@@ -44,7 +44,7 @@ public class OrderAddEndpoint : MyEndpointBaseAsync
             totalPrice += effectivePrice * cartItem.Quantity;
         }
 
-        // Create a new order
+        
         var order = new Order
         {
             Status = "Pending",
@@ -67,7 +67,7 @@ public class OrderAddEndpoint : MyEndpointBaseAsync
 
             if (product != null && product.QtyInStock >= cartItem.Quantity)
             {
-                product.QtyInStock -= cartItem.Quantity;  // Reduce the quantity
+                product.QtyInStock -= cartItem.Quantity;  
             }
             else
             {
@@ -79,11 +79,11 @@ public class OrderAddEndpoint : MyEndpointBaseAsync
 
         _db.Order.Add(order);
 
-        await _db.SaveChangesAsync(cancellationToken); // Ensure the order is saved first
+        await _db.SaveChangesAsync(cancellationToken);
 
         var userOrder = new UserOrders
         {
-            MyAppUserId = request.UserId,  // Using MyAppUserId instead of UserId
+            MyAppUserId = request.UserId,  
             OrderId = order.Id
         };
 
