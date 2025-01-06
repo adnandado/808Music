@@ -15,6 +15,8 @@ export interface TrackGetAllRequest {
   leadArtistId?: number
   featuredArtists?: number[]
   title?: string
+  isReleased?: boolean
+  sortByStreams?: boolean
 }
 
 @Injectable({

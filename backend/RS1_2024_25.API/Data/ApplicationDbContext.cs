@@ -40,6 +40,10 @@ namespace RS1_2024_25.API.Data
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<UserOrders> UserOrders { get; set; }
+        public DbSet<Follow> Follows { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<ReadNotification> ReadNotifications { get; set; }
+        public DbSet<MyAppUserPreference> MyAppUserPreferences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

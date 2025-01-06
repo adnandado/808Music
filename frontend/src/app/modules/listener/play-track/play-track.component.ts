@@ -1,4 +1,4 @@
-import {Component, inject, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject, Inject, OnInit} from '@angular/core';
 import {MusicPlayerService} from '../../../services/music-player.service';
 import {TrackGetByIdEndpointService} from '../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,7 +12,7 @@ import {ConfirmDialogComponent} from '../../shared/dialogs/confirm-dialog/confir
   templateUrl: './play-track.component.html',
   styleUrl: './play-track.component.css'
 })
-export class PlayTrackComponent implements OnInit {
+export class PlayTrackComponent implements AfterViewInit {
   dialog = inject(MatDialog);
 
   constructor(private musicPlayerService: MusicPlayerService,
@@ -21,7 +21,7 @@ export class PlayTrackComponent implements OnInit {
               private router : Router,) {
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if(id)

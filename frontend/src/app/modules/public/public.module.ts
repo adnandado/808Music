@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {PublicRoutingModule} from './public-routing.module';
@@ -13,6 +13,7 @@ import { AlbumCreateComponent } from '../artist/album/album-create/album-create.
 import {MatAnchor, MatButton} from '@angular/material/button';
 import { NewHomeComponent } from './new-home/new-home.component';
 import {SharedModule} from '../shared/shared.module';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -25,15 +26,16 @@ import {SharedModule} from '../shared/shared.module';
     AlbumCreateComponent,
     NewHomeComponent,
   ],
-  imports: [
-    CommonModule,
-    PublicRoutingModule,
-    FormsModule,
-    MatButton,
-    MatAnchor,
-    SharedModule
-  ],
-
+    imports: [
+        CommonModule,
+        PublicRoutingModule,
+        FormsModule,
+        MatButton,
+        MatAnchor,
+        SharedModule,
+        TranslatePipe
+    ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PublicModule {
 }

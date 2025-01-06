@@ -21,23 +21,23 @@ import {SharedModule} from '../../shared/shared.module';
 import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import {MatDivider} from '@angular/material/divider';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatFormField, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatPrefix, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {
   MatCalendar,
   MatDatepicker,
   MatDatepickerContent,
   MatDatepickerInput,
-  MatDatepickerToggle
+  MatDatepickerToggle, MatDateRangeInput, MatDateRangePicker
 } from '@angular/material/datepicker';
 import {MatOption, MatSelect} from '@angular/material/select';
 
 
 @NgModule({
-  declarations: [
-    AlbumListMaterialComponent,
-    AlbumCreateOrEditComponent
-  ],
+    declarations: [
+        AlbumListMaterialComponent,
+        AlbumCreateOrEditComponent
+    ],
   imports: [
     CommonModule,
     AlbumRoutingModule,
@@ -72,8 +72,14 @@ import {MatOption, MatSelect} from '@angular/material/select';
     MatDatepickerContent,
     MatSuffix,
     MatIconButton,
-    MatIconAnchor
+    MatIconAnchor,
+    MatDateRangeInput,
+    MatDateRangePicker,
+    MatPrefix
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    exports: [
+        AlbumListMaterialComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AlbumModule { }

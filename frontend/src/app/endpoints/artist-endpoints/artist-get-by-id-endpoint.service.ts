@@ -10,6 +10,7 @@ export interface ArtistDetailResponse {
   bio: string;
   profilePhotoPath: string;
   profileBackgroundPath: string;
+  followers: number;
 }
 
 @Injectable({

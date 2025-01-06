@@ -16,13 +16,22 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
         {
             var tracks = db.Tracks.AsQueryable();
             await db.Artists.LoadAsync();
+            await db.Albums.LoadAsync();
+
+            
+
 
             if (request.FeaturedArtists != null)
             {
                 foreach(int artistId in request.FeaturedArtists)
                 {
-                    tracks = db.ArtistsTracks.Where(db => db.ArtistId == artistId).Select(at => at.Track)!;
+                    tracks = db.ArtistsTracks.Where(db => db.ArtistId == artistId && !db.IsLead).Select(at => at.Track)!;
                 }
+            }
+
+            if (request.IsReleased != null)
+            {
+                tracks = tracks.Where(t => t.Album.ReleaseDate < DateTime.Now);
             }
 
             if(request.AlbumId != null)
@@ -32,13 +41,17 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 
             if(request.LeadArtistId != null)
             {
-                await db.Albums.LoadAsync();
                 tracks = tracks.Where(t => t.Album.ArtistId == request.LeadArtistId);
             }
 
             if(request.Title != string.Empty)
             {
                 tracks = tracks.Where(t => t.Title.ToLower().Contains(request.Title.ToLower()));
+            }
+
+            if(request.SortByStreams)
+            {
+                tracks = tracks.OrderByDescending(t => t.Streams);
             }
 
             var filteredTracks = tracks.Select(t => new TrackGetResponse
@@ -55,7 +68,8 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
                     IsLead = at.IsLead,
                     Name = at.Artist.Name,
                     PfpPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath,
-                }).ToList()
+                }).ToList(),
+                AlbumId = t.AlbumId
             });
 
             return await MyPagedList<TrackGetResponse>.CreateAsync(filteredTracks, request, cancellationToken);
@@ -68,5 +82,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
         public int? LeadArtistId { get; set; }
         public List<int>? FeaturedArtists { get; set; }
         public string Title { get; set; } = string.Empty;
+        public bool? IsReleased { get; set; }
+        public bool SortByStreams { get; set; } = false;
     }
 }

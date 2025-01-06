@@ -1,0 +1,9 @@
+@if (artist) {
+  <app-album-list-material class="album" [title]="artist.name + title"
+                           [hasControls]="false"
+                           [isHome]="true"></app-album-list-material>
+} @else {
+  <app-album-list-material class="album" [title]="title"
+                           [hasControls]="false"
+                           [isHome]="true"></app-album-list-material>
+}

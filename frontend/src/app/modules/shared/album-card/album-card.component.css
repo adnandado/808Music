@@ -5,13 +5,14 @@
 }
 
 .album-mat-card {
-  transition: 250ms background-color;
+  transition: background-color 0.25s ease-in-out;
   overflow-x: hidden;
+  position: relative;
 }
 
 .album-mat-card:hover {
   background-color: #4D3D50;
-  transition: 150ms background-color;
+  transition: background-color 0.25s ease-in-out;
 }
 
 .album-mat-card-controls {
@@ -28,7 +29,27 @@
   font-size: 20px;
 }
 
+.hide-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .album-mat-card-title:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.play-button {
+  position: absolute;
+  bottom: 7vh;
+  right: 10px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
 }

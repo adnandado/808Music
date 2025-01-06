@@ -18,6 +18,7 @@ import {
 } from '../../shared/bottom-sheets/queue-view-bottom-sheet/queue-view-bottom-sheet.component';
 import {ShareBottomSheetComponent} from '../../shared/bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
 import {queue} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-music-player',
@@ -34,7 +35,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   constructor(private trackGetService: TrackGetByIdEndpointService,
               private albumGetService: TrackGetAllEndpointService,
               private albumByIdService: AlbumGetByIdEndpointService,
-              protected musicPlayerService: MusicPlayerService) {
+              protected musicPlayerService: MusicPlayerService,
+              private router: Router) {
   }
 
   ngOnDestroy(): void {
@@ -79,5 +81,21 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   openShareSheet() {
     this.queueManager.open(ShareBottomSheetComponent, {data: {url: MyConfig.ui_address + "/listener/track/"+ this.track?.id}});
+  }
+
+  redirectToSource() {
+    this.router.navigate([this.musicPlayerService.queueSource.value]);
+  }
+
+  goToRelease() {
+    this.router.navigate(["/listener/release", this.track!.albumId]);
+  }
+
+  goHome() {
+    this.router.navigate(["/listener/home"]);
+  }
+
+  goToSearch() {
+    this.router.navigate(["/listener/home"]);
   }
 }

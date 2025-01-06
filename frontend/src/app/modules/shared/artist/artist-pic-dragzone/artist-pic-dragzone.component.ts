@@ -13,7 +13,10 @@ const ALLOWED_FILE_TYPES = [
   templateUrl: './artist-pic-dragzone.component.html',
   styleUrl: './artist-pic-dragzone.component.css'
 })
-export class ArtistPicDragzoneComponent implements OnChanges {
+export class ArtistPicDragzoneComponent implements OnChanges, OnInit {
+  ngOnInit(): void {
+      this.inputElement = document.getElementById("fileInput") as HTMLInputElement;
+  }
   ngOnChanges(changes: SimpleChanges): void {
       this.removeFile();
   }
@@ -25,6 +28,7 @@ export class ArtistPicDragzoneComponent implements OnChanges {
   fileUrl = "";
   @Input() control : any;
   allowedFileTypes = ALLOWED_FILE_TYPES;
+  inputElement: HTMLInputElement | null = null;
 
   selectFile(e: any) {
     let temp = (e.target.files[0] as File)
@@ -56,6 +60,19 @@ export class ArtistPicDragzoneComponent implements OnChanges {
   removeFile() {
     this.fileUrl = "";
     this.file = null;
+    if(this.inputElement){
+      this.inputElement.value = "";
+    }
     this.imageEmit.emit(undefined);
+  }
+
+  getFileName(name: string) {
+    if(name.length > 20)
+    {
+      let i = name.lastIndexOf(".");
+      return name.slice(0, 17) + "... " + name.substring(i, name.length);
+    }
+
+    return name;
   }
 }

@@ -17,9 +17,9 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
     {
         [Authorize]
         [HttpPost]
-        public override async Task<ActionResult<AlbumInsertResponse>> HandleAsync([FromForm]AlbumInsertRequest request, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<AlbumInsertResponse>> HandleAsync([FromForm] AlbumInsertRequest request, CancellationToken cancellationToken = default)
         {
-            if(!request.HandleValidation())
+            if (!request.HandleValidation())
             {
                 return BadRequest("Data not valid");
             }
@@ -39,7 +39,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             }
 
             Album a;
-            if(request.Id != null)
+            if (request.Id != null)
             {
                 a = await db.Albums.FindAsync(request.Id, cancellationToken);
             }
@@ -56,7 +56,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             a.IsActive = request.ReleaseDate < DateTime.Now;
             a.ArtistId = request.ArtistId;
 
-            if(request.CoverImage != null)
+            if (request.CoverImage != null)
             {
                 var path = await fh.UploadFileAsync(@"wwwroot\Images\AlbumCovers", request.CoverImage, 0, cancellationToken);
                 if (path == string.Empty)
@@ -67,6 +67,23 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             }
 
             await db.SaveChangesAsync();
+
+            //Add notification to db
+            if(request.Id == null && request.ReleaseDate < DateTime.Now)
+            {
+                Notification notification = new Notification
+                {
+                    ArtistId = a.ArtistId,
+                    ContentId = a.Id,
+                    CreatedAt = DateTime.Now,
+                    Sent = false,
+                    Type = nameof(Album),
+                };
+
+                await db.Notifications.AddAsync(notification, cancellationToken);
+                await db.SaveChangesAsync(cancellationToken);
+            }
+
             var response = new AlbumInsertResponse
             {
                 Title = a.Title,
@@ -82,7 +99,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
     public class AlbumInsertRequest : IValidatable
     {
         public int? Id { get; set; }
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         public string Distributor { get; set; } = string.Empty;
         public DateTime ReleaseDate { get; set; }
         public int AlbumTypeId { get; set; } = 4;
@@ -92,6 +109,12 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
 
         public bool HandleValidation()
         {
+            if (Title.Length < 3)
+                return false;
+            if (Distributor.Length < 3) 
+                return false;
+            if(AlbumTypeId < 1)
+                return false;
             return true;
         }
     }

@@ -19,7 +19,7 @@ import {
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {TrackWithPositionDto} from '../../../services/auth-services/dto/TrackWithPositionDto';
 import {ArtistSimpleDto} from '../../../services/auth-services/dto/artist-dto';
-import {MatSort, MatSortModule} from '@angular/material/sort';
+import {MatSort, MatSortModule, Sort} from '@angular/material/sort';
 import {TrackDeleteEndpointService} from '../../../endpoints/track-endpoints/track-delete-endpoint.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -30,13 +30,16 @@ import {
 } from '../../../endpoints/track-endpoints/track-get-all-endpoint.service';
 import {MyPagedList} from '../../../services/auth-services/dto/my-paged-list';
 import {PageEvent} from '@angular/material/paginator';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {ShareBottomSheetComponent} from '../bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
+import {MusicPlayerService} from '../../../services/music-player.service';
 
 @Component({
   selector: 'app-tracks-table',
   templateUrl: './tracks-table.component.html',
   styleUrl: './tracks-table.component.css',
 })
-export class TracksTableComponent implements OnInit, OnChanges {
+export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() inArtistMode = true;
   @Input() isPlaylist = false;
   protected readonly MyConfig = MyConfig;
@@ -56,12 +59,30 @@ export class TracksTableComponent implements OnInit, OnChanges {
   paginationOptions = [20, 35, 50]
   @Input() reload = true;
   shouldDisplayControls = false;
+  isShuffled = false;
+  @Input() allowPagination = true;
 
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private getTrackService: TrackGetByIdEndpointService,
               private deleteTrackService: TrackDeleteEndpointService,
-              private getAllTracksService: TrackGetAllEndpointService) {
+              private getAllTracksService: TrackGetAllEndpointService,
+              private btmSheet : MatBottomSheet,
+              private musicPlayerService : MusicPlayerService) {
+  }
+
+  ngAfterViewInit(): void {
+    /*
+    this.dataSource.sortingDataAccessor = (item, prop) => {
+      switch (prop)
+      {
+        case 'position': console.log(item[prop]); return item[prop];
+      }
+      return '';
+    }
+
+     */
+    this.dataSource.sort = this.sort;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -69,7 +90,6 @@ export class TracksTableComponent implements OnInit, OnChanges {
       {
           console.log("changes");
           this.reloadData();
-
       }
     }
 
@@ -94,7 +114,8 @@ export class TracksTableComponent implements OnInit, OnChanges {
               position: i+1,
               isExplicit: this.tracks[i].isExplicit,
               streams: this.tracks[i].streams,
-              title: this.tracks[i].title
+              title: this.tracks[i].title,
+              albumId: this.tracks[i].albumId
             });
           }
           console.log(this.tracksDto);
@@ -105,15 +126,13 @@ export class TracksTableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.dataSource.sortingDataAccessor = (item, prop) => {
-      switch (prop)
-      {
-        case 'position': return item.position;
-      }
-      return '';
-    }
-    this.dataSource.sort = this.sort;
     this.reloadData();
+
+    this.musicPlayerService.shuffleToggled.subscribe({
+      next: data => {
+        this.isShuffled = data;
+      }
+    })
   }
 
   getPosition(id:number) {
@@ -198,5 +217,34 @@ export class TracksTableComponent implements OnInit, OnChanges {
 
   emitCreate() {
     this.onCreateClick.emit();
+  }
+
+  openShareSheet() {
+    let matRef = this.btmSheet.open(ShareBottomSheetComponent, {hasBackdrop: true, data: {
+      url: MyConfig.ui_address + "/listener/release/"+this.tracks[0].albumId,
+      }});
+
+  }
+
+  toggleShuffle() {
+    this.musicPlayerService.toggleShuffle();
+  }
+
+  sortData(sort: Sort) {
+    switch (sort.active) {
+      case "position":
+        if(sort.direction == 'asc')
+        {
+          this.tracksDto.sort((t1, t2) => t1.position - t2.position)
+        }
+        else if(sort.direction == 'desc') {
+          this.tracksDto.sort((t1, t2) => t2.position - t1.position)
+        }
+        else {
+
+        }
+        break;
+    }
+    this.dataSource.data = this.tracksDto;
   }
 }

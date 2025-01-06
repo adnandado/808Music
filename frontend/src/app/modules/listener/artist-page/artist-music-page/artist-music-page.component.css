@@ -1,0 +1,102 @@
+.artist-music-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  margin-top: 3vh;
+  overflow-y: auto;
+}
+ h5 {
+  font-weight: 500;
+}
+
+.album-cover {
+  box-sizing: border-box;
+  width: 19vw;
+  height: 19vw;
+  background-color: #00B2A9;
+  border-radius: 10px;
+  padding: 1vw;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+}
+
+.spotlight-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spotlight-info > h6 {
+  margin-bottom: 0;
+}
+
+.lander {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popular {
+  height: 47vh;
+  flex-basis: 45vw;
+  overflow-y: hidden;
+}
+
+.popular-1 {
+
+}
+
+.tab-group {
+  flex-basis: 45vw;
+  background-color: #161215;
+  height: fit-content;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+.album-cards {
+  display: flex;
+  flex-basis: 10vw;
+  gap: 20px;
+  align-items: end;
+}
+
+app-album-card {
+  width: 10vw;
+}
+
+.spotlight {
+  position: relative;
+}
+
+.banner-gradient {
+  position: absolute;
+  background: rgb(0,0,0);
+  background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8603816526610644) 25%, rgba(0,212,255,0) 100%);
+}
+
+.view-all {
+  width: 3vw;
+  height: 12vw;
+  background-color: #161215;
+  border-radius: 10px;
+  margin-right: 10px;
+  text-align: center;
+  padding-top: 5vw;
+  box-sizing: border-box;
+  font-size: 27px;
+  font-weight: bold;
+  align-self: center;
+  border: 0.1rem solid #4E444B;
+}
+
+.view-all:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: #4D3D50;
+}
+
+.featured-section {
+  margin-top: 4vh;
+}

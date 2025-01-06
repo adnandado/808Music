@@ -1,0 +1,12 @@
+<div class="following-page">
+  <h3>Manage following</h3>
+  <div class="following">
+    @for (a of following; track a.id)
+    {
+      <app-artist-small-card [artist]="a" [followManagerMode]="true" (onRemove)="removeArtist($event)"></app-artist-small-card>
+    }
+  </div>
+  <button mat-flat-button (click)="dismiss()">
+    Ok
+  </button>
+</div>

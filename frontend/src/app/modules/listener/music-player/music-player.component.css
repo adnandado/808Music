@@ -9,6 +9,7 @@
   gap: 3px;
   overflow-y: auto;
   overflow-x: hidden;
+  height: 96vh;
 
   /*
   uncomment when there's alternate ways to play songs
@@ -26,6 +27,10 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: underline;
   font-weight: bold;
   font-size: 17px;
+}
+
+.now-playing h6:hover {
+  cursor: pointer;
 }
 
 .cover {
@@ -66,4 +71,29 @@ h1, h2, h3, h4, h5, h6 {
 
 .music-player2 {
   height: 97vh;
+}
+
+.track-title:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+h6 {
+  display: inline;
+}
+
+.clickable {
+  text-decoration: underline;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+.queue-status-info {
+  margin-top: 20px;
+}
+
+.queue-status-info2 {
+  margin-bottom: 15px;
 }

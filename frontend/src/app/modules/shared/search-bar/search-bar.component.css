@@ -17,9 +17,19 @@
   gap: 5vw;
 }
 
+.search-bar > div {
+  position: relative;
+}
+
 .search-bar > div > mat-icon{
   position: absolute;
   left:10px;
   top:15px;
   color: #EEDEE7;
+}
+
+.remove-btn {
+  position: absolute;
+  right:-70px;
+  top:6px;
 }

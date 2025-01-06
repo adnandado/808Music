@@ -1,0 +1,25 @@
+{
+  "PUBLIC-NAV": {
+    "Home": "Početna",
+    "About": "O nama",
+    "Contact": "Kontakt",
+    "Copyright": "©808Music 2024-2025 Sva prava pridržana."
+  },
+  "HOME": {
+    "Tagline": "Bilo da ste umjetnik koji želi doprijeti do šire publike ili strastveni slušalac muzike, 808 Music je pravo mjesto za vas",
+    "Login": "Prijavite se",
+    "Register": "Registrirajte se",
+    "AlreadyRegistered": "Već ste registrovani korisnik?",
+    "TitleP1": "Pridružite se",
+    "TitleP2": "izvođačima i slušaocima muzike",
+    "TitleP3": "koji već uživaju u 808 Music"
+  },
+  "ABOUT": {
+    "P1": "Mi u 808 Musicu vjerujemo da glazba ima moć povezivati, nadahnjivati i transformirati živote. Zato smo stvorili platformu na kojoj su vaše omiljene pjesme, izvođači i popisi za reprodukciju uvijek dostupni samo jednim dodirom. Bilo da zaronite u hitove na vrhu ljestvica, otkrivanje podzemnih dragulja ili kuriranje vaše osobne glazbene podloge, naša je misija učiniti svako iskustvo slušanja nezaboravnim.",
+    "P2": "S ogromnom bibliotekom pjesama i proizvoda, personaliziranim preporukama skrojenim prema vašem jedinstvenom ukusu i besprijekornim strujanjem na svim vašim uređajima, ovdje smo da svaki trenutak vašeg dana osnažimo savršenim zvukom.",
+    "P3": "Utemeljeni na inovacijama i vođeni strašću prema glazbi, cilj nam je biti više od samo usluge strujanja. Mi smo zajednica slušatelja i kreatora, koja povezuje ljude kroz univerzalni jezik glazbe. Od podrške umjetnicima u usponu do suradnje s industrijom ikone, predani smo oblikovanju budućnosti glazbene kulture. Dobro došli na krajnje odredište za vaše putovanje slušanja."
+  },
+  "LANG-SELECT": {
+    "Placeholder": "Odaberite jezik"
+  }
+}

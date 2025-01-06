@@ -1,0 +1,33 @@
+<div class="notification-card" (mouseover)="showHidden()" (mouseleave)="hideHidden()">
+  <div class="ncard-content">
+    <div class="thumbnail" [ngStyle]="thumbnail"></div>
+    <div class="ncard-info">
+      <div class="greyed msg">{{notification?.message}}</div>
+      <div class="title" (click)="goToContent()">
+        @if(notification?.priority) {
+          <mat-icon>stars</mat-icon>
+        }
+        <div>
+          {{notification?.title}}
+        </div>
+      </div>
+      @if(notification?.artist != null)
+      {
+        <div class="greyed artist-name" (click)="goToArtist()">{{notification?.artist?.name}}</div>
+      }
+      <div class="greyed time">{{getTimeFromNow()}}</div>
+    </div>
+  </div>
+  <div class="ncard-actions">
+    <button mat-icon-button (click)="markAsRead()" [ngStyle]="actionStyle" [matTooltip]="'Mark as read'" class="mark-as-read"><mat-icon>done_all</mat-icon></button>
+    <button mat-fab (click)="processContent()"><mat-icon>
+      @if(notification?.type === "Album")
+      {
+        play_arrow
+      } @else if (notification?.type === "Product")
+      {
+        shopping_cart_checkout
+      }
+    </mat-icon></button>
+  </div>
+</div>

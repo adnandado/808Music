@@ -12,11 +12,18 @@ export class AlbumCardComponent {
   @Input() hasControls: boolean = false;
   @Input() id: number = 0;
   @Input() tooltip = "";
+  @Input() artistName = "";
+  @Input() numOfTracks = -1;
 
   @Output() onEdit: EventEmitter<number> = new EventEmitter();
   @Output() onStats: EventEmitter<number> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
   @Output() onClick: EventEmitter<number> = new EventEmitter();
+  @Output() onPlayClick: EventEmitter<number> = new EventEmitter();
+  playBtnStyle = {
+    'display': 'none',
+    'bottom': '7vh'
+  }
 
   replaceWithPlaceholder() {
     document.getElementById("thumbnail")!.classList.add("album-mat-card-placeholder");
@@ -35,10 +42,26 @@ export class AlbumCardComponent {
   }
 
   getTitle() {
-    return this.title.length > 15 ? this.title.slice(0,10) + "..." : this.title;
+    return this.title.length > 16 ? this.title.slice(0,13) + "..." : this.title;
   }
 
   emitClick() {
     this.onClick.emit(this.id);
   }
+
+  showPlayButton() {
+    this.playBtnStyle['display'] = 'block';
+    if(this.artistName != ""){
+      this.playBtnStyle['bottom'] = '10vh';
+    }
+  }
+
+  hidePlayButton() {
+    this.playBtnStyle['display'] = 'none';
+  }
+
+  emitPlayClick() {
+    this.onPlayClick.emit(this.id);
+  }
+
 }

@@ -1,0 +1,12 @@
+<div class="artist-card" (mouseover)="showPlayButton(true)" (mouseleave)="showPlayButton(false)">
+  <div class="thumbnail-image" [ngStyle]="{'background-image':'url('+MyConfig.api_address+artist?.pfpPath+')'}"></div>
+  <div class="artist-info">
+    <h6 class="artist-name hide-overflow" (click)="goToArtist()">{{ artist?.name }}</h6>
+    <p class="follow-count hide-overflow">{{getFollowCount()}}</p>
+  </div>
+  <div class="play-button" (click)="playArtist()" [ngStyle]="playBtnSyle">
+    <mat-icon>
+      play_arrow
+    </mat-icon>
+  </div>
+</div>

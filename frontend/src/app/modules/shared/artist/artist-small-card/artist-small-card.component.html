@@ -1,14 +1,29 @@
 <div class="artist-small-card">
 
   <mat-card class="artist-small">
-    <mat-card-header class="artist-small-header">
+    <mat-card-header class="artist-small-header" (click)="!interactive ? routeToProfile() : false"
+                     [ngStyle]="interactive ? {} : {'cursor':'pointer'}">
       <h6>{{ artist?.name }}</h6>
       <img mat-card-avatar [src]="MyConfig.api_address+artist?.pfpPath">
     </mat-card-header>
   </mat-card>
   @if (interactive) {
-    <button mat-icon-button (click)="emitClick()">
+    <button mat-icon-button (click)="emitClick()" class="red">
       <mat-icon>cancel</mat-icon>
     </button>
+  }
+  @if (followManagerMode && validArtist(artist)) {
+    <div class="controls">
+      <button mat-icon-button (click)="toggleNotis(artist)">
+        @if(artist.wantsNotifications) {
+          <mat-icon>notifications_active</mat-icon>
+        } @else {
+          <mat-icon>notifications</mat-icon>
+        }
+      </button>
+      <button mat-flat-button (click)="unfollow(artist)">
+        Unfollow
+      </button>
+    </div>
   }
 </div>

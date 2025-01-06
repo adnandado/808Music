@@ -26,7 +26,7 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
 import { AlbumCardComponent } from './album-card/album-card.component';
 import {MatTooltip} from "@angular/material/tooltip";
 import { MyMatInputComponent } from './inputs/my-mat-input/my-mat-input.component';
-import {MatFormField} from '@angular/material/form-field';
+import {MatFormField, MatPrefix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import { TextInputDialogComponent } from './dialogs/text-input-dialog/text-input-dialog.component';
 import { TracksTableComponent } from './tracks-table/tracks-table.component';
@@ -65,6 +65,17 @@ import { PlaylistDialogComponent } from './playlist-detail/playlist-dialog.compo
 import {ArtistSidenavComponent} from './artist-sidenav/artist-sidenav.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
+import {SidenavComponent} from './sidenav/sidenav.component';
+import {PlaylistCardComponent} from './playlist-card/playlist-card.component';
+import { LanguageSelectorComponent } from './language-selector/language-selector.component';
+import {MatSelect} from "@angular/material/select";
+import { UserPreferenceBottomSheetComponent } from './bottom-sheets/user-preference-bottom-sheet/user-preference-bottom-sheet.component';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import { ManageFollowingBottomSheetComponent } from './bottom-sheets/manage-following-bottom-sheet/manage-following-bottom-sheet.component';
+import { AlbumCardListComponent } from './album-card-list/album-card-list.component';
+import { ArtistBigCardComponent } from './artist/artist-big-card/artist-big-card.component';
+import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist-big-card-list.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +106,67 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     SidenavComponent,
     ShoppingCartComponent,
     WishlistComponent
+    ShareBottomSheetComponent,
+    DeleteConfirmationDialogComponent,
+    SidenavComponent,
+    PlaylistCardComponent,
+    LanguageSelectorComponent,
+    UserPreferenceBottomSheetComponent,
+    ManageFollowingBottomSheetComponent,
+    AlbumCardListComponent,
+    ArtistBigCardComponent,
+    ArtistBigCardListComponent,
+// Dodajemo UnauthorizedComponent u deklaracije
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+    MatCard,
+    MatCardActions,
+    MatCardAvatar,
+    MatCardHeader,
+    MatCardTitle,
+    MatIcon,
+    MatIconButton,
+    MatCardTitleGroup,
+    MatCardContent,
+    MatDialogContainer,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+    MatCardFooter,
+    MatCardImage,
+    MatTooltip,
+    MatFormField,
+    MatInput,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatCell,
+    MatHeaderRow,
+    MatRow,
+    MatRowDef,
+    MatHeaderRowDef,
+    MatSort,
+    MatSortHeader,
+    MatPaginator,
+    MatFabButton,
+    NgxAudioPlayerModule,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+    MatOption,
+    MatNavList,
+    MatDivider,
+    QRCodeModule,
+    MatSelect,
+    MatPrefix,
+    MatSlideToggle,
   ],
     imports: [
         CommonModule,
@@ -170,6 +242,13 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     SidenavComponent,
     ShoppingCartComponent,
     WishlistComponent
+    DeleteConfirmationDialogComponent,
+    SidenavComponent,
+    PlaylistCardComponent,
+    LanguageSelectorComponent,
+    AlbumCardListComponent,
+    ArtistBigCardComponent,
+    ArtistBigCardListComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

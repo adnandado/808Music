@@ -1,6 +1,6 @@
 <div class="img-drag-drop">
   <div class="dd-landing">
-    <input type="file" (change)="selectFile($event)" class="file" accept=".png,.jpg,.jpeg">
+    <input type="file" (change)="selectFile($event)" class="file" accept=".png,.jpg,.jpeg" id="fileInput">
     <h6>Drag & drop <b>{{title}}</b> file here</h6>
     <p>(PNG, JPG)</p>
     <p>Or click the dropzone to browse files</p>
@@ -10,7 +10,7 @@
     <mat-card appearance="outlined">
       <mat-card-header>
         <mat-card-title-group>
-          <mat-card-title *ngIf="file != null">{{file.name}}</mat-card-title>
+          <mat-card-title *ngIf="file != null">{{getFileName(file.name)}}</mat-card-title>
           <mat-card-subtitle *ngIf="file != null">Preview of {{title}}</mat-card-subtitle>
           <mat-card-subtitle *ngIf="file == null">Current {{title}}</mat-card-subtitle>
           <img mat-card-avatar [src]="fileUrl">
@@ -27,14 +27,37 @@
     <mat-card appearance="outlined">
       <mat-card-header>
         <mat-card-title-group>
-          <mat-card-title *ngIf="file != null">{{file.name}}</mat-card-title>
+          <mat-card-title *ngIf="file != null">{{getFileName(file.name)}}</mat-card-title>
           <mat-card-subtitle *ngIf="file != null">Preview of {{title}}</mat-card-subtitle>
           <mat-card-subtitle *ngIf="file == null">Current {{title}}</mat-card-subtitle>
         </mat-card-title-group>
       </mat-card-header>
       <mat-card-content>
         <div [ngStyle]="{'background-image': 'url(' + fileUrl + ')',
-        'width':'500px', 'height':'150px', 'background-size':'contain', 'background-repeat': 'no-repeat'}"></div>
+        'width':'500px', 'height':'150px', 'background-size':'cover',
+        'background-repeat': 'no-repeat', 'background-position': 'center', 'border-radius':'10px'}"></div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button (click)="removeFile()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+  @else if (fileUrl != "" && type == "cover")
+  {
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title *ngIf="file != null">{{getFileName(file.name)}}</mat-card-title>
+          <mat-card-subtitle *ngIf="file != null">Preview of {{title}}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="file == null">Current {{title}}</mat-card-subtitle>
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content>
+        <div [ngStyle]="{'background-image': 'url(' + fileUrl + ')',
+        'width':'200px', 'height':'200px', 'background-size':'cover',
+        'background-repeat': 'no-repeat', 'background-position': 'center', 'border-radius':'10px'}"></div>
       </mat-card-content>
       <mat-card-actions>
         <button mat-icon-button (click)="removeFile()">

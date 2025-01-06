@@ -27,7 +27,7 @@
         </mat-icon>
         <div>
           <h2 class="album-title">{{ album?.title }}</h2>
-          <h6>{{album!.type!.type}} • {{getYear()}}</h6>
+          <h6>{{album?.type?.type}} • {{getYear()}}</h6>
           <p>{{album?.numOfTracks}} tracks • {{album?.lengthInSeconds | longDurationString}}</p>
         </div>
         <app-artist-small-card [artist]="artist"></app-artist-small-card>

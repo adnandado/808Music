@@ -18,20 +18,42 @@ export class MusicPlayerService {
   trackEvent = this.trackPlayEvent.asObservable();
   private trackAddEvent = new Subject<TrackGetResponse>();
   trackAdd = this.trackAddEvent.asObservable();
+  private shuffleToggleEvent = new Subject<boolean>();
+  shuffleToggled = this.shuffleToggleEvent.asObservable();
+  isShuffled : boolean = false;
 
-  constructor() { }
+  constructor() {
+    /*
+    let lastQueue = window.sessionStorage.getItem("queue");
+    if(lastQueue != null && lastQueue !== "")
+    {
+      const {queue, source} = JSON.parse(lastQueue);
+      this.createQueue(queue, source);
+    }
+
+     */
+  }
 
   createQueue(queue : TrackGetResponse[], source : QueueSource = {display:"Song", value:"song"}, append : boolean = false) {
     if(!append || this.queue.length == 0) {
       this.queue = queue;
       this.playedIndexes = []
-      this.playNext();
+      if(!this.isShuffled)
+      {
+        this.playNext();
+      }
+      else
+      {
+        this.shufflePlay()
+      }
       this.queueSource = source;
     }
     else {
       this.queue.push(...queue);
       this.trackAddEvent.next(queue[0]);
     }
+
+    //window.sessionStorage.setItem("queue", JSON.stringify({queue, source}));
   }
 
   addToQueue(queueTrack : TrackGetResponse) {
@@ -112,5 +134,10 @@ export class MusicPlayerService {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+  }
+
+  toggleShuffle() {
+    this.isShuffled = !this.isShuffled;
+    this.shuffleToggleEvent.next(this.isShuffled);
   }
 }

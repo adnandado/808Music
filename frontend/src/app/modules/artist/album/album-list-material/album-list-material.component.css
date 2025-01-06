@@ -41,14 +41,32 @@ div > h6 {
   gap: 20px;
 }
 
-.title > h1 {
-  padding-top: 1vh;
-}
 
 .flex-side {
-  flex-basis: 35vw;
+  flex-basis: 42vw;
   height: auto;
   display: block;
+}
+
+.title > h1 {
+  padding-top: 1vh;
+  margin-bottom: 5px;
+}
+
+.title mat-icon {
+  width: 35px;
+  height: 35px;
+  font-size: 35px;
+}
+
+.title button {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+}
+
+.error {
+  color: red;
 }
 
 @media only screen and (max-width: 1300px) {

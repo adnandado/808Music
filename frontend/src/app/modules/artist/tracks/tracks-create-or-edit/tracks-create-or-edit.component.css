@@ -52,3 +52,22 @@
   border-radius: 30px;
 }
 
+.tracks-dual-controls > h6 {
+  margin-bottom: 0;
+}
+
+.player {
+  width: 100%;
+}
+
+.player audio {
+  width: 100%;
+}
+
+.hint {
+  text-align: end;
+}
+
+.error {
+  color: red;
+}

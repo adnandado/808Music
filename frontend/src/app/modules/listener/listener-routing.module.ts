@@ -19,12 +19,20 @@ import {ProductWishlistComponent} from './web-store/product-wishlist/product-wis
 import {StoreSearchComponent} from './web-store/store-search/store-search.component';
 import {CheckoutComponent} from './web-store/checkout/checkout.component';
 import {BytypeComponent} from './web-store/bytype/bytype.component';
+import {ArtistPageComponent} from './artist-page/artist-page.component';
+import {ArtistAlbumsListComponent} from './artist-albums-list/artist-albums-list.component';
+import {NotificationsPageComponent} from './notifications-page/notifications-page.component';
+import {ListenerHomeComponent} from './listener-home/listener-home.component';
+import {ArtistSearchResultPageComponent} from './artist-search-result-page/artist-search-result-page.component';
 
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
   children: [
     {
-      path: 'home', component: NewHomeComponent,
+      path: '', redirectTo: 'home', pathMatch: 'full',
+    },
+    {
+      path: 'home', component: ListenerHomeComponent,
     },
     {
       path: 'release/:id', component: ReleaseViewComponent,
@@ -62,6 +70,24 @@ const routes: Routes = [{
     component: PlaylistListMaterialComponent,
   },
 ];
+    },
+    {
+      path: 'profile/:id', component: ArtistPageComponent
+    },
+    {
+      path: 'releases/:id', component: ArtistAlbumsListComponent
+    },
+    {
+      path: 'releases', component: ArtistAlbumsListComponent
+    },
+    {
+      path: 'notifications', component: NotificationsPageComponent
+    },
+    {
+      path: 'artists', component: ArtistSearchResultPageComponent
+    }
+  ]
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

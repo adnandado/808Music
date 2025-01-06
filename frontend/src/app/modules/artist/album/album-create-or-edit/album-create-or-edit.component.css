@@ -34,3 +34,12 @@
   padding-top: 0;
   margin-bottom: 0;
 }
+
+.error {
+  color: red;
+}
+
+.hint {
+  text-align: end;
+  align-self: end;
+}

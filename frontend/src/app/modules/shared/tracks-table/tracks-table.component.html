@@ -1,12 +1,23 @@
 <div class="tracks-table">
-  <div class="tracks-search-bar">
+  <div class="tracks-search-bar" *ngIf="allowPagination">
     <app-search-bar [placeholder]="'Search for a song'" (onSearchChange)="searchTracks($event)"></app-search-bar>
+    <div class="controls">
+    <button mat-icon-button><mat-icon>share</mat-icon></button>
     @if (inArtistMode)
     {
       <button mat-fab extended (click)="emitCreate()"><mat-icon>add</mat-icon>Add new song</button>
     } @else {
+      <button mat-icon-button (click)="toggleShuffle()"><mat-icon class="shuffle-button">
+        @if (!isShuffled)
+        {
+        shuffle
+        } @else {
+          shuffle_on
+        }
+      </mat-icon></button>
       <button mat-fab (click)="emitCreate()"><mat-icon>play_arrow</mat-icon></button>
     }
+    </div>
   </div>
   <table mat-table matSort [dataSource]="tracks!">
 
@@ -68,5 +79,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator showFirstLastButtons [pageSize]="20" [length]="pagedResponse?.totalCount" [pageSizeOptions]="paginationOptions" (page)="setPageOpitions($event)"></mat-paginator>
+  @if (allowPagination) {
+    <mat-paginator showFirstLastButtons [pageSize]="20" [length]="pagedResponse?.totalCount" [pageSizeOptions]="paginationOptions" (page)="setPageOpitions($event)"></mat-paginator>
+  }
 </div>
