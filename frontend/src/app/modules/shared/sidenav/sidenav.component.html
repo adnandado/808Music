@@ -1,32 +1,32 @@
 <div class="sidenav">
   <div class="logo-container">
-    <img class="logo-image" src="https://cdn-0001.qstv.on.epicgames.com/tFaisIxoSaCVPpPxIm/image/screen_comp.jpeg" alt="Logo">
+    <img class="logo-image" src="http://localhost:7000/media/808music_logo.png" alt="Logo">
     <hr class="divider">
   </div>
   <div class="sidenav-icons">
-    <button mat-icon-button routerLink="public/home" aria-label="Home">
+    <button mat-icon-button routerLink="/listener/home" aria-label="Home">
       <mat-icon>home</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/search" aria-label="Search">
+    <button mat-icon-button routerLink="/listener/search" aria-label="Search">
       <mat-icon>search</mat-icon>
     </button>
-    <button mat-icon-button (click)="navigateTo('products')" aria-label="Shopping Cart">
+    <button mat-icon-button routerLink="/listener/store-home" aria-label="Shopping Cart">
       <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/artist/playlist" aria-label="Playlists">
+    <button mat-icon-button routerLink="/listener/playlist" aria-label="Playlists">
       <mat-icon>library_music</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/library" aria-label="Library">
-      <mat-icon>library_books</mat-icon>
-    </button>
-    <button mat-icon-button routerLink="/notifications" aria-label="Notifications">
+    <button mat-icon-button routerLink="/listener/notifications" aria-label="Notifications">
       <mat-icon>notifications</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/social" aria-label="Socials">
+    <button mat-icon-button routerLink="/listener/chat" aria-label="Socials">
       <mat-icon>textsms</mat-icon>
     </button>
   </div>
+
   <div class="profile-container">
+    <hr class="divider">
+
     <img
       class="profile-picture"
       src="https://cdn-0001.qstv.on.epicgames.com/tFaisIxoSaCVPpPxIm/image/screen_comp.jpeg"
@@ -37,7 +37,7 @@
       <ul>
         <li (click)="navigateTo('profile')">Profile</li>
         <li (click)="navigateTo('account')">Account</li>
-        <li (click)="navigateTo('subscriptions')">Subscriptions</li>
+        <li (click)="navigateTo('/listener/subscriptions')">Subscriptions</li>
         <li (click)="navigateTo('settings')">Settings</li>
         <hr />
         <li (click)="navigateTo('artist')">808 for Artist</li>

@@ -2,7 +2,7 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 import { ArtistPicDragzoneComponent } from './artist/artist-pic-dragzone/artist-pic-dragzone.component';
 import {
   MatCard,
@@ -54,13 +54,16 @@ import {AppModule} from '../../app.module';
 import {SecondsToDurationStringPipe} from '../../services/pipes/seconds-to-string.pipe';
 import {LongDurationStringPipe} from '../../services/pipes/long-duration-string.pipe';
 import { QueueViewBottomSheetComponent } from './bottom-sheets/queue-view-bottom-sheet/queue-view-bottom-sheet.component';
-import {MatNavList} from '@angular/material/list';
+import {MatListItem, MatNavList} from '@angular/material/list';
 import {MatDivider} from '@angular/material/divider';
 import { ShareBottomSheetComponent } from './bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
 import {QRCodeModule} from 'angularx-qrcode';
-import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import {SidenavComponent} from './sidenav/sidenav.component';
 import {PlaylistCardComponent} from './playlist-card/playlist-card.component';
+import { PlaylistDialogComponent } from './playlist-detail/playlist-dialog.component';
+import {ArtistSidenavComponent} from './artist-sidenav/artist-sidenav.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { WishlistComponent } from './wishlist/wishlist.component';import {DeleteConfirmationDialogComponent} from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import {MatSelect} from "@angular/material/select";
 import { UserPreferenceBottomSheetComponent } from './bottom-sheets/user-preference-bottom-sheet/user-preference-bottom-sheet.component';
@@ -90,6 +93,15 @@ import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist
     LongDurationStringPipe,
     StripeComponent,
     QueueViewBottomSheetComponent,
+    SidenavComponent,
+    PlaylistCardComponent,
+    DeleteConfirmationDialogComponent,
+    ShareBottomSheetComponent,
+    PlaylistDialogComponent,
+    ArtistSidenavComponent,
+    SidenavComponent,
+    ShoppingCartComponent,
+    WishlistComponent,
     ShareBottomSheetComponent,
     DeleteConfirmationDialogComponent,
     SidenavComponent,
@@ -152,6 +164,7 @@ import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist
     MatPrefix,
     MatSlideToggle,
   ],
+
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
     CommonModule,
@@ -169,6 +182,14 @@ import { ArtistBigCardListComponent } from './artist/artist-big-card-list/artist
     ClickableFeaturedArtistsComponent,
     SecondsToDurationStringPipe,
     LongDurationStringPipe,
+    SidenavComponent,
+    PlaylistCardComponent,
+    DeleteConfirmationDialogComponent,
+    PlaylistDialogComponent,
+    ArtistSidenavComponent,
+    SidenavComponent,
+    ShoppingCartComponent,
+    WishlistComponent,
     DeleteConfirmationDialogComponent,
     SidenavComponent,
     PlaylistCardComponent,

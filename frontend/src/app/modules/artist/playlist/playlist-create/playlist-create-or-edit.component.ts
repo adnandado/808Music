@@ -82,14 +82,14 @@ export class PlaylistCreateOrEditComponent implements OnInit {
       isPublic: formData.get('isPublic') === 'true',
       trackIds: JSON.parse(formData.get('trackIds') as string) || [],
       coverImage: formData.get('coverImage') as File,
-      userId: userId // Dodajemo userId u zahtjev
+      userId: userId
     };
 
     this.playlistCreateService.handleAsync(playlistRequest).subscribe({
       next: (response: any) => {
         const message = `Successfully created playlist ${response.title}!`;
         this.snackBar.open(message, 'Dismiss', { duration: 3000 });
-        this.router.navigate(['/artist/playlist']);
+        this.router.navigate(['/listener/playlist']);
       },
       error: (err: HttpErrorResponse) => {
         this.snackBar.open('An error occurred. Please try again.', 'Dismiss', { duration: 3000 });
@@ -98,22 +98,44 @@ export class PlaylistCreateOrEditComponent implements OnInit {
   }
 
   getCurrentUserId(): number {
-    const authToken = sessionStorage.getItem('authToken');
+    let authToken = sessionStorage.getItem('authToken');
+
     if (!authToken) {
-      throw new Error('User not authenticated.');
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
     }
 
     try {
       const parsedToken = JSON.parse(authToken);
-      if (!parsedToken.userId) {
-        throw new Error('Invalid token: userId not found.');
-      }
-      return parsedToken.userId; // Dohvaćanje userId iz parsiranog tokena
+      return parsedToken.userId;
     } catch (error) {
-      throw new Error('Failed to parse authToken.');
+      console.error('Error parsing authToken:', error);
+      return 0;
     }
   }
 
+  private getUserIdFromToken(): number {
+    let authToken = sessionStorage.getItem('authToken');
+
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
+    }
+
+    try {
+      const parsedToken = JSON.parse(authToken);
+      return parsedToken.userId;
+    } catch (error) {
+      console.error('Error parsing authToken:', error);
+      return 0;
+    }
+  }
 
 
 
@@ -124,7 +146,7 @@ export class PlaylistCreateOrEditComponent implements OnInit {
       next: (response: any) => {
         const message = `Successfully updated playlist ${response.title}!`;
         this.snackBar.open(message, 'Dismiss', { duration: 3000 });
-        this.router.navigate(['/artist/playlist']);
+        this.router.navigate(['/listener/playlist']);
         window.location.reload();
       },
       error: (err: HttpErrorResponse) => {

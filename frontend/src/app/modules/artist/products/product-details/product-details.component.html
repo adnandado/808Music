@@ -1,6 +1,4 @@
 
-<app-sidenav></app-sidenav>
-
 <div class="product-container">
   <div class="carousel-container">
     <div class="carousel-wrapper">
@@ -19,7 +17,14 @@
   </div>
   <div class="product-header">
     <h1 class="product-title">{{ product?.title }}</h1>
-    <p class="price">{{ product?.price | currency }}</p>
+    <div class="price-container">
+      <!-- Original Price (precrtana) -->
+      <p *ngIf="product?.discountedPrice !== product?.price" class="original-price">
+        {{ product?.price | currency }}
+      </p>
+      <!-- Discounted Price -->
+      <p class="price">{{ product?.discountedPrice | currency }}</p>
+    </div>
   </div>
 
   <div class="artist-info">
@@ -27,8 +32,27 @@
     <p class="artist-name">{{ product?.artistName ?? 'Unknown Artist' }}</p>
   </div>
 
-  <p class="product-description">A HIGH-QUALITY PRODUCT TO MEET ALL YOUR NEEDS AND EXPECTATIONS.</p>
+  <p class="product-description">{{ product?.bio ?? '808 Shop item ready to be purchased! ' }}</p>
   <p class="quantity" [ngClass]="(product?.quantity ?? 0) > 0 ? '' : 'out-of-stock'">
     {{ (product?.quantity ?? 0) > 0 ? 'In Stock' : 'Out of Stock' }}
   </p>
+  <div class = "checkout-related">
+  <div class="add-to-cart-container">
+    <button mat-icon-button (click)="addToCart()" [disabled]="!quantity || quantity <= 0">
+      <mat-icon>shopping_cart</mat-icon> Add to Cart
+    </button>
+  </div>
+    <div class="quantity-container">
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" [(ngModel)]="quantity" min="1" [max]="product?.quantity  || 0" />
+    </div>
+
+  </div>
+  <div class="add-to-cart-container">
+    <button mat-icon-button (click)="addToWishlist()" [disabled]="!quantity || quantity <= 0">
+      <mat-icon>favorite_border</mat-icon> Add to Wishlist
+    </button>
+  </div>
+
+<app-shopping-cart> </app-shopping-cart>
 </div>

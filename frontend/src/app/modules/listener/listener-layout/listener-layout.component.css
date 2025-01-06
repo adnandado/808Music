@@ -7,14 +7,21 @@
   display: flex;
   justify-content: space-between;
   height: 100%;
-  padding: 2vh;
+  padding: 3vh;
+  padding-left: 0;
+  padding-top: 0;
 }
 
 .routed-content {
-  flex-basis: 74vw;
+  flex-basis: 69vw;
+  padding-top: 3vh;
+  height: 98vh;
+  overflow-y: auto;
 }
 
 .player {
   height: 98vh;
   overflow-y: auto;
+  padding-top: 1vh;
+box-sizing: border-box;
 }

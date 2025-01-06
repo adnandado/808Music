@@ -143,7 +143,7 @@ export class TracksPageComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router
+    this.router.navigate([`/listener/playlist/create`]);
   }
 
     getTotalTrackLength(): string {
@@ -176,7 +176,7 @@ export class TracksPageComponent implements OnInit {
         if (this.playlistDetails?.id) {
           this.deletePlaylistService.handleAsync(this.playlistDetails.id).subscribe({
             next: () => {
-              this.router.navigate(['/artist/playlist']);
+              this.router.navigate(['/listener/playlist']);
             },
             error: (error) => {
               console.error('Error deleting playlist:', error);
@@ -194,7 +194,12 @@ export class TracksPageComponent implements OnInit {
   }
 
   private getUserIdFromToken(): number {
-    const authToken = sessionStorage.getItem('authToken');
+    let authToken = sessionStorage.getItem('authToken');
+
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
     if (!authToken) {
       return 0;
     }

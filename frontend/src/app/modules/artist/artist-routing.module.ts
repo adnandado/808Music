@@ -15,7 +15,7 @@ import {ProductsCreateComponent} from './products/products-create/products-creat
 import {ProductListComponent} from './products/product-list/product-list.component';
 import {ArtistHandlerService} from '../../services/artist-handler.service';
 import {ProductAddEndpointService} from '../../endpoints/products-endpoints/product-create-endpoint.service';
-import {PlaylistCreateOrEditComponent} from './playlist/playlist-create/playlist-create-or-edit.component';
+import {TracksListComponent} from './tracks/tracks-list/tracks-list.component';
 
 
 const routes: Routes = [
@@ -38,25 +38,22 @@ const routes: Routes = [
         path: 'playlist',
         loadChildren: () => import("./playlist/playlist.module").then(m => m.PlaylistModule)
       },
+      {
+        path: 'product-create',
+        component: ProductsCreateComponent
+      },
+
+      {
+        path: ':artistName/products',
+        component: ProductListComponent
+      },
     ]
   },
   {
     path: 'create',
     component: AlbumCreateComponent
   },
-  {
-  path: 'playlist-create',
-  component: PlaylistCreateOrEditComponent
-  },
-  {
-    path: 'product-create',
-    component: ProductsCreateComponent
-  },
 
-  {
-    path: ':artistName/products',
-    component: ProductListComponent
-  },
   {
     path: 'edit/:id',
     component: AlbumCreateComponent

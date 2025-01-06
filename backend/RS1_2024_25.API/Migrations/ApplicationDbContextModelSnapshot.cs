@@ -189,6 +189,9 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SubscriptionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -196,6 +199,8 @@ namespace RS1_2024_25.API.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("SubscriptionId");
 
                     b.ToTable("MyAppUsers");
                 });
@@ -585,18 +590,37 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<int>("ArtistId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClothesType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDigital")
                         .HasColumnType("bit");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<int>("ProductType")
+                        .HasColumnType("int");
+
                     b.Property<int>("QtyInStock")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("SaleAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SoldItems")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -681,6 +705,67 @@ namespace RS1_2024_25.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentTransactions");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("MonthlyPrice")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("ReedemsOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("RenewalOn")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubscriptionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscription");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.SubscriptionDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("SubscriptionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubscriptionDetails");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Track", b =>
@@ -781,6 +866,24 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("UserArtistRoles");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserOrders", b =>
+                {
+                    b.Property<int>("MyAppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MyAppUserId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("UserOrders");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserPlaylist", b =>
                 {
                     b.Property<int>("MyAppUserId")
@@ -794,6 +897,120 @@ namespace RS1_2024_25.API.Migrations
                     b.HasIndex("PlaylistId");
 
                     b.ToTable("UserPlaylist");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserProductWishlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserProductWishlist");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserShoppingCart");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Endpoints.ProductEndpoints.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Endpoints.ProductEndpoints.OrderDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Album", b =>
@@ -842,7 +1059,14 @@ namespace RS1_2024_25.API.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("RS1_2024_25.API.Data.Models.Subscription", "Subscription")
+                        .WithMany()
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Country");
+
+                    b.Navigation("Subscription");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyAuthenticationToken", b =>
@@ -1115,6 +1339,25 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserOrders", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
+                        .WithMany("UserOrders")
+                        .HasForeignKey("MyAppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Endpoints.ProductEndpoints.Order", "Order")
+                        .WithMany("UserOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("MyAppUser");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserPlaylist", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "User")
@@ -1134,8 +1377,67 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserProductWishlist", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("MyAppUser");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserShoppingCart", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "MyAppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("MyAppUser");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Endpoints.ProductEndpoints.OrderDetails", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Endpoints.ProductEndpoints.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Auth.MyAppUser", b =>
                 {
+                    b.Navigation("UserOrders");
+
                     b.Navigation("UserPlaylists");
                 });
 
@@ -1154,6 +1456,13 @@ namespace RS1_2024_25.API.Migrations
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Track", b =>
                 {
                     b.Navigation("PlaylistTracks");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Endpoints.ProductEndpoints.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+
+                    b.Navigation("UserOrders");
                 });
 #pragma warning restore 612, 618
         }
