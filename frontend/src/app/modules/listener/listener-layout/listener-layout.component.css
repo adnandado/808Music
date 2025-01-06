@@ -8,13 +8,21 @@
   justify-content: space-between;
   height: 100%;
   padding: 2vh;
+  padding-left: 0;
+  padding-top: 0;
 }
 
 .routed-content {
-  flex-basis: 74vw;
+  flex-basis: 72vw;
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .player {
   height: 98vh;
   overflow-y: auto;
+  padding-top: 1vh;
+  box-sizing: border-box;
+  width: 23vw;
 }

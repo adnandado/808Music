@@ -2,7 +2,7 @@
   box-sizing: border-box;
   padding: 3vh;
   background-color: #242424;
-  width: 23vw;
+  width: 100%;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -10,6 +10,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   height: 96vh;
+
   /*
   uncomment when there's alternate ways to play songs
   flex-wrap: wrap;

@@ -26,12 +26,10 @@ namespace RS1_2024_25.API.Endpoints.StripeEndpoint
         {
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
 
-            // Stripe event
             Event stripeEvent;
 
             try
             {
-                // Provjera Stripe Webhook događaja
                 stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], _stripeWebhookSecretKey);
             }
             catch (StripeException e)
@@ -39,14 +37,12 @@ namespace RS1_2024_25.API.Endpoints.StripeEndpoint
                 return BadRequest($"Stripe webhook error: {e.Message}");
             }
 
-            // Provjera vrsta događaja
             if (stripeEvent.Type == "payment_intent.succeeded")
             {
                 var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
 
                 if (paymentIntent != null)
                 {
-                    // Kreiraj PaymentTransaction iz podataka Stripe-a
                     var chargeService = new ChargeService();
                     var charges = chargeService.List(new ChargeListOptions { PaymentIntent = paymentIntent.Id });
 
@@ -64,7 +60,6 @@ namespace RS1_2024_25.API.Endpoints.StripeEndpoint
                             CreatedAt = DateTime.UtcNow
                         };
 
-                        // Spremi transakciju u bazu podataka
                         await _context.PaymentTransactions.AddAsync(transaction);
                         await _context.SaveChangesAsync();
                     }

@@ -1,0 +1,11 @@
+.shopping-cart{
+position: absolute;
+top: 50px;
+right: 30%;
+z-index: 1200;}
+.wishlist-icon{
+background: none;
+  color: white;
+  border-style: none;
+  cursor: pointer;
+}

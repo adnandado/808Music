@@ -5,7 +5,40 @@ body {
   padding: 0;
   background: red;
 }
+.checkout-related{
+  display:flex;
+  flex-direction: row;
+  justify-content:  space-between;
+width: 100%;
+}
+.add-to-cart-container{
+  display:flex;
 
+}
+.add-to-cart-container button {
+  gap: 8px;
+  white-space: nowrap;
+}
+.mat-icon{
+  font-size: 26px;
+  box-sizing: border-box;
+
+}
+#quantity{
+  background-color: transparent;
+  margin-left: 10px;
+  color: white;
+  width: 20%;  border-style: none;
+font-size: 15px;
+}
+.quantity-container{
+  font-size: 20px;
+}
+.wishlist-add {
+  display:flex;
+  flex-direction: row;
+
+}
 .product-container {
   padding: 20px;
   display: flex;
@@ -65,10 +98,10 @@ body {
 
 .product-header {
   display: flex;
-  justify-content: space-between; /* Naziv i cijena sa strane */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid #444; /* Linija ispod */
+  border-bottom: 1px solid #444;
   margin-bottom: 15px;
   padding-bottom: 0;
 }
@@ -80,11 +113,23 @@ body {
   color: #FFFFFF;
 }
 
+.price-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #B0B0B0; /* Svijetlo siva za precrtanu cijenu */
+  font-size: 1rem;
+}
+
 .price {
   font-size: 1.3rem;
-  color: #ffffff;
-  margin: 0;
+  font-weight: bold;
 }
+
 
 .artist-info {
   display: flex;
@@ -103,10 +148,9 @@ body {
   color: #FFFFFF;
 }
 
-/* Opis proizvoda */
 .product-description {
-  font-size: 0.85rem; /* Manji font */
-  text-transform: uppercase; /* Sve velikim slovima */
+  font-size: 0.85rem;
+  text-transform: uppercase;
   color: #B0B0B0;
 }
 

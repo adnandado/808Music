@@ -14,7 +14,7 @@ import {MyConfig} from '../../../../my-config';
 })
 export class MusicControllerComponent implements OnInit {
   track : TrackGetResponse | null = null;
-  trackLocation = 'http://localhost:7000/api/TrackStreamEndpoint/';
+  trackLocation = `${MyConfig.api_address}/api/TrackStreamEndpoint/`;
   secondsPipe = new SecondsToDurationStringPipe();
   currentPlaybackTime: number = 0;
   playingState = false;

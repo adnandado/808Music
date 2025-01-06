@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="logo-container">
+    <img src="http://localhost:7000/media/webshop_logo.png" alt="Logo" class="logo" />
+  </div>
+<div class="heading">
+  <div class="search-bar">
+    <input
+      #searchInput
+      type="text"
+      placeholder="Search for products..."
+      class="search-input"
+      [(ngModel)]="keyword"
+
+    />
+    <button class="search-button" (click)="searchProducts(searchInput.value)">
+      <mat-icon class="lupa">search</mat-icon>
+    </button>
+  </div>
+
+  <div class="below-search">
+    <div class="sort-and-results">
+      <p class="results-count">Browse {{ totalResults }} results for {{ keyword }}</p>
+      <div class="sort-dropdown">
+        <select id="sortBy" [(ngModel)]="sortBy" (change)="changeSortOrder()">
+          <option value="" disabled selected>Sort</option>
+          <option value="dateCreatedNewest">Date created - Newest first</option>
+          <option value="dateCreatedOldest">Date created - Oldest first</option>
+          <option value="priceHighest">Price - Highest first</option>
+          <option value="priceLowest">Price - Lowest first</option>
+          <option value="saleHighest">Sale - Highest first</option>
+        </select>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+  <div class="products">
+    <div class="product-row">
+    <div class = "product-size" *ngIf="searchResults.length; else noResults">
+      <div *ngFor="let product of searchResults"
+        class="product" (click)="viewProduct(product.slug)">
+          <div class="sale-badge" *ngIf="product.saleAmount > 0">
+            -{{ (product.saleAmount * 100).toFixed(0) }}%
+          </div>
+          <img [src]="'http://localhost:7000/media/' + product.photoPaths[0]" alt="{{ product.title }}" class="product-image">
+          <div class="product-info">
+
+          <p class="product-name"> {{ product.title }}</p>
+          <p class="product-price">{{ product.discountedPrice | number: '1.2-2' }}$</p>
+          </div> <div
+        class="wishlist-icon"
+        (click)="toggleWishlist($event, product)">
+        <mat-icon>{{ isOnWishlist(product) ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </div> </div>
+      </div>
+    </div>
+    <ng-template #noResults>
+      <p>No results found for "{{ keyword }}"</p>
+    </ng-template>
+  </div>
+
+  <div class="pagination">
+    <button class = "prev_page" *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)"><</button>
+    <span>{{ currentPage }}</span>
+    <button class= "next_page" *ngIf="searchResults.length === pageSize" (click)="changePage(currentPage + 1)">></button>
+  </div>
+  <app-shopping-cart> </app-shopping-cart>
+
+</div>

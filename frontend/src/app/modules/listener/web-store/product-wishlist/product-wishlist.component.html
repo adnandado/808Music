@@ -1,0 +1,29 @@
+<div class="wishlist-page">
+<div *ngIf="wishlistItems.length > 0" class="wishlist-container">
+  <div *ngFor="let item of wishlistItems" class="wishlist-item">
+    <img [src]="'http://localhost:7000/media/' + item.productPhoto" alt="Product Image" class="product-photo" />
+    <div class="item-details">
+      <h3 class="product-title">{{ item.productTitle }}</h3>
+      <p class="artist-name">
+        <span class="artist-pfp">
+            <img [src]="item.artistPfp ? item.artistPfp : 'path/to/default-artist.jpg'" alt="Artist Image" class="artist-photo" />
+        </span>
+        {{ item.artistName }}
+      </p>
+      <div class="price-container">
+        <span *ngIf="item.saleAmount > 0" class="discount">-{{ getDiscountPercentage(item.saleAmount) }}%</span>
+        <span class="price">{{ item.discountedPrice | currency:'USD' }}</span>
+      </div>
+      <div class="date-n-remove">
+      <span>Date added {{ item.dateAdded | date:'dd/MM/yyyy' }}</span>
+      <button (click)="removeFromWishlist(item.slug)" class="remove-from-wishlist">Remove from Wishlist</button>
+      </div>
+    </div>
+    <button (click)="addToCart(item.productId)" class="add-to-cart-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div *ngIf="wishlistItems.length === 0" class="no-items-message">
+  No items in your wishlist.
+</div>
+</div>

@@ -2,6 +2,7 @@
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Data.Models.Auth;
 using RS1_2024_25.API.Data.Models.Stripe;
+using RS1_2024_25.API.Endpoints.ProductEndpoints;
 
 namespace RS1_2024_25.API.Data
 {
@@ -18,8 +19,6 @@ namespace RS1_2024_25.API.Data
         public DbSet<TrackGenre> TrackGenres { get; set; }
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Credits> Credits { get; set; }
         public DbSet<ArtistTrack> ArtistsTracks { get; set; }
         public DbSet<Artist> Artists { get; set; }
@@ -34,6 +33,13 @@ namespace RS1_2024_25.API.Data
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<UserPlaylist> UserPlaylist { get; set; }
         public DbSet<PlaylistTracks> PlaylistTracks { get; set; }
+        public DbSet<Subscription> Subscription { get; set; }
+        public DbSet<SubscriptionDetails> SubscriptionDetails { get; set; }
+        public DbSet<UserProductWishlist> UserProductWishlist { get; set; }
+        public DbSet<UserShoppingCart> UserShoppingCart { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<UserOrders> UserOrders { get; set; }
         public DbSet<Follow> Follows { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<ReadNotification> ReadNotifications { get; set; }

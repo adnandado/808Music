@@ -7,10 +7,9 @@
 .flex-page {
   display: flex;
   justify-content: space-between;  /* Raspodjela prostora između lijevog i desnog dijela */
-  flex-direction: row;  /* Omogućava horizontalno postavljanje */
+  flex-direction: row;
   padding: 0;
-  height: 100vh;  /* Postavlja visinu na cijeli ekran */
-  overflow-y: hidden;
+  height: 100vh;
 }
 
 .select-page {
@@ -29,6 +28,8 @@ app-album-card {
   align-items: end;
   flex-grow: 0;
   flex-basis: auto;
+  display: flex;
+  flex-direction: row;
 }
 
 mat-paginator {
@@ -47,6 +48,9 @@ div > h6 {
 
 .title > h1 {
   padding-top: 1vh;
+  display: flex;
+  flex-direction: row;
+  margin-left: 30px;
 }
 
 .flex-side {

@@ -34,6 +34,17 @@
       </div>
     </div>
 
+    <!-- Modal za odabir playlisti -->
+    <div class="track-item" *ngFor="let track of tracks">
+      <div class="track-details">
+        <span>{{ track.title }}</span>
+        <button mat-icon-button (click)="openTrackMenu(track)">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </div>
+
+
     <app-tracks-table [pagedRequest]="pagedRequest" (onMainClick)="editTrack($event)" [inArtistMode]="artistMode" (onCreateClick)="addNew()" [reload]="reloadTable"></app-tracks-table>
   </div>
   @if (artistMode) {

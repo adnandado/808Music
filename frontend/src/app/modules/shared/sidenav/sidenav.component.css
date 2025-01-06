@@ -1,20 +1,23 @@
 .sidenav {
-  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 60px;
+  width: 4.5vw;
   height: 100vh;
   background-color: #E692F8;
   color: white;
   align-items: center;
   z-index: 1000;
-  margin-right: 30px; /* Možete smanjiti ovu vrijednost ako želite manji razmak s desne strane */
+  margin-right: 2vw;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   overflow: visible;
   left: 0; /* Dodano da bude uvijek fiksiran lijevo */
   top: 0;  /* Dodano da bude fiksiran na vrhu */
 }
+.Active{
+  opacity:1;
 
+}
 .sidenav-icons {
   display: flex;
   flex-direction: column;
@@ -24,7 +27,7 @@
 }
 
 .sidenav-icons button {
-  font-size: 21px;
+  font-size: 45px;
   background: #E178F7;
   border: none;
   cursor: pointer;
@@ -34,8 +37,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 3.5vw;
+  height: 3.5vw  ;
 }
 
 .sidenav-icons button:hover {
@@ -43,7 +46,9 @@
 }
 
 .mat-icon {
-  font-size: 22px;
+  font-size: 37.5px;
+  width: 37.5px;
+  height:37.5px;
   color: #333333;
 }
 
@@ -54,10 +59,10 @@
 }
 
 .logo-image {
-  width: 50px;
-  height: 50px;
+  width: 3.5vw;
+  height: 3.5vw;
   object-fit: contain;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .divider {
@@ -65,6 +70,7 @@
   border: 0;
   border-top: 1px solid #333333;
   margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .profile-container {
@@ -75,20 +81,21 @@
 }
 
 .profile-picture {
-  width: 50px;
-  height: 50px;
+  width: 3.5vw;
+  height: 3.5vw;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #333333;
   cursor: pointer;
   margin-top: 20px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 .profile-menu {
   position: absolute;
-  bottom: 0;
-  left: 60px;
+  bottom: 0vw;
+  left: 5vw;
   background-color: #333333;
   color: white;
   border-radius: 8px;

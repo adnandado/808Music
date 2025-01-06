@@ -1,5 +1,5 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
+  import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+  import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 import { ListenerRoutingModule } from './listener-routing.module';
 import { ListenerLayoutComponent } from './listener-layout/listener-layout.component';
@@ -28,6 +28,18 @@ import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import { NotificationCardComponent } from './notifications-page/notification-card/notification-card.component';
 import { ListenerHomeComponent } from './listener-home/listener-home.component';
 import { ArtistSearchResultPageComponent } from './artist-search-result-page/artist-search-result-page.component';
+  import {StoreArtistPageComponent} from './web-store/store-artist-page/store-artist-page.component';
+  import {WebStoreComponent} from './web-store/store-home/store-home.component';
+  import {UserSubscriptionComponent} from './user-subscription/user-subscription.component';
+  import {ProductDetailsComponent} from '../artist/products/product-details/product-details.component';
+  import {ProductWishlistComponent} from './web-store/product-wishlist/product-wishlist.component';
+  import {StoreSearchComponent} from './web-store/store-search/store-search.component';
+  import {CheckoutComponent} from './web-store/checkout/checkout.component';
+  import {
+    OrderConfirmationDialogComponent
+  } from './web-store/checkout/order-confirmation-dialog/order-confirmation-dialog.component';
+  import {BytypeComponent} from './web-store/bytype/bytype.component';
+  import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -43,7 +55,16 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
     NotificationsPageComponent,
     NotificationCardComponent,
     ListenerHomeComponent,
-    ArtistSearchResultPageComponent
+    ArtistSearchResultPageComponent,
+    UserSubscriptionComponent,
+    WebStoreComponent,
+    StoreArtistPageComponent,
+    ProductDetailsComponent,
+    ProductWishlistComponent,
+    StoreSearchComponent,
+    CheckoutComponent,
+    OrderConfirmationDialogComponent,
+    BytypeComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +86,13 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
     AlbumModule,
     MatChipListbox,
     MatChipOption,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ListenerModule { }
+
+
+
