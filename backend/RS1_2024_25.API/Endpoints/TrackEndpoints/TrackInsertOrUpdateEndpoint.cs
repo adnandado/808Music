@@ -64,12 +64,21 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
 
             if (request.TrackFile != null)
             {
+                string extension = Path.GetExtension(request.TrackFile.FileName);
+                if(extension != ".mp3")
+                {
+                    return BadRequest($"Request was for {extension}");
+                }
+
                 trackName = await fh.UploadFileAsync(cfg["StaticFilePaths:Tracks"]!, request.TrackFile, 0, cancellationToken);
                 if(trackName == string.Empty)
                 {
                     return BadRequest("Invalid track file!");
                 }
             }
+
+
+
 
             WaveStream file = new MediaFoundationReader(cfg["StaticFilePaths:Tracks"] + trackName);
 

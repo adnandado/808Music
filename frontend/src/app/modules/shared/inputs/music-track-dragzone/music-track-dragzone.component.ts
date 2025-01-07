@@ -5,7 +5,7 @@ import {ControlValueAccessor, FormControl} from '@angular/forms';
 
 const ALLOWED_FILE_TYPES = [
   'audio/mpeg',
-  'audio/wav',
+  //'audio/wav',
 ];
 
 @Component({

@@ -8,6 +8,7 @@
   display: flex;
   justify-content: space-between;
   color: white;
+  overflow-y: auto;
 }
 
 .tracks-list {

@@ -13,6 +13,7 @@
   flex-basis: 98vw;
   padding-top: 3vh;
   height: 100vh;
+  overflow-y: auto;
 }
 .flex-side {
   display: flex;
