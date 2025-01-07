@@ -40,6 +40,7 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
   } from './web-store/checkout/order-confirmation-dialog/order-confirmation-dialog.component';
   import {BytypeComponent} from './web-store/bytype/bytype.component';
   import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
+  import {NgxImageZoomModule} from 'ngx-image-zoom';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
     MatAutocomplete,
     MatOption,
     MatAutocompleteTrigger,
+    NgxImageZoomModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

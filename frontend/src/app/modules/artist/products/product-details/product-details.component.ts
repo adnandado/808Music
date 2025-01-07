@@ -42,6 +42,7 @@ export class ProductDetailsComponent implements OnInit {
       next: (data) => {
         if (data) {
           this.product = data;
+          console.log(data);
         } else {
           this.errorMessage = 'No product data available';
         }
@@ -74,8 +75,7 @@ export class ProductDetailsComponent implements OnInit {
         next: (response) => {
           if (response.success) {
             console.log('Product added to cart:', response.message);
-            window.location.reload();
-          } else {
+this.ngOnInit()          } else {
             console.error('Failed to add product to cart:', response.message);
           }
         },
@@ -135,8 +135,7 @@ export class ProductDetailsComponent implements OnInit {
     this.addProductToWishlist.handleAsync(request).subscribe(
       (response: AddProductToWishlistResponse) => {
         if (response.success) {
-          window.location.reload();
-
+this.ngOnInit();
         } else {
           alert('Error: ' + response.message);
         }

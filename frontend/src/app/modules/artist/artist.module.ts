@@ -41,6 +41,7 @@ import {MatSelect} from "@angular/material/select";
 import {MatTooltip} from "@angular/material/tooltip";
 import { JoinArtistProfileComponent } from './join-artist-profile/join-artist-profile.component';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import {NgxImageZoomModule} from 'ngx-image-zoom';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { ProductDetailsComponent } from './products/product-details/product-deta
     MatOption,
     MatSelect,
     MatAutocompleteTrigger,
-    MatTooltip
+    MatTooltip,
+    NgxImageZoomModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

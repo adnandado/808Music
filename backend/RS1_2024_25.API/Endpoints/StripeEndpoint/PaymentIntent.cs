@@ -24,8 +24,8 @@ namespace RS1_2024_25.API.Controllers
             {
                 var options = new PaymentIntentCreateOptions
                 {
-                    Amount = request.Amount,  // Amount u centima
-                    Currency = "eur",         // Valuta
+                    Amount = request.Amount,  
+                    Currency = "eur",         
                     PaymentMethodTypes = new List<string> { "card" },
                     ReceiptEmail = request.Email 
 
@@ -45,7 +45,7 @@ namespace RS1_2024_25.API.Controllers
 
     public class PaymentRequest
     {
-        public int Amount { get; set; }  // Amount u centima (npr. 1000 = 10.00 EUR)
+        public int Amount { get; set; }  
         public string Email { get; set; }   
     }
 }

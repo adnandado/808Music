@@ -3,10 +3,11 @@
   <div class="carousel-container">
     <div class="carousel-wrapper">
       <button class="prev" (click)="prevSlide()">❮</button>
-      <img
-        [src]="'http://localhost:7000/media' + (product?.photoPaths?.[currentSlide] ?? '')"
-        alt="Product Image"
-        class="carousel-image">
+      <lib-ngx-image-zoom
+        [thumbImage]="'http://localhost:7000/media' + (product?.thumbnailPath?.[currentSlide] ?? '')"
+        [fullImage]="'http://localhost:7000/media' + (product?.photoPaths?.[currentSlide] ?? '')">
+      </lib-ngx-image-zoom>
+
       <button class="next" (click)="nextSlide()">❯</button>
     </div>
     <div class="thumbnails">
@@ -18,7 +19,6 @@
   <div class="product-header">
     <h1 class="product-title">{{ product?.title }}</h1>
     <div class="price-container">
-      <!-- Original Price (precrtana) -->
       <p *ngIf="product?.discountedPrice !== product?.price" class="original-price">
         {{ product?.price | currency }}
       </p>
