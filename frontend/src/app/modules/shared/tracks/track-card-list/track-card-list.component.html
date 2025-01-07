@@ -1,0 +1,12 @@
+<div class="artist-music-page">
+  <div>
+    <h3>{{ title }}</h3>
+    <div class="album-cards">
+      @for (track of tracks; track track.id; let i = $index) {
+        @if (i < 4 && !artistMode || i < 8 && artistMode) {
+          <app-track-card [track]="track" [artistMode]="artistMode" class="card"></app-track-card>
+        }
+      }
+    </div>
+  </div>
+</div>

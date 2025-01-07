@@ -1,6 +1,10 @@
 .search-page {
   height: 97vh;
   overflow-y: auto;
+  padding-top: 3vh;
+  padding-right: 2vh;
+  color: white;
+  box-sizing: border-box;
 }
 
 .search-area {

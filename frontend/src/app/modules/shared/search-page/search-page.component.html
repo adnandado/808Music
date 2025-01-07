@@ -5,22 +5,31 @@
     <div class="listbox">
       <mat-chip-listbox>
         <mat-chip-option [id]="'0'" (selectionChange)="filterResults($event)"
-                         [selected]="priotity">All
+                         [selected]="priotity" [value]="'0'">All
         </mat-chip-option>
         <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
-        <mat-chip-option [id]="'1'" (selectionChange)="filterResults($event)">Songs</mat-chip-option>
-        <mat-chip-option [id]="'2'" (selectionChange)="filterResults($event)">Releases</mat-chip-option>
+        <mat-chip-option [id]="'1'" (selectionChange)="filterResults($event)" [value]="'1'">Songs</mat-chip-option>
+        <mat-chip-option [id]="'2'" (selectionChange)="filterResults($event)" [value]="'2'">Releases</mat-chip-option>
         @if (!artistMode) {
-          <mat-chip-option [id]="'3'" (selectionChange)="filterResults($event)">Artists</mat-chip-option>
+          <mat-chip-option [id]="'3'" (selectionChange)="filterResults($event)" [value]="'3'">Artists</mat-chip-option>
         }
       </mat-chip-listbox>
     </div>
   </div>
   <div class="results-area">
-    @if (artists.length > 0 && filter.showArtists) {
+    @if (tracks && tracks?.dataItems!.length > 0 && filter.showTracks) {
+      <app-track-card-list [tracks]="tracks.dataItems" [artistMode]="artistMode"></app-track-card-list>
+    } @else if(filter.showTracks) {
+      <div class="result-error">
+        <mat-icon>report</mat-icon>
+        <h3>No songs that match your query found</h3>
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+      </div>
+    }
+    @if (artists.length > 0 && filter.showArtists && !artistMode) {
       <app-artist-big-card-list [numberDescription]="'followers'" [title]="'Artists'" [artists]="artists"
                                 [queryParams]="popArtistParams"></app-artist-big-card-list>
-    } @else if(filter.showArtists) {
+    } @else if(filter.showArtists  && !artistMode) {
       <div class="result-error">
         <mat-icon>report</mat-icon>
         <h3>No artists that match your query found</h3>
@@ -29,7 +38,7 @@
     }
     @if (albums && albums.dataItems.length > 0 && filter.showAlbums) {
 
-      <app-album-card-list [title]="'Releases'" [albums]="albums" [queryParams]="albumParams"></app-album-card-list>
+      <app-album-card-list [title]="'Releases'" [albums]="albums" [queryParams]="albumParams" (deletedAlbum)="refresh($event)"></app-album-card-list>
     } @else if(filter.showAlbums){
       <div class="result-error">
         <mat-icon>report</mat-icon>

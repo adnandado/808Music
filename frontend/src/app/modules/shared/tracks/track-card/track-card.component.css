@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.track-card {
+  position: relative;
+  background: #161215;
+  width: 33vw;
+  box-sizing: border-box;
+  border-radius: 15px;
+  border: 0.1rem solid #4E444B;
+  padding: 1vw;
+  transition: background-color 0.25s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 12vh;
+}
+
+.track-card:hover {
+  background-color: #4D3D50;
+  transition: background-color 0.25s ease-in-out;
+}
+
+.tc-thumbnail {
+  background-color: #4D3D50;
+  height: 8.5vh;
+  width: 8.5vh;
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
+}
+
+.tc-content {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.tc-content h6 {
+  margin: 0;
+  padding: 0;
+}
+
+.hide-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tc-content h6:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

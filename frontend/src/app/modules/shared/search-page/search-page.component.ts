@@ -13,7 +13,8 @@ import {
 } from '../../../endpoints/track-endpoints/track-get-all-endpoint.service';
 import {MyPagedList} from '../../../services/auth-services/dto/my-paged-list';
 import {ArtistSimpleDto} from '../../../services/auth-services/dto/artist-dto';
-import {Params} from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
+import {ArtistHandlerService} from '../../../services/artist-handler.service';
 
 @Component({
   selector: 'app-search-page',
@@ -67,29 +68,43 @@ export class SearchPageComponent implements OnInit{
 
   constructor(private artistGetService: ArtistGetAutocompleteEndpointService,
               private albumGetService: AlbumGetAllEndpointService,
-              private trackGetService: TrackGetAllEndpointService,) {
+              private trackGetService: TrackGetAllEndpointService,
+              private route: ActivatedRoute,
+              private artistHandler: ArtistHandlerService) {
   }
 
   ngOnInit(): void {
+    this.route.data.subscribe(data => {
+      let artist = data["artist"];
+      if(artist)
+      {
+        this.artistMode = artist
+        let a = this.artistHandler.getSelectedArtist();
+        this.trackRequest.leadArtistId = a?.id
+        this.albumRequest.artistId = a?.id
+        this.albumRequest.isReleased = undefined;
+        this.trackRequest.isReleased = undefined;
+      }
+    });
     this.search("");
   }
 
   filterResults(e: MatChipSelectionChange) {
-    if(e.selected && e.isUserInput)
+    if(e.isUserInput)
     {
-      if(e.source.id === "2")
+      if(e.source.value === "2")
       {
         this.filter.showAlbums = true;
         this.filter.showArtists = false;
         this.filter.showTracks = false;
       }
-      else if (e.source.id === "3")
+      else if (e.source.value === "3")
       {
         this.filter.showAlbums = false;
         this.filter.showArtists = true;
         this.filter.showTracks = false;
       }
-      else if (e.source.id === "1")
+      else if (e.source.value === "1")
       {
         this.filter.showAlbums = false;
         this.filter.showArtists = false;
@@ -102,7 +117,7 @@ export class SearchPageComponent implements OnInit{
       this.filter.showArtists = true;
       this.filter.showTracks = true;
     }
-    if(e.source.id === "0")
+    if(e.source.value === "0")
     {
       this.priotity = true;
       this.filter.showAlbums = true;
@@ -138,5 +153,12 @@ export class SearchPageComponent implements OnInit{
         this.tracks = data;
       }
     })
+  }
+
+  refresh(b: boolean) {
+    if (b)
+    {
+      this.ngOnInit();
+    }
   }
 }
