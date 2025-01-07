@@ -56,6 +56,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     })
      */
 
+    this.track = this.musicPlayerService.getLastPlayedSong();
+
     this.musicPlayerService.trackEvent.subscribe({
       next: data => {
         this.track = data;
@@ -97,5 +99,10 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   goToSearch() {
     this.router.navigate(["/listener/search"]);
+  }
+
+  messageBottomSheet() {
+    this.musicPlayerService.setAutoPlayStatus(!this.musicPlayerService.getAutoPlayStatus());
+    console.log(this.musicPlayerService.getAutoPlayStatus());
   }
 }

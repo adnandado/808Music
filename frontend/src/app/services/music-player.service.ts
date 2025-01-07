@@ -1,6 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {TrackGetResponse} from '../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 import {Subject} from 'rxjs';
+import {TrackGetAllEndpointService} from '../endpoints/track-endpoints/track-get-all-endpoint.service';
 
 export interface QueueSource {
   display: string;
@@ -21,30 +22,78 @@ export class MusicPlayerService {
   private shuffleToggleEvent = new Subject<boolean>();
   shuffleToggled = this.shuffleToggleEvent.asObservable();
   isShuffled : boolean = false;
+  private autoPlay = true;
 
-  constructor() {
-    /*
-    let lastQueue = window.sessionStorage.getItem("queue");
+  constructor(private trackGetAllEndpointService: TrackGetAllEndpointService,) {
+    let lastQueue = window.localStorage.getItem("queue");
+    let playedIndexes = this.getCachedPlayedIndexes();
     if(lastQueue != null && lastQueue !== "")
     {
+      this.playedIndexes = playedIndexes;
       const {queue, source} = JSON.parse(lastQueue);
-      this.createQueue(queue, source);
+      this.createQueue(queue, source, false, true);
     }
 
-     */
+    this.trackEvent.subscribe({
+      next: (e) => {
+        window.localStorage.setItem("lastPlayedSong", JSON.stringify(e));
+        window.localStorage.setItem("playedIndexes", JSON.stringify(this.playedIndexes));
+      }
+    })
+
+    this.autoPlay = this.getAutoPlayStatus();
   }
 
-  createQueue(queue : TrackGetResponse[], source : QueueSource = {display:"Song", value:"song"}, append : boolean = false) {
+  getAutoPlayStatus() {
+    return window.localStorage.getItem("autoPlay") === "true";
+  }
+
+  setAutoPlayStatus(status: boolean) {
+    window.localStorage.setItem("autoPlay", JSON.stringify(status));
+    this.autoPlay = status;
+  }
+
+  getLastPlayedSong() : TrackGetResponse | null{
+    let track = window.localStorage.getItem("lastPlayedSong");
+    if(track != null)
+    {
+      return JSON.parse(track);
+    }
+    else {
+      return null;
+    }
+  }
+
+  getCachedPlayedIndexes() : number[] {
+    let playedIndexes = window.localStorage.getItem("playedIndexes");
+    if(playedIndexes != null)
+    {
+      let indexes = JSON.parse(playedIndexes) as number[];
+      if(indexes.length === 0)
+      {
+        indexes.push(0);
+      }
+      return indexes;
+    }
+    else {
+      return [];
+    }
+  }
+
+  createQueue(queue : TrackGetResponse[], source : QueueSource = {display:"Song", value:"song"}, append : boolean = false, cacheRequest = false) {
     if(!append || this.queue.length == 0) {
       this.queue = queue;
-      this.playedIndexes = []
-      if(!this.isShuffled)
+      this.playedIndexes = cacheRequest ? this.getCachedPlayedIndexes() : [];
+      if(!cacheRequest)
       {
-        this.playNext();
-      }
-      else
-      {
-        this.shufflePlay()
+        if(!this.isShuffled)
+        {
+          this.playNext();
+        }
+        else
+        {
+          this.shufflePlay();
+        }
       }
       this.queueSource = source;
     }
@@ -53,7 +102,7 @@ export class MusicPlayerService {
       this.trackAddEvent.next(queue[0]);
     }
 
-    //window.sessionStorage.setItem("queue", JSON.stringify({queue, source}));
+    window.localStorage.setItem("queue", JSON.stringify({queue, source}));
   }
 
   addToQueue(queueTrack : TrackGetResponse) {
@@ -84,6 +133,10 @@ export class MusicPlayerService {
     let i = this.playedIndexes[this.playedIndexes.length - 1] + 1;
     if(this.queue.length <= i)
     {
+      if(this.autoPlay)
+      {
+        this.setAutoPlayQueue();
+      }
       return;
     }
     this.playedIndexes.push(i);
@@ -139,5 +192,14 @@ export class MusicPlayerService {
   toggleShuffle() {
     this.isShuffled = !this.isShuffled;
     this.shuffleToggleEvent.next(this.isShuffled);
+  }
+
+  private setAutoPlayQueue() {
+    let sortByStreams = Date.now()%2 == 0;
+    this.trackGetAllEndpointService.handleAsync({title:"", isReleased: true, sortByStreams: sortByStreams, pageSize: 1000, pageNumber:1, }).subscribe({
+      next: data => {
+        this.createQueue(data.dataItems, {display: sortByStreams ? "808 Popular - Autoplay" : "808 Fresh - Autoplay", value: "/listener/home"})
+      }
+    });
   }
 }

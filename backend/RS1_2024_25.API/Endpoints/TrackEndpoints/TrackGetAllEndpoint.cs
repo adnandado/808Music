@@ -53,6 +53,10 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
             {
                 tracks = tracks.OrderByDescending(t => t.Streams);
             }
+            else
+            {
+                tracks = tracks.OrderByDescending(t => t.Album!.ReleaseDate);
+            }
 
             var filteredTracks = tracks.Select(t => new TrackGetResponse
             {

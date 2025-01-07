@@ -41,6 +41,13 @@ export class MusicControllerComponent implements OnInit {
         this.player.volume = previousVolume;
       }
 
+      this.track = this.musicPlayerService.getLastPlayedSong();
+      let cachedTime = window.localStorage.getItem("currentPlaybackTime");
+      if(cachedTime != null)
+      {
+        this.userSetSlider({value: Number.parseInt(cachedTime)});
+      }
+
       this.musicPlayerService.trackEvent.subscribe({
         next: value => {
           this.track = value;
@@ -50,6 +57,7 @@ export class MusicControllerComponent implements OnInit {
           }
           this.streamCounted = false;
           this.streamedSec = 0;
+          window.localStorage.setItem("currentPlaybackTime", '0');
         }
       })
 
@@ -89,6 +97,7 @@ export class MusicControllerComponent implements OnInit {
 
   setCurrentPlaybackTime(e: number) {
     this.currentPlaybackTime = e;
+    window.localStorage.setItem("currentPlaybackTime", this.currentPlaybackTime.toString());
   }
 
   changePlayerState() {
@@ -111,14 +120,16 @@ export class MusicControllerComponent implements OnInit {
     if(this.player != null)
     {
       this.currentPlaybackTime = Math.floor(this.player.currentTime);
+      window.localStorage.setItem("currentPlaybackTime", this.currentPlaybackTime.toString());
     }
   }
 
-  userSetSlider(event: MatSliderDragEvent) {
+  userSetSlider(event: MatSliderDragEvent | {value: number}) {
     if(this.player != null)
     {
       this.player.currentTime = event.value;
       this.currentPlaybackTime = this.player.currentTime;
+      window.localStorage.setItem("currentPlaybackTime", this.currentPlaybackTime.toString());
     }
   }
 
