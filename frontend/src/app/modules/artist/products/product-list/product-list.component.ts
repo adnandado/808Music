@@ -44,9 +44,11 @@ export class ProductListComponent implements OnInit {
   }
 
   viewProduct(slug: string): void {
-    this.router.navigate(['/product', slug]);
+    this.router.navigate(['listener/product', slug]);
   }
-
+  goToCreate() {
+    this.router.navigate([`/artist/product-create`]);
+  }
   loadProducts(): void {
     this.productService.getProductsByArtist(this.artistId).subscribe({
       next: (data: Product[]) => {

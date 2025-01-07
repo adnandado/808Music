@@ -6,7 +6,20 @@ body {
   background-color: #1E1E1E;
   color: #E0E0E0;
 }
+.edit-title{
+  margin-top: 8px;
+  margin-bottom: 2px;
 
+}
+.add-product
+{
+  color:palevioletred;
+  background-color: #3b3b3b;
+  border-style:none;
+  cursor: pointer;
+  width:50px;
+  height: 50px;
+}
 .container {
   display: flex;
   flex-direction: column;

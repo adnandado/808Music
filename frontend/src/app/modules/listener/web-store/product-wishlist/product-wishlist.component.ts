@@ -7,6 +7,11 @@ import {
 import {
   RemoveProductFromWishlistService
 } from '../../../../endpoints/products-endpoints/remove-item-from-wishlist-endpoint.service';
+import {
+  AddToShoppingCartEndpointService
+} from '../../../../endpoints/products-endpoints/add-to-shopping-cart-endpoint.service';
+import {Product} from '../product.model';
+import {MyConfig} from '../../../../my-config';
 
 @Component({
   selector: 'app-product-wishlist',
@@ -98,5 +103,11 @@ export class ProductWishlistComponent implements OnInit {
           console.error('Error removing from wishlist:', error);
         }
       );
+  }
+
+  protected readonly MyConfig = MyConfig;
+
+  goToProfile() {
+
   }
 }

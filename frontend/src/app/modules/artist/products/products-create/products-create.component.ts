@@ -58,6 +58,7 @@ export class ProductsCreateComponent {
     if (cb === '0') {
 
       this.showClothesType = true;
+      this.productData.clothesType = 0;
       console.log(this.showClothesType);
 
     } else {
@@ -86,7 +87,7 @@ export class ProductsCreateComponent {
 
     this.productService.handleAsync(this.productData).subscribe({
       next: (response: ProductAddResponse) => {
-        //this.backToList();
+        this.backToList();
       },
       error: (err: HttpErrorResponse) => {
         console.error("Error creating product:", err);

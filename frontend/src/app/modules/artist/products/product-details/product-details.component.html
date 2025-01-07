@@ -3,10 +3,11 @@
   <div class="carousel-container">
     <div class="carousel-wrapper">
       <button class="prev" (click)="prevSlide()">❮</button>
-      <img
-        [src]="'http://localhost:7000/media' + (product?.photoPaths?.[currentSlide] ?? '')"
-        alt="Product Image"
-        class="carousel-image">
+      <lib-ngx-image-zoom
+        [thumbImage]="MyConfig.api_address+'/media' + (product?.thumbnailPath?.[currentSlide] ?? '')"
+        [fullImage]="'http://localhost:7000/media' + (product?.photoPaths?.[currentSlide] ?? '')">
+      </lib-ngx-image-zoom>
+
       <button class="next" (click)="nextSlide()">❯</button>
     </div>
     <div class="thumbnails">
@@ -28,7 +29,7 @@
   </div>
 
   <div class="artist-info">
-    <img *ngIf="product?.artistPhoto" [src]="'http://localhost:7000/media' + product?.artistPhoto" alt="Artist Photo" class="artist-photo">
+    <img *ngIf="product?.artistPhoto" [src]="'http://localhost:7000/media/Images/Artistpfps/' + product?.artistPhoto" alt="Artist Photo" class="artist-photo">
     <p class="artist-name">{{ product?.artistName ?? 'Unknown Artist' }}</p>
   </div>
 
