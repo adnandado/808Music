@@ -50,6 +50,8 @@ export class AlbumListMaterialComponent implements OnInit {
   periodTo = new FormControl<Date | null>(null);
   periodFrom = new FormControl<Date | null>(null);
 
+  isResult: boolean = false;
+
   @Input() isHome : boolean = false;
 
   constructor(private albumService: AlbumGetAllEndpointService,
@@ -124,6 +126,16 @@ export class AlbumListMaterialComponent implements OnInit {
                 this.pagedRequest.sortByPopularity = true;
               }
             })
+
+            this.route.queryParams.subscribe(queryParams => {
+              let title = queryParams['albumTitle'];
+              if(title != null && title.length > 0)
+              {
+                this.pagedRequest.title = title;
+                this.isResult = true;
+              }
+            })
+
             this.pagedRequest.isReleased = true;
           }
       })

@@ -31,6 +31,7 @@
     <Folder Include="TrackFiles\" />
     <Folder Include="wwwroot\Images\ArtistPfps\" />
     <Folder Include="wwwroot\Images\ArtistBgs\" />
+    <Folder Include="wwwroot\Images\products\" />
   </ItemGroup>
 
 </Project>

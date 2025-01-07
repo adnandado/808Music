@@ -44,7 +44,9 @@
 }
 
 .popular-1 {
-
+  height: 45vh;
+  flex-basis: 45vw;
+  overflow-y: auto;
 }
 
 .tab-group {

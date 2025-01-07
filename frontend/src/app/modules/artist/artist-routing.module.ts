@@ -16,6 +16,7 @@ import {ProductListComponent} from './products/product-list/product-list.compone
 import {ArtistHandlerService} from '../../services/artist-handler.service';
 import {ProductAddEndpointService} from '../../endpoints/products-endpoints/product-create-endpoint.service';
 import {TracksListComponent} from './tracks/tracks-list/tracks-list.component';
+import {SearchPageComponent} from '../shared/search-page/search-page.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,9 @@ const routes: Routes = [
         loadChildren: () => import("./tracks/tracks.module").then(m => m.TracksModule)
       },
       {
+        path: 'search', component: SearchPageComponent, data: {artist: true}
+      },
+      {
         path: 'playlist',
         loadChildren: () => import("./playlist/playlist.module").then(m => m.PlaylistModule)
       },
@@ -42,7 +46,6 @@ const routes: Routes = [
         path: 'product-create',
         component: ProductsCreateComponent
       },
-
       {
         path: ':artistName/products',
         component: ProductListComponent

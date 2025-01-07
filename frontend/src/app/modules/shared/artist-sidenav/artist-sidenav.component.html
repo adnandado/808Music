@@ -4,10 +4,10 @@
     <hr class="divider">
   </div>
   <div class="sidenav-icons">
-    <button mat-icon-button routerLink="public/home" aria-label="Home">
+    <button mat-icon-button routerLink="/listener/home" aria-label="Home">
       <mat-icon>home</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/search" aria-label="Search">
+    <button mat-icon-button routerLink="/artist/search" aria-label="Search">
       <mat-icon>search</mat-icon>
     </button>
     <button mat-icon-button (click)="navigateTo('products')" aria-label="Shopping Cart">
@@ -24,12 +24,11 @@
   <div class="profile-container">
     <hr class="divider">
 
-    <img
+    <div
       class="profile-picture"
-      src="https://cdn-0001.qstv.on.epicgames.com/tFaisIxoSaCVPpPxIm/image/screen_comp.jpeg"
-      alt="Profile Picture"
+      [ngStyle]="{'background-image': 'url('+pathToPfp+')'}"
       (click)="toggleMenu()"
-    />
+    ><div>
     <div class="profile-menu" [ngClass]="{'show': isMenuVisible}">
       <ul>
         <li (click)="navigateTo('profile')">Profile</li>

@@ -2,7 +2,7 @@
   box-sizing: border-box;
   padding: 3vh;
   background-color: #242424;
-  width: 23vw;
+  width: 100%;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -47,6 +47,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .music-info {
   padding-top: 3vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.music-info > mat-icon {
+  margin-bottom: 10px;
 }
 
 .control-bar {

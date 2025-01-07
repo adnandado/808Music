@@ -1,0 +1,16 @@
+.artist-music-page {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.album-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  row-gap: 1vw;
+  column-gap: 2vw;
+}

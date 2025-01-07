@@ -90,6 +90,10 @@
   margin-top: 20px;
   margin-bottom: 20px;
   box-sizing: border-box;
+  background-position: center;
+  background-size: cover;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .profile-menu {

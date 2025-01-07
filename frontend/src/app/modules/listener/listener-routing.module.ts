@@ -24,6 +24,7 @@ import {ArtistAlbumsListComponent} from './artist-albums-list/artist-albums-list
 import {NotificationsPageComponent} from './notifications-page/notifications-page.component';
 import {ListenerHomeComponent} from './listener-home/listener-home.component';
 import {ArtistSearchResultPageComponent} from './artist-search-result-page/artist-search-result-page.component';
+import {SearchPageComponent} from '../shared/search-page/search-page.component';
 
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
@@ -39,7 +40,9 @@ const routes: Routes = [{
     },
     {
       path: 'track/:id', component: PlayTrackComponent
-
+    },
+    {
+      path: 'search', component: SearchPageComponent
     },
     {
       path: 'profile/:id', component: ArtistPageComponent

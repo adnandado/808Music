@@ -3,6 +3,8 @@
 }
 
 .artist-page {
+  padding-top: 2vh;
+  padding-bottom: 2vh;
   position: relative;
   height: 100%;
   overflow-y: auto;
@@ -84,7 +86,7 @@
 
 .back-button {
   position: absolute;
-  top: 5px;
+  top: 25px;
   left: 5px;
   z-index: 3;
 }

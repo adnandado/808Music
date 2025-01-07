@@ -5,9 +5,11 @@
   width: 100%;
   font-family: 'Roboto', sans-serif;
   color: #EEDEE7;
-  padding-left: 3.5vw;
+  padding-left: 2.7vw;
   font-size: 16px;
   border: #EEDEE7 solid 1px;
+  box-sizing: border-box;
+  margin-right: 10vw;
 }
 
 .search-bar {
@@ -30,6 +32,6 @@
 
 .remove-btn {
   position: absolute;
-  right:-70px;
+  right:10px;
   top:6px;
 }

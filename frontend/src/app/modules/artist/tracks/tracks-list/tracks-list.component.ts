@@ -66,8 +66,8 @@ export class TracksListComponent implements OnInit {
     }
     this.checkIfHome();
     this.reloadData();
-    this.getCurrentUserId();
-    this.loadPlaylists();
+    //this.getCurrentUserId();
+    //this.loadPlaylists();
   }
 
   reloadData() {
@@ -102,6 +102,7 @@ export class TracksListComponent implements OnInit {
   getYear() {
     return new Date(this.album?.releaseDate!).getFullYear();
   }
+
   getCurrentUserId(): void {
     const authToken = sessionStorage.getItem('authToken');
     if (!authToken) {
