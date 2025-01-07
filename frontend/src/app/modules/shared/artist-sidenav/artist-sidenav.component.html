@@ -33,7 +33,7 @@
     <div class="profile-menu" [ngClass]="{'show': isMenuVisible}">
       <ul>
         <li (click)="navigateTo('profile')">Profile</li>
-        <li (click)="navigateTo('account')">Account</li>
+        <li (click)="switchArtist()">Switch Artist</li>
         <li (click)="navigateTo('settings')">Settings</li>
         <hr />
         <li (click)="navigateTo('/auth/logout')">Log Out</li>

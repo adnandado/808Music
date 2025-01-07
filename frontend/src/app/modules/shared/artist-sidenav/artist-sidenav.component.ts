@@ -45,4 +45,10 @@ export class ArtistSidenavComponent {
       this.isMenuVisible = false;
     }
   }
+
+  switchArtist() {
+    sessionStorage.removeItem('artist');
+    window.location.reload();
+  }
+
 }
