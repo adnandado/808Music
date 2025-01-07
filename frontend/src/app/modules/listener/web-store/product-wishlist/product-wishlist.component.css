@@ -88,17 +88,20 @@ border-style: none;
 }
 
 .add-to-cart-btn {
-  background-color: #007bff;
+  background-color: #333333;
   color: white;
   padding: 10px 20px;
+  height:80px;
+  width: 100px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 1em;
+  margin-right: 20px;
 }
 
 .add-to-cart-btn:hover {
-  background-color: #0056b3;
+  background-color: rgba(230, 146, 248, 0.48);
 }
 
 .no-items-message {

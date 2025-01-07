@@ -43,6 +43,7 @@ export class ProductDetailsComponent implements OnInit {
       next: (data) => {
         if (data) {
           this.product = data;
+          console.log(data);
         } else {
           this.errorMessage = 'No product data available';
         }

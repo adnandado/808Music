@@ -11,7 +11,6 @@ import {
   AddToShoppingCartEndpointService
 } from '../../../../endpoints/products-endpoints/add-to-shopping-cart-endpoint.service';
 import {Product} from '../product.model';
-import {MyConfig} from '../../../../my-config';
 
 @Component({
   selector: 'app-product-wishlist',
@@ -23,7 +22,8 @@ export class ProductWishlistComponent implements OnInit {
   wishlistItems: WishlistItem[] = [];
 
   constructor(private wishlistService: GetWishlistEndpointService,
-              private removeProductFromWishlistService : RemoveProductFromWishlistService) {}
+              private removeProductFromWishlistService : RemoveProductFromWishlistService,
+              private addToShoppingCartService : AddToShoppingCartEndpointService) {}
 
   ngOnInit(): void {
     this.loadWishlist();
@@ -76,9 +76,28 @@ export class ProductWishlistComponent implements OnInit {
   }
 
   addToCart(productId: number): void {
-    console.log(`Product ${productId} added to cart`);
-  }
+    const userId = this.getUserIdFromToken();
 
+      const quantity = 1;
+      const request = {
+        productId: productId,
+        userId: userId,
+        quantity: quantity
+      };
+
+      this.addToShoppingCartService.handleAsync(request).subscribe({
+        next: (response) => {
+          if (response.success) {
+            console.log('Product added to cart:', response.message);
+            this.ngOnInit()          } else {
+            console.error('Failed to add product to cart:', response.message);
+          }
+        },
+        error: (err) => {
+          console.error('Error adding to cart', err);
+        }
+      });
+  }
   removeFromWishlist(slug: string) {
     const userId = this.getUserIdFromToken();
     if (userId === null) {
@@ -103,11 +122,5 @@ export class ProductWishlistComponent implements OnInit {
           console.error('Error removing from wishlist:', error);
         }
       );
-  }
-
-  protected readonly MyConfig = MyConfig;
-
-  goToProfile() {
-
   }
 }

@@ -9,6 +9,8 @@ namespace RS1_2024_25.API.Data.Models
         [Key]
         public int Id { get; set; }
         public string Path { get; set; }
+        public string ThumbnailPath { get; set; } 
+
 
         [ForeignKey(nameof(Product))]
         public int ProductId { get; set; }

@@ -67,7 +67,8 @@ public class OrderAddEndpoint : MyEndpointBaseAsync
 
             if (product != null && product.QtyInStock >= cartItem.Quantity)
             {
-                product.QtyInStock -= cartItem.Quantity;  
+                product.QtyInStock -= cartItem.Quantity;
+                product.SoldItems++;
             }
             else
             {
