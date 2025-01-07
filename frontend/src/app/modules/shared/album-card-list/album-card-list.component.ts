@@ -1,29 +1,54 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MyConfig} from '../../../my-config';
 import {MyPagedList} from '../../../services/auth-services/dto/my-paged-list';
 import {AlbumGetAllResponse} from '../../../endpoints/album-endpoints/album-get-all-endpoint.service';
-import {Params, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TrackGetAllEndpointService} from '../../../endpoints/track-endpoints/track-get-all-endpoint.service';
 import {MusicPlayerService} from '../../../services/music-player.service';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {AlbumDeleteEndpointService} from '../../../endpoints/album-endpoints/album-delete-endpoint.service';
 
 @Component({
   selector: 'app-album-card-list',
   templateUrl: './album-card-list.component.html',
   styleUrls: ['../../listener/artist-page/artist-music-page/artist-music-page.component.css','./album-card-list.component.css']
 })
-export class AlbumCardListComponent {
+export class AlbumCardListComponent implements OnInit {
   protected readonly MyConfig = MyConfig;
   @Input() albums: MyPagedList<AlbumGetAllResponse> | null = null;
   @Input() title: string = "RELEASES";
   @Input() queryParams: Params | null = null;
+  artistMode: boolean = false;
+
+  @Output() deletedAlbum = new EventEmitter<boolean>();
 
   constructor(private router: Router,
               private trackGetAllService: TrackGetAllEndpointService,
-              private musicPlayerService: MusicPlayerService,) {
+              private musicPlayerService: MusicPlayerService,
+              private route: ActivatedRoute,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar,
+              private albumDeleteService : AlbumDeleteEndpointService) {
+  }
+
+  ngOnInit(): void {
+    if(this.router.url.includes("/artist/search"))
+    {
+      this.artistMode = true;
+    }
   }
 
   goToAlbum(id: number) {
-    this.router.navigate(["listener/release", id])
+    if(!this.artistMode)
+    {
+      this.router.navigate(["listener/release", id])
+    }
+    else
+    {
+      this.router.navigate(["artist/tracks/", id])
+    }
   }
 
   getTitle(title: string | undefined) {
@@ -57,5 +82,34 @@ export class AlbumCardListComponent {
 
   viewAll(featured: boolean) {
     this.router.navigate(["listener/releases"],{queryParams: this.queryParams});
+  }
+
+  goToEdit(id: number) {
+    this.router.navigate(["artist/album/edit", id]);
+  }
+
+  deleteAlbum(id: number) {
+
+    let matRef = this.dialog.open(ConfirmDialogComponent, {hasBackdrop: true,
+      data:{
+        title: "Are you sure you want to delete this album",
+        content: "This will delete every track that is in the album.",
+      }})
+
+    matRef.afterClosed().subscribe(res => {
+      if(res)
+      {
+        this.albumDeleteService.handleAsync(id).subscribe({
+          error: () => { alert("Album deletion failed."); },
+          complete: () => {
+            this.snackBar.open("Album deleted successfully.", "Dismiss", {
+              duration: 3000
+            });
+            this.ngOnInit();
+            this.deletedAlbum.emit(true);
+          }
+        });
+      }
+    })
   }
 }

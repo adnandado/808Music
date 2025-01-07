@@ -22,7 +22,7 @@
   <table mat-table matSort [dataSource]="tracks!">
 
     <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+      <th mat-header-cell *matHeaderCellDef>#</th>
       <td mat-cell *matCellDef="let track">{{ getPosition(track.id) }}</td>
     </ng-container>
 
@@ -65,12 +65,12 @@
     </ng-container>
 
     <ng-container matColumnDef="duration">
-      <th mat-header-cell *matHeaderCellDef class="track-table-duration-cell" mat-sort-header> Duration</th>
+      <th mat-header-cell *matHeaderCellDef class="track-table-duration-cell"> Duration</th>
       <td mat-cell *matCellDef="let track" class="track-table-duration-cell"> {{ track.length | secondsToDurationString }}</td>
     </ng-container>
 
     <ng-container matColumnDef="streams">
-      <th mat-header-cell *matHeaderCellDef class="track-table-streams-cell" mat-sort-header> Streams</th>
+      <th mat-header-cell *matHeaderCellDef class="track-table-streams-cell"> Streams</th>
       <td mat-cell *matCellDef="let track" class="track-table-streams-cell"
           (click)="displayControls(true)"> {{ track.streams }}
       </td>

@@ -1,0 +1,40 @@
+.search-page {
+  height: 97vh;
+  overflow-y: auto;
+  padding-top: 3vh;
+  padding-right: 2vh;
+  color: white;
+  box-sizing: border-box;
+}
+
+.search-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #161215;
+  width: 100%;
+  border-radius: 30px;
+  box-sizing: border-box;
+  padding: 2vh;
+  border: 0.1rem solid #4E444B;
+  gap: 2vw;
+}
+
+.result-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5vh;
+  margin-bottom: 10vh;
+}
+
+.result-error > h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.result-error > mat-icon {
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+}

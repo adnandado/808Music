@@ -8,5 +8,4 @@ export class CustomTranslateLoader implements TranslateLoader {
     getTranslation(lang: string): Observable<any> {
         return this.httpClient.get(`/i18n/${lang}.json`);
     }
-
 }
