@@ -244,6 +244,12 @@
       "fileHash": "47e47860",
       "needsInterop": true
     },
+    "ngx-image-zoom": {
+      "src": "../../../../../../node_modules/ngx-image-zoom/fesm2020/ngx-image-zoom.mjs",
+      "file": "ngx-image-zoom.js",
+      "fileHash": "7a5b78b2",
+      "needsInterop": false
+    },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
@@ -314,6 +320,15 @@
     },
     "chunk-4XBDHYYO": {
       "file": "chunk-4XBDHYYO.js"
+    },
+    "chunk-GXRJFQCD": {
+      "file": "chunk-GXRJFQCD.js"
+    },
+    "chunk-UHF7S7GW": {
+      "file": "chunk-UHF7S7GW.js"
+    },
+    "chunk-FA36KNV3": {
+      "file": "chunk-FA36KNV3.js"
     },
     "chunk-IJZD5EWN": {
       "file": "chunk-IJZD5EWN.js"
