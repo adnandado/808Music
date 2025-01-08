@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
+import {Router} from '@angular/router';
+import {MusicPlayerService} from './services/music-player.service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +10,5 @@ import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core'
 })
 export class AppComponent {
   title = '808 Music ';
+  constructor(private musicPlayer: MusicPlayerService) {}
 }

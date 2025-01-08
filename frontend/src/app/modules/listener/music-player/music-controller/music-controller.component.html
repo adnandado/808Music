@@ -1,5 +1,5 @@
 <div class="music-controller">
-  <audio [src]="trackLocation + track?.id" id="player" (timeupdate)="setSliderValue($event)"
+  <audio [src]="trackLocation + getTrackId() + '&Jwt='+jwt" id="player" (timeupdate)="setSliderValue($event)"
          [autoplay]="playingState" (ended)="skipNext()"></audio>
     <mat-slider min="0" [max]="track?.length" discrete class="seekable-slider" [displayWith]="secondsPipe.transform">
       <input matSliderThumb (valueChange)="setCurrentPlaybackTime($event)" [(value)]="currentPlaybackTime" (dragEnd)="userSetSlider($event)">
