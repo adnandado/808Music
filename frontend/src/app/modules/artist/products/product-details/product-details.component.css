@@ -169,6 +169,7 @@ font-size: 15px;
 }
 
 .product-description {
+  margin-top: 15px;
   font-size: 0.85rem;
   text-transform: uppercase;
   color: #B0B0B0;

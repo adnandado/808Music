@@ -34,7 +34,6 @@ public class MyAppUser
     public Subscription? Subscription { get; set; }
 
     public ICollection<UserOrders> UserOrders { get; set; }  // Veza prema narudžbama
-
     /*
      
      Ako sistem nije zamišljen da podržava česte promjene rola i 

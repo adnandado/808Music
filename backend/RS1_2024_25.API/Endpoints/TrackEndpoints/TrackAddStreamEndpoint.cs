@@ -20,6 +20,13 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
             }
 
             track.Streams++;
+            var newStream = new TrackStream
+            {
+                TrackId = track.Id,
+                StreamedAt = DateTime.UtcNow 
+            };
+
+            await db.TrackStream.AddAsync(newStream, cancellationToken);
             await db.SaveChangesAsync(cancellationToken);
             return;
         }

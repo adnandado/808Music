@@ -11,6 +11,7 @@ export interface GetWishlistRequest {
 export interface WishlistItem {
   productId: number;
   productTitle: string;
+
   slug : string;
   productPhoto?: string;
   originalPrice: number;
@@ -24,6 +25,7 @@ export interface WishlistItem {
 export interface GetWishlistResponse {
   success: boolean;
   wishlistItems: WishlistItem[];
+  userName: string;
 }
 
 @Injectable({

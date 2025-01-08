@@ -5,6 +5,9 @@ import { ProductDeleteEndpointService } from '../../../../endpoints/products-end
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProductUpdateEndpointService, ProductUpdateResponse } from '../../../../endpoints/products-endpoints/product-update-endpoint.service';
 import { ArtistHandlerService } from '../../../../services/artist-handler.service';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ConfirmDialogComponent} from '../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -24,7 +27,9 @@ export class ProductListComponent implements OnInit {
     private updateService: ProductUpdateEndpointService,
     private deleteService: ProductDeleteEndpointService,
     private router: Router,
-  private artistHandlerService: ArtistHandlerService
+  private artistHandlerService: ArtistHandlerService,
+    private dialog: MatDialog,
+    private snackBar : MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -40,13 +45,14 @@ export class ProductListComponent implements OnInit {
       this.errorMessage = 'No artist selected';
       this.loading = false;
     }
-    console.log('PlaylistListMaterialComponent initialized');
   }
 
   viewProduct(slug: string): void {
-    this.router.navigate(['/product', slug]);
+    this.router.navigate(['listener/product', slug]);
   }
-
+  goToCreate() {
+    this.router.navigate([`/artist/product-create`]);
+  }
   loadProducts(): void {
     this.productService.getProductsByArtist(this.artistId).subscribe({
       next: (data: Product[]) => {
@@ -126,19 +132,38 @@ export class ProductListComponent implements OnInit {
 
 
   deleteProduct(slug: string): void {
-    if (confirm('Are you sure you want to delete this product?')) {
-      this.deleteService.handleAsync(slug).subscribe({
-        next: () => {
-          alert('Product deleted successfully!');
-          this.loadProducts();
-        },
-        error: (err: HttpErrorResponse) => {
-          alert('Failed to delete product.');
-          console.error(err);
-        }
-      });
-    }
+    let product = this.products?.find(x => x.slug === slug);  // Pronađi proizvod prema slug-u
+    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      hasBackdrop: true,
+      data: {
+        title: `Are you sure you want to delete "${product?.title}"?`,  // Prilagođeni naslov dijaloga
+        content: 'This will permanently delete this product.'  // Tekst potvrde
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteService.handleAsync(slug).subscribe({
+          next: () => {
+            this.snackBar.open(`${product?.title} deleted successfully!`, 'Close', {  // Prikazivanje poruke o uspehu
+              duration: 2000,
+            });
+            this.loadProducts();  // Ponovno učitavanje proizvoda
+          },
+          error: (err: HttpErrorResponse) => {
+            this.snackBar.open('Failed to delete product.', 'Close', {  // Prikazivanje greške
+              duration: 3000,
+            });
+            console.error(err);
+          }
+        });
+      } else {
+        console.log('Product deletion canceled');
+      }
+    });
   }
+
+
 
   productPrice(slug: string) : number {
     const product = this.products.find(p => p.slug === slug);

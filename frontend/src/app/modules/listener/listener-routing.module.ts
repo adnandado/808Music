@@ -75,14 +75,15 @@ const routes: Routes = [{
     { path: 'product-search', component: StoreSearchComponent },
     { path: 'checkout', component: CheckoutComponent },
     { path: 'product-type', component: BytypeComponent },
+    {path: 'subscriptions',
+  component: UserSubscriptionComponent,
+},
   ]},
 
 
 
-  {
-  path: 'subscriptions',
-  component: UserSubscriptionComponent,
-},
+
+
   {
     path: 'playlist',
     component: PlaylistListMaterialComponent,

@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product List</title>
-</head>
+
 <body>
+<div>
+  <button class="add-product" (click)="goToCreate()"><mat-icon>add_circle</mat-icon></button>
+</div>
 <div class="container">
   <!-- Main Content -->
   <main class="main-content">
@@ -24,10 +21,15 @@
 
         <!-- Edit Mode -->
         <div *ngIf="isEditing[product.slug]">
+          <p class="edit-title">Title</p>
           <input [(ngModel)]="product.title" class="product-input" placeholder="Title">
+          <p class="edit-title">Price</p>
           <input [(ngModel)]="product.price" class="product-input" />
+          <p class="edit-title">Quantity</p>
           <input [(ngModel)]="product.quantity" class="product-input" type="number" placeholder="Quantity">
+          <p class="edit-title">Sale%</p>
           <input [(ngModel)]="product.saleAmount" class="product-input" type="number" placeholder="SaleAmount">
+          <p class="edit-title">Bio</p>
           <input [(ngModel)]="product.bio" class="product-input" placeholder="bio">
           <div class="image-edit">
             <label for="image-upload">Change Image</label>
@@ -47,4 +49,3 @@
 
 
 </body>
-</html>

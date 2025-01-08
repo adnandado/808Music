@@ -10,7 +10,11 @@ body {
   padding: 0;
   margin-left: 7vw;
 }
-
+.hide-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .logo-container {
   text-align: center;
 }

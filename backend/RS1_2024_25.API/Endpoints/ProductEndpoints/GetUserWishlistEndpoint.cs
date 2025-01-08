@@ -44,11 +44,19 @@ namespace RS1_2024_25.API.Endpoints.WishlistEndpoints
                     SaleAmount = w.Product.SaleAmount,
                 })
                 .ToListAsync(cancellationToken);
+            var user = await _db.MyAppUsers
+       .Where(u => u.ID == request.UserId)
+       .Select(u => new
+       {
+           u.Username,
+       })
+       .FirstOrDefaultAsync(cancellationToken);
+
 
             return new GetWishlistResponse
             {
                 Success = true,
-                
+                UserName = user.Username,
                 WishlistItems = wishlistItems,
             };
         }
@@ -63,6 +71,7 @@ namespace RS1_2024_25.API.Endpoints.WishlistEndpoints
         {
             public required bool Success { get; set; }
             public List<WishlistItem> WishlistItems { get; set; } = new();
+            public required string UserName { get; set; }
             public DateTime DateAdded { get; set; }
     }
 
@@ -76,6 +85,7 @@ namespace RS1_2024_25.API.Endpoints.WishlistEndpoints
             public required decimal SaleAmount { get; set; }
             public required decimal DiscountedPrice { get; set; }
             public required DateTime DateAdded { get; set; }
+
             public required string ArtistName { get; set; }
             public required string ArtistPfp { get; set; }
         }

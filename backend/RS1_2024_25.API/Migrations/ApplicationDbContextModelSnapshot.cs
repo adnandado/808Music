@@ -555,6 +555,9 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<int>("QtyInStock")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("RevenueFromProduct")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("SaleAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -771,6 +774,27 @@ namespace RS1_2024_25.API.Migrations
                     b.HasIndex("TrackId");
 
                     b.ToTable("TrackGenres");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.TrackStream", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("StreamedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TrackId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrackId");
+
+                    b.ToTable("TrackStream");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserArtist", b =>
@@ -1229,6 +1253,17 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("Track");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.TrackStream", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Track", "Track")
+                        .WithMany("TrackStreams")
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Track");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserArtist", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
@@ -1373,6 +1408,8 @@ namespace RS1_2024_25.API.Migrations
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Track", b =>
                 {
                     b.Navigation("PlaylistTracks");
+
+                    b.Navigation("TrackStreams");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Endpoints.ProductEndpoints.Order", b =>

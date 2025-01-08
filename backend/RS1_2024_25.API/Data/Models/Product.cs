@@ -19,6 +19,8 @@ namespace RS1_2024_25.API.Data.Models
         public DateTime DateCreated { get; set; }
         public string Bio { get; set; } = string.Empty;
         public int SoldItems { get; set; } = 0;
+        public decimal RevenueFromProduct { get; set; } = 0;
+
         public ProductType ProductType { get; set; }    
         public ClothesType? ClothesType { get; set; }    
 

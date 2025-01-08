@@ -42,6 +42,9 @@ import {MatTooltip} from "@angular/material/tooltip";
 import { JoinArtistProfileComponent } from './join-artist-profile/join-artist-profile.component';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
 import {NgxImageZoomModule} from 'ngx-image-zoom';
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from '@angular/material/stepper';
+import { ArtistDashboardComponent } from './artist-dashboard/artist-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,7 @@ import {NgxImageZoomModule} from 'ngx-image-zoom';
     ArtistCreateOrEditComponent,
     ManageUsersComponent,
     JoinArtistProfileComponent,
+    ArtistDashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -97,7 +101,13 @@ import {NgxImageZoomModule} from 'ngx-image-zoom';
     MatSelect,
     MatAutocompleteTrigger,
     MatTooltip,
-    NgxImageZoomModule
+    NgxImageZoomModule,
+    MatCheckbox,
+    MatStep,
+    MatStepperNext,
+    MatStepper,
+    MatStepLabel,
+    MatStepperPrevious
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

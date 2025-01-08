@@ -11,7 +11,7 @@
       {
         <mat-icon>explicit</mat-icon>
       }
-      <h6 class="track-title" (click)="goToRelease()" [matTooltip]="track?.title">{{track?.title}}</h6>
+      <h6 class="track-title hide-overflow" (click)="goToRelease()">{{track?.title}}</h6>
       <app-clickable-featured-artists [artists]="track?.artists ?? null"></app-clickable-featured-artists>
     </div>
 

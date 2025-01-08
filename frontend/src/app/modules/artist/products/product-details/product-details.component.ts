@@ -8,6 +8,7 @@ import {
 import {
   AddProductToWishlistEndpointService, AddProductToWishlistRequest, AddProductToWishlistResponse
 } from '../../../../endpoints/products-endpoints/add-to-wishlist-endpoint.service';
+import {MyConfig} from '../../../../my-config';
 
 @Component({
   selector: 'app-product-details',
@@ -145,4 +146,6 @@ this.ngOnInit();
       }
     );
   }
+
+  protected readonly MyConfig = MyConfig;
 }
