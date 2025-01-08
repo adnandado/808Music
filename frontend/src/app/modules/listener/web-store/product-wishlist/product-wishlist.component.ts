@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {
-  GetWishlistEndpointService,
+  GetWishlistEndpointService, GetWishlistResponse,
   WishlistItem
 } from '../../../../endpoints/products-endpoints/get-wishlist-endpoint.service';
 import {
@@ -11,6 +11,8 @@ import {
   AddToShoppingCartEndpointService
 } from '../../../../endpoints/products-endpoints/add-to-shopping-cart-endpoint.service';
 import {Product} from '../product.model';
+import {MyConfig} from '../../../../my-config';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-wishlist',
@@ -20,11 +22,15 @@ import {Product} from '../product.model';
 export class ProductWishlistComponent implements OnInit {
   @Input()
   wishlistItems: WishlistItem[] = [];
+  userName: string = ''; //
+
 
   constructor(private wishlistService: GetWishlistEndpointService,
               private removeProductFromWishlistService : RemoveProductFromWishlistService,
-              private addToShoppingCartService : AddToShoppingCartEndpointService) {}
+              private addToShoppingCartService : AddToShoppingCartEndpointService,
+              private snackBar: MatSnackBar
 
+  ) {}
   ngOnInit(): void {
     this.loadWishlist();
   }
@@ -35,9 +41,10 @@ export class ProductWishlistComponent implements OnInit {
       const request = { userId: userId };
       this.wishlistService.handleAsync(request).subscribe({
         next: (response) => {
-          console.log('Wishlist response:', response); // Proveri da li odgovor stiže
+          console.log('Wishlist response:', response);
           if (response.success) {
             this.wishlistItems = response.wishlistItems;
+            this.userName = response.userName;
           } else {
             console.error('Failed to load wishlist');
           }
@@ -88,6 +95,11 @@ export class ProductWishlistComponent implements OnInit {
       this.addToShoppingCartService.handleAsync(request).subscribe({
         next: (response) => {
           if (response.success) {
+            this.snackBar.open('Product added to Shopping Cart successfully', 'Close', {
+              duration: 1500,
+              verticalPosition: 'bottom',
+              horizontalPosition: 'center'
+            });
             console.log('Product added to cart:', response.message);
             this.ngOnInit()          } else {
             console.error('Failed to add product to cart:', response.message);
@@ -111,9 +123,15 @@ export class ProductWishlistComponent implements OnInit {
       }).subscribe(
         (response) => {
           if (response.success) {
-            window.location.reload();
+            this.wishlistItems = this.wishlistItems.filter(item => item.slug !== slug);
 
-            console.log(response.message);
+            this.snackBar.open('Product removed from Wishlist successfully', 'Close', {
+              duration: 1500,
+              verticalPosition: 'bottom',
+              horizontalPosition: 'center'
+            });
+
+              console.log(response.message);
           } else {
             console.log(response.message);
           }
@@ -123,4 +141,12 @@ export class ProductWishlistComponent implements OnInit {
         }
       );
   }
+
+  protected readonly MyConfig = MyConfig;
+
+  goToProfile() {
+
+  }
+
+
 }

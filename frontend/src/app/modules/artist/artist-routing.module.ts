@@ -17,6 +17,7 @@ import {ArtistHandlerService} from '../../services/artist-handler.service';
 import {ProductAddEndpointService} from '../../endpoints/products-endpoints/product-create-endpoint.service';
 import {TracksListComponent} from './tracks/tracks-list/tracks-list.component';
 import {SearchPageComponent} from '../shared/search-page/search-page.component';
+import {ArtistDashboardComponent} from './artist-dashboard/artist-dashboard.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,9 @@ const routes: Routes = [
       },
       {
         path: 'search', component: SearchPageComponent, data: {artist: true}
+      },
+      {
+        path: 'dashboard', component: ArtistDashboardComponent, data: {artist: true}
       },
       {
         path: 'playlist',

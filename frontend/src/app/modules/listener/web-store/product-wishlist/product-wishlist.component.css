@@ -24,12 +24,23 @@
   transition: background-color 0.25s ease-in-out;
 
   }
+.wishlist-name{
+  text-transform: uppercase;
+  font-weight: bold;
+}
 .remove-from-wishlist{
   background: none;
 border-style: none;
   cursor: pointer;
   color: white;
   font-size: 0.80em;
+}
+.mat-snack-bar-container {
+  background-color: #323232;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .product-photo {

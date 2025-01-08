@@ -49,7 +49,8 @@ export class ProductsCreateComponent {
     private router: Router,
     private artistHandlerService: ArtistHandlerService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {  this.productData.clothesType = 0;
+  }
 
   onProductTypeChange(cbChange: Event): void {
 
@@ -72,6 +73,9 @@ export class ProductsCreateComponent {
 
 
   createProduct() {
+    console.log( this.productData.clothesType);
+    console.log( this.productData.productType);
+
     const selectedArtist = this.artistHandlerService.getSelectedArtist();
     if (selectedArtist && selectedArtist.id) {
       this.productData.artistId = selectedArtist.id;
@@ -111,7 +115,6 @@ export class ProductsCreateComponent {
     if (files.length > 0) {
       this.productData.photos = Array.from(files);
 
-      // Generiraj preview za slike
       this.previewPhotos = [];
       Array.from(files).forEach((file) => {
         const reader = new FileReader();

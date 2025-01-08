@@ -1,37 +1,63 @@
 <div class="checkout-container">
   <h1>Checkout</h1>
 
-  <!-- Order Summary -->
-  <section class="order-summary">
-    <h2>Order Summary</h2>
-    <ul class="order-items">
-      <li *ngFor="let item of cartItems">
-        <img [src]="'http://localhost:7000/media/' + item.productPhoto" alt="Product Image" class="product-photo" />
-        <div>
-          <h3>{{ item.productTitle }}</h3>
-          <p>{{ item.discountedPrice | number: '1.2-2' }}$</p>
-          <p>Quantity: {{ item.quantity }}</p>
+  <mat-vertical-stepper [(selectedIndex)]="currentStep" linear>
+    <mat-step label="Your Products">
+      <section class="order-summary">
+        <h2>Order Summary</h2>
+        <ul class="order-items">
+          <li *ngFor="let item of cartItems">
+            <img [src]="'http://localhost:7000/media/' + item.productPhoto" alt="Product Image" class="product-photo" />
+            <div>
+              <h3>{{ item.productTitle }}</h3>
+              <p>{{ item.discountedPrice | number: '1.2-2' }}$</p>
+              <p>Quantity: {{ item.quantity }}</p>
+            </div>
+          </li>
+        </ul>
+        <div class="total">
+          <h3>Total: {{ totalPrice | number: '1.2-2'}}$</h3>
         </div>
-      </li>
-    </ul>
-    <div class="total">
-      <h3>Total: {{ totalPrice | number: '1.2-2'}}$</h3>
-    </div>
-  </section>
+      </section>
+    </mat-step>
 
-  <div class="stripe-container">
-    <h2>Payment</h2>
-    <form (ngSubmit)="handleSubmit()">
-      <div id="card-element"></div>
-      <button type="submit">Pay ${{ totalPrice | number: '1.2-2' }}</button>
-    </form>
+    <mat-step label="Shipping Info">
+      <form [formGroup]="checkoutForm">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" formControlName="name" type="text" required />
+        </div>
+        <div>
+          <label for="country">Country</label>
+          <input id="country" formControlName="country" type="text" required />
+        </div>
+        <div>
+          <label for="city">City</label>
+          <input id="city" formControlName="city" type="text" required />
+        </div>
+        <div>
+          <label for="phoneNumber">Phone Number</label>
+          <input id="phoneNumber" formControlName="phoneNumber" type="text" required />
+        </div>
+      </form>
+    </mat-step>
 
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
+    <mat-step label="Payment">
+      <div class="stripe-container">
+        <h2>Payment</h2>
+        <form (ngSubmit)="handleSubmit()">
+          <div id="card-element"></div>
+          <button type="submit">Pay ${{ totalPrice | number: '1.2-2' }}</button>
+        </form>
 
-    <div *ngIf="paymentSuccess" class="payment-success">
-      Payment successful!
-    </div>
-  </div>
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <div *ngIf="paymentSuccess" class="payment-success">
+          Payment successful!
+        </div>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
 </div>

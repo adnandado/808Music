@@ -13,11 +13,10 @@ export class StoreSearchComponent implements OnInit {
   currentPage: number = 1;
   noResults: boolean = false;
 
-  pageSize: number = 10; // Veličina stranice
+  pageSize: number = 10;
   totalResults: number = 0;
 
-  // Filtriranje
-  sortBy: string = 'dateCreatedNewest'; // Default vrijednost
+  sortBy: string = 'dateCreatedNewest';
 
   constructor(
     private route: ActivatedRoute,
@@ -29,9 +28,8 @@ export class StoreSearchComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.keyword = params['keyword'] || '';
       this.currentPage = +params['page'] || 1;
-      this.sortBy = params['sortBy'] || 'title'; // Default value for sortBy
+      this.sortBy = params['sortBy'] || 'title';
 
-      // Pokreni pretragu sa trenutnim parametrima
       if (this.keyword || this.sortBy) {
         this.fetchResults();
       }
@@ -40,7 +38,7 @@ export class StoreSearchComponent implements OnInit {
 
   fetchResults(): void {
     this.productsSearchService
-      .searchProducts(this.keyword, this.sortBy, this.currentPage, this.pageSize) // Pozivamo searchProducts umjesto handleAsync
+      .searchProducts(this.keyword, this.sortBy, this.currentPage, this.pageSize)
       .subscribe({
         next: (results) => {
           this.searchResults = results.products;
@@ -61,7 +59,7 @@ export class StoreSearchComponent implements OnInit {
 
   searchProducts(keyword: string) {
     this.keyword = keyword;
-    this.currentPage = 1; // Resetiraj na prvu stranicu kada se mijenja pretraga
+    this.currentPage = 1;
     this.updateUrlParams();
     this.fetchResults();
   }
@@ -73,7 +71,6 @@ export class StoreSearchComponent implements OnInit {
   }
 
   changeSortOrder(): void {
-    // Ažurirajte sortBy na osnovu odabrane opcije
     if (this.sortBy === 'dateCreatedNewest') {
       this.sortBy = 'datecreatednewest';
     } else if (this.sortBy === 'dateCreatedOldest') {
@@ -86,7 +83,6 @@ export class StoreSearchComponent implements OnInit {
       this.sortBy = 'salelowest';
     }
 
-    // Ažurirajte URL parametre
     this.updateUrlParams();
     this.fetchResults();
   }
@@ -96,7 +92,7 @@ export class StoreSearchComponent implements OnInit {
       queryParams: {
         keyword: this.keyword,
         page: this.currentPage,
-        sortBy: this.sortBy, // Poslano samo sortBy
+        sortBy: this.sortBy,
       },
     });
   }
@@ -106,6 +102,6 @@ export class StoreSearchComponent implements OnInit {
   }
 
   toggleWishlist($event: MouseEvent, product: any) {
-    
+
   }
 }

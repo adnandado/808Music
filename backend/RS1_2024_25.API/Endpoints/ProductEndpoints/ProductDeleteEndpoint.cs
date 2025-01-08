@@ -29,25 +29,40 @@
         public override async Task HandleAsync(string slug, CancellationToken cancellationToken = default)
         {
             var product = await _db.Products
-                .Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.Slug == slug, cancellationToken);
 
             if (product == null)
                 throw new KeyNotFoundException("Product not found");
 
-            foreach (var photo in product.Photos)
+            var orderDetails = _db.OrderDetails.Where(od => od.ProductId == product.Id);
+            _db.OrderDetails.RemoveRange(orderDetails);
+
+            var userProductWishlists = _db.UserProductWishlist.Where(upw => upw.ProductId == product.Id);
+            _db.UserProductWishlist.RemoveRange(userProductWishlists);
+
+            var userShoppingCarts = _db.UserShoppingCart.Where(usc => usc.ProductId == product.Id);
+            _db.UserShoppingCart.RemoveRange(userShoppingCarts);
+
+            var productPhotos = _db.ProductPhotos.Where(p => p.ProductId == product.Id);
+            foreach (var photo in productPhotos)
             {
                 if (!string.IsNullOrEmpty(photo.Path))
                 {
                     _fileHandler.DeleteFile(_cfg["StaticFilePaths:Products"] + photo.Path);
                 }
+                if (!string.IsNullOrEmpty(photo.ThumbnailPath))
+                {
+                    _fileHandler.DeleteFile(_cfg["StaticFilePaths:Products"] + photo.ThumbnailPath);
+                }
             }
 
-            _db.ProductPhotos.RemoveRange(product.Photos);
+            _db.ProductPhotos.RemoveRange(productPhotos);
             await _db.SaveChangesAsync(cancellationToken);
 
             _db.Products.Remove(product);
             await _db.SaveChangesAsync(cancellationToken);
         }
+
+
     }
 }

@@ -29,6 +29,7 @@
     "@types/node": "^22.10.2",
     "angularx-qrcode": "^18.0.2",
     "browser-image-compression": "^2.0.2",
+    "chart.js": "^4.4.7",
     "format-num": "^1.2.0",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",

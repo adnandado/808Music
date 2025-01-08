@@ -59,7 +59,7 @@ export class ProductAddEndpointService
   constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {}
 
   handleAsync(request: ProductAddRequest): Observable<ProductAddResponse> {
-    if (!request.title || !request.price || !request.productType) {
+    if (!request.title || !request.price) {
       return throwError(() => new Error('All required fields must be provided.'));
     }
 
