@@ -59,7 +59,23 @@ namespace RS1_2024_25.API.Services
             return handler.ReadJwtToken(token);
         }
 
+        public JwtSecurityToken GetDecodedJwt(string token)
+        {
+            if (token == string.Empty)
+            {
+                throw new Exception("JSON Web Token not found");
+            }
+            var handler = new JwtSecurityTokenHandler();
+            return handler.ReadJwtToken(token);
+        }
+
         public string GetJwtSub(HttpRequest request)
+        {
+            var decodedToken = GetDecodedJwt(request);
+            return decodedToken.Claims.FirstOrDefault(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub)?.Value!;
+        }
+
+        public string GetJwtSub(string request)
         {
             var decodedToken = GetDecodedJwt(request);
             return decodedToken.Claims.FirstOrDefault(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub)?.Value!;
