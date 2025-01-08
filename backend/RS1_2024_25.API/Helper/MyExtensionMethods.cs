@@ -14,6 +14,11 @@ public static class MyExtensionMethods
         return list.OrderBy(arg => Guid.NewGuid()).Take(elementsCount).ToList();
     }
 
+    public static DateTime StartOfWeek(this DateTime dateTime, DayOfWeek startOfWeek)
+    {
+        int diff = (7 + (dateTime.DayOfWeek - startOfWeek)) % 7;
+        return dateTime.AddDays(-1 * diff).Date;
+    }
     public static string RandomString(int size)
     {
         System.Text.StringBuilder builder = new System.Text.StringBuilder();
