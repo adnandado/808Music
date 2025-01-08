@@ -19,7 +19,6 @@
   <div class="product-header">
     <h1 class="product-title">{{ product?.title }}</h1>
     <div class="price-container">
-      <!-- Original Price (precrtana) -->
       <p *ngIf="product?.discountedPrice !== product?.price" class="original-price">
         {{ product?.price | currency }}
       </p>

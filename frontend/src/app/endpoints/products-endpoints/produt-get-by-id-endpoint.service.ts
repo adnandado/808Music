@@ -16,6 +16,7 @@ export interface ProductGetResponse {
   artistName?: string;
   bio: string;
   discountedPrice : number;
+  thumbnailPath: string[];
 }
 
 @Injectable({

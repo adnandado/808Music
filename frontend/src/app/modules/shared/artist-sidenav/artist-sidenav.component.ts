@@ -51,5 +51,11 @@ export class ArtistSidenavComponent implements OnInit {
       this.isMenuVisible = false;
     }
   }
+
+  switchArtist() {
+    sessionStorage.removeItem('artist');
+    window.location.reload();
+  }
+
 }
 

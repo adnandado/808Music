@@ -6,7 +6,7 @@ import {
   MatPaginatorIntl,
   MatPaginatorModule,
   PageEvent
-} from "./chunk-5LK5VUIE.js";
+} from "./chunk-HRLTU625.js";
 import "./chunk-4VQHVOCQ.js";
 import "./chunk-J6JWSVMO.js";
 import "./chunk-UHF7S7GW.js";
@@ -19,6 +19,7 @@ import "./chunk-UHF7S7GW.js";
 import "./chunk-FA36KNV3.js";
 import "./chunk-IJZD5EWN.js";
 import "./chunk-5UCFXUO2.js";
+import "./chunk-UJDEVZ2T.js";
 import "./chunk-3277C5RZ.js";
 import "./chunk-QFPSIRYE.js";
 import "./chunk-LO7GNJQE.js";

@@ -135,7 +135,7 @@ export class WebStoreComponent implements OnInit {
     this.productIsOnWishlistService.handleAsync(request).subscribe(
       (response) => {
         if (response.isOnWishlist) {
-          this.wishlist.add(product.slug); // Dodaj u wishlist
+          this.wishlist.add(product.slug);
         }
       },
       (error) => {
@@ -156,23 +156,7 @@ export class WebStoreComponent implements OnInit {
       return;
     }
     if (this.isOnWishlist(product)) {
-      this.removeProductFromWishlistService.removeProductFromWishlist({
-        productSlug: product.slug,
-        userId: userId
-      }).subscribe(
-        (response) => {
-          if (response.success) {
-            window.location.reload();
-
-            console.log(response.message);
-          } else {
-            console.log(response.message);
-          }
-        },
-        (error) => {
-          console.error('Error removing from wishlist:', error);
-        }
-      );
+      this.removeFromWishlist(product.slug);
     } else {
       this.addToWish(product.slug);
     }
@@ -217,7 +201,8 @@ export class WebStoreComponent implements OnInit {
     this.addProductToWishlist.handleAsync(request).subscribe(
       (response: AddProductToWishlistResponse) => {
         if (response.success) {
-          window.location.reload();
+          this.ngOnInit();
+
 
         } else {
           alert('Error: ' + response.message);
@@ -243,5 +228,26 @@ export class WebStoreComponent implements OnInit {
     this.router.navigate(['/listener/product-search'], {
       queryParams: { keyword },
     });
+  }
+
+  private removeFromWishlist(slug: string) {
+    const userId = this.getUserIdFromToken();
+
+    this.removeProductFromWishlistService.removeProductFromWishlist({
+      productSlug: slug,
+      userId: userId
+    }).subscribe(
+      (response) => {
+        if (response.success) {
+
+          this.wishlist.delete(slug);
+        } else {
+          console.log(response.message);
+        }
+      },
+      (error) => {
+        console.error('Error removing from wishlist:', error);
+      }
+    );
   }
 }

@@ -6,6 +6,7 @@ import {MusicPlayerService} from '../../../../services/music-player.service';
 import {interval} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {MyConfig} from '../../../../my-config';
+import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
 
 @Component({
   selector: 'app-music-controller',
@@ -13,8 +14,9 @@ import {MyConfig} from '../../../../my-config';
   styleUrl: './music-controller.component.css'
 })
 export class MusicControllerComponent implements OnInit {
+  jwt: string = "";
   track : TrackGetResponse | null = null;
-  trackLocation = `${MyConfig.api_address}/api/TrackStreamEndpoint/`;
+  trackLocation = `${MyConfig.api_address}/api/TrackStreamEndpoint?TrackId=`;
   secondsPipe = new SecondsToDurationStringPipe();
   currentPlaybackTime: number = 0;
   playingState = false;
@@ -29,16 +31,25 @@ export class MusicControllerComponent implements OnInit {
 
 
   constructor(private musicPlayerService: MusicPlayerService,
-              private httpClient : HttpClient) {
+              private httpClient : HttpClient,
+              private auth: MyUserAuthService) {
   }
 
   ngOnInit(): void {
       this.player = document.getElementById("player") as HTMLAudioElement;
+      this.jwt = this.auth.getAuthToken()?.token ?? "";
       console.log(this.player);
       let previousVolume = Number.parseFloat(window.localStorage.getItem("music-volume") ?? "0.5");
       if(this.player != null)
       {
         this.player.volume = previousVolume;
+      }
+
+      this.track = this.musicPlayerService.getLastPlayedSong();
+      let cachedTime = window.localStorage.getItem("currentPlaybackTime");
+      if(cachedTime != null)
+      {
+        this.userSetSlider({value: Number.parseInt(cachedTime)});
       }
 
       this.musicPlayerService.trackEvent.subscribe({
@@ -50,6 +61,7 @@ export class MusicControllerComponent implements OnInit {
           }
           this.streamCounted = false;
           this.streamedSec = 0;
+          window.localStorage.setItem("currentPlaybackTime", '0');
         }
       })
 
@@ -89,6 +101,7 @@ export class MusicControllerComponent implements OnInit {
 
   setCurrentPlaybackTime(e: number) {
     this.currentPlaybackTime = e;
+    window.localStorage.setItem("currentPlaybackTime", this.currentPlaybackTime.toString());
   }
 
   changePlayerState() {
@@ -111,14 +124,16 @@ export class MusicControllerComponent implements OnInit {
     if(this.player != null)
     {
       this.currentPlaybackTime = Math.floor(this.player.currentTime);
+      window.localStorage.setItem("currentPlaybackTime", this.currentPlaybackTime.toString());
     }
   }
 
-  userSetSlider(event: MatSliderDragEvent) {
+  userSetSlider(event: MatSliderDragEvent | {value: number}) {
     if(this.player != null)
     {
       this.player.currentTime = event.value;
       this.currentPlaybackTime = this.player.currentTime;
+      window.localStorage.setItem("currentPlaybackTime", this.currentPlaybackTime.toString());
     }
   }
 
@@ -180,5 +195,9 @@ export class MusicControllerComponent implements OnInit {
 
   setShuffleState() {
     this.isShuffled = !this.isShuffled;
+  }
+
+  getTrackId() {
+    return this.track != null ? this.track.id : -1;
   }
 }

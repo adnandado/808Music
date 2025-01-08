@@ -153,6 +153,7 @@ input.mat-input-element {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
 }
 .hide-overflow {
   overflow: hidden;
@@ -161,7 +162,7 @@ input.mat-input-element {
 }
 .product {
   position: relative;
-  width: 200px;
+  width: 11vw;
   background-color: #2c2c2c;
   margin: 5px;
   border-radius: 10px;

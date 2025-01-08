@@ -26,6 +26,8 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
                                 PhotoPaths = p.Photos.Select(photo => photo.Path).ToList(),
                                 ArtistName = p.Artist.Name,  
                                 ArtistPhoto = p.Artist.ProfilePhotoPath,
+                                ThumbnailPath = p.Photos.Select(thumbnail => thumbnail.ThumbnailPath).ToList(), 
+
                                 SaleAmount = p.SaleAmount, 
                                 Bio = p.Bio,
                                 DiscountedPrice = p.SaleAmount > 0
@@ -53,6 +55,7 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
         public string ArtistPhoto { get; set; }
         public string Bio { get; set; }
         public decimal DiscountedPrice { get; internal set; }
+        public List<string> ThumbnailPath { get; set; }
 
 
         public decimal SaleAmount { get; set; } = 0;
