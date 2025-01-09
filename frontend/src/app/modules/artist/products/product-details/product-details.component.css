@@ -19,7 +19,7 @@ lib-ngx-image-zoom {
   position: relative;
   width: 100%;
   height: auto;
-  cursor: zoom-in; /* Promijeniti pokazivač u 'zoom' */
+  cursor: zoom-in;
 }
 .add-to-cart-container button {
   gap: 8px;
@@ -141,7 +141,7 @@ font-size: 15px;
 
 .original-price {
   text-decoration: line-through;
-  color: #B0B0B0; /* Svijetlo siva za precrtanu cijenu */
+  color: #B0B0B0;
   font-size: 1rem;
 }
 

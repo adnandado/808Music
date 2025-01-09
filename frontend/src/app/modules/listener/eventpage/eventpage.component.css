@@ -1,0 +1,154 @@
+.event-container {
+  margin-top: 2vw;
+  display: flex;
+  justify-content: space-around;
+  height: 80vh;
+}
+
+.event-list {
+  width: 30vw;
+  padding-right: 1vw;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.event-item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+
+}
+p{
+  margin: 0;
+}
+.event-image {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.event-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.event-info {
+  position: absolute;
+  bottom: 1vw;
+  left: 10px;
+  z-index: 2;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.event-info h3 {
+  margin: 0;
+}
+.selected-event-img{
+  width: 100%;
+  height: 18vw;
+  position: relative;
+}
+.artist-name{
+  font-size: 2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.event-details {
+  position: relative;
+  overflow-y: hidden;
+  width: 35vw;
+  padding: 20px;
+  background-color: rgba(22, 18, 21, 0.67);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-description {
+  margin-top: 20px;
+
+}
+.event-title {
+  font-size: 2.5em;
+  font-weight: bold;
+
+}
+.event-description img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.artist-pfp {
+display:flex;
+  flex-direction: row;
+}
+.event-information{
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.event-venue{
+  font-size: 1.2em;
+}
+.buy-tickets{background: transparent;
+font-size: 2em;
+  position: absolute;
+
+  border-style: none;
+color: white;
+bottom: 2vw;}
+.date-event{
+  color: #A9A9A9;
+}
+.event-date-small1{
+  font-weight: bold;
+  font-size: 1.3em;
+}
+.event-date-small2{
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.p{margin:0;}
+.small-event-date-div{
+  z-index: 1000;
+  position: absolute;
+  top: 1.5vw;
+  left: 1.5vw;
+background-color: rgba(0, 0, 0, 0.55);
+  display:flex;
+  flex-direction: column;
+  width: 4vw;
+  height: 4vw;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+.event-title{
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+.artist-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 90%;
+}
+.selected {
+  border: #a81313;
+}

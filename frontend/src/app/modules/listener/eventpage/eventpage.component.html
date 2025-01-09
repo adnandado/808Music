@@ -1,0 +1,44 @@
+<div class="event-container">
+  <div class="event-list" *ngIf="ArtistEvents.length > 0; else noEvents">
+    <div
+      *ngFor="let event of ArtistEvents"
+      class="event-item"
+      (click)="selectEvent(event)"
+      [class.selected]="event.id === selectedEvent?.id"
+    >
+      <div class="event-image" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + event.eventCover + ')'}">
+        <div class="event-info">
+          <h3 class="event-title">{{ event.eventTitle }}</h3>
+          <p>{{ event.city }} ● {{ event.eventDate | date: 'dd.MM.yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noEvents>
+    <div class="no-events-message">
+      <p>No events soon</p>
+    </div>
+  </ng-template>
+
+  <div class="event-details" *ngIf="selectedEvent">
+    <img class="selected-event-img" [src]="MyConfig.media_address + selectedEvent.eventCover" alt="Event Cover" />
+    <div class="small-event-date-div">
+    <p class="event-date-small1">{{ moment(selectedEvent.eventDate).format('Do')  }}</p>
+      <p class="event-date-small2">{{ moment(selectedEvent.eventDate).format('MMM\t')  }}</p>
+
+    </div>
+    <div class="event-description">
+      <div *ngIf="artistData">
+        <p class="artist-name">{{ artistData.name }}</p>
+      </div>
+      <div class="event-information">
+        <p class="event-title">{{ selectedEvent.eventTitle }}</p>
+        <p class="event-venue"> ● {{ selectedEvent.venue }} ● {{ selectedEvent.city }} ● {{ selectedEvent.country }}</p>
+      </div>
+      <p class="date-event">{{ moment(selectedEvent.eventDate).format('dddd') }} ● {{ selectedEvent.eventDate | date: 'dd.MM.yyyy' }} ● {{ selectedEvent.eventDate | date: 'HH:mm' }}</p>
+
+      <button class="buy-tickets">Buy tickets here...</button>
+    </div>
+  </div>
+</div>
