@@ -41,7 +41,8 @@ export class ArtistPageComponent implements OnInit {
               private snackBar : MatSnackBar) { }
 
     ngOnInit(): void {
-        this.route.params.subscribe(params => {
+
+      this.route.params.subscribe(params => {
           let id = params['id'];
           if(id) {
             this.artistService.handleAsync(id as number).subscribe({

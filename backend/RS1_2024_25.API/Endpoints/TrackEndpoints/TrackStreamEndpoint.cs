@@ -19,7 +19,14 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
             {
                 return Unauthorized();
             }
+            var user = await db.MyAppUsers.Include(u => u.Subscription)
+                            .FirstOrDefaultAsync(u => u.ID == userId, cancellationToken);
 
+
+            if (user.Subscription == null || user.Subscription.EndDate < DateTime.UtcNow)
+            {
+                return Unauthorized(new { message = "Your subscription has expired or is not active." });
+            }
             //TODO Check for active subscription
 
             Track? track = request.TrackId <= 0 ? await db.Tracks.FirstOrDefaultAsync(cancellationToken) : await cs.GetAsync<Track>($"track-{request.TrackId}", cancellationToken);
