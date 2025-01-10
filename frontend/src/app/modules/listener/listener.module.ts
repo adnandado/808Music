@@ -42,6 +42,7 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
   import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
   import {NgxImageZoomModule} from 'ngx-image-zoom';
   import {MatStep, MatStepper} from '@angular/material/stepper';
+  import {EventpageComponent} from './eventpage/eventpage.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
     StoreSearchComponent,
     CheckoutComponent,
     OrderConfirmationDialogComponent,
-    BytypeComponent
+    BytypeComponent,
+    EventpageComponent
   ],
   imports: [
     CommonModule,
