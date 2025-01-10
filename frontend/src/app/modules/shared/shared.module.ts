@@ -76,6 +76,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import { TrackCardComponent } from './tracks/track-card/track-card.component';
 import { TrackCardListComponent } from './tracks/track-card-list/track-card-list.component';
+import { CreateChatBottomSheetComponent } from './bottom-sheets/create-chat-bottom-sheet/create-chat-bottom-sheet.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { TrackCardListComponent } from './tracks/track-card-list/track-card-list
     SearchPageComponent,
     TrackCardComponent,
     TrackCardListComponent,
+    CreateChatBottomSheetComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [

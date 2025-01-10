@@ -1,0 +1,21 @@
+<div class="chat-box">
+  <div class="chat-info">
+    <h3 class="title">{{chat?.chatter}}</h3>
+    <div class="actions">
+      <button mat-icon-button matTooltip="Mute chat"><mat-icon>do_not_disturb_on</mat-icon></button>
+      <button mat-icon-button matTooltip="Block chat"><mat-icon>block</mat-icon></button>
+    </div>
+  </div>
+  <div class="messages">
+  <p>{{JSON.stringify(messages)}}</p>
+  </div>
+  <div class="send-message">
+    <form class="input" [formGroup]="form" (ngSubmit)="sendMessage()">
+      <input class="search-bar-input" type="text" formControlName="message" [placeholder]="'Message '+ chat?.chatter">
+      <div class="actions2">
+        <button mat-mini-fab><mat-icon>attachment</mat-icon></button>
+        <button mat-mini-fab [disabled]="!form.valid" type="submit"><mat-icon>send</mat-icon></button>
+      </div>
+    </form>
+  </div>
+</div>

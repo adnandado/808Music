@@ -103,3 +103,32 @@ h6 {
 .queue-status-info2 {
   margin-bottom: 15px;
 }
+
+
+@media only screen and (max-height: 900px) {
+  .cover {
+    height: 25vh;
+    width: 25vh;
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  .cover {
+    height: 25vh;
+    width: 25vh;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .cover {
+    height: 15vh;
+    width: 15vh;
+  }
+}
+
+@media only screen and (max-height: 800px) {
+  .cover {
+    height: 15vh;
+    width: 15vh;
+  }
+}

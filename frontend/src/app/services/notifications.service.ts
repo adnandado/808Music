@@ -3,6 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import {MyUserAuthService} from './auth-services/my-user-auth.service';
 import {MyConfig} from '../my-config';
 import {Artist} from '../endpoints/album-endpoints/album-get-by-id-endpoint.service';
+import {Router} from '@angular/router';
 
 export interface RichNotification {
   id: number;
@@ -24,12 +25,13 @@ export interface RichNotification {
 export class NotificationsService {
   private hubConnection!: signalR.HubConnection;
 
-  constructor(private authService: MyUserAuthService) { }
+  constructor(private authService: MyUserAuthService, private router: Router) { }
 
   public startConnection(): void {
     let authToken = this.authService.getAuthToken();
     if(authToken == null)
     {
+      this.router.navigate(['/auth/login']);
       return;
     }
 

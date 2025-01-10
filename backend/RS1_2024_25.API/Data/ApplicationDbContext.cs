@@ -44,6 +44,8 @@ namespace RS1_2024_25.API.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<ReadNotification> ReadNotifications { get; set; }
         public DbSet<MyAppUserPreference> MyAppUserPreferences { get; set; }
+        public DbSet<UserChat> UserChats { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

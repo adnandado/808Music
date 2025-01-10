@@ -1,0 +1,19 @@
+<div class="inbox-page">
+  <div class="chats">
+    <h3 class="title">Chats</h3>
+    <button mat-fab class="create" (click)="openCreateSheet()"><mat-icon>add</mat-icon>Create a chat</button>
+    <app-search-bar [autoSearch]="true" [placeholder]="'Find chats'" (onSearchChange)="filterChats($event)" class="no-margin"></app-search-bar>
+    <div class="open-chats">
+      @for (c of getFilteredChats(); track c.id) {
+        <div class="chat-card" (click)="openChat(c)">
+          <h6 class="title hide-overflow">{{c.chatter}}</h6>
+          <p class="last-message hide-overflow">{{c.lastMessage == "" ? "No messages" : c.lastMessage}}</p>
+          <p class="last-active hide-overflow">{{c.createdAt > c.lastMessageAt ? "Created " + moment(c.createdAt).format("DD. MM. yyyy.") : moment(c.lastMessageAt).fromNow()}}</p>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="messages">
+    <app-chat-box [chat]="selectedChat"></app-chat-box>
+  </div>
+</div>

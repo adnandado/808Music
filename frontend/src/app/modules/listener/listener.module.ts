@@ -10,7 +10,7 @@ import {SharedModule} from '../shared/shared.module';
 import {
   ClickableFeaturedArtistsComponent
 } from '../shared/artist/clickable-featured-artists/clickable-featured-artists.component';
-import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatFormField, MatInput} from "@angular/material/input";
 import {MatSlider, MatSliderThumb} from '@angular/material/slider';
@@ -41,6 +41,10 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
   import {BytypeComponent} from './web-store/bytype/bytype.component';
   import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
   import {NgxImageZoomModule} from 'ngx-image-zoom';
+import { InboxComponent } from './inbox/inbox.component';
+import { ChatBoxComponent } from './inbox/chat-box/chat-box.component';
+import { MessagesListComponent } from './inbox/messages-list/messages-list.component';
+import { MessageCardComponent } from './inbox/message-card/message-card.component';
 
 
 @NgModule({
@@ -65,7 +69,11 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
     StoreSearchComponent,
     CheckoutComponent,
     OrderConfirmationDialogComponent,
-    BytypeComponent
+    BytypeComponent,
+    InboxComponent,
+    ChatBoxComponent,
+    MessagesListComponent,
+    MessageCardComponent
   ],
   imports: [
     CommonModule,
@@ -91,6 +99,7 @@ import { ArtistSearchResultPageComponent } from './artist-search-result-page/art
     MatOption,
     MatAutocompleteTrigger,
     NgxImageZoomModule,
+    MatMiniFabButton,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
