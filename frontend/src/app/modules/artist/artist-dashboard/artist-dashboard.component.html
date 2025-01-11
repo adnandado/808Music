@@ -1,0 +1,138 @@
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="!loading && artistDashboardData">
+
+  <h2 class="artistname">{{ artistDashboardData.artistName }}'S DASHBOARD - {{ currentDate | date:'d MMM yyyy' }}</h2>
+
+  <section class="header-info">
+    <div class="header-item">
+      <div class="text">
+        <p class="number-title">STREAMS</p>
+        <p class="number">{{ artistDashboardData.totalStreams }}</p>
+        <div class="growth-indicator">
+          <mat-icon
+            *ngIf="artistDashboardData.streamGrowth"
+            style="color: #07bd07; font-size: 30px; width: 30px; height: 30px;"
+            class="green-arrow">arrow_outward</mat-icon>
+
+            <mat-icon *ngIf="!artistDashboardData.streamGrowth"
+              style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
+              class="red-arrow">call_received</mat-icon>
+
+          <span class="percentage-growth" [ngClass]="{
+            'positive-growth': artistDashboardData.streamGrowth,
+            'negative-growth': !artistDashboardData.streamGrowth
+          }">
+            {{ artistDashboardData.streamGrowth ? '+' : '-' }}{{ artistDashboardData.streamGrowthPercentage }}%
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-item">
+      <div class="text">
+        <p class="number-title">FOLLOWERS</p>
+        <p class="number">{{ artistDashboardData.totalFollowers }}</p>
+        <div class="growth-indicator">
+          <mat-icon
+            *ngIf="artistDashboardData.followerGrowth"
+            style="color: #07bd07; font-size: 30px; width: 30px; height: 30px;"
+            class="green-arrow">arrow_outward</mat-icon>
+
+            <mat-icon *ngIf="!artistDashboardData.followerGrowth"
+              style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
+              class="red-arrow">call_received</mat-icon>
+
+          <span class="percentage-growth" [ngClass]="{
+            'positive-growth': artistDashboardData.followerGrowth,
+            'negative-growth': !artistDashboardData.followerGrowth
+          }">
+            {{ artistDashboardData.followerGrowth ? '+' : '-' }}{{ artistDashboardData.followerGrowthPercentage }}%
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-item">
+      <div class="text">
+        <p class="number-title">REVENUE</p>
+        <p class="number">{{ artistDashboardData.totalRevenueAllProducts }}€</p>
+        <div class="growth-indicator">
+          <mat-icon
+            *ngIf="artistDashboardData.revenueGrowth"
+            style="color: #07bd07; font-size: 30px; width: 30px; height: 30px; "
+            class="green-arrow">arrow_outward</mat-icon>
+            <mat-icon  *ngIf="!artistDashboardData.revenueGrowth"
+              style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
+              class="red-arrow">call_received</mat-icon>
+
+          <span class="percentage-growth" [ngClass]="{
+            'positive-growth': artistDashboardData.revenueGrowth,
+            'negative-growth': !artistDashboardData.revenueGrowth
+          }">
+            {{ artistDashboardData.revenueGrowth ? '+' : '-' }}{{ artistDashboardData.revenueGrowthPercentage }}%
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dashboard-tables">
+
+    <section class="table-section">
+      <h2 class="table-title">Last 5 Streams</h2>
+      <table>
+        <thead>
+        <tr>
+          <th>Track Title</th>
+          <th>Streamed At</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let stream of artistDashboardData.lastStreams">
+          <td>{{ stream.trackTitle }}</td>
+          <td>{{ moment(stream.streamedAt).fromNow() }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="table-section">
+      <h2 class="table-title">Last 5 Followers</h2>
+      <table>
+        <thead>
+        <tr>
+          <th>Follower</th>
+          <th>Followed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let follower of artistDashboardData.followers">
+          <td>{{ follower.followerName }}</td>
+          <td>{{ moment(follower.startedFollowing).fromNow() }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="table-section">
+      <h2 class="table-title">Last 5 Product Sales</h2>
+      <table>
+        <thead>
+        <tr>
+          <th>Product Title</th>
+          <th>Quantity Sold</th>
+          <th>Total Revenue</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let sale of artistDashboardData.productSales">
+          <td>{{ sale.productTitle }}</td>
+          <td>{{ sale.quantitySold }}</td>
+          <td>{{ sale.totalRevenue | currency }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GetShoppingCartService } from '../../../../endpoints/products-endpoints/get-shopping-cart-endpoint.service';
@@ -10,7 +10,7 @@ import {
   OrderAddRequest,
   OrderAddResponse
 } from '../../../../endpoints/products-endpoints/add-order-endpoint.service';
-import {OrderConfirmationDialogComponent} from './order-confirmation-dialog/order-confirmation-dialog.component';
+import { OrderConfirmationDialogComponent } from './order-confirmation-dialog/order-confirmation-dialog.component';
 
 @Component({
   selector: 'app-checkout',
@@ -26,21 +26,28 @@ export class CheckoutComponent implements OnInit {
   elements: StripeElements | null = null;
   card: StripeCardElement | null = null;
   stripeClientSecret: string | null = null;
+  currentStep: number = 0;
 
   errorMessage: string = '';
   paymentSuccess: boolean = false;
   orderCode: string = '';
+
   constructor(
     private getShoppingCartService: GetShoppingCartService,
     private stripeService: StripeService,
     private fb: FormBuilder,
     private orderAddService: OrderAddEndpointService,
     private router: Router,
-  private ngzone : NgZone,
-    private changeDetectorRef : ChangeDetectorRef,
+    private ngzone: NgZone,
+    private changeDetectorRef: ChangeDetectorRef,
     private dialog: MatDialog
   ) {
-    this.checkoutForm = this.fb.group({});
+    this.checkoutForm = this.fb.group({
+      name: ['', Validators.required],
+      country: ['', Validators.required],
+      city: ['', Validators.required],
+      phoneNumber: ['', Validators.required]
+    });
   }
 
   async ngOnInit() {
@@ -79,15 +86,12 @@ export class CheckoutComponent implements OnInit {
 
   private getUserIdFromToken(): number {
     let authToken = sessionStorage.getItem('authToken');
-
     if (!authToken) {
       authToken = localStorage.getItem('authToken');
     }
-
     if (!authToken) {
       return 0;
     }
-
     try {
       const parsedToken = JSON.parse(authToken);
       return parsedToken.userId;
@@ -96,7 +100,6 @@ export class CheckoutComponent implements OnInit {
       return 0;
     }
   }
-
 
   async handleSubmit(): Promise<void> {
     if (!this.stripe || !this.elements || !this.card) {
@@ -115,19 +118,12 @@ export class CheckoutComponent implements OnInit {
     this.stripeService.createPaymentIntent(amountInCents, email).subscribe(
       async (response) => {
         const clientSecret = response.clientSecret;
-
         const { error, paymentIntent } = await this.stripe!.confirmCardPayment(clientSecret, {
           payment_method: {
             card: this.card!,
             billing_details: {
               name: this.checkoutForm.value.name,
-              email: email,
-              address: {
-                line1: this.checkoutForm.value.address,
-                city: this.checkoutForm.value.city,
-                postal_code: this.checkoutForm.value.zip,
-                country: this.checkoutForm.value.country
-              }
+              email: email
             }
           }
         });
@@ -153,13 +149,11 @@ export class CheckoutComponent implements OnInit {
                 });
               });
               this.changeDetectorRef.detectChanges();
-
             },
             (error) => {
               console.error('Error adding order:', error);
             }
           );
-          // Nem
         }
       },
       (error) => {

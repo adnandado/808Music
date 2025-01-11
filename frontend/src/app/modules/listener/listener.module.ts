@@ -45,6 +45,8 @@ import { InboxComponent } from './inbox/inbox.component';
 import { ChatBoxComponent } from './inbox/chat-box/chat-box.component';
 import { MessagesListComponent } from './inbox/messages-list/messages-list.component';
 import { MessageCardComponent } from './inbox/message-card/message-card.component';
+  import {MatStep, MatStepper} from '@angular/material/stepper';
+  import {EventpageComponent} from './eventpage/eventpage.component';
 
 
 @NgModule({
@@ -70,6 +72,7 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
     CheckoutComponent,
     OrderConfirmationDialogComponent,
     BytypeComponent,
+    EventpageComponent
     InboxComponent,
     ChatBoxComponent,
     MessagesListComponent,
@@ -99,6 +102,8 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
     MatOption,
     MatAutocompleteTrigger,
     NgxImageZoomModule,
+    MatStepper,
+    MatStep,
     MatMiniFabButton,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

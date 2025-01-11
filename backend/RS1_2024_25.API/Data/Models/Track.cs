@@ -16,6 +16,7 @@ namespace RS1_2024_25.API.Data.Models
         [ForeignKey(nameof(Album))]
         public int AlbumId { get; set; }
         public Album? Album { get; set; }
+        public ICollection<TrackStream> TrackStreams { get; set; } = new List<TrackStream>();
 
         public ICollection<PlaylistTracks> PlaylistTracks { get; set; }
 

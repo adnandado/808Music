@@ -1,0 +1,134 @@
+*{
+  color: white;
+}
+.header-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+p { margin: 0}
+.number{
+  font-weight: bold;
+  font-size: 2.6em;
+  margin-top: 3.25vw;
+}
+.artistname{
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1vw;
+}
+.chart-section {
+  margin-top: 30px;
+}
+
+canvas {
+  width: 100%;
+  height: 400px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.text {
+}
+.number-title{
+  margin-top: 3vw;
+}
+.header-item {
+  text-align: center;
+  display:flex;
+  flex-direction: column;
+  font-size: 2.35rem;
+  background-color: rgba(22, 18, 21, 0.72);
+  width: 30vw;
+  height: 15vw;
+  border-radius:0 0 20px 20px;
+  margin-right: 1.1vw;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+.table-section {
+  width: 30vw;
+  height: 50vh;
+  position: relative;
+  background-color: rgba(22, 18, 21, 0.72);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding: 1vh;
+  transition: background-color 0.25s ease-in-out;
+  margin-top: 1vw;
+  margin-right: 0.2vw;
+
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+.dashboard-tables{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1.1vw;
+}
+.table-title{
+  margin-left: 0.5vw;
+  font-size: 1.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1vw;
+}
+.table-part{
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1vw;
+  display: flex;
+  margin-left:1vw;
+}
+.percentage-growth {
+  font-size: 0.50em;
+}
+
+.positive-growth {
+
+  color: #07bd07;
+  font-size: 0.4em;
+}
+
+.negative-growth {
+  color: #ae0017;
+  font-size: 0.5em;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(221, 221, 221, 0.11);
+}
+
+th {
+  background-color: rgba(51, 51, 51, 0.35);
+  color: white;
+}
+
+.growth-indicator {
+  margin-top: 2vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+
+}

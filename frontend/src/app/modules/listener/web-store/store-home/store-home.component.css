@@ -155,7 +155,11 @@ input.mat-input-element {
   justify-content: space-between;
 
 }
-
+.hide-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .product {
   position: relative;
   width: 11vw;

@@ -10,6 +10,11 @@ body {
   padding: 0;
 
 }
+.hide-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .wishlist-icon {
   position: absolute;
   top: 10px;

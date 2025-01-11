@@ -143,8 +143,7 @@
   margin: 10px 0;
 }
 
-/* Dodajte marginu desnom sadržaju da ne ulazi u sidenav */
 body {
-  margin-left: 60px; /* Ovdje možete promijeniti marginu da bude odgovarajući razmak od sidenav-a */
+  margin-left: 60px;
 }
 

@@ -49,7 +49,8 @@ export class ProductsCreateComponent {
     private router: Router,
     private artistHandlerService: ArtistHandlerService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {  this.productData.clothesType = 0;
+  }
 
   onProductTypeChange(cbChange: Event): void {
 
@@ -58,6 +59,7 @@ export class ProductsCreateComponent {
     if (cb === '0') {
 
       this.showClothesType = true;
+      this.productData.clothesType = 0;
       console.log(this.showClothesType);
 
     } else {
@@ -71,6 +73,9 @@ export class ProductsCreateComponent {
 
 
   createProduct() {
+    console.log( this.productData.clothesType);
+    console.log( this.productData.productType);
+
     const selectedArtist = this.artistHandlerService.getSelectedArtist();
     if (selectedArtist && selectedArtist.id) {
       this.productData.artistId = selectedArtist.id;
@@ -86,7 +91,7 @@ export class ProductsCreateComponent {
 
     this.productService.handleAsync(this.productData).subscribe({
       next: (response: ProductAddResponse) => {
-        //this.backToList();
+        this.backToList();
       },
       error: (err: HttpErrorResponse) => {
         console.error("Error creating product:", err);
@@ -110,7 +115,6 @@ export class ProductsCreateComponent {
     if (files.length > 0) {
       this.productData.photos = Array.from(files);
 
-      // Generiraj preview za slike
       this.previewPhotos = [];
       Array.from(files).forEach((file) => {
         const reader = new FileReader();

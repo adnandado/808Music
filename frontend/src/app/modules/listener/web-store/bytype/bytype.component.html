@@ -43,7 +43,7 @@
           </div>
           <img [src]="'http://localhost:7000/media/' + product.photoPaths[0]" alt="{{ product.title }}" class="product-image">
           <div class="product-info">
-            <p class="product-name">{{ product.title }}</p>
+            <p class="product-name hide-overflow">{{ product.title }}</p>
             <p class="product-price">{{ product.discountedPrice | number: '1.2-2' }}$</p>
           </div>
           <div
