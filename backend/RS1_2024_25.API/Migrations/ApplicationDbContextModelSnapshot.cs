@@ -284,6 +284,49 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("MyResetTokens");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.ChatMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ContentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Seen")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("SeetAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserChatId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SenderId");
+
+                    b.HasIndex("UserChatId");
+
+                    b.ToTable("ChatMessages");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.City", b =>
                 {
                     b.Property<int>("ID")
@@ -878,6 +921,41 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("UserArtistRoles");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserChat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastMessageAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Muted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PrimaryChatterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SecondaryChatterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrimaryChatterId");
+
+                    b.HasIndex("SecondaryChatterId");
+
+                    b.ToTable("UserChats");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserOrders", b =>
                 {
                     b.Property<int>("MyAppUserId")
@@ -1114,6 +1192,25 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("MyAppUser");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.ChatMessage", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.UserChat", "UserChat")
+                        .WithMany()
+                        .HasForeignKey("UserChatId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
+
+                    b.Navigation("UserChat");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.City", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.Country", "Country")
@@ -1341,6 +1438,25 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserChat", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "PrimaryChatter")
+                        .WithMany()
+                        .HasForeignKey("PrimaryChatterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "SecondaryChatter")
+                        .WithMany()
+                        .HasForeignKey("SecondaryChatterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("PrimaryChatter");
+
+                    b.Navigation("SecondaryChatter");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserOrders", b =>

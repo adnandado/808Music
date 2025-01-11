@@ -1,0 +1,38 @@
+<div class="following-page">
+  <h3>Start chats</h3>
+  <div class="search">
+  <app-search-bar [placeholder]="'Find users'" [autoSearch]="true" (onSearchChange)="findUsers($event)"></app-search-bar>
+  </div>
+  <button mat-flat-button (click)="dismiss()" class="cancel">
+    Cancel
+  </button>
+  <div class="following">
+    @if(users.length > 0)
+    {
+      @for (a of users; track a.id) {
+        <div [ngStyle]="{'width':'100%'}">
+          <div class="flex-list">
+            <mat-card appearance="outlined">
+              <mat-card-content class="flex-content">
+                <div class="flex-controls">
+                  <h6>{{ a.username }}</h6>
+                </div>
+                <div class="flex-controls">
+                  <button mat-flat-button (click)="createChat(a)">
+                    Start chat
+                  </button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="result-error">
+        <mat-icon>report</mat-icon>
+        <h6>No users that match your query found</h6>
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+      </div>
+    }
+  </div>
+</div>

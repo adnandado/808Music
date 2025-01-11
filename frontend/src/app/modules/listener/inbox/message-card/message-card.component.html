@@ -1,0 +1,20 @@
+<div class="msg-card">
+  <div class="msg-content" [ngStyle]="msgStyle">
+    @if (message?.contentType != "None")
+    {
+      <app-message-content-card [iconButton]="true" (onButtonClick)="playContent($event)" [content]="result"></app-message-content-card>
+    }
+    <p class="msg-text">{{message?.message}}</p>
+  </div>
+  @if (userId == message?.senderId)
+  {
+  <div class="msg-info">
+    <mat-icon>{{message?.seen ? "done_all" : "check"}}</mat-icon>
+    <p>{{getSeenInfo()}}</p>
+  </div>
+  } @else {
+    <div class="msg-info fa-align-left">
+      <p>{{moment(message?.sentAt).format('DD. MM. yy. hh:mm')}}</p>
+    </div>
+  }
+</div>

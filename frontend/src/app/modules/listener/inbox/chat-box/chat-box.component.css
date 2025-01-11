@@ -1,0 +1,86 @@
+.chat-box {
+  height: 96vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.chat-info {
+  border-radius: 100px;
+  border: 0.1em solid #4E444B;
+  background-color: #161215;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 1.5vh;
+  gap: 20px;
+  height: 8vh;
+}
+
+.title {
+  margin: 0;
+}
+
+.messages {
+  height: 76vh;
+  width: 100%;
+  background-color: #242424;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 1.5vh;
+  border-radius: 30px;
+}
+
+.send-message {
+  height: 8vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #161215;
+  box-sizing: border-box;
+  padding: 1vh;
+  border: 0.1em solid #4E444B;
+  border-radius: 30px;
+  position: relative;
+}
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  align-items: center;
+  gap: 1vw;
+  position: relative;
+}
+
+.search-bar-input {
+  background-color: #161215;
+  border-radius: 30px;
+  padding: 16px;
+  width: 37vw;
+  font-family: 'Roboto', sans-serif;
+  color: #EEDEE7;
+  font-size: 16px;
+  border: #4E444B solid 0.1rem;
+  box-sizing: border-box;
+
+}
+
+.actions2 {
+  display: flex;
+  gap: 15px;
+}
+
+.actions2 > button {
+  width: 4vw;
+}
+
+.attached-content {
+  position: absolute;
+  width: 30vw;
+  right: 0;
+  bottom: 8vh;
+}

@@ -22,7 +22,7 @@ export class MyUserAuthService {
               private router: Router,
               private myDialog: MatDialog,) {
     setInterval(() => {
-      //console.log(this.getAuthToken());
+      this.getAuthToken();
     },60000)
   }
 
@@ -77,7 +77,7 @@ export class MyUserAuthService {
           error: (err :HttpErrorResponse) => {
             alert(err.error);
             this.setLoggedInUser(null, auth.rememberMe);
-            window.location.reload();
+            this.router.navigate(["/auth/login"]);
           }
         });
         if(Date.now() > decodedJwt.exp! * 1000)

@@ -1,0 +1,8 @@
+p, h6 {
+  margin:0;
+}
+
+.name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -1,0 +1,40 @@
+<mat-card appearance="outlined">
+  <mat-card-content class="flex-content">
+    <div class="flex-controls">
+      <div class="result-card">
+        <div class="thumbnail" [ngStyle]="{'background-image': 'url('+a?.picture+')', 'border-radius': a?.type === 'Artist' ? '50%' : '10px'}"></div>
+        <div class="card-info">
+          <h6 class="hide-overflow name" (click)="goToContent()">{{ a?.name }}</h6>
+          <div class="type">
+            <mat-icon>
+              @switch (a?.type) {
+                @case ("Track") {
+                  music_note
+                }
+                @case ("Album") {
+                  album
+                }
+                @case ("Artist") {
+                  mic
+                }
+              }
+            </mat-icon>
+            <p>{{a?.type}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex-controls">
+      @if (!iconButton)
+      {
+        <button mat-flat-button (click)="attachContent(a)">
+          {{btnLabel}}
+        </button>
+      } @else {
+        <button mat-mini-fab (click)="attachContent(a)">
+          <mat-icon>{{btnIconName}}</mat-icon>
+        </button>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>
