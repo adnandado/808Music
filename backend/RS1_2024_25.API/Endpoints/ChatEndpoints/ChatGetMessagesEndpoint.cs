@@ -45,7 +45,7 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
         public string Message { get; set; } = string.Empty;
         public int ContentId { get; set; }
         public string ContentType { get; set; } = "Track";
-        public object Content { get; set; }
+        public object? Content { get; set; }
         public int SenderId { get; set; }
         public string Sender {  get; set; } = String.Empty;
         public DateTime SentAt { get; set; }

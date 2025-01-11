@@ -35,7 +35,7 @@ export class SearchPageComponent implements OnInit{
   tracks: MyPagedList<TrackGetResponse> | null = null;
 
   artistRequest: UserArtistSearchRequest = {
-    sortByPopularity: true,
+    sortByStreams: true,
     searchString:"",
     returnAmount: 1000,
   }

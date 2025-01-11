@@ -30,7 +30,9 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
                 OtherChatter = c.PrimaryChatterId != userId ? c.SecondaryChatter.Username : c.PrimaryChatter.Username,
                 CreatedAt = c.CreatedAt,
                 LastMessageAt = c.LastMessageAt,
-                LastMessage = db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.Message).FirstOrDefault() ?? ""
+                LastMessage = db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.Message).FirstOrDefault() ?? "",
+                NumberOfUnreads = db.ChatMessages.Where(cm => cm.UserChatId == c.Id && !cm.Seen).Count(),
+                LastMessageSenderId = db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.SenderId).FirstOrDefault(),
             }).ToList();
 
             return Ok(response);
@@ -43,9 +45,11 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
         public string Chatter { get; set; } = string.Empty;
         public string OtherChatter { get; set; } = string.Empty;
         public string LastMessage {  get; set; } = string.Empty;
+        public int LastMessageSenderId { get; set; }
         public bool Muted { get; set; }
         public bool Blocked { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastMessageAt { get; set; }
+        public int NumberOfUnreads { get; set; }
     }
 }

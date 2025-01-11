@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MyConfig} from '../../my-config';
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
-import { Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 export interface MessageGetResponse {
   id: number;

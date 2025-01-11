@@ -40,6 +40,7 @@
 .chat-card {
   background-color: #161215;
   padding: 1vh;
+  padding-left: 1.5vh;
   border-radius: 15px;
   border: 0.1rem solid #4E444B;
   display: flex;
@@ -80,4 +81,29 @@ h6, p {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+}
+
+.title-and-unreads {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.unreads {
+  box-sizing: border-box;
+  width: 35px;
+  height: 35px;
+  background: #EEDEE7;
+  border-radius: 50%;
+  text-align: center;
+  color: #161215;
+  display: flex;
+  justify-content: center;
+}
+
+.unreads > p {
+  color: #161215;
+  display: block;
+  align-self: center;
+  font-weight: bold;
 }

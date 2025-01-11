@@ -35,5 +35,6 @@ export class SearchBarComponent implements AfterViewInit{
 
   removeString() {
     this.queryString.setValue(null);
+    this.onSearchChange.emit(this.queryString.value ?? "");
   }
 }

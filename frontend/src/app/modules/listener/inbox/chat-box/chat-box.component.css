@@ -25,8 +25,11 @@
 .messages {
   height: 76vh;
   width: 100%;
-  background-color: #4E444B;
+  background-color: #242424;
   overflow-y: auto;
+  box-sizing: border-box;
+  padding: 1.5vh;
+  border-radius: 30px;
 }
 
 .send-message {
@@ -40,6 +43,7 @@
   padding: 1vh;
   border: 0.1em solid #4E444B;
   border-radius: 30px;
+  position: relative;
 }
 
 .input {
@@ -49,6 +53,7 @@
   overflow-x: hidden;
   align-items: center;
   gap: 1vw;
+  position: relative;
 }
 
 .search-bar-input {
@@ -71,4 +76,11 @@
 
 .actions2 > button {
   width: 4vw;
+}
+
+.attached-content {
+  position: absolute;
+  width: 30vw;
+  right: 0;
+  bottom: 8vh;
 }

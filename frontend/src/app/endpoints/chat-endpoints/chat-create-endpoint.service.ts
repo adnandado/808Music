@@ -17,6 +17,8 @@ export interface ChatGetResponse {
   blocked: boolean;
   createdAt: string;
   lastMessageAt: string;
+  numberOfUnreads: number;
+  lastMessageSenderId: number;
 }
 
 @Injectable({

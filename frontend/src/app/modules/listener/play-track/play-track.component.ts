@@ -6,6 +6,7 @@ import {MyConfig} from '../../../my-config';
 import {windowWhen} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../../shared/dialogs/confirm-dialog/confirm-dialog.component';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-play-track',
@@ -18,7 +19,8 @@ export class PlayTrackComponent implements AfterViewInit {
   constructor(private musicPlayerService: MusicPlayerService,
               private getTrackByIdService : TrackGetByIdEndpointService,
               private route : ActivatedRoute,
-              private router : Router,) {
+              private router : Router,
+              private location: Location) {
   }
 
   ngAfterViewInit(): void {
@@ -35,7 +37,7 @@ export class PlayTrackComponent implements AfterViewInit {
               {
                 this.musicPlayerService.createQueue([data],{display: data.title, value: MyConfig.ui_address+"/listener/home"})
               }
-                this.router.navigate(["/listener/home"]);
+                this.location.back();
             }})
           }
         })
