@@ -72,7 +72,7 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
     CheckoutComponent,
     OrderConfirmationDialogComponent,
     BytypeComponent,
-    EventpageComponent
+    EventpageComponent,
     InboxComponent,
     ChatBoxComponent,
     MessagesListComponent,
