@@ -14,6 +14,8 @@ namespace RS1_2024_25.API.Data.Models
         public string Country { get; set; }
         public string Venue { get; set; }
         public string EventCover { get; set; }
+        public decimal Longitude { get; set; }
+        public decimal Latitude { get; set; }
         [ForeignKey(nameof(Artist))]
         public int ArtistId { get; set; }
         public Artist? Artist { get; set; }

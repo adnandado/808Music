@@ -37,8 +37,13 @@
         <p class="event-venue"> ● {{ selectedEvent.venue }} ● {{ selectedEvent.city }} ● {{ selectedEvent.country }}</p>
       </div>
       <p class="date-event">{{ moment(selectedEvent.eventDate).format('dddd') }} ● {{ selectedEvent.eventDate | date: 'dd.MM.yyyy' }} ● {{ selectedEvent.eventDate | date: 'HH:mm' }}</p>
+      <div class="map-container">
+        <div class="map-frame">
+          <div id="map" [attr.data-key]="selectedEvent.id"></div>
+        </div>
+      </div>
 
-      <button class="buy-tickets">Buy tickets here...</button>
+   <button class="buy-tickets">Buy tickets here...</button>
     </div>
   </div>
 </div>

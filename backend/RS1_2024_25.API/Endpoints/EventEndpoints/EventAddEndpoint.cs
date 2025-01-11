@@ -21,6 +21,10 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
         [HttpPost("api/EventAdd")]
         public override async Task<EventAddResponse> HandleAsync([FromForm] EventAddRequest request, CancellationToken cancellationToken = default)
         {
+          
+            var roundedLongitude = Math.Round(request.Longitude, 6);
+            var roundedLatitude = Math.Round(request.Latitude, 6);
+
             var eventItem = new Events
             {
                 City = request.City,
@@ -29,6 +33,8 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
                 Venue = request.Venue,
                 ArtistId = request.ArtistId,
                 EventTitle = request.EventTitle,
+                Longitude = roundedLongitude, 
+                Latitude = roundedLatitude,  
             };
 
             if (request.EventCover != null)
@@ -58,8 +64,11 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
                 Venue = eventItem.Venue,
                 EventCover = eventItem.EventCover,
                 EventTitle = eventItem.EventTitle,
+                Longitude = eventItem.Longitude,
+                Latitude = eventItem.Latitude,
             };
         }
+
 
         public class EventAddRequest
         {
@@ -70,6 +79,8 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
             public required DateTime EventDate { get; set; }
             public required string Venue { get; set; }
             public IFormFile? EventCover { get; set; }
+            public required decimal Longitude { get; set; }
+            public required decimal Latitude { get; set; }
             public required int ArtistId { get; set; }
         }
 
@@ -83,6 +94,9 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
             public DateTime EventDate { get; set; }
             public string Venue { get; set; }
             public string? EventCover { get; set; }
+
+            public required decimal Longitude { get; set; }
+            public required decimal Latitude { get; set; }
         }
     }
 }
