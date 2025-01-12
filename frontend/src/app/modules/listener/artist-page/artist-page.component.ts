@@ -65,7 +65,7 @@ export class ArtistPageComponent implements OnInit {
   protected readonly MyConfig = MyConfig;
 
   shareProfile() {
-    this.shareSheet.open(ShareBottomSheetComponent, {data: {url: MyConfig.ui_address + "/listener/profile/"+this.artist?.id}});
+      this.shareSheet.open(ShareBottomSheetComponent, {data: {url: MyConfig.ui_address + "/listener/profile/"+this.artist?.id}});
   }
 
   playArtist() {

@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="artist-info">
+  <div class="artist-info" (click)="goToArtistPage()">
     <img *ngIf="product?.artistPhoto" [src]="MyConfig.media_address + 'Images/Artistpfps/' + product?.artistPhoto" alt="Artist Photo" class="artist-photo">
     <p class="artist-name">{{ product?.artistName ?? 'Unknown Artist' }}</p>
   </div>

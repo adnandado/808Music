@@ -83,11 +83,20 @@ export class MusicControllerComponent implements OnInit {
             this.streamedSec++;
             if(this.streamedSec >= this.secondsNeeded && !this.streamCounted)
             {
-              this.httpClient.post(MyConfig.api_address+ "/api/TrackAddStreamEndpoint/"+ this.track?.id, {}).subscribe({
+              this.httpClient.post(MyConfig.api_address + "/api/TrackAddStreamEndpoint/" + this.track?.id, {}).subscribe({
                 next: value => {
                   console.log("Stream counted");
+                },
+                error: err => {
+                  console.error('Error occurred:', err);
+                  if (err.status === 401 ) {
+                    alert('Potrebna vam je aktivna pretplata da biste streamali pjesmu.');
+                  } else {
+                    console.log('Došlo je do pogreške prilikom dodavanja streama.');
+                  }
                 }
               });
+
               this.streamCounted = true;
               this.streamedSec = 0;
           }
@@ -114,7 +123,8 @@ export class MusicControllerComponent implements OnInit {
       else {
         this.playingState = true;
         this.player.play().catch((error: Error) => {
-          console.error(error);
+          console.log(error);
+
         });
       }
     }

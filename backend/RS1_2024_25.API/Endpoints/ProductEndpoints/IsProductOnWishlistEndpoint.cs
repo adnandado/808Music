@@ -25,7 +25,6 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
             [FromQuery] IsProductOnWishlistRequest request,
             CancellationToken cancellationToken = default)
         {
-            // Tražimo proizvod po slug-u
             var product = await _db.Products
                 .FirstOrDefaultAsync(p => p.Slug == request.ProductSlug, cancellationToken);
 
@@ -38,7 +37,6 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
                 };
             }
 
-            // Provjeravamo da li je proizvod već na wishlisti korisnika
             var existingWishlistItem = await _db.UserProductWishlist
                 .FirstOrDefaultAsync(w => w.ProductId == product.Id && w.UserId == request.UserId, cancellationToken);
 
@@ -51,14 +49,14 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
 
         public class IsProductOnWishlistRequest
         {
-            public required string ProductSlug { get; set; }  // Slug proizvoda
-            public required int UserId { get; set; }          // ID korisnika
+            public required string ProductSlug { get; set; }  
+            public required int UserId { get; set; }          
         }
 
         public class IsProductOnWishlistResponse
         {
-            public required bool IsOnWishlist { get; set; }  // Da li je proizvod na wishlisti
-            public required string Message { get; set; }     // Poruka za korisnika
+            public required bool IsOnWishlist { get; set; }  
+            public required string Message { get; set; }     
         }
     }
 }

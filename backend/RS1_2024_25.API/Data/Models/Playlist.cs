@@ -10,6 +10,7 @@ namespace RS1_2024_25.API.Data.Models
         public int NumOfTracks { get; set; }
         public bool IsPublic { get; set; }
         public string CoverPath { get; set; }
+        public bool isLikePlaylist { get; set; } = false;
 
         public ICollection<UserPlaylist> UserPlaylists { get; set; }
         public ICollection<PlaylistTracks> PlaylistTracks { get; set; }

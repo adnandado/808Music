@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ProductGetByIdEndpointService, ProductGetResponse } from '../../../../endpoints/products-endpoints/produt-get-by-id-endpoint.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
@@ -26,6 +26,7 @@ export class ProductDetailsComponent implements OnInit {
     private productService: ProductGetByIdEndpointService,
   private addToShoppingCartService: AddToShoppingCartEndpointService,
   private addProductToWishlist: AddProductToWishlistEndpointService,
+    private router : Router,
 
 ) {}
 
@@ -76,7 +77,7 @@ export class ProductDetailsComponent implements OnInit {
         next: (response) => {
           if (response.success) {
             console.log('Product added to cart:', response.message);
-this.ngOnInit()          } else {
+window.location.reload();      } else {
             console.error('Failed to add product to cart:', response.message);
           }
         },
@@ -148,4 +149,8 @@ this.ngOnInit();
   }
 
   protected readonly MyConfig = MyConfig;
+
+  goToArtistPage() {
+    this.router.navigate(['/listener/profile/4'])
+  }
 }

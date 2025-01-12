@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {
   RegisterRequest,
   UserRegisterOrUpdateEndpointService
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   sentRequest: boolean = false;
   successText: string = "";
 
-  constructor(private registerService: UserRegisterOrUpdateEndpointService, private countryService: CountryGetAllEndpointService) {
+  constructor(private cdr: ChangeDetectorRef, private registerService: UserRegisterOrUpdateEndpointService, private countryService: CountryGetAllEndpointService) {
 
   }
 
@@ -52,9 +52,11 @@ export class RegisterComponent implements OnInit {
       next: (data) => {
         this.sentRequest = true;
         this.successText = data;
+        this.cdr.detectChanges();
       },
       error: (err: HttpErrorResponse) => {
         this.errorMessage = err.error;
+        this.cdr.detectChanges();
       }
     })
   }

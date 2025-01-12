@@ -56,7 +56,7 @@
     <div class="header-item">
       <div class="text">
         <p class="number-title">REVENUE</p>
-        <p class="number">{{ artistDashboardData.totalRevenueAllProducts }}€</p>
+        <p class="number">{{ formatNumber(artistDashboardData.totalRevenueAllProducts, 'en') }}€</p>
         <div class="growth-indicator">
           <mat-icon
             *ngIf="artistDashboardData.revenueGrowth"
@@ -116,7 +116,7 @@
     </section>
 
     <section class="table-section">
-      <h2 class="table-title">Last 5 Product Sales</h2>
+      <h2 class="table-title">Best selling products</h2>
       <table>
         <thead>
         <tr>
