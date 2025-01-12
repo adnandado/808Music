@@ -11,8 +11,8 @@
   margin-right: 2vw;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   overflow: visible;
-  left: 0; /* Dodano da bude uvijek fiksiran lijevo */
-  top: 0;  /* Dodano da bude fiksiran na vrhu */
+  left: 0;
+  top: 0;
 }
 .Active{
   opacity:1;

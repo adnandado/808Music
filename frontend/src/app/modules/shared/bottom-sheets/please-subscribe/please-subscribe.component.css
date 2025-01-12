@@ -26,9 +26,39 @@ h3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 }
 .mat-accent{
   background-color: #9f9f9f;
   color: #fff;
+}
+.second-button{
+  width: 8vw;
+  height: 2.5vw;
+  border: none;
+  font-weight: 444;
+  font-size: 1em;
+  border-radius: 25px;
+  cursor: pointer;
+  color: #642a95;
+  background-color: #a075c8;
+}
+.first-button{
+  width: 8vw;
+  height: 2.5vw;
+  border: none;
+  font-weight: 744;
+  font-size: 1em;
+  border-radius: 25px;
+  cursor: pointer;
+  color: #842591;
+  background-color: #e692f8;
+}
+.first-button:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.second-button:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
