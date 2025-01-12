@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {ProductsSearchService} from '../../../../endpoints/products-endpoints/search-by-title-endpoint.service';
+import {MyConfig} from '../../../../my-config';
 
 @Component({
   selector: 'app-search-results',
@@ -104,4 +105,6 @@ export class StoreSearchComponent implements OnInit {
   toggleWishlist($event: MouseEvent, product: any) {
 
   }
+
+  protected readonly MyConfig = MyConfig;
 }

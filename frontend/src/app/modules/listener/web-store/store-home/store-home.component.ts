@@ -16,6 +16,7 @@ import {
 import {
   RemoveProductFromWishlistService
 } from '../../../../endpoints/products-endpoints/remove-item-from-wishlist-endpoint.service';
+import {MyConfig} from '../../../../my-config';
 
 @Component({
   selector: 'app-web-store',
@@ -250,4 +251,6 @@ export class WebStoreComponent implements OnInit {
       }
     );
   }
+
+  protected readonly MyConfig = MyConfig;
 }

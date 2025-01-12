@@ -33,7 +33,9 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
                     EventDate = e.EventDate,
                     Venue = e.Venue,
                     EventTitle = e.EventTitle,
-                    EventCover = e.EventCover
+                    EventCover = e.EventCover,
+                    Longitude = e.Longitude,
+                    Latitude = e.Latitude,
                 })
                 .ToArrayAsync(cancellationToken);
 
@@ -50,6 +52,9 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
             public DateTime EventDate { get; set; }
             public string Venue { get; set; }
             public string? EventCover { get; set; }
+
+            public required decimal Longitude { get; set; }
+            public required decimal Latitude { get; set; }
         }
     }
 }

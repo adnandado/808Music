@@ -21,14 +21,12 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
         [Route("api/playlists/user/{userId}")]
         public async Task<ActionResult<PlaylistResponse>> GetPlaylistsByUserIdAsync(int userId, CancellationToken cancellationToken = default)
         {
-            // Tražimo korisnika s odgovarajućim ID-jem
             var user = await _db.MyAppUsers.FindAsync(userId);
             if (user == null)
             {
                 return NotFound("User not found.");
             }
 
-            // Dohvaćamo sve playliste vezane uz korisnika
             var playlists = await _db.UserPlaylist
                                      .Where(up => up.MyAppUserId == userId)
                                      .Include(up => up.Playlist)
@@ -39,11 +37,10 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                                          NumOfTracks = up.Playlist.NumOfTracks,
                                          IsPublic = up.Playlist.IsPublic,
                                          CoverPath = up.Playlist.CoverPath,
-                                         Username = user.Username // Dodajemo username
+                                         Username = user.Username 
                                      })
                                      .ToListAsync(cancellationToken);
 
-            // Provjeravamo ako korisnik ima playliste
             if (playlists == null || playlists.Count == 0)
             {
                 return NotFound("No playlists by this user.");

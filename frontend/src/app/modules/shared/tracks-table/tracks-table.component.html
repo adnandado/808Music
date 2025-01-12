@@ -39,15 +39,22 @@
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef> Title</th>
       <td mat-cell *matCellDef="let track">
+
         <div>
+          @if (isPlaylist){
+            <div class="track-cover-container">
+              <img class="track-image" [src]="MyConfig.api_address + track.coverPath" alt="Track Cover" />
+              <mat-icon *ngIf="showDeleteIcon" class="delete-icon" (click)="removeTrack(track.id)">delete</mat-icon>
+            </div>
+          }
           <p>{{ track.title }}</p>
           <div class="track-artists">
             <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
             <app-clickable-featured-artists [artists]="track.artists"
                                             (onArtistClick)="goToArtistProfile($event)"></app-clickable-featured-artists>
           </div>
-        </div>
-      </td>
+        </div>      </td>
+
     </ng-container>
 
     <ng-container matColumnDef="artist-controls">
@@ -60,7 +67,12 @@
           <button mat-icon-button (click)="deleteTrack(track.id)">
             <mat-icon>delete</mat-icon>
           </button>
+        }@else{
+          <button mat-icon-button (click)="addToLikedSongs(track.id)">
+            <mat-icon>{{ getLikeIcon(track.id) }}</mat-icon>
+          </button>
         }
+
       </td>
     </ng-container>
 

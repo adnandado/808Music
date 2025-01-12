@@ -87,7 +87,7 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
 
         var last5Sales = productSales
             .Where(ps => ps.QuantitySold > 0)
-            .OrderByDescending(ps => ps.QuantitySold) 
+            .OrderByDescending(ps => ps.TotalRevenue) 
             .Take(5)
             .ToList();
 

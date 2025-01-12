@@ -33,6 +33,8 @@ import {PageEvent} from '@angular/material/paginator';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {ShareBottomSheetComponent} from '../bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
 import {MusicPlayerService} from '../../../services/music-player.service';
+import {AddTrackToLikedSongsService} from '../../../endpoints/playlist-endpoints/add-to-liked-songs-endpoint';
+import {IsLikedSongService} from '../../../endpoints/playlist-endpoints/is-liked-song-endpoint.service';
 
 @Component({
   selector: 'app-tracks-table',
@@ -68,9 +70,12 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
               private deleteTrackService: TrackDeleteEndpointService,
               private getAllTracksService: TrackGetAllEndpointService,
               private btmSheet : MatBottomSheet,
-              private musicPlayerService : MusicPlayerService) {
+              private musicPlayerService : MusicPlayerService,
+              private addTrackToLikedSongsService : AddTrackToLikedSongsService,
+              private isLikedSongService : IsLikedSongService) {
   }
-
+  likedSongs: Map<number, boolean> = new Map();
+  showDeleteIcon : boolean = true;
   ngAfterViewInit(): void {
     /*
     this.dataSource.sortingDataAccessor = (item, prop) => {
@@ -92,38 +97,39 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
           this.reloadData();
       }
     }
-
+  getLikeIcon(id: number): string {
+    return this.likedSongs.get(id) ? 'favorite' : 'favorite_border';
+  }
   reloadData() {
     this.reload = false;
-    if(this.isPlaylist) {
+    this.getAllTracksService.handleAsync(this.pagedRequest).subscribe({
+      next: data => {
+        this.pagedResponse = data;
+        this.tracks = data.dataItems;
+        this.tracksDto = this.tracks.map((track, index) => ({
+          ...track,
+          position: index + 1,
+        }));
+        this.dataSource.data = this.tracksDto;
 
-    }
-    else
-    {
-      this.getAllTracksService.handleAsync(this.pagedRequest).subscribe({
-        next: data => {
-          this.pagedResponse = data;
-          this.tracks = data.dataItems;
-          this.tracksDto = [];
-          for(let i = 0; i < this.tracks.length; i++) {
-            this.tracksDto.push({
-              artists: this.tracks[i].artists,
-              id: this.tracks[i].id,
-              length: this.tracks[i].length,
-              coverPath: MyConfig.api_address + this.tracks[i].coverPath,
-              position: i+1,
-              isExplicit: this.tracks[i].isExplicit,
-              streams: this.tracks[i].streams,
-              title: this.tracks[i].title,
-              albumId: this.tracks[i].albumId
-            });
-          }
-          console.log(this.tracksDto);
-          this.dataSource.data = this.tracksDto;
-        }
-      })
-    }
+        this.likedSongs.clear();
+
+        this.tracksDto.forEach(track => {
+          const request = { trackId: track.id, userId: this.getUserIdFromToken() };
+          this.isLikedSongService.handleAsync(request).subscribe({
+            next: response => {
+              this.likedSongs.set(track.id, response.isLikedSong);
+            },
+          });
+        });
+      },
+      error: error => {
+        console.error('Error reloading data:', error);
+      },
+    });
   }
+
+
 
   ngOnInit(): void {
     this.reloadData();
@@ -246,5 +252,55 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
         break;
     }
     this.dataSource.data = this.tracksDto;
+  }
+
+  addToLikedSongs(id: number) {
+    const isLiked = this.likedSongs.get(id) || false;
+    const request = { trackId: id, userId: this.getUserIdFromToken() };
+
+    if (isLiked) {
+      this.addTrackToLikedSongsService.handleAsync(request).subscribe({
+        next: () => {
+          this.likedSongs.set(id, false);
+          this.snackBar.open("Song removed from liked songs", "Dismiss", { duration: 3500 });
+        },
+        error: error => {
+          console.error('Error removing track:', error);
+        },
+      });
+    } else {
+      this.addTrackToLikedSongsService.handleAsync(request).subscribe({
+        next: () => {
+          this.likedSongs.set(id, true);
+          this.snackBar.open("Song added to liked songs", "Dismiss", { duration: 3500 });
+        },
+        error: error => {
+          console.error('Error adding track:', error);
+        },
+      });
+    }
+  }
+
+  private getUserIdFromToken(): number {
+    let authToken = sessionStorage.getItem('authToken');
+
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
+    }
+
+    try {
+      const parsedToken = JSON.parse(authToken);
+      return parsedToken.userId;
+    } catch (error) {
+      console.error('Error parsing authToken:', error);
+      return 0;
+    }}
+
+  removeTrack(id : number) {
+
   }
 }

@@ -3,7 +3,18 @@ import { SubscriptionDetails, SubscriptionDetailsService } from '../../../endpoi
 import { SubscriptionAddEndpointService } from '../../../endpoints/subscription-endpoints/add-subscription-endpoint.service';
 import { loadStripe, Stripe, StripeCardElement, StripeElements } from '@stripe/stripe-js';
 import { StripeService } from '../../../endpoints/stripe-endpoints/stripe-endpoint.service'; // Import StripeService
-import { UserService } from '../../../endpoints/user-endpoints/get-user-info-endpoints.service'; // Import UserService
+import { UserService } from '../../../endpoints/user-endpoints/get-user-info-endpoints.service';
+import {
+  IsSubscribedRequest,
+  IsSubscribedService
+} from '../../../endpoints/auth-endpoints/is-subscribed-endpoint.service';
+import {
+  UserSubscriptionDetailsResponse,
+  UserSubscriptionService
+} from '../../../endpoints/subscription-endpoints/user-subscription-type-endpoint.service';
+import moment from 'moment';
+import {MyConfig} from '../../../my-config';
+import {MatSnackBar} from '@angular/material/snack-bar'; // Import UserService
 
 @Component({
   selector: 'app-user-subscription',
@@ -12,6 +23,18 @@ import { UserService } from '../../../endpoints/user-endpoints/get-user-info-end
 })
 export class UserSubscriptionComponent implements OnInit {
   subscriptions: SubscriptionDetails[] = [];
+  subscriptionDetails: UserSubscriptionDetailsResponse = {
+    subscription: {
+      subscriptionType: 0,  // Podrazumevana vrednost (ako nije odabrano)
+      title: '',
+      description: '',
+      price: 0,
+      startDate: '',
+      endDate: '',
+      renewalOn: false,
+      message: ''
+    }
+  };
   selectedSubscription: SubscriptionDetails | null = null;
   stripe: Stripe | null = null;
   elements: StripeElements | null = null;
@@ -28,11 +51,27 @@ export class UserSubscriptionComponent implements OnInit {
     private subscriptionService: SubscriptionDetailsService,
     private subscriptionAddService: SubscriptionAddEndpointService,
     private userService: UserService,
-    private stripeService: StripeService, // Inject StripeService
-  private cdr: ChangeDetectorRef
+    private stripeService: StripeService,
+  private cdr: ChangeDetectorRef,
+    private isSubscribedService : IsSubscribedService,
+    private userSubscriptionService : UserSubscriptionService,
+    private snackBar : MatSnackBar
   ) {}
-
+  userSubscribed = false;
   async ngOnInit(): Promise<void> {
+    const userId = this.getUserIdFromToken();
+    this.userSubscriptionService.getUserSubscriptionDetails(userId).subscribe({
+      next: (response: UserSubscriptionDetailsResponse) => {
+        this.subscriptionDetails = response;
+        this.userSubscribed = response.subscription.subscriptionType != null;
+        console.log('User subscription details:', response);
+      },
+      error: (err) => {
+        console.error('Error fetching subscription details:', err);
+      }
+    });
+
+    this.isUserSubscribed();
     this.subscriptionService.getAll().subscribe((data) => {
       this.subscriptions = data;
     });
@@ -100,6 +139,11 @@ export class UserSubscriptionComponent implements OnInit {
           this.errorMessage = result.error.message || 'Payment failed';
         } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
           this.paymentSuccess = true;
+          this.snackBar.open('Payment successful!', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });
           alert('Payment successful!');
           this.addSubscription(userId);
         }
@@ -139,9 +183,11 @@ export class UserSubscriptionComponent implements OnInit {
   }
   selectPlan(subscription: SubscriptionDetails): void {
     this.selectedSubscription = subscription;
-    this.paymentSuccess = false; // Resetiranje prethodnog statusa
-    this.errorMessage = ''; // Resetiranje greške
-    this.loadStripeCard();
+    this.paymentSuccess = false;
+    this.errorMessage = '';
+    setTimeout(() => {
+      this.loadStripeCard();
+    }, 200);
   }
 
 
@@ -151,7 +197,9 @@ export class UserSubscriptionComponent implements OnInit {
       this.errorMessage = 'Please select a subscription plan first.';
       return;
     }
-    this.loadStripeCard();
+
+      this.loadStripeCard();
+
     this.subscribe(this.selectedSubscription);
   }
 
@@ -163,7 +211,11 @@ export class UserSubscriptionComponent implements OnInit {
     }).subscribe(
       (response) => {
         if (response.success) {
-          alert('Subscription added successfully!');
+          this.snackBar.open('Subscription added successful!', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });
         } else {
           this.errorMessage = response.message;
         }
@@ -173,4 +225,35 @@ export class UserSubscriptionComponent implements OnInit {
       }
     );
   }
+
+  private isUserSubscribed() {
+    const request: IsSubscribedRequest = {
+      userId : this.getUserIdFromToken()
+    };
+    this.isSubscribedService.handleAsync(request).subscribe({
+      next: (response) => {
+        if (response.isSubscribed)
+        {
+          this.userSubscribed = true;
+
+        }
+        else
+        {
+          this.userSubscribed = false;
+
+        }
+      },
+      error: (err) => {
+        console.error('Error:', err);
+
+      },
+    });
+  }
+
+  getSubscriptionTitle(subscriptionType: number | null) {
+    return "";
+  }
+
+  protected readonly moment = moment;
+  protected readonly MyConfig = MyConfig;
 }

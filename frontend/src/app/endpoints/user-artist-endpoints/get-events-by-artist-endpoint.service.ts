@@ -10,6 +10,8 @@ export interface ArtistEvents {
   venue: string;
   eventCover?: string;
   eventTitle : string;
+  latitude : number,
+  longitude : number;
 }
 
 @Injectable({

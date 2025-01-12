@@ -8,6 +8,7 @@ import {ArtistGetByIdEndpointService} from '../../../endpoints/artist-endpoints/
 import {HttpErrorResponse} from '@angular/common/http';
 import { format } from 'date-fns';
 import moment from 'moment';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-eventpage',
@@ -18,21 +19,22 @@ export class EventpageComponent {
   ArtistEvents: ArtistEvents[] = [];
   selectedEvent: ArtistEvents | null = null;
   artistData: any | null = null;
+  mapInstance: L.Map | null = null;
 
   constructor(private eventService: EventGetByArtistIdService, private route :ActivatedRoute, private artistGetByIdEndpointService :ArtistGetByIdEndpointService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       let artistId = params['id'];
-    this.eventService.getEventsByArtist(artistId).subscribe(
-      (data) => {
-        this.ArtistEvents = data;
-        this.selectClosestEvent();
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    );})
+      this.eventService.getEventsByArtist(artistId).subscribe(
+        (data) => {
+          this.ArtistEvents = data;
+          this.selectClosestEvent();
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );})
 
     this.route.params.subscribe(params => {
       let artID = params['id'];
@@ -45,7 +47,6 @@ export class EventpageComponent {
         }
       );
     })
-
   }
 
   selectClosestEvent() {
@@ -58,15 +59,45 @@ export class EventpageComponent {
         }))
         .sort((a, b) => a.timeDiff - b.timeDiff)[0];
     }
+    if (this.selectedEvent) {
+      setTimeout(() => {
+        this.initMap(this.selectedEvent!);
+      }, 2000);}
   }
 
-  // Funkcija za selektiranje eventa pri kliku
   selectEvent(event: ArtistEvents) {
     this.selectedEvent = event;
+    this.initMap(event);
+  }
+
+  initMap(event: ArtistEvents) {
+    const mapElement = document.getElementById('map');
+
+    if (this.mapInstance) {
+      this.mapInstance.remove();
+    }
+
+    const customIcon = L.icon({
+      iconUrl: 'https://th.bing.com/th/id/R.81f20b3f073d38c550b0938686909785?rik=rsNHhb6EvzomoQ&riu=http%3a%2f%2fclipart-library.com%2fimage_gallery2%2fKanye-West-PNG-Pic.png&ehk=xOLiNla8XPcrGhjryB7yA2GB%2bdHvVldfG1U%2fLLj016Y%3d&risl=&pid=ImgRaw&r=0',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    const map = L.map('map').setView([event.latitude, event.longitude], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.marker([event.latitude, event.longitude], { icon: customIcon }).addTo(map)
+      .bindPopup(`<b>${event.eventTitle}</b><br>${event.city}, ${event.country}`)
+      .openPopup();
+
+    this.mapInstance = map;
   }
 
   protected readonly MyConfig = MyConfig;
-
   protected readonly format = format;
   protected readonly moment = moment;
 }

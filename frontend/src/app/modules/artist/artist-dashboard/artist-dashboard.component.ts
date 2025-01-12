@@ -6,6 +6,7 @@ import {
 } from '../../../endpoints/artist-endpoints/artist-dashboard-stats-endpoint.serrvice';
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
 import moment from 'moment';
+import {formatNumber} from '@angular/common';
 
 @Component({
   selector: 'app-artist-dashboard',
@@ -57,4 +58,5 @@ export class ArtistDashboardComponent implements OnInit {
   }
 
   protected readonly moment = moment;
+  protected readonly formatNumber = formatNumber;
 }

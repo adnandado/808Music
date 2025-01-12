@@ -5,7 +5,13 @@
 .track-table-duration-cell {
   text-align: center;
 }
-
+.track-image{
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 15px;
+;}
 table p {
   font-size: 16px;
   margin: 0;
@@ -29,7 +35,11 @@ table p {
 .mat-mdc-row .mat-mdc-cell {
   border: none;
 }
-
+.song-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .mat-mdc-row:hover .mat-mdc-cell {
   border-color: currentColor;
   background-color: #4D3D50;

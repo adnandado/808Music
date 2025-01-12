@@ -17,6 +17,6 @@ namespace RS1_2024_25.API.Data.Models
         public float Price { get; set; }
 
         [Required]
-        public int SubscriptionType { get; set; } // 1 = 1 month, 2 = 2 months, 3 = 3 months
+        public int SubscriptionType { get; set; } 
     }
 }
