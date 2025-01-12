@@ -1,3 +1,4 @@
+@if(!userSubscribed){
 <div class="plans-container">
 <div class="stripe-container" *ngIf="selectedSubscription">
   <h2>{{ selectedSubscription.title }}</h2>
@@ -36,6 +37,17 @@
     </div>
   </div>
 </div>
+}
+<div *ngIf="userSubscribed && subscriptionDetails.subscription.subscriptionType">
+  <div class="plan-container">
 
 
+  <div class="subscription-card-current"
+> <div class="top"><p class="your-plan">Your plan</p><img class="logo" [src]="MyConfig.api_address + '/media/808music_blue.png'" alt="Dado"></div>
+      <h3 class="subscription-title-current">{{ subscriptionDetails.subscription.title }}</h3>
+      <p class="subscription-price-current">Your next bill is  for €{{ subscriptionDetails.subscription.price | number:'1.2-2' }} on {{ moment(subscriptionDetails.subscription.endDate).format('DD/MM/YY') }}</p>
+
+    </div>
+  </div>
+  </div>
 

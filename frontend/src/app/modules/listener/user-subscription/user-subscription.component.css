@@ -16,13 +16,37 @@ body {
   box-sizing: border-box;
 }
 
-
+.subscription-card-current{
+height: 15vw;
+  width: 70vw;
+  background-color: #272727;
+  color: #E0E0E0;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.logo{
+  width: 5vw;
+  padding-top: 1vw;
+  align-self: center;
+  padding-right: 1vw;
+}
 .plans-container h2 {
   color: #fff;
   margin-bottom: 30px;
   font-size: 32px;
   font-weight: 700;
-  text-align: left; /* Lijevo poravnanje naslova */
+  text-align: left;
 }
 
 .subscription-card {
@@ -71,24 +95,61 @@ body {
 }
 .plan-body {
   padding: 30px 20px;
-  text-align: left; /* Lijevo poravnanje teksta unutar tijela */
+  text-align: left;
   background-color: #333333;
   display: flex;
-  justify-content: space-between;  /* Poravnajte tekst i gumb s lijeve strane */
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
+
+}
+.your-plan{
+  padding-left: 1vw;
+  padding-top: 1vw;
+
+  font-weight: bold;
+  font-size: 2em;
+}
+p{
+  margin: 0;
+}
+.subscription-title-current{
+  font-size: 3.5em;
+  padding-left: 1vw;
+  padding-top: 1vw;
+
+  font-weight: bold;
+  color: rgb(165, 187, 209);
+}
+.subscription-price-current{
+  font-weight: 555;
+  color: #656565;
+  padding-left: 1vw;
+  font-size: 1.50em;  padding-top: 0.6vw;
 
 }
 .plans-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center; /* Poravnanje na sredinu po horizontali */
+  align-items: center;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  overflow-y: auto; /* Omogućite vertikalni scroll */
+  overflow-y: auto;
+  height: auto;
+}
+.plan-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  overflow-y: auto;
   height: auto;
 }
 
@@ -107,7 +168,9 @@ body {
   align-items: center; /* Centriranje sadržaja unutar stripe-container */
   margin: 0 auto; /* Centriranje unutar roditeljskog elementa */
 }
-
+h3{
+  margin: 0;
+}
 
 label {
   display: block;

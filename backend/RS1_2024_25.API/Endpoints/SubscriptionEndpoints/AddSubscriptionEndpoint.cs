@@ -54,7 +54,6 @@ public class SubscriptionAddEndpoint : MyEndpointBaseAsync
         _db.MyAppUsers.Update(user);
         await _db.SaveChangesAsync(cancellationToken);
 
-        // Generiranje maila
         var myAppUser = await _db.MyAppUsers.SingleOrDefaultAsync(u => u.ID == request.UserId, cancellationToken);
         if (myAppUser != null)
         {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {ProductByTypeService} from '../../../../endpoints/products-endpoints/products-by-type-endpoint.service';
+import {MyConfig} from '../../../../my-config';
 
 @Component({
   selector: 'app-search-results',
@@ -139,4 +140,6 @@ this.currentPage = 1;
   isOnWishlist(product: any) {
     return false;
   }
+
+  protected readonly MyConfig = MyConfig;
 }

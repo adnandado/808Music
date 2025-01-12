@@ -61,7 +61,12 @@ const routes: Routes = [{
     },
     {
       path: 'playlist',
-      loadChildren: () => import("../artist/playlist/playlist.module").then(m => m.PlaylistModule)
+      children: [
+        { path: '', component: PlaylistListMaterialComponent },
+        { path: 'create', component: PlaylistCreateOrEditComponent },
+        { path: 'edit/:id', component: PlaylistCreateOrEditComponent },
+        { path: ':id', component: TracksPageComponent }
+      ]
     },
     {path: 'store-home',
       component: WebStoreComponent
