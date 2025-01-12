@@ -1,0 +1,27 @@
+<div class="following-page">
+  <h3>Attach Content</h3>
+  <div class="search">
+    <app-search-bar [placeholder]="'Find content to share'" [autoSearch]="true" (onSearchChange)="findContent($event)"></app-search-bar>
+  </div>
+  <button mat-flat-button (click)="dismiss()" class="cancel">
+    Cancel
+  </button>
+  <div class="following">
+    @if(results.length > 0)
+    {
+      @for (a of results; track i; let i = $index) {
+        <div [ngStyle]="{'width':'100%'}">
+          <div class="flex-list">
+            <app-message-content-card [content]="a" (onButtonClick)="attachContent($event)"></app-message-content-card>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="result-error">
+        <mat-icon>report</mat-icon>
+        <h6>No content that matches your query found</h6>
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+      </div>
+    }
+  </div>
+</div>

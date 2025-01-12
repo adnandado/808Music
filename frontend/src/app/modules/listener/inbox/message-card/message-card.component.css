@@ -1,0 +1,39 @@
+.msg-card {
+  width: fit-content;
+}
+
+.msg-content {
+  border-radius: 20px;
+  background-color: #3E3F40;
+  box-sizing: border-box;
+  padding: 2vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msg-info {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: end;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+p {
+  margin: 0;
+}
+
+.msg-info > p{
+
+  font-size: 0.8rem;
+}
+
+.msg-text {
+  font-size: 1.4rem;
+}
+
+.fa-align-left {
+  justify-self: start;
+}

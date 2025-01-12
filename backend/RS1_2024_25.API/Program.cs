@@ -78,7 +78,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 // If the request is for our hub...
                 var path = context.HttpContext.Request.Path;
                 if (!string.IsNullOrEmpty(accessToken) &&
-                    (path.StartsWithSegments("/notificationsHub")))
+                    (path.StartsWithSegments("/notificationsHub") || path.StartsWithSegments("/chatHub")))
                 {
                     // Read the token out of the query string
                     context.Token = accessToken;
@@ -136,5 +136,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapHub<NotificationsHub>("/notificationsHub");
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

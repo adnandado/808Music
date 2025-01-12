@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RS1_2024_25.API.Data;
 
@@ -11,9 +12,11 @@ using RS1_2024_25.API.Data;
 namespace RS1_2024_25.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250108231137_chat-last-message-date")]
+    partial class chatlastmessagedate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -392,53 +395,6 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("Credits");
                 });
 
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Events", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EventCover")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EventDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EventTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Latitude")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Longitude")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Venue")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtistId");
-
-                    b.ToTable("Events");
-                });
-
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Follow", b =>
                 {
                     b.Property<int>("MyAppUserId")
@@ -589,9 +545,6 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("isLikePlaylist")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("Playlists");
@@ -647,9 +600,6 @@ namespace RS1_2024_25.API.Migrations
 
                     b.Property<int>("QtyInStock")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("RevenueFromProduct")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("SaleAmount")
                         .HasColumnType("decimal(18,2)");
@@ -867,27 +817,6 @@ namespace RS1_2024_25.API.Migrations
                     b.HasIndex("TrackId");
 
                     b.ToTable("TrackGenres");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.TrackStream", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("StreamedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TrackId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TrackId");
-
-                    b.ToTable("TrackStream");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserArtist", b =>
@@ -1242,17 +1171,6 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("Track");
                 });
 
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Events", b =>
-                {
-                    b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
-                        .WithMany()
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Artist");
-                });
-
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Follow", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
@@ -1407,17 +1325,6 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Genre");
-
-                    b.Navigation("Track");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.TrackStream", b =>
-                {
-                    b.HasOne("RS1_2024_25.API.Data.Models.Track", "Track")
-                        .WithMany("TrackStreams")
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
 
                     b.Navigation("Track");
                 });
@@ -1585,8 +1492,6 @@ namespace RS1_2024_25.API.Migrations
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Track", b =>
                 {
                     b.Navigation("PlaylistTracks");
-
-                    b.Navigation("TrackStreams");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Endpoints.ProductEndpoints.Order", b =>

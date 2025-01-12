@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
-import {Router} from '@angular/router';
 import {NotificationsService, RichNotification} from '../../../services/notifications.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MusicPlayerService} from '../../../services/music-player.service';
@@ -43,7 +42,8 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if(!this.auth.isLoggedIn())
     {
-      this.router.navigate(['/auth/login']);
+      console.log("Not logged in...");
+      setTimeout(() => this.router.navigate(['/auth/login']), 1000);
     }
     this.musicPlayerService.trackEvent.subscribe({
       next: data => {

@@ -47,6 +47,8 @@ namespace RS1_2024_25.API.Data
         public DbSet<TrackStream> TrackStream { get; set; }
 
         public DbSet<Events> Events { get; set; }
+        public DbSet<UserChat> UserChats { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

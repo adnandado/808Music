@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+  color: #EEDEE7;
+}
+
+.inbox-page {
+  padding-top: 2vh;
+  overflow-y: hidden;
+  height: 100vh;
+  display: flex;
+  gap: 2vw;
+}
+
+.chats {
+  height: 96vh;
+  overflow-y: auto;
+  width: 20vw;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.messages {
+  height: 96vh;
+  overflow-y: auto;
+  width: 47vw;
+}
+
+
+.title {
+  font-weight: 500;
+  margin: 0;
+}
+
+.create {
+  width: 8vw;
+}
+
+.chat-card {
+  background-color: #161215;
+  padding: 1vh;
+  padding-left: 1.5vh;
+  border-radius: 15px;
+  border: 0.1rem solid #4E444B;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+.chat-card:hover {
+  cursor: pointer;
+}
+
+.chat-card:hover > h6{
+  text-decoration: underline;
+}
+
+h6, p {
+  margin: 0;
+}
+
+.last-active {
+  color: #A9A9A9;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+.last-message {
+  color: #A9A9A9;
+}
+
+.hide-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.open-chats {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.title-and-unreads {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.unreads {
+  box-sizing: border-box;
+  width: 35px;
+  height: 35px;
+  background: #EEDEE7;
+  border-radius: 50%;
+  text-align: center;
+  color: #161215;
+  display: flex;
+  justify-content: center;
+}
+
+.unreads > p {
+  color: #161215;
+  display: block;
+  align-self: center;
+  font-weight: bold;
+}

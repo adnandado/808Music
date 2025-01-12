@@ -1,0 +1,93 @@
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+}
+
+.following h6, .following p{
+  padding: 0;
+  margin: 0;
+}
+
+.result-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  justify-self: flex-start;
+}
+
+.type {
+  display: flex;
+  align-items: center;
+  color: #A9A9A9;
+  gap: 3px;
+}
+
+.flex-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  max-width: 50vw;
+}
+
+.hide-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.following-page {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+h3 {
+  font-weight: 500;
+  margin-bottom: 0;
+  align-self: center;
+}
+
+.search {
+  align-self: center;
+  overflow-x: hidden;
+}
+
+.following {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1vh;
+}
+
+.following-page {
+  min-width: 40vw;
+  min-height: 40vh;
+}
+
+.result-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5vh;
+  margin-bottom: 10vh;
+}
+
+.result-error > h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.result-error > mat-icon {
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+}

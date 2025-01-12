@@ -1,0 +1,18 @@
+.search {
+  width: 20vw;
+  overflow: hidden;
+  align-self: center;
+}
+
+.cancel {
+  width: 20vw;
+  align-self: center;
+}
+
+h3 {
+  align-self: center;
+}
+
+.result-error {
+  height: 10vh;
+}

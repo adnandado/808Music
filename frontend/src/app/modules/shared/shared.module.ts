@@ -13,7 +13,7 @@ import {
   MatCardTitleGroup
 } from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
-import {MatButton, MatFabButton, MatIconButton} from "@angular/material/button";
+import {MatButton, MatFabButton, MatIconButton, MatMiniFabButton} from "@angular/material/button";
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 import {
   MatDialogActions,
@@ -76,6 +76,9 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import { TrackCardComponent } from './tracks/track-card/track-card.component';
 import { TrackCardListComponent } from './tracks/track-card-list/track-card-list.component';
+import { CreateChatBottomSheetComponent } from './bottom-sheets/create-chat-bottom-sheet/create-chat-bottom-sheet.component';
+import { SearchForContentSheetComponent } from './bottom-sheets/search-for-content-sheet/search-for-content-sheet.component';
+import { MessageContentCardComponent } from './message-content-card/message-content-card.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +122,9 @@ import { TrackCardListComponent } from './tracks/track-card-list/track-card-list
     SearchPageComponent,
     TrackCardComponent,
     TrackCardListComponent,
+    CreateChatBottomSheetComponent,
+    SearchForContentSheetComponent,
+    MessageContentCardComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
@@ -172,6 +178,7 @@ import { TrackCardListComponent } from './tracks/track-card-list/track-card-list
     MatSlideToggle,
     MatChipListbox,
     MatChipOption,
+    MatMiniFabButton,
   ],
 
   exports: [
@@ -205,7 +212,8 @@ import { TrackCardListComponent } from './tracks/track-card-list/track-card-list
     LanguageSelectorComponent,
     AlbumCardListComponent,
     ArtistBigCardComponent,
-    ArtistBigCardListComponent
+    ArtistBigCardListComponent,
+    MessageContentCardComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
