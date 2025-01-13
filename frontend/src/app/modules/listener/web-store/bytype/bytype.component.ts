@@ -20,7 +20,6 @@ export class BytypeComponent implements OnInit {
 
   sortBy: string = 'dateCreatedNewest';
 
-  // Lista tipova proizvoda
   productTypes = [
     { value: 0, label: 'Clothes' },
     { value: 1, label: 'Vinyls' },
@@ -69,7 +68,7 @@ export class BytypeComponent implements OnInit {
     }
   }
   getProductTypeLabel(typeValue: number | null): string {
-    if (typeValue === null) return 'All Products'; // Ili neka zadana vrijednost
+    if (typeValue === null) return 'All Products';
     const type = this.productTypes.find((t) => t.value === typeValue);
     return type ? type.label : 'Unknown';
   }
@@ -78,10 +77,9 @@ export class BytypeComponent implements OnInit {
     this.router.navigate(['listener/product', slug]);
   }
   calculatePagination() {
-    this.totalPages = Math.ceil(this.totalResults / this.pageSize);  // Ukupan broj stranica
+    this.totalPages = Math.ceil(this.totalResults / this.pageSize);
     this.pageNumbers = [];
 
-    // Napravi niz brojeva stranica
     for (let i = 1; i <= this.totalPages; i++) {
       this.pageNumbers.push(i);
     }
@@ -89,7 +87,7 @@ export class BytypeComponent implements OnInit {
 
 
   searchByType(): void {
-    this.currentPage = 1; // Resetiraj na prvu stranicu
+    this.currentPage = 1;
     this.updateUrlParams();
     this.fetchResults();
   }

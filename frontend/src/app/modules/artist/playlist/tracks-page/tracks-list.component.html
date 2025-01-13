@@ -16,7 +16,7 @@
         <div>
           <p>{{ playlistDetails?.isPublic ? 'Public playlist' : 'Private playlist' }}</p>
 <h2 class="playlist-title">{{ playlistDetails?.title }}</h2>
-          <h6>{{ username }}</h6>
+          <h6> {{ username }}</h6>
           <p>{{ playlistDetails?.numOfTracks }} songs • {{ getTotalTrackLength() }}</p>
           <div class="playlist-actions">
             <button mat-icon-button [matMenuTriggerFor]="menu">

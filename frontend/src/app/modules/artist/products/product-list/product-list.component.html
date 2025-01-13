@@ -1,17 +1,25 @@
 
 <body>
+
 <div>
-  <button class="add-product" (click)="goToCreate()"><mat-icon>add_circle</mat-icon></button>
+  <mat-card class="add-product" appearance="outlined" (click)="goToCreate()">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>New Product</mat-card-title>
+        <mat-icon>add_circle</mat-icon>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content></mat-card-content>
+  </mat-card>
 </div>
 <div class="container">
-  <!-- Main Content -->
   <main class="main-content">
 
 
     <div class="products">
       <div *ngFor="let product of products" class="product">
         <div *ngIf="!isEditing[product.slug]">
-          <img [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="product-image">
+          <img [src]="MyConfig.media_address + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="product-image">
           <p class="product-name">{{ product.title }}</p>
           <p class="product-price">{{ updateCalculatedPrice(product)}}$</p>
           <button class="product-button" (click)="toggleEdit(product.slug)">Edit</button>
@@ -19,16 +27,15 @@
           <button class="product-button" (click)="viewProduct(product.slug)">View Details</button>
         </div>
 
-        <!-- Edit Mode -->
         <div *ngIf="isEditing[product.slug]">
           <p class="edit-title">Title</p>
           <input [(ngModel)]="product.title" class="product-input" placeholder="Title">
           <p class="edit-title">Price</p>
-          <input [(ngModel)]="product.price" class="product-input" />
+          <input [(ngModel)]="product.price" class="product-input" min="1"/>
           <p class="edit-title">Quantity</p>
-          <input [(ngModel)]="product.quantity" class="product-input" type="number" placeholder="Quantity">
+          <input [(ngModel)]="product.quantity" class="product-input" type="number" placeholder="Quantity" min="0">
           <p class="edit-title">Sale%</p>
-          <input [(ngModel)]="product.saleAmount" class="product-input" type="number" placeholder="SaleAmount">
+          <input [(ngModel)]="product.saleAmount" class="product-input" type="number" placeholder="SaleAmount" min="0">
           <p class="edit-title">Bio</p>
           <input [(ngModel)]="product.bio" class="product-input" placeholder="bio">
           <div class="image-edit">

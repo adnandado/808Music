@@ -35,6 +35,8 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
             throw new Exception("Product not found");
         }
 
+        bool isSaleAmountChanged = product.SaleAmount != Math.Round(request.SaleAmount, 2) / 100;
+
         product.Title = request.Title;
         product.Price = request.Price;
         product.QtyInStock = request.Quantity;
@@ -45,7 +47,6 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
         _db.Products.Update(product);
         await _db.SaveChangesAsync(cancellationToken);
 
-        // Ako su dodane slike
         if (request.Photos != null && request.Photos.Any())
         {
             string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "products");
@@ -76,36 +77,39 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
 
         await _db.SaveChangesAsync(cancellationToken);
 
-        var wishlistedUsers = await _db.UserProductWishlist
-            .Where(wishlist => wishlist.ProductId == product.Id)
-            .Include(wishlist => wishlist.MyAppUser)
-            .ToListAsync(cancellationToken);
-
-        foreach (var wishlist in wishlistedUsers)
+        if (isSaleAmountChanged)
         {
-            var user = wishlist.MyAppUser;
+            var wishlistedUsers = await _db.UserProductWishlist
+                .Where(wishlist => wishlist.ProductId == product.Id)
+                .Include(wishlist => wishlist.MyAppUser)
+                .ToListAsync(cancellationToken);
 
-            var mailBody = new StringBuilder();
-            mailBody.Append("<html><body style='background-color: #f0f0f0; margin: 0; padding: 0;'>");
-            mailBody.Append("<div style='width: 100%; background-color: #f0f0f0; padding: 20px; box-sizing: border-box;'>");
-            mailBody.Append("<img src='https://i.imgur.com/gZqaDjj.png' alt='Order Confirmation' style='width: 100px; height: auto; display: block; margin: 20px auto;' />");
-            mailBody.Append("<div style='max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px;'>"); 
-            mailBody.Append($"<h2 >Hi {user.Username},</h2>");
-            mailBody.Append($"<p>The product <strong>{product.Title}</strong> is now on sale!</p>");
-            mailBody.Append($"<p>New price: <strong>${(decimal)product.Price * (1 - product.SaleAmount):F2}</strong> (Discount: {product.SaleAmount * 100:F0}%)</p>");
-            mailBody.Append($"<p style='font-size: 7px;'>You're receiving this email because you have this product wishlisted</p>");
-
-            mailBody.Append("</div>");
-            mailBody.Append("</div>");
-            mailBody.Append("</body></html>");
-
-            await _mailService.Send(new MailData
+            foreach (var wishlist in wishlistedUsers)
             {
-                Subject = $"{product.Title.ToUpper()} - from your wishlist - IS NOW {product.SaleAmount * 100:F0}% OFF!",
-                IsBodyHtml = true,
-                To = user.Email,
-                Body = mailBody
-            });
+                var user = wishlist.MyAppUser;
+
+                var mailBody = new StringBuilder();
+                mailBody.Append("<html><body style='background-color: #f0f0f0; margin: 0; padding: 0;'>");
+                mailBody.Append("<div style='width: 100%; background-color: #f0f0f0; padding: 20px; box-sizing: border-box;'>");
+                mailBody.Append("<img src='https://i.imgur.com/gZqaDjj.png' alt='Order Confirmation' style='width: 100px; height: auto; display: block; margin: 20px auto;' />");
+                mailBody.Append("<div style='max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px;'>");
+                mailBody.Append($"<h2>Hi {user.Username},</h2>");
+                mailBody.Append($"<p>The product <strong>{product.Title}</strong> is now on sale!</p>");
+                mailBody.Append($"<p>New price: <strong>${(decimal)product.Price * (1 - product.SaleAmount):F2}</strong> (Discount: {product.SaleAmount * 100:F0}%)</p>");
+                mailBody.Append($"<p style='font-size: 7px;'>You're receiving this email because you have this product wishlisted</p>");
+
+                mailBody.Append("</div>");
+                mailBody.Append("</div>");
+                mailBody.Append("</body></html>");
+
+                await _mailService.Send(new MailData
+                {
+                    Subject = $"{product.Title.ToUpper()} - from your wishlist - IS NOW {product.SaleAmount * 100:F0}% OFF!",
+                    IsBodyHtml = true,
+                    To = user.Email,
+                    Body = mailBody
+                });
+            }
         }
 
         return new ProductUpdateResponse
@@ -119,6 +123,7 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
             Bio = product.Bio,
         };
     }
+
 
     public class ProductUpdateRequest
     {

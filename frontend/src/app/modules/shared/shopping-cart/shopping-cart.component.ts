@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { GetShoppingCartService } from '../../../endpoints/products-endpoints/get-shopping-cart-endpoint.service';
 import { RemoveFromShoppingCartService } from '../../../endpoints/products-endpoints/remove-item-from-shopping-cart-endpoint.service';
 import { UpdateShoppingCartService } from '../../../endpoints/products-endpoints/update-shopping-cart-endpoint.service';
@@ -19,7 +19,8 @@ export class ShoppingCartComponent implements OnInit {
     private getCartService: GetShoppingCartService,
     private removeFromCartService: RemoveFromShoppingCartService,
     private updateShoppingCartService: UpdateShoppingCartService,
-    private router : Router
+    private router : Router,
+    private cdRef : ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -57,10 +58,12 @@ export class ShoppingCartComponent implements OnInit {
       if (Array.isArray(response.cartItems)) {
         this.cartItems = response.cartItems;
         this.calculateTotalPrice();
+        this.cdRef.detectChanges();
       } else {
         console.error('Expected an array for cartItems, but received:', response.cartItems);
         this.cartItems = [];
         this.totalPrice = 0;
+        this.cdRef.detectChanges();
       }
     });
   }

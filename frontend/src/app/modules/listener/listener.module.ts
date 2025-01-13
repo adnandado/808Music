@@ -47,6 +47,7 @@ import { MessagesListComponent } from './inbox/messages-list/messages-list.compo
 import { MessageCardComponent } from './inbox/message-card/message-card.component';
   import {MatStep, MatStepper} from '@angular/material/stepper';
   import {EventpageComponent} from './eventpage/eventpage.component';
+  import {ImageCropperComponent} from 'ngx-image-cropper';
 
 
 @NgModule({
@@ -76,7 +77,7 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
     InboxComponent,
     ChatBoxComponent,
     MessagesListComponent,
-    MessageCardComponent
+    MessageCardComponent,
   ],
   imports: [
     CommonModule,
@@ -105,6 +106,7 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
     MatStepper,
     MatStep,
     MatMiniFabButton,
+    ImageCropperComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

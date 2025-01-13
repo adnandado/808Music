@@ -39,7 +39,7 @@
     <div class="product-row">
       <div
         *ngFor="let product of onSaleProducts"
-        class="product"
+        class="product" matTooltip="{{ product.title }}" matTooltipPosition="above"
         (click)="viewProduct(product.slug)"
       >
         <div class="sale-badge" *ngIf="product.saleAmount > 0">
@@ -51,7 +51,7 @@
           class="product-image"
         >
         <div class="product-info">
-          <p class="product-name hide-overflow">{{ product.title }}</p>
+          <p class="product-name hide-overflow" >{{ product.title }}</p>
           <p class="product-price">{{ updateCalculatedPrice(product) }}$</p>
         </div>
         <div
@@ -66,7 +66,7 @@
     <div class="product-row">
       <div
         *ngFor="let product of newestProducts"
-        class="product"
+        class="product" matTooltip="{{ product.title }}" matTooltipPosition="above"
         (click)="viewProduct(product.slug)"
       >
         <div class="sale-badge" *ngIf="product.saleAmount > 0">
@@ -93,7 +93,7 @@
     <div class="product-row">
       <div
         *ngFor="let product of bestSellingProducts"
-        class="product"
+        class="product" matTooltip="{{ product.title }}" matTooltipPosition="above"
         (click)="viewProduct(product.slug)"
       >
         <div class="sale-badge" *ngIf="product.saleAmount > 0">
@@ -123,7 +123,7 @@
     <div class="product-row">
       <div
         *ngFor="let product of randomProducts"
-        class="product"
+        class="product" matTooltip="{{ product.title }}" matTooltipPosition="above"
         (click)="viewProduct(product.slug)"
       >
         <div class="sale-badge" *ngIf="product.saleAmount > 0">

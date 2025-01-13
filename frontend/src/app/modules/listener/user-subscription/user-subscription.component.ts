@@ -25,7 +25,7 @@ export class UserSubscriptionComponent implements OnInit {
   subscriptions: SubscriptionDetails[] = [];
   subscriptionDetails: UserSubscriptionDetailsResponse = {
     subscription: {
-      subscriptionType: 0,  // Podrazumevana vrednost (ako nije odabrano)
+      subscriptionType: 0,
       title: '',
       description: '',
       price: 0,

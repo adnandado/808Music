@@ -8,6 +8,7 @@ import { ArtistHandlerService } from '../../../../services/artist-handler.servic
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ConfirmDialogComponent} from '../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
+import {MyConfig} from "../../../../my-config";
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -34,7 +35,6 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.products.forEach(product => {
-      // Pomnoži vrijednost s 100 da bi se prikazala kao cijeli broj
       product.saleAmount = product.saleAmount * 100;
     });
     const selectedArtist = this.artistHandlerService.getSelectedArtist();
@@ -97,12 +97,16 @@ export class ProductListComponent implements OnInit {
 
     this.updateService.handleAsync(formData).subscribe({
       next: (response: ProductUpdateResponse) => {
-        alert('Product updated successfully!');
+        this.snackBar.open('Product updated successfully!.', 'Close', {
+          duration: 3000,
+        });
         this.loadProducts();
         this.toggleEdit(product.slug);
       },
       error: (err: HttpErrorResponse) => {
-        alert('Failed to update product.');
+        this.snackBar.open('Product update failed!.', 'Close', {
+          duration: 3000,
+        });
         console.error(err);
       }
     });
@@ -132,12 +136,12 @@ export class ProductListComponent implements OnInit {
 
 
   deleteProduct(slug: string): void {
-    let product = this.products?.find(x => x.slug === slug);  // Pronađi proizvod prema slug-u
+    let product = this.products?.find(x => x.slug === slug);
     let dialogRef = this.dialog.open(ConfirmDialogComponent, {
       hasBackdrop: true,
       data: {
-        title: `Are you sure you want to delete "${product?.title}"?`,  // Prilagođeni naslov dijaloga
-        content: 'This will permanently delete this product.'  // Tekst potvrde
+        title: `Are you sure you want to delete "${product?.title}"?`,
+        content: 'This will permanently delete this product.'
       }
     });
 
@@ -145,13 +149,13 @@ export class ProductListComponent implements OnInit {
       if (result) {
         this.deleteService.handleAsync(slug).subscribe({
           next: () => {
-            this.snackBar.open(`${product?.title} deleted successfully!`, 'Close', {  // Prikazivanje poruke o uspehu
+            this.snackBar.open(`${product?.title} deleted successfully!`, 'Close', {
               duration: 2000,
             });
-            this.loadProducts();  // Ponovno učitavanje proizvoda
+            this.loadProducts();
           },
           error: (err: HttpErrorResponse) => {
-            this.snackBar.open('Failed to delete product.', 'Close', {  // Prikazivanje greške
+            this.snackBar.open('Failed to delete product.', 'Close', {
               duration: 3000,
             });
             console.error(err);
@@ -180,4 +184,5 @@ export class ProductListComponent implements OnInit {
     product.saleAmount = product.saleAmount * 100;
   }
 
+    protected readonly MyConfig = MyConfig;
 }

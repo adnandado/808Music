@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Change your Profile Picture</h2>
+
+<mat-dialog-content>
+  <div
+    class="drop-area"
+    (click)="triggerFileInput()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)">
+    <p *ngIf="!imageChangedEvent">Drag & drop your image here, or click to select a file</p>
+    <p *ngIf="imageChangedEvent">Image loaded! You can crop it below.</p>
+  </div>
+  <input type="file" #fileInput hidden (change)="fileChangeEvent($event)" />
+
+  <image-cropper
+    class="crop"
+    [imageChangedEvent]="imageChangedEvent"
+    (imageCropped)="imageCropped($event)"
+    [resizeToWidth]="128"
+    [resizeToHeight]="128"
+    [maintainAspectRatio]="true"
+    [cropperMinWidth]="100"
+    [cropperMinHeight]="100">
+  </image-cropper>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Cancel</button>
+  <button mat-button (click)="saveCroppedImage()">Save</button>
+</mat-dialog-actions>

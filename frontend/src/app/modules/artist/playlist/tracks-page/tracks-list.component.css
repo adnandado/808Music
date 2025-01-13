@@ -11,7 +11,18 @@ body {
   height: 100vh;
 
 }
+.username-and-pfp
+{
+  display: flex;
+  flex-direction: row;
+}
+.profile-picture{
+  border-radius: 50%;
+  width: 2vw;
+  height: 2vw;
+  margin-right: 0.5vw;
 
+}
 .playlist-title{
   font-weight: bold;
   margin:0;
