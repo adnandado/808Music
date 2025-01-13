@@ -16,6 +16,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import { PlaylistUpdateDialogComponent } from './tracks-page/playlist-update-dialog/playlist-update-dialog.component';
 import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 import { PlaylistCreateDialogComponent } from './tracks-page/playlist-create-dialog/playlist-create-dialog.component';
+import {MatTooltip} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { PlaylistCreateDialogComponent } from './tracks-page/playlist-create-dia
     MatMenuItem,
     MatDialogActions,
     MatDialogContent,
-    MatDialogTitle
+    MatDialogTitle,
+    MatTooltip
   ]
 })
 export class PlaylistModule { }

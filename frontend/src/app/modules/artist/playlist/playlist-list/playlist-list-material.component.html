@@ -19,7 +19,7 @@
     <div class="flex-container">
 
       <div *ngFor="let playlist of playlists || []">
-        <app-playlist-card [title]="playlist.title"
+        <app-playlist-card matTooltip="{{ playlist.title }}" matTooltipPosition="below" [title]="playlist.title"
                            [imageUrl]="MyConfig.media_address + playlist.coverPath"
                            [username]="playlist.username"
                            [id]="playlist.id"

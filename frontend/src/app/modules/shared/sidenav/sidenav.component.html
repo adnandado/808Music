@@ -1,6 +1,6 @@
 <div class="sidenav">
   <div class="logo-container">
-    <img class="logo-image" src="http://localhost:7000/media/808music_logo.png" alt="Logo">
+    <img class="logo-image" [src]="MyConfig.media_address + '/808music_logo.png'" alt="Logo">
     <hr class="divider">
   </div>
   <div class="sidenav-icons">
@@ -10,12 +10,14 @@
     <button mat-icon-button routerLink="/listener/search" aria-label="Search">
       <mat-icon>search</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/listener/store-home" aria-label="Shopping Cart">
-      <mat-icon>shopping_cart</mat-icon>
-    </button>
     <button mat-icon-button routerLink="/listener/playlist" aria-label="Playlists">
       <mat-icon>library_music</mat-icon>
     </button>
+
+    <button mat-icon-button routerLink="/listener/store-home" aria-label="Shopping Cart">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+
     <button mat-icon-button routerLink="/listener/notifications" aria-label="Notifications">
       <mat-icon>notifications</mat-icon>
     </button>
@@ -29,14 +31,13 @@
 
     <img
       class="profile-picture"
-      src="https://i.imgur.com/x3HgXwt.png"
-      alt="Profile Picture"
+      [src]="pathToPfp"
       (click)="toggleMenu()"
     />
     <div class="profile-menu" [ngClass]="{'show': isMenuVisible}">
       <ul>
         <li (click)="navigateTo('profile')">Profile</li>
-        <li (click)="navigateTo('account')">Account</li>
+        <li (click)="openImageCropperDialog()">Change Picture</li>
         <li (click)="navigateTo('/listener/subscriptions')">Subscriptions</li>
         <li (click)="navigateTo('settings')">Settings</li>
         <hr />

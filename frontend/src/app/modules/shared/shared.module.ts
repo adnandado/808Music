@@ -80,6 +80,8 @@ import { CreateChatBottomSheetComponent } from './bottom-sheets/create-chat-bott
 import { SearchForContentSheetComponent } from './bottom-sheets/search-for-content-sheet/search-for-content-sheet.component';
 import { MessageContentCardComponent } from './message-content-card/message-content-card.component';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+import { PfpCropperDialogComponent } from './pfp-cropper-dialog/pfp-cropper-dialog.component';
+import {ImageCropperComponent} from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -126,6 +128,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
     CreateChatBottomSheetComponent,
     SearchForContentSheetComponent,
     MessageContentCardComponent,
+    PfpCropperDialogComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
@@ -183,6 +186,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
+    ImageCropperComponent,
   ],
 
   exports: [

@@ -43,7 +43,7 @@
           <div class="sale-badge" *ngIf="product.saleAmount > 0">
             -{{ (product.saleAmount * 100).toFixed(0) }}%
           </div>
-          <img [src]="'http://localhost:7000/media/' + product.photoPaths[0]" alt="{{ product.title }}" class="product-image">
+          <img [src]="MyConfig.media_address + product.photoPaths[0]" alt="{{ product.title }}" class="product-image">
           <div class="product-info">
 
           <p class="product-name hide-overflow"> {{ product.title }}</p>

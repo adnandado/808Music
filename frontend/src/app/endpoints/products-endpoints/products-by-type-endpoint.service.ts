@@ -16,14 +16,12 @@ export class ProductByTypeService {
     pageSize: number = 10,
     sortBy: string = 'title'
   ): Observable<any> {
-    // Kreirajte HTTP parametre
     const params = new HttpParams()
       .set('productType', productType.toString())
       .set('page', page.toString())
       .set('pageSize', pageSize.toString())
       .set('sortBy', sortBy);
 
-    // Poziv API-ja
     return this.http.get<any>(this.baseUrl, { params });
   }
 }

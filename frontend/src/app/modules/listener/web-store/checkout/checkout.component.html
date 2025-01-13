@@ -7,7 +7,7 @@
         <h2>Order Summary</h2>
         <ul class="order-items">
           <li *ngFor="let item of cartItems">
-            <img [src]="'http://localhost:7000/media/' + item.productPhoto" alt="Product Image" class="product-photo" />
+            <img [src]="MyConfig.media_address + item.productPhoto" alt="Product Image" class="product-photo" />
             <div>
               <h3>{{ item.productTitle }}</h3>
               <p>{{ item.discountedPrice | number: '1.2-2' }}$</p>

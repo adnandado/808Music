@@ -5,14 +5,14 @@
       <button class="prev" (click)="prevSlide()">❮</button>
       <lib-ngx-image-zoom
         [thumbImage]="MyConfig.api_address+'/media' + (product?.thumbnailPath?.[currentSlide] ?? '')"
-        [fullImage]="'http://localhost:7000/media' + (product?.photoPaths?.[currentSlide] ?? '')">
+        [fullImage]="MyConfig.media_address + (product?.photoPaths?.[currentSlide] ?? '')">
       </lib-ngx-image-zoom>
 
       <button class="next" (click)="nextSlide()">❯</button>
     </div>
     <div class="thumbnails">
       <div *ngFor="let photoPath of product?.photoPaths; let i = index" class="thumbnail" (click)="changeSlide(i)">
-        <img [src]="'http://localhost:7000/media' + photoPath" alt="Thumbnail" class="thumbnail-image">
+        <img [src]="MyConfig.media_address + photoPath" alt="Thumbnail" class="thumbnail-image">
       </div>
     </div>
   </div>

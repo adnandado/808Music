@@ -11,6 +11,7 @@ import {
   OrderAddResponse
 } from '../../../../endpoints/products-endpoints/add-order-endpoint.service';
 import { OrderConfirmationDialogComponent } from './order-confirmation-dialog/order-confirmation-dialog.component';
+import {MyConfig} from "../../../../my-config";
 
 @Component({
   selector: 'app-checkout',
@@ -162,4 +163,6 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
+
+    protected readonly MyConfig = MyConfig;
 }

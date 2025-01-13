@@ -85,6 +85,7 @@ export class TracksPageComponent implements OnInit {
           this.filteredTracks = [];
         },
       });
+
   }
 
   private loadPlaylistTracks(playlistId: number): void {
