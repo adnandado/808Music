@@ -79,6 +79,7 @@ import { TrackCardListComponent } from './tracks/track-card-list/track-card-list
 import { CreateChatBottomSheetComponent } from './bottom-sheets/create-chat-bottom-sheet/create-chat-bottom-sheet.component';
 import { SearchForContentSheetComponent } from './bottom-sheets/search-for-content-sheet/search-for-content-sheet.component';
 import { MessageContentCardComponent } from './message-content-card/message-content-card.component';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -179,6 +180,9 @@ import { MessageContentCardComponent } from './message-content-card/message-cont
     MatChipListbox,
     MatChipOption,
     MatMiniFabButton,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
   ],
 
   exports: [

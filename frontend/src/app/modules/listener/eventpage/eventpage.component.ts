@@ -62,7 +62,7 @@ export class EventpageComponent {
     if (this.selectedEvent) {
       setTimeout(() => {
         this.initMap(this.selectedEvent!);
-      }, 2000);}
+      }, 3500);}
   }
 
   selectEvent(event: ArtistEvents) {

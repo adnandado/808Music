@@ -63,6 +63,7 @@
     <button class = "prev_page" *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)"><</button>
     <span>{{ currentPage }}</span>
       <button class= "next_page" *ngIf="searchResults.length === pageSize" (click)="changePage(currentPage + 1)">></button>
-  </div>
+  </div>  <app-wishlist></app-wishlist>
+
   <app-shopping-cart> </app-shopping-cart>
 </div>

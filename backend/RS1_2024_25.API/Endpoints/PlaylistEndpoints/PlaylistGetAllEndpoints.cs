@@ -54,7 +54,8 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                     p.Title,
                     p.NumOfTracks,
                     p.IsPublic,
-                    p.CoverPath
+                    p.CoverPath,
+                    p.isLikePlaylist
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -81,7 +82,7 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
             var relatedTracks = _db.PlaylistTracks.Where(pt => pt.PlaylistId == id);
             _db.PlaylistTracks.RemoveRange(relatedTracks);
 
-            if (!string.IsNullOrEmpty(playlist.CoverPath))
+            if (!string.IsNullOrEmpty(playlist.CoverPath) && playlist.CoverPath != "/Images/playlist_placeholder.png")
             {
                 try
                 {

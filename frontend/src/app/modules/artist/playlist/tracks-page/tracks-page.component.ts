@@ -4,19 +4,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { PlaylistTracksEndpointService, PlaylistTracksGetResponse } from '../../../../endpoints/playlist-endpoints/playlist-get-tracks-endpoint.service';
+import {
+  PlaylistTracksGetEndpointService, PlaylistTracksGetRequest,
+  PlaylistTracksGetResponse
+} from '../../../../endpoints/playlist-endpoints/playlist-get-tracks-endpoint.service';
 import { GetPlaylistByIdEndpointService, PlaylistByIdResponse } from '../../../../endpoints/playlist-endpoints/get-playlist-by-id-endpoint.service';
-import { TrackGetAllEndpointService, TrackGetAllRequest, TrackGetResponse } from '../../../../endpoints/track-endpoints/track-get-all-endpoint.service';
 import { PlaylistUpdateTracksService, PlaylistUpdateTracksRequest } from '../../../../endpoints/playlist-endpoints/add-track-to-playlist-endpoint.service';
 import { MyConfig } from '../../../../my-config';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AlbumCoverService } from '../../../../endpoints/album-endpoints/album-get-cover-by-track-endpoint.service';
 import { RemoveTrackFromPlaylistService } from '../../../../endpoints/playlist-endpoints/delete-track-from-playlist-endpoint.service';
-import { DeletePlaylistService } from '../../../../endpoints/playlist-endpoints/playlist-delete-endpoint.service'; // Import for DeletePlaylistService
+import { DeletePlaylistService } from '../../../../endpoints/playlist-endpoints/playlist-delete-endpoint.service';
 import { MyPagedList } from '../../../../services/auth-services/dto/my-paged-list';
 import { GetPlaylistsByUserIdEndpointService } from '../../../../endpoints/playlist-endpoints/get-playlist-by-user-endpoint.service';
 import { MatDialog } from '@angular/material/dialog';
-import {DeleteConfirmationDialogComponent} from '../../../shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { DeleteConfirmationDialogComponent } from '../../../shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { MusicPlayerService } from '../../../../services/music-player.service';
+import {TrackGetResponse} from '../../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
+import {PlaylistUpdateDialogComponent} from './playlist-update-dialog/playlist-update-dialog.component';
 
 @Component({
   selector: 'app-tracks-page',
@@ -30,14 +35,20 @@ export class TracksPageComponent implements OnInit {
   userId: number = 0;
   coverPaths: { [trackId: number]: string } = {};
   showDeleteIcon: boolean = true;
-
+  isLikedSongs = false;
   searchControl = new FormControl('');
   filteredTracks: TrackGetResponse[] = [];
 
+  featuredTracks: TrackGetResponse[] = [];
+  myFeaturedRequest: { pageNumber: number; pageSize: number; PlaylistID : number } = {
+    pageNumber: 1,
+    pageSize: 1000,
+    PlaylistID: this.playlist?.playlistId!
+  };
+
   constructor(
-    private playlistTracksService: PlaylistTracksEndpointService,
+    private playlistTracksService: PlaylistTracksGetEndpointService,
     private playlistDetailsService: GetPlaylistByIdEndpointService,
-    private trackGetAllService: TrackGetAllEndpointService,
     private playlistUpdateTracksService: PlaylistUpdateTracksService,
     private route: ActivatedRoute,
     private getPlaylistsByUserIdService: GetPlaylistsByUserIdEndpointService,
@@ -45,13 +56,19 @@ export class TracksPageComponent implements OnInit {
     private albumCoverService: AlbumCoverService,
     private removeTrackFromPlaylistService: RemoveTrackFromPlaylistService,
     private deletePlaylistService: DeletePlaylistService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private musicPlayerService: MusicPlayerService,
+
   ) {}
 
   ngOnInit(): void {
     this.userId = this.getUserIdFromToken();
     const playlistId = +this.route.snapshot.paramMap.get('id')!;
-    this.loadPlaylist(playlistId);
+
+    if (playlistId) {
+      this.loadPlaylistTracks(playlistId);
+      this.loadPlaylistDetails(playlistId);
+    }
 
     this.searchControl.valueChanges
       .pipe(
@@ -70,9 +87,43 @@ export class TracksPageComponent implements OnInit {
       });
   }
 
+  private loadPlaylistTracks(playlistId: number): void {
+    const request = { playlistId, pageNumber: 1, pageSize: 50 };
+    this.playlistTracksService.handleAsync(request).subscribe({
+      next: (response) => {
+        this.featuredTracks = response.dataItems || [];
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error fetching playlist tracks:', err);
+      },
+    });
+  }
+
+    private loadPlaylistDetails(playlistId: number): void {
+    this.playlistDetailsService.handleAsync(playlistId).subscribe({
+      next: (response) => {
+        this.playlistDetails = response;
+        this.isLikedSongs = response.isLikePlaylist;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error fetching playlist details:', err);
+      },
+    });
+      this.getPlaylistsByUserIdService.handleAsync(this.userId).subscribe({
+        next: (response) => {
+          this.username = response[0]?.username || 'Unknown';
+          console.log(this.isLikedSongs);
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error('Error loading username:', err);
+          this.username = 'Error';
+        },
+      });
+  }
+
   searchTracks(searchTerm: string): Observable<MyPagedList<TrackGetResponse>> {
-    const request: TrackGetAllRequest = { title: searchTerm, pageNumber: 1, pageSize: 10 };
-    return this.trackGetAllService.handleAsync(request);
+    const request: PlaylistTracksGetRequest = { title: searchTerm, playlistId: this.playlistDetails?.id || 0, pageNumber: 1, pageSize: 10 };
+    return this.playlistTracksService.handleAsync(request);
   }
 
   addTrackToPlaylist(trackId: number): void {
@@ -87,7 +138,7 @@ export class TracksPageComponent implements OnInit {
       next: () => {
         console.log(`Track with ID ${trackId} added to playlist`);
         if (this.playlistDetails?.id) {
-          this.loadPlaylist(this.playlistDetails.id);
+          this.loadPlaylistTracks(this.playlistDetails.id); // Osvježi listu pjesama
         } else {
           console.error('Playlist details or ID is null');
         }
@@ -98,68 +149,13 @@ export class TracksPageComponent implements OnInit {
     });
   }
 
-  loadPlaylist(playlistId: number): void {
-    this.playlistDetailsService.handleAsync(playlistId).subscribe({
-      next: (response) => {
-        this.playlistDetails = response;
-        console.log('Playlist details loaded:', response);
-        if (this.playlistDetails?.coverPath) {
-          this.playlistDetails.coverPath = this.playlistDetails.coverPath.replace(/^\/+/, '');
-        }
-
-        this.getPlaylistsByUserIdService.handleAsync(this.userId).subscribe({
-          next: (response) => {
-            this.username = response[0]?.username || 'Unknown';
-          },
-          error: (err: HttpErrorResponse) => {
-            console.error('Error loading username:', err);
-            this.username = 'Error';
-          },
-        });
-      },
-      error: (error) => {
-        console.error('Error loading playlist details:', error);
-      },
-    });
-
-    this.playlistTracksService.getPlaylistTracks({ PlaylistId: playlistId }).subscribe({
-      next: (response) => {
-        this.playlist = response;
-        this.playlist?.tracks.forEach((track) => {
-          this.albumCoverService.getCoverPathByTrackId(track.id).subscribe({
-            next: (coverResponse) => {
-              this.coverPaths[track.id] = 'http://localhost:7000/media/images/AlbumCovers/' + coverResponse.coverPath;
-            },
-            error: (error) => {
-              console.error(`Error fetching cover for track ${track.id}:`, error);
-            },
-          });
-        });
-      },
-      error: (error) => {
-        console.error('Error loading tracks:', error);
-      },
-    });
-  }
-
-  goBack(): void {
-    this.router.navigate([`/listener/playlist/create`]);
-  }
-
-    getTotalTrackLength(): string {
-    const totalSeconds = this.playlist?.tracks?.reduce((total, track) => total + track.length, 0) || 0;
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}m ${seconds}s`;
-  }
-
   removeTrack(trackId: number): void {
     const playlistId = this.playlistDetails?.id;
     if (playlistId) {
       this.removeTrackFromPlaylistService.handleAsync(playlistId, trackId).subscribe({
         next: () => {
           console.log(`Track ${trackId} successfully removed from playlist ${playlistId}`);
-          this.loadPlaylist(playlistId);
+          this.loadPlaylistTracks(playlistId); // Osvježi listu pjesama
         },
         error: (error) => {
           console.error('Error removing track:', error);
@@ -168,10 +164,21 @@ export class TracksPageComponent implements OnInit {
     }
   }
 
-  deletePlaylist(): void {
-    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent);  // Otvoriti dijalog za potvrdu
+  goBack(): void {
+    this.router.navigate([`/listener/playlist/`]);
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
+  getTotalTrackLength(): string {
+    const totalSeconds = this.featuredTracks?.reduce((total, track) => total + track.length, 0) || 0;
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}m ${seconds}s`;
+  }
+
+  deletePlaylist(): void {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent); // Otvoriti dijalog za potvrdu
+
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (this.playlistDetails?.id) {
           this.deletePlaylistService.handleAsync(this.playlistDetails.id).subscribe({
@@ -187,10 +194,6 @@ export class TracksPageComponent implements OnInit {
         console.log('Playlist deletion canceled');
       }
     });
-  }
-
-  sharePlaylist(): void {
-
   }
 
   private getUserIdFromToken(): number {
@@ -214,4 +217,31 @@ export class TracksPageComponent implements OnInit {
   }
 
   protected readonly MyConfig = MyConfig;
+
+  sharePlaylist() {
+    // Implementirati logiku za dijeljenje playliste
+  }
+
+  createFeaturedQueue(e: number) {
+    this.musicPlayerService.createQueue(this.featuredTracks);
+    let i = this.featuredTracks.filter(val => val.id == e)[0];
+    if (i) {
+      this.musicPlayerService.skipTo(i);
+    }
+  }
+
+  editPlaylist(): void {
+    const dialogRef = this.dialog.open(PlaylistUpdateDialogComponent, {
+      width: '900px',
+      data: {
+        playlistDetails: this.playlistDetails,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadPlaylistDetails(this.playlistDetails?.id!);
+      }
+    });
+  }
 }

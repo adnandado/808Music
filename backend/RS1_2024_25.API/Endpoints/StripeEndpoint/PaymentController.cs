@@ -14,7 +14,7 @@ namespace RS1_2024_25.API.Endpoints.StripeEndpoint
     public class PaymentController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly string _stripeWebhookSecretKey = "whsec_c7845fbbefc36be6055cc51d9e6220b2529d13b35b6b623cf77738d988fd758f";  // Stripe webhook secret za lokalno testiranje
+        private readonly string _stripeWebhookSecretKey = "whsec_c7845fbbefc36be6055cc51d9e6220b2529d13b35b6b623cf77738d988fd758f";  
 
         public PaymentController(ApplicationDbContext context)
         {

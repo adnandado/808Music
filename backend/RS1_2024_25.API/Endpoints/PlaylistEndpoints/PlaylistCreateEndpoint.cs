@@ -24,7 +24,7 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
             int userId;
             if (request.UserId.HasValue)
             {
-                userId = request.UserId.Value; 
+                userId = request.UserId.Value;
             }
             else if (User.Identity?.IsAuthenticated == true)
             {
@@ -46,7 +46,7 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                 Title = request.Title,
                 NumOfTracks = 0,
                 IsPublic = request.IsPublic,
-                CoverPath = string.Empty
+                CoverPath = "/Images/playlist_placeholder.png"
             };
 
             _db.Playlists.Add(playlist);
@@ -102,12 +102,12 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                 NumOfTracks = playlist.NumOfTracks,
                 IsPublic = playlist.IsPublic,
                 CoverPath = playlist.CoverPath,
-                UserId = userId 
+                UserId = userId
             };
         }
     }
 
-    public class PlaylistAddRequest
+        public class PlaylistAddRequest
     {
         public required string Title { get; set; }
         public bool IsPublic { get; set; }

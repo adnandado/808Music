@@ -9,6 +9,8 @@
   transition: 250ms background-color;
   overflow-x: hidden;
   margin: 0 auto;
+  margin-right: 1.25vw;
+
 }
 
 
@@ -46,9 +48,9 @@
 #thumbnail {
   width: 100%;
   height: 150px;
-  object-fit: inherit; /* Popunjava okvir slike bez izobličenja */
-  object-position: center; /* Fokus na sredinu slike */
-  display: block; /* Rješava eventualne razmake oko slike */
-  border-radius: 4px; /* Zaobljeni rubovi za estetiku */
+  object-fit: inherit;
+  object-position: center;
+  display: block;
+  border-radius: 4px;
 }
 

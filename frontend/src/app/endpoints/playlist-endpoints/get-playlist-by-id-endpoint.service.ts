@@ -9,6 +9,7 @@ export interface PlaylistByIdResponse {
   numOfTracks: number;
   isPublic: boolean;
   coverPath: string;
+  isLikePlaylist : boolean;
 }
 
 @Injectable({

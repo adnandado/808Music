@@ -17,12 +17,13 @@
     </div>
 
     <div class="flex-container">
+
       <div *ngFor="let playlist of playlists || []">
         <app-playlist-card [title]="playlist.title"
                            [imageUrl]="MyConfig.media_address + playlist.coverPath"
                            [username]="playlist.username"
                            [id]="playlist.id"
-                           [hasControls]="true"
+                           [hasControls]="false"
                            (onDelete)="deletePlaylist(playlist.id)"
                            (onEdit)="editPlaylist(playlist.id)"
                            (onClick)="openPlaylist(playlist.id)">
@@ -31,7 +32,5 @@
     </div>
   </div>
 
-  <div class="flex-side">
-    <router-outlet></router-outlet>
-  </div>
+
 </div>
