@@ -2,71 +2,100 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
+using RS1_2024_25.API.Endpoints.TrackEndpoints;
+using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Api;
 
 namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
 {
-    public class PlaylistTracksGetEndpoint(ApplicationDbContext db)
-        : MyEndpointBaseAsync.WithRequest<PlaylistTracksGetRequest>.WithActionResult<PlaylistTracksGetResponse>
+    public class PlaylistTracksGetEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+        .WithRequest<PlaylistTracksGetRequest>
+        .WithActionResult<MyPagedList<TrackGetResponse>>
     {
         [Authorize]
         [HttpGet]
-        public override async Task<ActionResult<PlaylistTracksGetResponse>> HandleAsync([FromQuery] PlaylistTracksGetRequest request, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<MyPagedList<TrackGetResponse>>> HandleAsync([FromQuery] PlaylistTracksGetRequest request, CancellationToken cancellationToken = default)
         {
-            var playlist = await db.Playlists
-                .Where(p => p.Id == request.PlaylistId)
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Title
-                })
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (playlist == null)
-                return NotFound($"Playlist with ID {request.PlaylistId} not found.");
-
-            var tracks = await db.PlaylistTracks
+            var tracks = db.PlaylistTracks
                 .Where(pt => pt.PlaylistId == request.PlaylistId)
                 .OrderBy(pt => pt.TrackOrder)
-                .Select(pt => new TrackBasicInfo
-                {
-                    Id = pt.TrackId,
-                    Title = pt.Track.Title,
-                    Length = pt.Track.Length,
-                    Streams = pt.Track.Streams,
-                    IsExplicit = pt.Track.isExplicit
-                })
-                .ToListAsync(cancellationToken);
+                .Select(pt => pt.Track)
+                .AsQueryable();
 
-            var response = new PlaylistTracksGetResponse
+            await db.Artists.LoadAsync();
+            await db.Albums.LoadAsync();
+
+            // Filtriranje prema zahtjevima
+            if (request.FeaturedArtists != null)
             {
-                PlaylistId = playlist.Id,
-                PlaylistTitle = playlist.Title,
-                Tracks = tracks
-            };
+                foreach (int artistId in request.FeaturedArtists)
+                {
+                    tracks = db.ArtistsTracks
+                        .Where(at => at.ArtistId == artistId && !at.IsLead)
+                        .Select(at => at.Track)
+                        .Where(t => tracks.Contains(t));
+                }
+            }
 
-            return Ok(response);
+            if (request.IsReleased != null)
+            {
+                tracks = tracks.Where(t => t.Album.ReleaseDate < DateTime.Now);
+            }
+
+            if (request.AlbumId != null)
+            {
+                tracks = tracks.Where(t => t.AlbumId == request.AlbumId);
+            }
+
+            if (request.LeadArtistId != null)
+            {
+                tracks = tracks.Where(t => t.Album.ArtistId == request.LeadArtistId);
+            }
+
+            if (!string.IsNullOrEmpty(request.Title))
+            {
+                tracks = tracks.Where(t => t.Title.ToLower().Contains(request.Title.ToLower()));
+            }
+
+            if (request.SortByStreams)
+            {
+                tracks = tracks.OrderByDescending(t => t.Streams);
+            }
+            else
+            {
+                tracks = tracks.OrderByDescending(t => t.Album!.ReleaseDate);
+            }
+
+            var filteredTracks = tracks.Select(t => new TrackGetResponse
+            {
+                Id = t.Id,
+                isExplicit = t.isExplicit,
+                Length = t.Length,
+                Streams = t.Streams,
+                Title = t.Title,
+                CoverPath = "/media/Images/AlbumCovers/" + t.Album.CoverPath,
+                Artists = db.ArtistsTracks.Where(at => at.TrackId == t.Id).Select(at => new ArtistTrackDto
+                {
+                    Id = at.ArtistId,
+                    IsLead = at.IsLead,
+                    Name = at.Artist.Name,
+                    PfpPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath,
+                }).ToList(),
+                AlbumId = t.AlbumId
+            });
+
+            return await MyPagedList<TrackGetResponse>.CreateAsync(filteredTracks, request, cancellationToken);
         }
     }
 
-    public class PlaylistTracksGetRequest
+    public class PlaylistTracksGetRequest : MyPagingRequest
     {
         public int PlaylistId { get; set; }
-    }
-
-    public class PlaylistTracksGetResponse
-    {
-        public int PlaylistId { get; set; }
-        public string PlaylistTitle { get; set; }
-        public List<TrackBasicInfo> Tracks { get; set; } = new List<TrackBasicInfo>();
-    }
-
-    public class TrackBasicInfo
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public int Length { get; set; } 
-        public int Streams { get; set; }
-        public bool IsExplicit { get; set; }
+        public int? AlbumId { get; set; }
+        public int? LeadArtistId { get; set; }
+        public List<int>? FeaturedArtists { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public bool? IsReleased { get; set; }
+        public bool SortByStreams { get; set; } = false;
     }
 }

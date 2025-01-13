@@ -13,37 +13,43 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardTitle, MatCardTitleGroup}
 import {TracksPageComponent} from './tracks-page/tracks-page.component';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import { PlaylistUpdateDialogComponent } from './tracks-page/playlist-update-dialog/playlist-update-dialog.component';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
+import { PlaylistCreateDialogComponent } from './tracks-page/playlist-create-dialog/playlist-create-dialog.component';
 
 
 @NgModule({
-    declarations: [PlaylistListMaterialComponent, PlaylistCreateOrEditComponent, TracksPageComponent],
+    declarations: [PlaylistListMaterialComponent, PlaylistCreateOrEditComponent, TracksPageComponent, PlaylistUpdateDialogComponent, PlaylistCreateDialogComponent],
     exports: [
         TracksPageComponent
     ],
-    imports: [
-        CommonModule,
-        PlaylistRoutingModule,
-        MatFormField,
-        MatSlideToggle,
-        SharedModule,
-        MatIcon,
-        MatInput,
-        MatButton,
-        MatAnchor,
-        MatCardHeader,
-        MatCard,
-        MatCardTitle,
-        MatCardContent,
-        MatCardTitleGroup,
-        MatFormFieldModule,
-        MatIconAnchor,
-        MatIconButton,
-        MatAutocomplete,
-        MatOption,
-        MatAutocompleteTrigger,
-        MatMenu,
-        MatMenuTrigger,
-        MatMenuItem
-    ]
+  imports: [
+    CommonModule,
+    PlaylistRoutingModule,
+    MatFormField,
+    MatSlideToggle,
+    SharedModule,
+    MatIcon,
+    MatInput,
+    MatButton,
+    MatAnchor,
+    MatCardHeader,
+    MatCard,
+    MatCardTitle,
+    MatCardContent,
+    MatCardTitleGroup,
+    MatFormFieldModule,
+    MatIconAnchor,
+    MatIconButton,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
+    MatMenu,
+    MatMenuTrigger,
+    MatMenuItem,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle
+  ]
 })
 export class PlaylistModule { }

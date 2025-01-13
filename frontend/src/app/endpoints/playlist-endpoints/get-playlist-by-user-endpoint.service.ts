@@ -10,6 +10,7 @@ export interface PlaylistResponse {
   isPublic: boolean;
   coverPath: string;
   username: string
+  isLikedSongs : boolean;
 }
 
 @Injectable({

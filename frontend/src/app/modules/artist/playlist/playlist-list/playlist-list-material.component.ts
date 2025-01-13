@@ -9,6 +9,8 @@ import { GetPlaylistsByUserIdEndpointService } from '../../../../endpoints/playl
 import { PlaylistUpdateEndpointService } from '../../../../endpoints/playlist-endpoints/update-playlist-endpoint.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PlaylistResponse } from '../../../../endpoints/playlist-endpoints/get-playlist-by-user-endpoint.service';
+import {PlaylistUpdateDialogComponent} from '../tracks-page/playlist-update-dialog/playlist-update-dialog.component';
+import {PlaylistCreateDialogComponent} from '../tracks-page/playlist-create-dialog/playlist-create-dialog.component';
 
 @Component({
   selector: 'app-playlist-list-material',
@@ -79,11 +81,19 @@ export class PlaylistListMaterialComponent implements OnInit {
   editPlaylist(id: number) {
     this.router.navigate([`/listener/playlist/edit`, id]);
   }
-
   createPlaylist() {
-    this.router.navigate([`/listener/playlist/create`]);
-  }
+    const dialogRef = this.dialog.open(PlaylistCreateDialogComponent, {
+      width: '900px', // Prilagodi širinu prema potrebi
+      data: {}, // Proslijedi dodatne podatke ako su potrebni
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Playlist successfully created:', result);
+        // Dodaj logiku za osvježavanje liste playlista ili prikaz poruke korisniku
+      }
+    });
+  }
   getReleaseYear(releaseDate: string) {
     return new Date(releaseDate).getFullYear().toString();
   }

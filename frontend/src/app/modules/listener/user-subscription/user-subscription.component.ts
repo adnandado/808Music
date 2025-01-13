@@ -144,7 +144,6 @@ export class UserSubscriptionComponent implements OnInit {
             verticalPosition: 'bottom',
             horizontalPosition: 'center'
           });
-          alert('Payment successful!');
           this.addSubscription(userId);
         }
       });
@@ -215,7 +214,9 @@ export class UserSubscriptionComponent implements OnInit {
             duration: 1500,
             verticalPosition: 'bottom',
             horizontalPosition: 'center'
-          });
+          });setTimeout(() => {
+            window.location.reload();
+          }, 1500);
         } else {
           this.errorMessage = response.message;
         }

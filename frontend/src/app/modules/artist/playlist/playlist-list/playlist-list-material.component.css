@@ -1,12 +1,11 @@
 * {
   color: white;
   box-sizing: border-box;
-  margin-left: 25px;
-}
 
+}
 .flex-page {
   display: flex;
-  justify-content: space-between;  /* Raspodjela prostora između lijevog i desnog dijela */
+  justify-content: space-between;
   flex-direction: row;
   padding: 0;
   height: 100vh;
@@ -54,7 +53,7 @@ div > h6 {
 }
 
 .flex-side {
-  flex-basis: 35vw;  /* Desni dio zauzima 35% širine */
+  flex-basis: 35vw;
   height: auto;
   display: block;
 }
@@ -71,9 +70,6 @@ div > h6 {
   }
 }
 .playlist-actions {
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }
 
 .mat-menu-item {

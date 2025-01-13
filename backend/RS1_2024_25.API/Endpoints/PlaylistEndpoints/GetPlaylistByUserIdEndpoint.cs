@@ -37,7 +37,9 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                                          NumOfTracks = up.Playlist.NumOfTracks,
                                          IsPublic = up.Playlist.IsPublic,
                                          CoverPath = up.Playlist.CoverPath,
-                                         Username = user.Username 
+                                         Username = user.Username,
+                                         IsLikedSongs = up.Playlist.isLikePlaylist
+
                                      })
                                      .ToListAsync(cancellationToken);
 
@@ -55,8 +57,10 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
             public required string Title { get; set; }
             public int NumOfTracks { get; set; }
             public bool IsPublic { get; set; }
+            public bool IsLikedSongs { get; set; }
+
             public string CoverPath { get; set; } = string.Empty;
-            public string Username { get; set; } = string.Empty; // Dodajemo polje za username
+            public string Username { get; set; } = string.Empty;
         }
     }
 }

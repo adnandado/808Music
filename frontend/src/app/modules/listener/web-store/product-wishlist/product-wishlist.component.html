@@ -1,5 +1,6 @@
 <div class="wishlist-page">
-  <h3 class ="wishlist-name">{{ userName ? userName + "'s Wishlist" : "Your Wishlist" }}</h3>
+
+    <h3 class ="wishlist-name">{{ userName ? userName + "'s Wishlist" : "Your Wishlist" }}</h3>
 <div *ngIf="wishlistItems.length > 0" class="wishlist-container">
   <div *ngFor="let item of wishlistItems" class="wishlist-item">
     <img [src]="MyConfig.api_address + '/media/' + item.productPhoto" alt="Product Image" class="product-photo" />
@@ -22,6 +23,7 @@
     </div>
     <button (click)="addToCart(item.productId)" class="add-to-cart-btn">
       <mat-icon>shopping_cart</mat-icon>
+
     </button>
   </div>
 </div>

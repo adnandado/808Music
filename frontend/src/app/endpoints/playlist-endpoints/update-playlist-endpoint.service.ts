@@ -19,7 +19,6 @@ export class PlaylistUpdateEndpointService {
   constructor(private httpClient: HttpClient) {}
 
   handleAsync(id: number, formData: FormData): Observable<PlaylistUpdateResponse> {
-    // Provjera za obavezne parametre u FormData
     if (!formData.has('title') || !formData.has('isPublic')) {
       return throwError(() => new Error('Required fields are missing.'));
     }

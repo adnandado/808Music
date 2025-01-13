@@ -6,23 +6,55 @@
   text-align: center;
 }
 .track-image{
-  width: 50px;
-  height: 50px;
+  width: 2.6vw;
+  height: 2.6vw;
   object-fit: cover;
   border-radius: 5px;
-  margin-right: 15px;
-;}
+
+}
+.track-cover-container:hover .delete-icon{
+  display:block;
+}
+.song-rows{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+.delete-icon{
+  position: absolute;
+  top: 0.5vw;
+  right: 0.5vw;
+display:none;
+  cursor: pointer;
+  font-size: 23px;
+}
+
 table p {
   font-size: 16px;
   margin: 0;
 }
+.track-cover-container {
+  position: relative;  display: inline-block;
+  margin-right: 10px;
 
+
+}
+song-information{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .track-artists {
   color: #A9A9A9;
   font-style: italic;
   font-size: 14px;
   display: flex;
   gap: 3px;
+
+}
+.song-information
+{
+
 }
 
 .tracks-explicit-icon {
@@ -60,13 +92,39 @@ table p {
   color: #A9A9A9;
   text-align: center;
 }
+.dropdown-img{
+  width:3vw;
+}
+.dropdown-stuff{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.dropdown-stuff:hover{
+}
+.dropdown-menu {
+  display: block;
+  position: absolute;
+  min-width: 50vw;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  background-color: #4D3D50;
+  padding: 10px;
+  color: white;
+}
+
+
 
 .mat-column-artist-controls {
   padding: 0;
   width: 7vw;
   color: #A9A9A9;
 }
-
+.mat-column-add-to-playlist-controls {
+  padding: 0;
+  width: 3vw;
+}
 .tracks-search-bar {
   margin-bottom: 15px;
   display: flex;

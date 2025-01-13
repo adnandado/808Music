@@ -35,6 +35,21 @@ import {ShareBottomSheetComponent} from '../bottom-sheets/share-bottom-sheet/sha
 import {MusicPlayerService} from '../../../services/music-player.service';
 import {AddTrackToLikedSongsService} from '../../../endpoints/playlist-endpoints/add-to-liked-songs-endpoint';
 import {IsLikedSongService} from '../../../endpoints/playlist-endpoints/is-liked-song-endpoint.service';
+import {
+  GetPlaylistsByUserIdEndpointService
+} from '../../../endpoints/playlist-endpoints/get-playlist-by-user-endpoint.service';
+import {
+  PlaylistUpdateTracksRequest,
+  PlaylistUpdateTracksService
+} from '../../../endpoints/playlist-endpoints/add-track-to-playlist-endpoint.service';
+import {PlaylistResponse} from '../../../endpoints/playlist-endpoints/get-all-playlists-endpoint.service';
+import {
+  RemoveTrackFromPlaylistService
+} from '../../../endpoints/playlist-endpoints/delete-track-from-playlist-endpoint.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {
+  PlaylistTracksGetEndpointService
+} from '../../../endpoints/playlist-endpoints/playlist-get-tracks-endpoint.service';
 
 @Component({
   selector: 'app-tracks-table',
@@ -44,14 +59,19 @@ import {IsLikedSongService} from '../../../endpoints/playlist-endpoints/is-liked
 export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() inArtistMode = true;
   @Input() isPlaylist = false;
+  @Input() playlistId: number | null = null;
+
   protected readonly MyConfig = MyConfig;
   @Input() tracks: TrackGetResponse[] = [];
   tracksDto: TrackWithPositionDto[] = []
-  displayedColumns = ["position", "main-control", "title", "artist-controls", "duration", "streams"];
+  displayedColumns = ["position", "main-control", "title", "artist-controls", "duration", "streams", "add-to-playlist-controls"];
   dataSource = new MatTableDataSource<TrackWithPositionDto>(this.tracksDto);
   @Output() onMainClick: EventEmitter<number> = new EventEmitter();
   matDialog: MatDialog = inject(MatDialog);
   snackBar: MatSnackBar = inject(MatSnackBar);
+  playlists: PlaylistResponse[] = [];
+  showPlaylistDropdown: boolean = false;
+  selectedTrackId: number | null = null;
   pagedResponse: MyPagedList<TrackGetResponse> | null = null;
   @Input() pagedRequest: TrackGetAllRequest = {
     pageNumber: 1,
@@ -72,7 +92,11 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
               private btmSheet : MatBottomSheet,
               private musicPlayerService : MusicPlayerService,
               private addTrackToLikedSongsService : AddTrackToLikedSongsService,
-              private isLikedSongService : IsLikedSongService) {
+              private isLikedSongService : IsLikedSongService,
+              private getPlaylistsService: GetPlaylistsByUserIdEndpointService,
+              private playlistUpdateTracksService: PlaylistUpdateTracksService,
+              private removeTrackFromPlaylistService: RemoveTrackFromPlaylistService,
+              private playlistTracksService : PlaylistTracksGetEndpointService) {
   }
   likedSongs: Map<number, boolean> = new Map();
   showDeleteIcon : boolean = true;
@@ -91,21 +115,26 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
       if(this.reload)
       {
           console.log("changes");
           this.reloadData();
-      }
-    }
+      }  }
+
   getLikeIcon(id: number): string {
     return this.likedSongs.get(id) ? 'favorite' : 'favorite_border';
   }
   reloadData() {
     this.reload = false;
+
     this.getAllTracksService.handleAsync(this.pagedRequest).subscribe({
       next: data => {
-        this.pagedResponse = data;
-        this.tracks = data.dataItems;
+
+          this.pagedResponse = data;
+          if (!this.isPlaylist)
+          {
+            this.tracks = data.dataItems;}
         this.tracksDto = this.tracks.map((track, index) => ({
           ...track,
           position: index + 1,
@@ -132,7 +161,8 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
 
 
   ngOnInit(): void {
-    this.reloadData();
+     this.reloadData();
+    this.loadPlaylists();
 
     this.musicPlayerService.shuffleToggled.subscribe({
       next: data => {
@@ -153,7 +183,28 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
     }
     return artists;
   }
+  loadPlaylists() {
+    const userId = this.getUserIdFromToken();
+    if (userId) {
+      this.getPlaylistsService.handleAsync(userId).subscribe({
+        next: (playlists) => {
+          this.playlists = playlists;
+          console.log(this.playlists); // Dodaj ovo za debagovanje
 
+        },
+        error: (error) => {
+          console.error('Error loading playlists:', error);
+        },
+      });
+    }
+  }
+
+  toggleDropdown(trackId: number) {
+    this.selectedTrackId = trackId;
+    this.showPlaylistDropdown = !this.showPlaylistDropdown;
+    console.log(this.showPlaylistDropdown);  // Provjeri vrednost
+
+  }
   getDuration(id:number) {
     let track = this.tracksDto.find(x => x.id === id)!;
     let minutes = Math.floor(track.length / 60).toString();
@@ -300,7 +351,64 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
       return 0;
     }}
 
-  removeTrack(id : number) {
+  removeTrackFromPlaylist(trackId: number): void {
+    let matRef = this.matDialog.open(ConfirmDialogComponent, {
+      hasBackdrop: true,
+      data: {
+        title: "Are you sure?",
+        content: "This will remove the song from your playlist"
+      }
+    });
 
+    matRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        if (this.playlistId) {
+          this.removeTrackFromPlaylistService.handleAsync(this.playlistId, trackId).subscribe({
+            next: () => {
+              console.log(`Track ${trackId} successfully removed from playlist ${this.playlistId}`);
+              this.loadPlaylistTracks(this.playlistId!);
+            },
+            error: (error) => {
+              console.error('Error removing track:', error);
+            },
+          });
+        } else {
+          console.error('Playlist ID is not defined');
+        }
+      } else {
+        console.log('User canceled the action');
+      }
+    });
+  }
+
+  private loadPlaylistTracks(playlistId: number): void {
+    const request = { playlistId, pageNumber: 1, pageSize: 50 };
+    this.playlistTracksService.handleAsync(request).subscribe({
+      next: (response) => {
+        this.tracks = response.dataItems || [];
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error fetching playlist tracks:', err);
+      },
+    });
+  }
+  addToPlaylist(playlistId: number) {
+
+    if (this.selectedTrackId) {
+      const request: PlaylistUpdateTracksRequest = {
+        playlistId: playlistId,
+        trackIds: [this.selectedTrackId],
+      };
+
+      this.playlistUpdateTracksService.handleAsync(request).subscribe({
+        next: () => {
+          this.snackBar.open('Track added to playlist!', 'Dismiss', { duration: 3500 });
+          this.showPlaylistDropdown = false;
+        },
+        error: (error) => {
+          console.error('Error adding track to playlist:', error);
+        },
+      });
+    }
   }
 }
