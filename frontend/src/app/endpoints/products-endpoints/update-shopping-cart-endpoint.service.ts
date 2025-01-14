@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {MyConfig} from '../../my-config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UpdateShoppingCartService {
-  private url = 'http://localhost:7000/api/UpdateShoppingCartEndpoint';
+  private url = `${MyConfig.api_address}/api/UpdateShoppingCartEndpoint`;
 
   constructor(private http: HttpClient) {}
 

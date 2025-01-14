@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {MyConfig} from '../../my-config';
 
 interface AlbumCoverResponse {
   trackId: number;
@@ -13,7 +14,7 @@ interface AlbumCoverResponse {
 })
 export class AlbumCoverService {
 
-  private baseUrl = 'http://localhost:7000/api'; // URL tvog backend-a
+  private baseUrl = `${MyConfig.api_address}/api`;
 
   constructor(private http: HttpClient) { }
 

@@ -57,5 +57,6 @@ export class ArtistSidenavComponent implements OnInit {
     window.location.reload();
   }
 
+    protected readonly MyConfig = MyConfig;
 }
 

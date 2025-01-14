@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RS1_2024_25.API.Data;
 
@@ -11,9 +12,11 @@ using RS1_2024_25.API.Data;
 namespace RS1_2024_25.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250114213716_wishlistedcounter")]
+    partial class wishlistedcounter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -948,9 +951,6 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<bool>("Blocked")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("BlockedByUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -967,8 +967,6 @@ namespace RS1_2024_25.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BlockedByUserId");
 
                     b.HasIndex("PrimaryChatterId");
 
@@ -1463,11 +1461,6 @@ namespace RS1_2024_25.API.Migrations
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.UserChat", b =>
                 {
-                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "BlockedByUser")
-                        .WithMany()
-                        .HasForeignKey("BlockedByUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "PrimaryChatter")
                         .WithMany()
                         .HasForeignKey("PrimaryChatterId")
@@ -1479,8 +1472,6 @@ namespace RS1_2024_25.API.Migrations
                         .HasForeignKey("SecondaryChatterId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("BlockedByUser");
 
                     b.Navigation("PrimaryChatter");
 

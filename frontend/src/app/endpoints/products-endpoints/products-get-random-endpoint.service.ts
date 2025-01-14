@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MyBaseEndpointAsync } from '../../helper/my-base-endpoint-async.interface';
 import { ClothesType, ProductType } from './product-create-endpoint.service';
-import {MyConfig} from '../../my-config';
+import { MyConfig } from '../../my-config';
 
-export interface ProductsGetRandomResponse {
+export interface ProductsGetTopWishlistedResponse {
   slug: string;
   id: number;
   title: string;
@@ -12,7 +12,7 @@ export interface ProductsGetRandomResponse {
   price: number;
   isDigital: boolean;
   photoPaths: string[];
-  Bio: string;
+  bio: string;
   productType: ProductType;
   clothesType?: ClothesType;
 }
@@ -20,13 +20,13 @@ export interface ProductsGetRandomResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsGetRandomService implements MyBaseEndpointAsync<void, ProductsGetRandomResponse[]> {
-  private apiUrl = `${MyConfig.api_address}/api/ProductGetRandomEndpoint/api/ProductGetRandom
+export class ProductsGetTopWishlistedService implements MyBaseEndpointAsync<void, ProductsGetTopWishlistedResponse[]> {
+  private apiUrl = `${MyConfig.api_address}/api/ProductGetTopWishlistedEndpoint/api/ProductGetTopWishlisted
 `;
 
   constructor(private httpClient: HttpClient) {}
 
   handleAsync() {
-    return this.httpClient.get<ProductsGetRandomResponse[]>(this.apiUrl);
+    return this.httpClient.get<ProductsGetTopWishlistedResponse[]>(this.apiUrl);
   }
 }
