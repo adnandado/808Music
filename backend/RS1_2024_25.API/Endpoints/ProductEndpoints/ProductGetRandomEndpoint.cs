@@ -6,35 +6,61 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.ProductGetAllEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.ProductEndpoints
 {
-    public class ProductGetRandomEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+    public class ProductGetTopWishlistedEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithoutRequest
     .WithResult<ProductGetAllResponse[]>
     {
-        [HttpGet("api/ProductGetRandom")]
+        [HttpGet("api/ProductGetTopWishlisted")]
         public override async Task<ProductGetAllResponse[]> HandleAsync(CancellationToken cancellationToken = default)
         {
-            var randomProducts = await db.Products
-                            .OrderBy(p => Guid.NewGuid())  // Nasumično sortiranje
-                            .Take(5)
-                            .Include(p => p.Photos)
-                            .Select(p => new ProductGetAllResponse
-                            {
-                                Slug = p.Slug,
-                                Id = p.Id,
-                                Title = p.Title,
-                                Price = p.Price,
-                                Quantity = p.QtyInStock,
-                                isDigital = p.IsDigital,
-                                SaleAmount = p.SaleAmount,
-                                Bio = p.Bio,
-                                ProductType = p.ProductType,
-                                ClothesType = p.ClothesType,
-                                PhotoPaths = p.Photos.Select(photo => photo.Path).ToList()
-                            })
-                            .ToArrayAsync(cancellationToken);
+            var topWishlistedProducts = await db.Products
+                .Where(p => p.WishlistedTimes > 0)
+                .OrderByDescending(p => p.WishlistedTimes)
+                .Take(5)
+                .Include(p => p.Photos)
+                .Select(p => new ProductGetAllResponse
+                {
+                    Slug = p.Slug,
+                    Id = p.Id,
+                    Title = p.Title,
+                    Price = p.Price,
+                    Quantity = p.QtyInStock,
+                    isDigital = p.IsDigital,
+                    SaleAmount = p.SaleAmount,
+                    Bio = p.Bio,
+                    ProductType = p.ProductType,
+                    ClothesType = p.ClothesType,
+                    PhotoPaths = p.Photos.Select(photo => photo.Path).ToList()
+                })
+                .ToListAsync(cancellationToken);
 
-            return randomProducts;
+            if (topWishlistedProducts.Count < 5)
+            {
+                var additionalProducts = await db.Products
+                    .Where(p => !topWishlistedProducts.Select(tp => tp.Id).Contains(p.Id))
+                    .OrderByDescending(p => p.WishlistedTimes) 
+                    .Take(5 - topWishlistedProducts.Count)
+                    .Include(p => p.Photos)
+                    .Select(p => new ProductGetAllResponse
+                    {
+                        Slug = p.Slug,
+                        Id = p.Id,
+                        Title = p.Title,
+                        Price = p.Price,
+                        Quantity = p.QtyInStock,
+                        isDigital = p.IsDigital,
+                        SaleAmount = p.SaleAmount,
+                        Bio = p.Bio,
+                        ProductType = p.ProductType,
+                        ClothesType = p.ClothesType,
+                        PhotoPaths = p.Photos.Select(photo => photo.Path).ToList()
+                    })
+                    .ToListAsync(cancellationToken);
+
+                topWishlistedProducts.AddRange(additionalProducts);
+            }
+
+            return topWishlistedProducts.ToArray();
         }
     }
-
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsGetRandomService } from '../../../../endpoints/products-endpoints/products-get-random-endpoint.service';
+import {
+  ProductsGetTopWishlistedService
+} from '../../../../endpoints/products-endpoints/products-get-random-endpoint.service';
 import { ProductsGetNewestService } from '../../../../endpoints/products-endpoints/product-get-newest-endpoint.service';
 import { ProductsGetBestSellingService } from '../../../../endpoints/products-endpoints/product-get-best-selling-endpoint.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,7 +37,7 @@ export class WebStoreComponent implements OnInit {
   searchControl = new FormControl();
   filteredProducts: Product[] = [];
   constructor(
-    private randomProductService: ProductsGetRandomService,
+    private productsGetTopWishlistedService: ProductsGetTopWishlistedService,
     private newestProductService: ProductsGetNewestService,
     private bestSellingProductService: ProductsGetBestSellingService,
     private productsOnSaleService: ProductsOnSaleService,
@@ -69,7 +71,7 @@ export class WebStoreComponent implements OnInit {
     forkJoin([
       this.newestProductService.handleAsync(),
       this.bestSellingProductService.handleAsync(),
-      this.randomProductService.handleAsync(),
+      this.productsGetTopWishlistedService.handleAsync(),
       this.productsOnSaleService.handleAsync()
     ]).subscribe(
       ([newestData, bestSellingData, randomData, onSaleData]) => {
@@ -115,9 +117,12 @@ export class WebStoreComponent implements OnInit {
       ...this.randomProducts,
       ...this.onSaleProducts
     ];
+    console.log('Checking wishlist for products:', allProducts);
 
     allProducts.forEach(product => {
-      this.checkIfOnWishlist(product);
+
+        this.checkIfOnWishlist(product);
+
     });
   }
 

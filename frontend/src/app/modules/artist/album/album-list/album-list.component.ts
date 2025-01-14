@@ -7,6 +7,7 @@ import {AlbumDeleteEndpointService} from '../../../../endpoints/album-endpoints/
 import {Router} from '@angular/router';
 import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
 import {ArtistHandlerService} from '../../../../services/artist-handler.service';
+import {MyConfig} from "../../../../my-config";
 
 @Component({
   selector: 'app-album-list',
@@ -60,4 +61,6 @@ export class AlbumListComponent implements OnInit {
   getDateString(date: string) :string {
     return new Date(date).toLocaleDateString('en-GB', {weekday:"long", month:"numeric", day:"numeric", year:"numeric"});
   }
+
+    protected readonly MyConfig = MyConfig;
 }

@@ -49,11 +49,13 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
                 };
             }
 
+            product.WishlistedTimes--;
             _db.UserProductWishlist.Remove(existingWishlistItem);
             await _db.SaveChangesAsync(cancellationToken);
 
             return new RemoveProductFromWishlistResponse
-            {
+            {   
+
                 Success = true,
                 Message = "Product removed from wishlist successfully."
             };

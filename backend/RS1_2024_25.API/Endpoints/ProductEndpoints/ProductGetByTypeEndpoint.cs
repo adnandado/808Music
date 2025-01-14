@@ -29,13 +29,11 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
             [FromQuery] string sortBy = "title",
             CancellationToken cancellationToken = default)
         {
-            // Provjera da li je korisnik odabrao validan tip proizvoda
             if (!Enum.IsDefined(typeof(ProductType), productType))
             {
                 return BadRequest("Invalid product type.");
             }
 
-            // Ukupni broj proizvoda u toj kategoriji
             var total = await _db.Products
                 .Where(p => p.ProductType == productType)
                 .CountAsync(cancellationToken);
@@ -45,12 +43,10 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
                 return NotFound(new { Total = 0, Products = new List<ProductGetAllResponse>() });
             }
 
-            // Kreiranje osnovne upite za dohvat proizvoda
             IQueryable<Product> query = _db.Products
                 .Where(p => p.ProductType == productType)
                 .Include(p => p.Photos);
 
-            // Sortiranje prema odabranom kriteriju
             switch (sortBy.ToLower())
             {
                 case "datecreatedoldest":
@@ -87,7 +83,6 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
                     break;
             }
 
-            // Dohvat proizvoda s paginacijom
             var products = await query
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -110,7 +105,6 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
                 })
                 .ToListAsync(cancellationToken);
 
-            // Povrat rezultata
             return Ok(new
             {
                 Total = total,

@@ -46,7 +46,7 @@
           -{{ (product.saleAmount * 100).toFixed(0) }}%
         </div>
         <img
-          [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]"
+          [src]="MyConfig.media_address  + product.photoPaths[product.photoPaths.length - 1]"
           alt="{{ product.title }}"
           class="product-image"
         >
@@ -73,7 +73,7 @@
           -{{ (product.saleAmount * 100).toFixed(0) }}%
         </div>
         <img
-          [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]"
+          [src]="MyConfig.media_address  + product.photoPaths[product.photoPaths.length - 1]"
           alt="{{ product.title }}"
           class="product-image"
         >
@@ -100,7 +100,7 @@
           -{{ (product.saleAmount * 100).toFixed(0) }}%
         </div>
         <img
-          [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]"
+          [src]="MyConfig.media_address  + product.photoPaths[product.photoPaths.length - 1]"
           alt="{{ product.title }}"
           class="product-image"
         >
@@ -111,10 +111,7 @@
         <div
           class="wishlist-icon"
           (click)="toggleWishlist($event, product)">
-          <mat-icon (click)="checkIfOnWishlist(product)">
-            {{ isWishlistItem ? 'favorite' : 'favorite_border' }}
-          </mat-icon>
-
+          <mat-icon>{{ isOnWishlist(product) ? 'favorite' : 'favorite_border' }}</mat-icon>
         </div>
       </div>
     </div>
@@ -130,7 +127,7 @@
           -{{ (product.saleAmount * 100).toFixed(0) }}%
         </div>
         <img
-          [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]"
+          [src]="MyConfig.media_address + product.photoPaths[product.photoPaths.length - 1]"
           alt="{{ product.title }}"
           class="product-image"
         >
@@ -141,10 +138,7 @@
         <div
           class="wishlist-icon"
           (click)="toggleWishlist($event, product)">
-          <mat-icon (click)="checkIfOnWishlist(product)">
-            {{ isWishlistItem ? 'favorite' : 'favorite_border' }}
-          </mat-icon>
-
+          <mat-icon>{{ isOnWishlist(product) ? 'favorite' : 'favorite_border' }}</mat-icon>
         </div>
       </div>
     </div>
