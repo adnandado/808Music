@@ -110,6 +110,15 @@ h6 {
   margin-bottom: 15px;
 }
 
+.premium {
+  text-align: center;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  color: #EEDEE7;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 
 @media only screen and (max-height: 900px) {
   .cover {
@@ -127,14 +136,15 @@ h6 {
 
 @media only screen and (max-width: 1000px) {
   .cover {
-    height: 15vh;
-    width: 15vh;
+    height: 20vh;
+    width: 20vh;
   }
 }
 
 @media only screen and (max-height: 800px) {
   .cover {
-    height: 15vh;
-    width: 15vh;
+    height: 20vh;
+    width: 20vh;
   }
 }
+

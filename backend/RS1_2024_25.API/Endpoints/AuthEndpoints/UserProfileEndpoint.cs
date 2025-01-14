@@ -31,7 +31,9 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
             }
             else
             {
-                return NotFound("Profile picture not found.");
+                user.pfpCoverPath = "/Images/ProfilePictures/placeholder.png";
+                await _db.SaveChangesAsync(cancellationToken);
+                return Ok(new { ProfilePicturePath = user.pfpCoverPath });
             }
         }
     }

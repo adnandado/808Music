@@ -47,7 +47,26 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
 
             if (likedSongsPlaylist == null)
             {
-                return NotFound("Playlist 'Liked songs' not found.");
+                likedSongsPlaylist = new Playlist
+                {
+                    Title = "Liked songs",
+                    IsPublic = false,
+                    isLikePlaylist = true,
+                    CoverPath = "/Images/liked_songs.png",
+                    NumOfTracks = 0
+                };
+
+                _db.Playlists.Add(likedSongsPlaylist);
+                await _db.SaveChangesAsync();
+
+                var userPlaylist = new UserPlaylist
+                {
+                    MyAppUserId = user.ID,
+                    PlaylistId = likedSongsPlaylist.Id
+                };
+
+                _db.UserPlaylist.Add(userPlaylist);
+                await _db.SaveChangesAsync();
             }
 
             var track = await _db.Tracks.FindAsync(request.TrackId);

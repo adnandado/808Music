@@ -19,6 +19,13 @@ import {
 import {ShareBottomSheetComponent} from '../../shared/bottom-sheets/share-bottom-sheet/share-bottom-sheet.component';
 import {queue} from 'rxjs';
 import {Router} from '@angular/router';
+import {
+  IsSubscribedRequest,
+  IsSubscribedService
+} from '../../../endpoints/auth-endpoints/is-subscribed-endpoint.service';
+import {MatDialog} from '@angular/material/dialog';
+import {PleaseSubscribeComponent} from '../../shared/bottom-sheets/please-subscribe/please-subscribe.component';
+import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
 
 @Component({
   selector: 'app-music-player',
@@ -30,13 +37,17 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   track:TrackGetResponse | null = null;
   newTrackId: number = 39;
   queueManager = inject(MatBottomSheet)
+  isSubbed = true;
 
 
   constructor(private trackGetService: TrackGetByIdEndpointService,
               private albumGetService: TrackGetAllEndpointService,
               private albumByIdService: AlbumGetByIdEndpointService,
               protected musicPlayerService: MusicPlayerService,
-              private router: Router) {
+              private router: Router,
+              private isSubscribedService : IsSubscribedService,
+              private dialog : MatDialog,
+              private auth: MyUserAuthService) {
   }
 
   ngOnDestroy(): void {
@@ -55,6 +66,25 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       }
     })
      */
+
+    const request: IsSubscribedRequest = {
+      userId : this.auth.getAuthToken()!.userId
+    };
+    this.isSubscribedService.handleAsync(request).subscribe({
+      next: (response) => {
+        if (!response.isSubscribed)
+        {
+          this.openPleaseSubscribeDialog();
+          this.isSubbed = false;
+        }
+        else {
+          this.isSubbed = true;
+        }
+      },
+      error: (err) => {
+        console.error('Error:', err);
+      },
+    });
 
     this.track = this.musicPlayerService.getLastPlayedSong();
 
@@ -104,5 +134,18 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   messageBottomSheet() {
     this.musicPlayerService.setAutoPlayStatus(!this.musicPlayerService.getAutoPlayStatus());
     console.log(this.musicPlayerService.getAutoPlayStatus());
+  }
+
+  private openPleaseSubscribeDialog(): void {
+    const dialogRef = this.dialog.open(PleaseSubscribeComponent, {
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result: string | undefined ) => {
+      if (result === 'navigate') {
+        this.router.navigate(['listener/subscriptions']);
+      }
+    });
   }
 }
