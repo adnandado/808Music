@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {MyConfig} from '../../my-config';
 
 interface Product {
   slug: string;
@@ -26,11 +27,10 @@ interface SearchResult {
   providedIn: 'root'
 })
 export class ProductsSearchService {
-  private apiUrl = `http://localhost:7000/api/products/search`;
+  private apiUrl = `${MyConfig.api_address}/api/products/search`;
 
   constructor(private http: HttpClient) {}
 
-  // Pretraga proizvoda s podrškom za keyword, sortBy, page i pageSize
   searchProducts(
     keyword: string,
     sortBy: string = 'title', // Default sorting by title

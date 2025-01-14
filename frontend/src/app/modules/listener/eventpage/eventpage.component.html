@@ -33,8 +33,8 @@
         <p class="artist-name">{{ artistData.name }}</p>
       </div>
       <div class="event-information">
-        <p class="event-title">{{ selectedEvent.eventTitle }}</p>
-        <p class="event-venue"> ● {{ selectedEvent.venue }} ● {{ selectedEvent.city }} ● {{ selectedEvent.country }}</p>
+        <p class="event-title hide-overflow" matTooltip="{{ selectedEvent.eventTitle }}" matTooltipPosition="above">{{ selectedEvent.eventTitle }}</p>
+        <p class="event-venue hide-overflow" matTooltip="{{ selectedEvent.venue }} ● {{ selectedEvent.city }} ● {{ selectedEvent.country }}" matTooltipPosition="above"> ● {{ selectedEvent.venue }} ● {{ selectedEvent.city }} ● {{ selectedEvent.country }}</p>
       </div>
       <p class="date-event">{{ moment(selectedEvent.eventDate).format('dddd') }} ● {{ selectedEvent.eventDate | date: 'dd.MM.yyyy' }} ● {{ selectedEvent.eventDate | date: 'HH:mm' }}</p>
       <div class="map-container">

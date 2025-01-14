@@ -10,7 +10,7 @@
       <input #searchInput type="text" matInput placeholder="Did Kanye drop something again?" [formControl]="searchControl" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="viewProduct($event.option.value)">
         <mat-option class = "Adnan" *ngFor="let product of filteredProducts" [value]="product.slug">
-          <img [src]="'http://localhost:7000/media/' + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="autocomplete-product-image">
+          <img [src]="MyConfig.media_address + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="autocomplete-product-image">
           {{ product.title }}
           <p class = "price-opt">{{ updateCalculatedPrice(product)}}$ </p>
         </mat-option>

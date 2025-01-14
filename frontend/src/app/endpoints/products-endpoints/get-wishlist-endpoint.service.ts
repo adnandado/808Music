@@ -34,7 +34,7 @@ export interface GetWishlistResponse {
 export class GetWishlistEndpointService
   implements MyBaseEndpointAsync<GetWishlistRequest, GetWishlistResponse>
 {
-  readonly url = 'http://localhost:7000/api/GetWishlistEndpoint/api/wishlist';
+  readonly url = `${MyConfig.api_address}/api/GetWishlistEndpoint/api/wishlist`;
 
   constructor(private httpClient: HttpClient) {}
 

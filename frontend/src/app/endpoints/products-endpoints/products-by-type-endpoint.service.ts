@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {MyConfig} from '../../my-config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductByTypeService {
-  private baseUrl: string = 'http://localhost:7000/api/products/bytype';
+  private baseUrl: string = `${MyConfig.api_address}/api/products/bytype`;
 
   constructor(private http: HttpClient) {}
 

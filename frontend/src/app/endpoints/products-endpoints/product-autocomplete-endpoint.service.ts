@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MyBaseEndpointAsync } from '../../helper/my-base-endpoint-async.interface';
 import { ClothesType, ProductType } from './product-create-endpoint.service';
+import {MyConfig} from '../../my-config';
 
 export interface ProductAutocompleteResponse {
   id: number;
@@ -28,7 +29,7 @@ export class ProductAutocompleteService
   implements MyBaseEndpointAsync<ProductAutocompleteRequest, ProductAutocompleteResponse[]>
 {
   // API endpoint URL with the correct path
-  private apiUrl = 'http://localhost:7000/api/ProductAutocompleteEndpoint/api/ProductAutocomplete';
+  private apiUrl = `${MyConfig.api_address}/api/ProductAutocompleteEndpoint/api/ProductAutocomplete`;
 
   constructor(private httpClient: HttpClient) {}
 

@@ -219,12 +219,12 @@ export class WebStoreComponent implements OnInit {
     const calculatedPrice = product.saleAmount > 0
       ? product.price * (1 - product.saleAmount)
       : product.price;
-    return calculatedPrice.toFixed(2); // Formatiranje na dvije decimale
+    return calculatedPrice.toFixed(2);
   }
 
   searchProducts(keyword: string): void {
     if (!keyword.trim()) {
-      return; // Izbjegavaj slanje prazne ključne riječi
+      return;
     }
     this.router.navigate(['/listener/product-search'], {
       queryParams: { keyword },

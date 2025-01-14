@@ -89,11 +89,9 @@ export class MusicControllerComponent implements OnInit {
                 },
                 error: err => {
                   console.error('Error occurred:', err);
-                  if (err.status === 401 ) {
-                    alert('Potrebna vam je aktivna pretplata da biste streamali pjesmu.');
-                  } else {
+
                     console.log('Došlo je do pogreške prilikom dodavanja streama.');
-                  }
+
                 }
               });
 
