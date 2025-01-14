@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log('Login successful');
         console.log(lr)
         // Redirect to
-        this.router.navigate(['/artist']);
+        this.router.navigate([this.redirectUrl]);
       },
       error: (error: any) => {
         this.errorMessage = 'Incorrect username or password';

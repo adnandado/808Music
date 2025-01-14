@@ -19,7 +19,7 @@ import {TracksModule} from '../artist/tracks/tracks.module';
 import { PlayTrackComponent } from './play-track/play-track.component';
 import {MatDivider} from '@angular/material/divider';
 import { ArtistPageComponent } from './artist-page/artist-page.component';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
+import {MatTab, MatTabContent, MatTabGroup} from '@angular/material/tabs';
 import { ArtistMusicPageComponent } from './artist-page/artist-music-page/artist-music-page.component';
 import { ArtistAlbumsListComponent } from './artist-albums-list/artist-albums-list.component';
 import {AlbumModule} from '../artist/album/album.module';
@@ -79,35 +79,36 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
     MessagesListComponent,
     MessageCardComponent,
   ],
-  imports: [
-    CommonModule,
-    ListenerRoutingModule,
-    MatIcon,
-    SharedModule,
-    MatIconButton,
-    MatTooltip,
-    MatInput,
-    MatFormField,
-    MatButton,
-    MatSlider,
-    MatSliderThumb,
-    TracksModule,
-    MatDivider,
-    MatFabButton,
-    MatTabGroup,
-    MatTab,
-    AlbumModule,
-    MatChipListbox,
-    MatChipOption,
-    MatAutocomplete,
-    MatOption,
-    MatAutocompleteTrigger,
-    NgxImageZoomModule,
-    MatStepper,
-    MatStep,
-    MatMiniFabButton,
-    ImageCropperComponent,
-  ],
+    imports: [
+        CommonModule,
+        ListenerRoutingModule,
+        MatIcon,
+        SharedModule,
+        MatIconButton,
+        MatTooltip,
+        MatInput,
+        MatFormField,
+        MatButton,
+        MatSlider,
+        MatSliderThumb,
+        TracksModule,
+        MatDivider,
+        MatFabButton,
+        MatTabGroup,
+        MatTab,
+        AlbumModule,
+        MatChipListbox,
+        MatChipOption,
+        MatAutocomplete,
+        MatOption,
+        MatAutocompleteTrigger,
+        NgxImageZoomModule,
+        MatStepper,
+        MatStep,
+        MatMiniFabButton,
+        ImageCropperComponent,
+        MatTabContent,
+    ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ListenerModule { }

@@ -24,6 +24,9 @@ import {
   MessageContent,
   MessageContentCardComponent
 } from '../../../shared/message-content-card/message-content-card.component';
+import {MyConfig} from '../../../../my-config';
+import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
+import {ChatToggleBlockEndpointService} from '../../../../endpoints/chat-endpoints/chat-toggle-block-endpoint.service';
 
 @Component({
   selector: 'app-chat-box',
@@ -49,21 +52,39 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
 
   result: MessageContent | null = null;
 
+  userId: number = 0;
+
   constructor(private chatService: ChatService,
               private getMessages: ChatGetMessagesEndpointService,
               private snackBar: MatSnackBar,
               private changeDetectorRef: ChangeDetectorRef,
-              private bottomSheet: MatBottomSheet) {
+              private bottomSheet: MatBottomSheet,
+              private auth: MyUserAuthService,
+              private blockToggleService: ChatToggleBlockEndpointService) {
   }
 
   ngAfterViewInit(): void {
     this.msgDiv = document.getElementById("messageBox") as HTMLDivElement;
     setTimeout(() => {this.msgDiv.scrollTop = this.msgDiv.scrollHeight}, 100);
     this.changeDetectorRef.detectChanges();
+    this.chatService.msgReceived$.subscribe(msg => {
+      setTimeout(() => {this.msgDiv.scrollTop = this.msgDiv.scrollHeight}, 100);
+    })
+
+    this.chatService.chatBlocked$.subscribe(blockedChat => {
+      if(blockedChat.id === this.chat?.id) {
+        this.chat.blockedByUser = blockedChat.blockedByUser
+        this.chat.blocked = blockedChat.isBlocked
+        this.chat.blockedByUserId = blockedChat.blockedByUserId
+
+        console.log(this.chat.blockedByUserId);
+      }
+    })
+
+    this.userId = this.auth.getAuthToken()?.userId!;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("HELLOOOOOO");
       setTimeout(() => {this.msgDiv.scrollTop = this.msgDiv.scrollHeight}, 50);
       this.scroll = false;
   }
@@ -89,8 +110,6 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
           contentId: -1,
           contentType: 'None'
         });
-
-        setTimeout(() => {this.msgDiv.scrollTop = this.msgDiv.scrollHeight}, 100);
       }
     });
   }
@@ -115,5 +134,17 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
     this.form.get('contentType')!.setValue('None');
     this.form.get('contentId')!.setValue(-1);
     this.form.get('message')!.setValue(this.form.get('message')!.value);
+  }
+
+  protected readonly MyConfig = MyConfig;
+
+  toggleBlock(chat: ChatGetResponse | null) {
+    this.blockToggleService.handleAsync(chat?.id!).subscribe({
+      next: data => {
+        this.chat!.blocked = data.isBlocked;
+        this.chat!.blockedByUserId = data.blockedByUserId;
+        this.chat!.blockedByUser = data.blockedByUser
+      }
+    })
   }
 }

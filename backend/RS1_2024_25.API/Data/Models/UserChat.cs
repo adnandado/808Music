@@ -11,13 +11,17 @@ namespace RS1_2024_25.API.Data.Models
 
         [ForeignKey(nameof(MyAppUser))]
         public int PrimaryChatterId { get; set; }
-        public MyAppUser PrimaryChatter { get; set; }
+        public MyAppUser? PrimaryChatter { get; set; }
 
         [ForeignKey(nameof(MyAppUser))]
         public int SecondaryChatterId { get; set; }
-        public MyAppUser SecondaryChatter { get; set; }
+        public MyAppUser? SecondaryChatter { get; set; }
         public bool Muted { get; set; }
         public bool Blocked { get; set; }
+
+        [ForeignKey(nameof(MyAppUser))]
+        public int? BlockedByUserId { get; set; }
+        public MyAppUser? BlockedByUser { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastMessageAt { get; set; }
     }

@@ -3,7 +3,10 @@
     <div class="banner"
          [ngStyle]="{'background-image': 'url('+ MyConfig.api_address + artist?.profileBackgroundPath+')'}"></div>
     <div class="banner-gradient"></div>
-    <button mat-raised-button class="back-button" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Back</button>
+    <button mat-raised-button class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
     <div class="controls">
       <div class="name">
         <button mat-icon-button (click)="shufflePlay()" class="shuffley">
@@ -24,17 +27,16 @@
           <button mat-icon-button (click)="shareProfile()">
             <mat-icon>share</mat-icon>
           </button>
-          @if (followInfo)
-          {
-          <button mat-icon-button (click)="toggleNotifications()">
-            <mat-icon>
-              @if (followInfo.wantsNotifications) {
-                notifications_active
-              } @else {
-                notifications
-              }
-            </mat-icon>
-          </button>
+          @if (followInfo) {
+            <button mat-icon-button (click)="toggleNotifications()">
+              <mat-icon>
+                @if (followInfo.wantsNotifications) {
+                  notifications_active
+                } @else {
+                  notifications
+                }
+              </mat-icon>
+            </button>
           }
           @if (followInfo) {
             <button mat-flat-button class="follow-button" (click)="followOrUnfollow()">
@@ -51,9 +53,20 @@
   </div>
   <mat-tab-group>
     <mat-tab label="MUSIC">
-      <app-artist-music-page></app-artist-music-page>
+      <ng-template matTabContent>
+        <app-artist-music-page></app-artist-music-page>
+      </ng-template>
     </mat-tab>
-    <mat-tab label="SHOP">  <app-store-artist-page></app-store-artist-page></mat-tab>
-    <mat-tab label="EVENTS"> <app-eventpage></app-eventpage></mat-tab>
+    <mat-tab label="SHOP">
+      <ng-template matTabContent>
+        <app-store-artist-page></app-store-artist-page>
+
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="EVENTS">
+      <ng-template matTabContent>
+        <app-eventpage></app-eventpage>
+      </ng-template>
+    </mat-tab>
   </mat-tab-group>
 </div>
