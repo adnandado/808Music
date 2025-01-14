@@ -1,1 +1,22 @@
-<p>store-artist-page works!</p>
+<div class="products">
+  <h2>ALL PRODUCTS</h2>
+
+  <div *ngIf="Products.length === 0" class="no-products">
+    No products
+  </div>
+
+
+  <div class="product-row" *ngIf="Products.length > 0">
+    <div *ngFor="let product of Products" class="product" matTooltip="{{ product.title }}" matTooltipPosition="above" (click)="viewProduct(product.slug)">
+      <div class="sale-badge" *ngIf="product.saleAmount > 0">
+        -{{ (product.saleAmount * 100).toFixed(0) }}%
+      </div>
+      <img [src]="MyConfig.media_address + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="product-image">
+      <div class="product-info">
+        <p class="product-name hide-overflow">{{ product.title }}</p>
+        <p class="product-price">{{ updateCalculatedPrice(product).toFixed(2)}}$</p>
+      </div>
+    </div>
+  </div>
+
+</div>
