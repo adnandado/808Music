@@ -110,7 +110,8 @@ export class MyUserAuthService {
       isAdmin: true,
       token: lr.token,
       refreshToken: lr.refreshToken,
-      rememberMe: rememberMe
+      rememberMe: rememberMe,
+      username: decodedJwt.Username
     }
   }
 

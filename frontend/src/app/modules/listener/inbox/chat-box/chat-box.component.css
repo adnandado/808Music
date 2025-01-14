@@ -84,3 +84,24 @@
   right: 0;
   bottom: 8vh;
 }
+
+.pfp {
+  width: 6vh;
+  height: 6vh;
+  border-radius: 50%;
+  background-color: aliceblue;
+  background-position: center;
+  background-size: cover;
+}
+
+.chatter-info {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.error {
+  color: red;
+  padding: 0;
+  margin: 0;
+}

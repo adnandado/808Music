@@ -17,6 +17,8 @@ import {
 } from '../../../endpoints/notification-endpoints/notification-mark-as-read-endpoint.service';
 import {ChatMarkAsReadEndpointService} from '../../../endpoints/chat-endpoints/chat-mark-as-read-endpoint.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {MyConfig} from '../../../my-config';
+import {MatChipListboxChange} from '@angular/material/chips';
 
 @Component({
   selector: 'app-inbox',
@@ -31,6 +33,8 @@ export class InboxComponent implements OnInit {
   userId!: number;
   protected readonly JSON = JSON;
   protected readonly moment = moment;
+
+  showBlocked = false;
 
   receiveMessageCallback = (msg: MessageGetResponse) => {
     if(this.selectedChat?.id === msg.userChatId)
@@ -99,6 +103,16 @@ export class InboxComponent implements OnInit {
       }
     })
 
+    this.chatService.chatBlocked$.subscribe(data => {
+      let chat = this.chats.find(val => val.id === data.id);
+      if(chat)
+      {
+        chat.blocked = data.isBlocked;
+        chat.blockedByUser = data.blockedByUser;
+        chat.blockedByUserId = data.blockedByUserId;
+      }
+    })
+
     this.userId = this.auth.getAuthToken()!.userId;
   }
 
@@ -139,11 +153,12 @@ export class InboxComponent implements OnInit {
   }
 
   getFilteredChats() {
+    let chats : ChatGetResponse[] = this.chats;
     if(this.queryString != "")
     {
-      return this.chats.filter(c => c.chatter.toLowerCase().includes(this.queryString.toLowerCase()));
+      chats = chats.filter(c => c.chatter.toLowerCase().includes(this.queryString.toLowerCase()));
     }
-    return this.chats;
+    return chats.filter(c => c.blocked == this.showBlocked);
   }
 
   protected readonly Math = Math;
@@ -159,5 +174,12 @@ export class InboxComponent implements OnInit {
 
   scroll() {
     this.shouldScroll = true;
+  }
+
+  protected readonly MyConfig = MyConfig;
+
+  showHideBlocked($event: MatChipListboxChange) {
+    this.showBlocked = !this.showBlocked;
+    this.filterChats(this.queryString);
   }
 }

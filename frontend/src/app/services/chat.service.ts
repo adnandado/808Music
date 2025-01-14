@@ -6,6 +6,7 @@ import {RichNotification} from './notifications.service';
 import {Router} from '@angular/router';
 import {MessageGetResponse} from '../endpoints/chat-endpoints/chat-get-messages-endpoint.service';
 import {Subject} from 'rxjs';
+import {ChatBlockResponse} from '../endpoints/chat-endpoints/chat-toggle-block-endpoint.service';
 
 export interface MessageSendRequest {
   userChatId: number;
@@ -26,10 +27,15 @@ export interface MsgSeen {
 })
 export class ChatService {
   private hubConnection!: signalR.HubConnection;
+
   private msgReceive = new Subject<MessageGetResponse>();
   msgReceived$ = this.msgReceive.asObservable();
+
   private msgSeen = new Subject<MsgSeen>();
   msgSeen$ = this.msgSeen.asObservable();
+
+  private chatBlocked = new Subject<ChatBlockResponse>();
+  chatBlocked$ = this.chatBlocked.asObservable();
 
   constructor(private authService: MyUserAuthService, private router: Router) { }
 
@@ -61,6 +67,11 @@ export class ChatService {
     this.hubConnection.on("msgSeen", (data: MsgSeen) => {
       console.log(data);
       this.msgSeen.next(data);
+    });
+
+    this.hubConnection.on("chatBlocked", (data: ChatBlockResponse) => {
+      console.log(data);
+      this.chatBlocked.next(data);
     });
   }
 
