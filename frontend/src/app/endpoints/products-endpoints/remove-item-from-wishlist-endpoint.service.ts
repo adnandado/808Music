@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {MyConfig} from '../../my-config';
 
 export interface RemoveProductFromWishlistRequest {
   productSlug: string;
@@ -16,7 +17,7 @@ export interface RemoveProductFromWishlistResponse {
   providedIn: 'root',
 })
 export class RemoveProductFromWishlistService {
-  private apiUrl = 'http://localhost:7000/api/RemoveProductFromWishlistEndpoint';
+  private apiUrl = `${MyConfig.api_address}/api/RemoveProductFromWishlistEndpoint`;
 
   constructor(private httpClient: HttpClient) {}
 

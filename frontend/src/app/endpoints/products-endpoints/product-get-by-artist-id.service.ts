@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {ClothesType, ProductType} from './product-create-endpoint.service';
+import {MyConfig} from '../../my-config';
 
 export interface Product {
   id: number;
@@ -21,7 +22,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductGetByArtistIdService {
-  private apiUrl = 'http://localhost:7000/api/ProductGetByArtistEndpoint/api/ProductGetByArtist'; // Tvoj backend URL
+  private apiUrl = `${MyConfig.api_address}/api/ProductGetByArtistEndpoint/api/ProductGetByArtist`;
 
   constructor(private http: HttpClient) {}
 

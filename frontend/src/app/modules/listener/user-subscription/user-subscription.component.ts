@@ -106,8 +106,15 @@ export class UserSubscriptionComponent implements OnInit {
 
   createPaymentIntent(userId: number): void {
     if (this.stripe && this.card && this.selectedSubscription) {
-      const amountInCents = Math.round(this.selectedSubscription?.price * 100);
+      let amountInCents: number;
 
+      if (this.selectedSubscription?.price === 8.99) {
+        amountInCents = Math.round(this.selectedSubscription?.price * 100) * 6;
+      } else if (this.selectedSubscription?.price === 6.50) {
+        amountInCents = Math.round(this.selectedSubscription?.price * 100) * 12;
+      } else {
+        amountInCents = Math.round(this.selectedSubscription?.price * 100);
+      }
       this.userService.getUserInfo(userId).subscribe(
         (userInfo) => {
           const email = userInfo.email;
@@ -257,4 +264,16 @@ export class UserSubscriptionComponent implements OnInit {
 
   protected readonly moment = moment;
   protected readonly MyConfig = MyConfig;
+
+  getPrice() {
+    let amountInCents
+    if (this.selectedSubscription?.price === 8.99) {
+      amountInCents = this.selectedSubscription?.price * 6;
+    } else if (this.selectedSubscription?.price === 6.50) {
+      amountInCents = this.selectedSubscription?.price  * 12;
+    } else {
+      amountInCents = this.selectedSubscription?.price!;
+    }
+    return amountInCents
+  }
 }

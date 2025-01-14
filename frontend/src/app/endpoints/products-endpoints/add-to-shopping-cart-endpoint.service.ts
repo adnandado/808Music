@@ -22,7 +22,7 @@ export interface AddToShoppingCartResponse {
 export class AddToShoppingCartEndpointService
   implements MyBaseEndpointAsync<AddToShoppingCartRequest, AddToShoppingCartResponse>
 {
-  readonly url = `http://localhost:7000/api/AddToShoppingCartEndpoint`;
+  readonly url = `${MyConfig.api_address}/api/AddToShoppingCartEndpoint`;
 
   constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {}
 

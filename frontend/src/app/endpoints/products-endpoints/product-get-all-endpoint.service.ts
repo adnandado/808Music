@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MyBaseEndpointAsync } from '../../helper/my-base-endpoint-async.interface';
 import {ClothesType, ProductType} from './product-create-endpoint.service';
+import {MyConfig} from '../../my-config';
 
 export interface ProductsGetAllResponse {
   slug: string;
@@ -21,7 +22,7 @@ export interface ProductsGetAllResponse {
   providedIn: 'root'
 })
 export class ProductsGetAllService implements MyBaseEndpointAsync<void, ProductsGetAllResponse[]> {
-  private apiUrl = `http://localhost:7000/api/ProductGetAllEndpoint/api/ProductGetAll`;
+  private apiUrl = `${MyConfig.api_address}/api/ProductGetAllEndpoint/api/ProductGetAll`;
 
   constructor(private httpClient: HttpClient) {}
 

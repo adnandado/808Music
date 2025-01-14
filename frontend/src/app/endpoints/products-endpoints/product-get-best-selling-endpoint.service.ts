@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MyBaseEndpointAsync } from '../../helper/my-base-endpoint-async.interface';
 import { ClothesType, ProductType } from './product-create-endpoint.service';
+import {MyConfig} from '../../my-config';
 
 export interface ProductsGetBestSellingResponse {
   slug: string;
@@ -30,7 +31,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductsGetBestSellingService implements MyBaseEndpointAsync<void, ProductsGetBestSellingResponse[]> {
-  private apiUrl = `http://localhost:7000/api/ProductGetBestSellingEndpoint/api/ProductGetBestSelling
+  private apiUrl = `${MyConfig.api_address}/api/ProductGetBestSellingEndpoint/api/ProductGetBestSelling
 `;
 
   constructor(private httpClient: HttpClient) {}
