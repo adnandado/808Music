@@ -191,6 +191,7 @@ export class UserSubscriptionComponent implements OnInit {
     this.selectedSubscription = subscription;
     this.paymentSuccess = false;
     this.errorMessage = '';
+
     setTimeout(() => {
       this.loadStripeCard();
     }, 200);

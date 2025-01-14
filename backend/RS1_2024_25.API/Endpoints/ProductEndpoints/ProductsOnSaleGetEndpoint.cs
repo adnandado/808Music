@@ -16,7 +16,7 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
         {
             var result = await db.Products
      .Where(p => p.SaleAmount > 0)
-     .OrderBy(p => Guid.NewGuid()) // Koristi Guid za nasumično sortiranje
+     .OrderByDescending(p => p.SaleAmount) 
      .Take(5)
      .Include(p => p.Photos)
      .Select(p => new ProductGetAllResponse

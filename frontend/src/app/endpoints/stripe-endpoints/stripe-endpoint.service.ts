@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {MyConfig} from '../../my-config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StripeService {
-  private apiUrl = 'http://localhost:7000/api/Stripe/create-payment-intent';
+  readonly apiUrl = `${MyConfig.api_address}/api/Stripe/create-payment-intent`;
 
   constructor(private http: HttpClient) {}
 

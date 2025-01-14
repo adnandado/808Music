@@ -54,7 +54,7 @@ export interface GetArtistDashboardResponse {
 export class GetArtistDashboardEndpointService
   implements MyBaseEndpointAsync<GetArtistDashboardRequest, GetArtistDashboardResponse>
 {
-  readonly url = 'http://localhost:7000/api/GetArtistDashboardEndpoint';
+  readonly url = `${MyConfig.api_address}/api/GetArtistDashboardEndpoint`;
 
   constructor(private httpClient: HttpClient) {}
 

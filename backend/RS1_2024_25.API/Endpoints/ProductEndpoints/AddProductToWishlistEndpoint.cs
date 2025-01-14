@@ -36,7 +36,7 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
                     Message = "Product not found."
                 };
             }
-
+            product.WishlistedTimes++;
             var existingWishlistItem = await _db.UserProductWishlist
                 .FirstOrDefaultAsync(w => w.ProductId == product.Id && w.UserId == request.UserId, cancellationToken);
 
@@ -68,7 +68,7 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
 
         public class AddProductToWishlistRequest
         {
-            public required string ProductSlug { get; set; }  // Promijenjeno u slug
+            public required string ProductSlug { get; set; }  
             public required int UserId { get; set; }
         }
 
