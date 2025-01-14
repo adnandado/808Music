@@ -46,30 +46,24 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
       console.log("Not logged in...");
       setTimeout(() => this.router.navigate(['/auth/login']), 1000);
     }
-    this.musicPlayerService.trackEvent.subscribe({
-      next: data => {
-        const request: IsSubscribedRequest = {
-          userId : this.getUserIdFromToken()
-        };
-        this.isSubscribedService.handleAsync(request).subscribe({
-          next: (response) => {
-            if (!response.isSubscribed)
-            {
-              this.openPleaseSubscribeDialog();
-
-            }
-          },
-          error: (err) => {
-            console.error('Error:', err);
-
-          },
-        });
+    /*
+    const request: IsSubscribedRequest = {
+      userId : this.getUserIdFromToken()
+    };
+    this.isSubscribedService.handleAsync(request).subscribe({
+      next: (response) => {
+        if (!response.isSubscribed)
+        {
+          this.openPleaseSubscribeDialog();
+        }
       },
-
-      complete: () => {
-        console.log('Stream completed');
-      }
+      error: (err) => {
+        console.error('Error:', err);
+      },
     });
+
+     */
+
     this.notificationsService.startConnection();
     this.notificationsService.addNotificationListener(this.notiCallback);
   }

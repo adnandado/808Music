@@ -44,7 +44,6 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 user = new MyAppUser();
                 db.MyAppUsers.Add(user);
                 user.pfpCoverPath = "/Images/ProfilePictures/placeholder.png";
-
             }
 
             MyAppUser dupeUser = await db.MyAppUsers.FirstOrDefaultAsync(u => u.Username == request.Username || u.Email == request.Email);

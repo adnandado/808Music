@@ -14,8 +14,11 @@
       <h6 class="track-title hide-overflow" (click)="goToRelease()">{{track?.title}}</h6>
       <app-clickable-featured-artists [artists]="track?.artists ?? null"></app-clickable-featured-artists>
     </div>
-
+  @if (isSubbed) {
     <app-music-controller class="music-controls"></app-music-controller>
+  } @else {
+    <h6 class="hide-overflow premium" routerLink="/listener/subscriptions">Get Premium To Stream</h6>
+  }
 
     <div class="control-bar">
       <button mat-icon-button matTooltip="Share" (click)="openShareSheet()">
