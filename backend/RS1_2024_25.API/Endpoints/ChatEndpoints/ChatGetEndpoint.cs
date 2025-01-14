@@ -31,7 +31,8 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
                 CreatedAt = c.CreatedAt,
                 LastMessageAt = c.LastMessageAt,
                 LastMessage = db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.Message).FirstOrDefault() ?? "",
-                NumberOfUnreads = db.ChatMessages.Where(cm => cm.UserChatId == c.Id && !cm.Seen).Count(),
+                NumberOfUnreads = db.ChatMessages.Where(cm => cm.UserChatId == c.Id && !cm.Seen 
+                && db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.SenderId).FirstOrDefault() != userId).Count(),
                 LastMessageSenderId = db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.SenderId).FirstOrDefault(),
                 ChatterPfp = c.PrimaryChatterId == userId ? 
                 (c.SecondaryChatter.pfpCoverPath == "" ? "/Images/ProfilePictures/placeholder.png" : c.SecondaryChatter.pfpCoverPath)

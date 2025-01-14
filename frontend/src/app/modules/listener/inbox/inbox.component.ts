@@ -59,7 +59,7 @@ export class InboxComponent implements OnInit {
       audio.play();
     }
     let userChat = this.chats.find(val => val.id === msg.userChatId);
-    if(userChat && this.selectedChat?.id !== msg.userChatId)
+    if(userChat && this.selectedChat?.id !== msg.userChatId && msg.senderId !== this.userId)
     {
       userChat.numberOfUnreads++;
     }
@@ -87,7 +87,6 @@ export class InboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chatService.startConnection();
     this.chatService.msgReceived$.subscribe(msg => {
       this.receiveMessageCallback(msg);
     })

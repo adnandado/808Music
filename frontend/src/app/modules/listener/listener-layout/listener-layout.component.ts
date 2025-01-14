@@ -13,6 +13,7 @@ import {
 import {PleaseSubscribeComponent} from '../../shared/bottom-sheets/please-subscribe/please-subscribe.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
+import {ChatService} from '../../../services/chat.service';
 
 @Component({
   selector: 'app-listener-layout',
@@ -33,7 +34,8 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
               private notificationsService: NotificationsService,
               private snackBar: MatSnackBar, private musicPlayerService : MusicPlayerService,
               private isSubscribedService : IsSubscribedService,
-              private dialog : MatDialog) {
+              private dialog : MatDialog,
+              private chatService : ChatService,) {
   }
 
   ngOnDestroy(): void {
@@ -66,6 +68,8 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
 
     this.notificationsService.startConnection();
     this.notificationsService.addNotificationListener(this.notiCallback);
+
+    this.chatService.startConnection();
   }
   private getUserIdFromToken(): number {
     let authToken = sessionStorage.getItem('authToken');

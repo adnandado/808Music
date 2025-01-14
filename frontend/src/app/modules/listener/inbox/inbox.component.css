@@ -122,3 +122,8 @@ h6, p {
   justify-content: space-between;
   align-items: center;
 }
+
+.title-and-notis {
+  display: flex;
+  gap: 10px;
+}
