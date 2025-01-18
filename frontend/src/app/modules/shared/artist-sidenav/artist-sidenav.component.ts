@@ -1,7 +1,9 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
 import {MyConfig} from '../../../my-config';
+import {UserProfileService} from '../../../endpoints/auth-endpoints/user-profile-endpoint.service';
+import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
 
 @Component({
   selector: 'artist-sidenav',
@@ -11,11 +13,44 @@ import {MyConfig} from '../../../my-config';
 export class ArtistSidenavComponent implements OnInit {
   isMenuVisible: boolean = false;
   pathToPfp: string = `${MyConfig.api_address}`;
+  pathToUserPfp: string = "";
 
-  constructor(private router: Router, private artistHandlerService: ArtistHandlerService) {}
+  constructor(private router: Router, private artistHandlerService: ArtistHandlerService,
+              private auth: MyUserAuthService,
+              private userProfileService: UserProfileService,
+              private cdRef: ChangeDetectorRef,) {}
 
   ngOnInit(): void {
-    this.pathToPfp += this.artistHandlerService.getSelectedArtist()?.pfpPath;
+    let userId = this.auth.getAuthToken()?.userId;
+    if (userId) {
+      this.userProfileService.getProfilePicture(userId).subscribe({
+        next: (response) => {
+          if (response && response.profilePicturePath) {
+            this.pathToUserPfp = `${MyConfig.media_address}${response.profilePicturePath}`;
+            console.log(this.pathToUserPfp);
+            this.pathToPfp = this.artistHandlerService.isArtistSelected() ? this.pathToPfp : this.pathToUserPfp;
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching profile picture:', error);
+        }
+    });
+    }
+    let artist = this.artistHandlerService.getSelectedArtist();
+    if(artist) {
+     this.pathToPfp = `${MyConfig.api_address}${artist.pfpPath}`;
+    }
+
+
+    this.artistHandlerService.artistSelectedPfp$.subscribe(data => {
+      if(data != "")
+      {
+       this.pathToPfp = data;
+      }
+      else {
+        this.pathToPfp = this.pathToUserPfp;
+      }
+    });
   }
 
   toggleMenu(): void {
@@ -38,6 +73,22 @@ export class ArtistSidenavComponent implements OnInit {
       this.router.navigate([destination]);
     }
     this.isMenuVisible = false;
+  }
+
+  getArtistProductPath() {
+    if(!this.router.url.includes('/products')) {
+      return "";
+    }
+
+    let artistName = this.artistHandlerService.getSelectedArtist()?.name;
+    if(artistName)
+    {
+      artistName = artistName.replaceAll(" ", "%20");
+
+      console.log(`/artist/${artistName}/products`);
+      return `/artist/${artistName}/products`;
+    }
+    return "";
   }
 
 

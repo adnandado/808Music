@@ -50,3 +50,11 @@
   }
   </div>
 </div>
+
+<div infiniteScroll
+     [fromRoot]="true"
+     [infiniteScrollContainer]="'#messageBox'"
+     [infiniteScrollUpDistance]="2"
+     [infiniteScrollThrottle]="500"
+     (scrolledUp)="loadMore()"
+></div>

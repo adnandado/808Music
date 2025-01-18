@@ -9,7 +9,7 @@ import moment from 'moment';
 import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
 import {ChatService, MsgSeen} from '../../../services/chat.service';
 import {
-  ChatGetMessagesEndpointService,
+  ChatGetMessagesEndpointService, MessageGetRequest,
   MessageGetResponse
 } from '../../../endpoints/chat-endpoints/chat-get-messages-endpoint.service';
 import {
@@ -35,6 +35,12 @@ export class InboxComponent implements OnInit {
   protected readonly moment = moment;
 
   showBlocked = false;
+
+  messagePagedRequest : MessageGetRequest = {
+    id: 0,
+    pageNumber: 1,
+    pageSize: 20
+  }
 
   receiveMessageCallback = (msg: MessageGetResponse) => {
     if(this.selectedChat?.id === msg.userChatId)
@@ -87,6 +93,8 @@ export class InboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userId = this.auth.getAuthToken()!.userId;
+
     this.chatService.msgReceived$.subscribe(msg => {
       this.receiveMessageCallback(msg);
     })
@@ -98,6 +106,7 @@ export class InboxComponent implements OnInit {
       next: value => {
         this.chats = value;
         this.selectedChat = value[0];
+        this.messagePagedRequest.id = this.selectedChat.id;
         this.fetchMessages();
       }
     })
@@ -112,7 +121,7 @@ export class InboxComponent implements OnInit {
       }
     })
 
-    this.userId = this.auth.getAuthToken()!.userId;
+
   }
 
   filterChats(queryString: string) {
@@ -134,14 +143,16 @@ export class InboxComponent implements OnInit {
 
   openChat(c: ChatGetResponse) {
     this.selectedChat = c;
+    this.messagePagedRequest.id = c.id;
     this.fetchMessages();
   }
 
   fetchMessages() {
-    this.getMessages.handleAsync(this.selectedChat!.id).subscribe({
+    this.messagePagedRequest.pageNumber = 1;
+    this.getMessages.handleAsync(this.messagePagedRequest).subscribe({
       next: data => {
-        this.selectedChatMessages = data;
-        this.markAsReadService.handleAsync({msgs: data}).subscribe({
+        this.selectedChatMessages = data.dataItems;
+        this.markAsReadService.handleAsync({msgs: data.dataItems}).subscribe({
           next: value => {
             console.log("Marked as read");
           }
@@ -180,5 +191,14 @@ export class InboxComponent implements OnInit {
   showHideBlocked($event: MatChipListboxChange) {
     this.showBlocked = !this.showBlocked;
     this.filterChats(this.queryString);
+  }
+
+  loadNewBatch(page: number) {
+    this.messagePagedRequest.pageNumber = page;
+    this.getMessages.handleAsync(this.messagePagedRequest).subscribe({
+      next: data => {
+        this.selectedChatMessages.unshift(...data.dataItems);
+      }
+    })
   }
 }

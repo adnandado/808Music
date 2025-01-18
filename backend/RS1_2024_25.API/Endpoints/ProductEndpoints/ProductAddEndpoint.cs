@@ -44,6 +44,16 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
             _db.Products.Add(product);
             await _db.SaveChangesAsync(cancellationToken);
 
+        Notification noti = new Notification
+        {
+            ArtistId = product.ArtistId,
+            ContentId = product.Id,
+            Type = "Product",
+            CreatedAt = DateTime.Now,
+        };
+        _db.Notifications.Add(noti);
+        await _db.SaveChangesAsync();
+
         if (request.Photos != null && request.Photos.Any())
         {
             foreach (var photo in request.Photos)

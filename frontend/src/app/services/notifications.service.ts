@@ -16,6 +16,7 @@ export interface RichNotification {
   createdAt: string;
   priority: boolean;
   hidden?: boolean;
+  slug?: string;
 }
 
 

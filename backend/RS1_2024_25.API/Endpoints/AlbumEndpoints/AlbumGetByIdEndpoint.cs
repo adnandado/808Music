@@ -27,7 +27,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             {
                 Id = a.Id,
                 Artist = await db.Artists.FindAsync(a.ArtistId,cancellationToken),
-                CoverPath = a.CoverPath != "" ? $"/media/Images/AlbumCovers/{a.CoverPath}" : "",
+                CoverPath = a.CoverPath != "" ? $"/media/Images/AlbumCovers/{a.CoverPath}" : "/media/Images/playlist_placeholder.png",
                 Distributor = a.Distributor,
                 NumOfTracks = numOfTracks,
                 ReleaseDate = a.ReleaseDate,

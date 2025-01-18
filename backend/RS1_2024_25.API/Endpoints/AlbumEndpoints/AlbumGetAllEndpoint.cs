@@ -68,7 +68,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             {
                 Id = a.Id,
                 Artist = a.Artist.Name,
-                CoverArt = a.CoverPath != "" ? $"/media/Images/AlbumCovers/{a.CoverPath}" : "",
+                CoverArt = a.CoverPath != "" ? $"/media/Images/AlbumCovers/{a.CoverPath}" : "/media/Images/playlist_placeholder.png",
                 ReleaseDate = a.ReleaseDate,
                 Title = a.Title,
                 Type = a.AlbumType.Type,

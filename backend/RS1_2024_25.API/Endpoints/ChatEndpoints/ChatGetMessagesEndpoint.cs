@@ -7,20 +7,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using RS1_2024_25.API.Helper;
 
 namespace RS1_2024_25.API.Endpoints.ChatEndpoints
 {
-    public class ChatGetMessagesEndpoint(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<int>.WithActionResult<List<MessageGetResponse>>
+    public class ChatGetMessagesEndpoint(ApplicationDbContext db, TokenProvider tp) : MyEndpointBaseAsync.WithRequest<MessageGetRequest>.WithActionResult<MyPagedList<MessageGetResponse>>
     {
         [Authorize]
-        [HttpGet("{id}")]
-        public override async Task<ActionResult<List<MessageGetResponse>>> HandleAsync(int id, CancellationToken cancellationToken = default)
+        [HttpGet]
+        public override async Task<ActionResult<MyPagedList<MessageGetResponse>>> HandleAsync([FromQuery] MessageGetRequest request, CancellationToken cancellationToken = default)
         {
             int userId = int.Parse(tp.GetJwtSub(Request));
             await db.UserChats.LoadAsync();
 
-            var messages = await db.ChatMessages.Where(cm => cm.UserChatId == id && (cm.UserChat.PrimaryChatterId == userId || cm.UserChat.SecondaryChatterId == userId))
-                .OrderBy(cm => cm.SentAt).Select(cm => new MessageGetResponse
+            var messages = db.ChatMessages.Where(cm => cm.UserChatId == request.Id && (cm.UserChat.PrimaryChatterId == userId || cm.UserChat.SecondaryChatterId == userId))
+                .OrderByDescending(cm => cm.SentAt).Select(cm => new MessageGetResponse
                 {
                     Id = cm.Id,
                     ContentType = cm.ContentType,
@@ -31,11 +32,20 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
                     SenderId = cm.SenderId,
                     Sender = cm.Sender.Username,
                     SentAt = cm.SentAt,
-                    UserChatId = id,
-                }).ToListAsync();
+                    UserChatId = request.Id,
+                }).AsQueryable();
 
-            return Ok(messages);
+            var list = await MyPagedList<MessageGetResponse>.CreateAsync(messages, request, cancellationToken);
+
+            list.DataItems = list.DataItems.OrderBy(m => m.SentAt).ToArray();
+
+            return list;
         }
+    }
+
+    public class MessageGetRequest : MyPagingRequest
+    {
+        public int Id { get; set; }
     }
 
     public class MessageGetResponse

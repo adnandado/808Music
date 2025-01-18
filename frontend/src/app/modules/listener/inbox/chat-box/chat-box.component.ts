@@ -12,7 +12,7 @@ import {ChatGetResponse} from '../../../../endpoints/chat-endpoints/chat-create-
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ChatService, MessageSendRequest} from '../../../../services/chat.service';
 import {
-  ChatGetMessagesEndpointService,
+  ChatGetMessagesEndpointService, MessageGetRequest,
   MessageGetResponse
 } from '../../../../endpoints/chat-endpoints/chat-get-messages-endpoint.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -47,12 +47,15 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
   }
   @Input() scroll: boolean = true;
   @Output() msgSent : EventEmitter<any> = new EventEmitter();
+  @Output() loadMoreMessages : EventEmitter<number> = new EventEmitter();
   sendDisabled: boolean = false;
   msgDiv!: HTMLDivElement;
 
   result: MessageContent | null = null;
 
   userId: number = 0;
+
+  page = 1;
 
   constructor(private chatService: ChatService,
               private getMessages: ChatGetMessagesEndpointService,
@@ -87,6 +90,7 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
       setTimeout(() => {this.msgDiv.scrollTop = this.msgDiv.scrollHeight}, 50);
       this.scroll = false;
+      this.page = 1;
   }
 
   sendMessage() {
@@ -146,5 +150,10 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
         this.chat!.blockedByUser = data.blockedByUser
       }
     })
+  }
+
+  loadMore() {
+    this.page++;
+    this.loadMoreMessages.emit(this.page);
   }
 }

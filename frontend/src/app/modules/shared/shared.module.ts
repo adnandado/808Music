@@ -191,6 +191,7 @@ import {MatCheckbox} from "@angular/material/checkbox";
         MatMenuTrigger,
         ImageCropperComponent,
         MatCheckbox,
+        RouterLinkActive,
     ],
 
   exports: [
