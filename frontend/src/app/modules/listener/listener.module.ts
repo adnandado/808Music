@@ -48,6 +48,8 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
   import {MatStep, MatStepper} from '@angular/material/stepper';
   import {EventpageComponent} from './eventpage/eventpage.component';
   import {ImageCropperComponent} from 'ngx-image-cropper';
+  import {InfiniteScrollDirective} from "ngx-infinite-scroll";
+  import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -79,36 +81,38 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
     MessagesListComponent,
     MessageCardComponent,
   ],
-    imports: [
-        CommonModule,
-        ListenerRoutingModule,
-        MatIcon,
-        SharedModule,
-        MatIconButton,
-        MatTooltip,
-        MatInput,
-        MatFormField,
-        MatButton,
-        MatSlider,
-        MatSliderThumb,
-        TracksModule,
-        MatDivider,
-        MatFabButton,
-        MatTabGroup,
-        MatTab,
-        AlbumModule,
-        MatChipListbox,
-        MatChipOption,
-        MatAutocomplete,
-        MatOption,
-        MatAutocompleteTrigger,
-        NgxImageZoomModule,
-        MatStepper,
-        MatStep,
-        MatMiniFabButton,
-        ImageCropperComponent,
-        MatTabContent,
-    ],
+  imports: [
+    CommonModule,
+    ListenerRoutingModule,
+    MatIcon,
+    SharedModule,
+    MatIconButton,
+    MatTooltip,
+    MatInput,
+    MatFormField,
+    MatButton,
+    MatSlider,
+    MatSliderThumb,
+    TracksModule,
+    MatDivider,
+    MatFabButton,
+    MatTabGroup,
+    MatTab,
+    AlbumModule,
+    MatChipListbox,
+    MatChipOption,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
+    NgxImageZoomModule,
+    MatStepper,
+    MatStep,
+    MatMiniFabButton,
+    ImageCropperComponent,
+    MatTabContent,
+    InfiniteScrollDirective,
+    MatProgressSpinner,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ListenerModule { }

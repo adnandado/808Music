@@ -41,6 +41,6 @@
   </div>
   <div class="messages">
     <app-chat-box [chat]="selectedChat" [messages]="selectedChatMessages" [scroll]="shouldScroll"
-                  (msgSent)="scroll()"></app-chat-box>
+                  (msgSent)="scroll()" (loadMoreMessages)="loadNewBatch($event)"></app-chat-box>
   </div>
 </div>

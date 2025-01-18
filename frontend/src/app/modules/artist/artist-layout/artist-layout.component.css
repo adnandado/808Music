@@ -18,6 +18,8 @@
 .flex-side {
   display: flex;
   justify-content: space-between;
+  height: 100vh;
+  overflow-y: auto;
 }
 .edit{
   width: 1000px;
