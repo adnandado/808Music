@@ -63,7 +63,10 @@
   object-fit: contain;
   margin-bottom: 0px;
 }
+.logo-image:hover {
+  cursor: pointer;
 
+}
 .divider {
   width: 80%;
   border: 0;

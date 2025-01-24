@@ -13,12 +13,34 @@ import {
   ArtistGetAutocompleteEndpointService, UserArtistSearchRequest
 } from '../../../endpoints/artist-endpoints/artist-get-autocomplete-endpoint.service';
 import {ArtistSimpleDto} from '../../../services/auth-services/dto/artist-dto';
+import {
+  EventGetUpcomingService,
+  UpcomingEvent
+} from '../../../endpoints/user-artist-endpoints/event-get-upociming.service';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-listener-home',
   templateUrl: './listener-home.component.html',
-  styleUrls: ['../artist-page/artist-music-page/artist-music-page.component.css','./listener-home.component.css']
-})
+  styleUrls: ['../artist-page/artist-music-page/artist-music-page.component.css','./listener-home.component.css'],
+  animations: [
+    trigger('pageAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('0.4s ease-out', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('0.5s ease-in', style({ opacity: 0 }))
+      ])
+    ]),
+    trigger('profileImageAnimation', [
+      transition(':enter', [
+        style({ transform: 'scale(0)', opacity: 0 }),
+        animate('0.3s ease-out', style({ transform: 'scale(1)', opacity: 1 }))
+      ])
+    ])
+  ]})
 export class ListenerHomeComponent implements OnInit {
   userId : number = 0;
   protected readonly MyConfig = MyConfig;
@@ -44,17 +66,19 @@ export class ListenerHomeComponent implements OnInit {
     streams: "yes",
     needsToHaveSongs: "yes"
   }
-
+  events : UpcomingEvent [] = [];
   infinitePage = [1];
-
+  currentSlide: number = 0;
   constructor(private router: Router,
               private trackGetAllService: TrackGetAllEndpointService,
               private musicPlayerService: MusicPlayerService,
               private albumGetService: AlbumGetAllEndpointService,
-              private artistGetService: ArtistGetAutocompleteEndpointService) {
+              private artistGetService: ArtistGetAutocompleteEndpointService,
+              private eventGetUpcoming : EventGetUpcomingService) {
   }
 
   ngOnInit(): void {
+    this.loadEvents();
     this.userId = this.getUserIdFromToken();
     let request: AlbumPagedRequest  = {pageNumber: 1, pageSize: 50, isReleased: true, title: ""};
       this.albumGetService.handleAsync(request).subscribe({
@@ -80,7 +104,33 @@ export class ListenerHomeComponent implements OnInit {
       }
     })
   }
+  loadEvents(): void {
+    this.eventGetUpcoming.getUpcomingEvents().subscribe({
+      next: (data) => {
+        this.events = data;
+        console.log(this.events);
+      },
+      error: (err) => {
+        console.error('Error fetching events:', err);
+      }
+    });
+  }
 
+  nextSlide(): void {
+    if (this.events.length > 0) {
+      this.currentSlide = (this.currentSlide + 1) % this.events.length;
+    }
+  }
+
+  prevSlide(): void {
+    if (this.events.length > 0) {
+      this.currentSlide = (this.currentSlide - 1 + this.events.length) % this.events.length;
+    }
+  }
+
+  changeSlide(index: number): void {
+    this.currentSlide = index;
+  }
   private getUserIdFromToken(): number {
     let authToken = sessionStorage.getItem('authToken');
 

@@ -90,6 +90,7 @@ export class PlaylistListMaterialComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Playlist successfully created:', result);
+        this.loadPlaylists();
       }
     });
   }

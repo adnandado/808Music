@@ -1,4 +1,4 @@
-<div class="event-container">
+<div class="event-container" [@pageAnimation]>
   <div class="event-list" *ngIf="ArtistEvents.length > 0; else noEvents">
     <div
       *ngFor="let event of ArtistEvents"

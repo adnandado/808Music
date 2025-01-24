@@ -1,4 +1,4 @@
-<div class="wishlist-page">
+<div class="wishlist-page" [@pageAnimation]>
 
     <h3 class ="wishlist-name">{{ userName ? userName + "'s Wishlist" : "Your Wishlist" }}</h3>
 <div *ngIf="wishlistItems.length > 0" class="wishlist-container">
