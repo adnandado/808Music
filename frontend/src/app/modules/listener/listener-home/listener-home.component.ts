@@ -84,9 +84,6 @@ export class ListenerHomeComponent implements OnInit {
   private getUserIdFromToken(): number {
     let authToken = sessionStorage.getItem('authToken');
 
-  loadMore() {
-    this.infinitePage.push(this.infinitePage[this.infinitePage.length-1]+1);
-    console.log("Scrolled")
     if (!authToken) {
       authToken = localStorage.getItem('authToken');
     }
@@ -102,5 +99,10 @@ export class ListenerHomeComponent implements OnInit {
       console.error('Error parsing authToken:', error);
       return 0;
     }
+  }
+
+  loadMore() {
+    this.infinitePage.push(this.infinitePage[this.infinitePage.length-1]+1);
+    console.log("Scrolled")
   }
 }
