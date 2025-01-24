@@ -82,6 +82,7 @@ import { MessageContentCardComponent } from './message-content-card/message-cont
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import { PfpCropperDialogComponent } from './pfp-cropper-dialog/pfp-cropper-dialog.component';
 import {ImageCropperComponent} from 'ngx-image-cropper';
+import { PlaylistCardListComponent } from './playlist-card-list/playlist-card-list.component';
 import { SendSongMessageComponent } from './bottom-sheets/send-song-message/send-song-message.component';
 import {MatCheckbox} from "@angular/material/checkbox";
 
@@ -131,6 +132,7 @@ import {MatCheckbox} from "@angular/material/checkbox";
     SearchForContentSheetComponent,
     MessageContentCardComponent,
     PfpCropperDialogComponent,
+    PlaylistCardListComponent,
     SendSongMessageComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
@@ -226,7 +228,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
     AlbumCardListComponent,
     ArtistBigCardComponent,
     ArtistBigCardListComponent,
-    MessageContentCardComponent
+    MessageContentCardComponent,
+    PlaylistCardListComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

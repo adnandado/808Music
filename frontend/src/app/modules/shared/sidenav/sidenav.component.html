@@ -63,7 +63,7 @@
     />
     <div class="profile-menu" [ngClass]="{'show': isMenuVisible}">
       <ul>
-        <li (click)="navigateTo('profile')">Profile</li>
+        <li (click)="openUserProfile()">Profile</li>
         <li (click)="openImageCropperDialog()">Change Picture</li>
         <li (click)="navigateTo('/listener/subscriptions')">Subscriptions</li>
         <li (click)="navigateTo('settings')">Settings</li>

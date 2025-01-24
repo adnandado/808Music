@@ -55,7 +55,12 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                     p.NumOfTracks,
                     p.IsPublic,
                     p.CoverPath,
-                    p.isLikePlaylist
+                    p.isLikePlaylist,
+                    Users = p.UserPlaylists.Select(up => new
+                    {
+                        UserId = up.MyAppUserId,
+                        Username = up.User.Username
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 

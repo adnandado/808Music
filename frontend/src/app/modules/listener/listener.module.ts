@@ -50,6 +50,9 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
   import {ImageCropperComponent} from 'ngx-image-cropper';
   import {InfiniteScrollDirective} from "ngx-infinite-scroll";
   import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
+  import {FollowersPageComponent} from './user-profile-page/follower-page/follower-page.component';
+import { FollowingPageComponent } from './user-profile-page/following-page/following-page.component';
 
 
 @NgModule({
@@ -80,6 +83,9 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
     ChatBoxComponent,
     MessagesListComponent,
     MessageCardComponent,
+    UserProfilePageComponent,
+    FollowersPageComponent,
+    FollowingPageComponent,
   ],
   imports: [
     CommonModule,

@@ -19,6 +19,7 @@ import {
   RemoveProductFromWishlistService
 } from '../../../../endpoints/products-endpoints/remove-item-from-wishlist-endpoint.service';
 import {MyConfig} from '../../../../my-config';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-web-store',
@@ -46,7 +47,8 @@ export class WebStoreComponent implements OnInit {
     private addProductToWishlist: AddProductToWishlistEndpointService,
     private productIsOnWishlistService: ProductIsOnWishlistService,
     private searchService : ProductAutocompleteService,
-    private removeProductFromWishlistService : RemoveProductFromWishlistService
+    private removeProductFromWishlistService : RemoveProductFromWishlistService,
+    private snackBar : MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -208,7 +210,11 @@ export class WebStoreComponent implements OnInit {
       (response: AddProductToWishlistResponse) => {
         if (response.success) {
           this.ngOnInit();
-
+          this.snackBar.open('Product added to Wishlist successfully', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });
 
         } else {
           alert('Error: ' + response.message);
@@ -247,6 +253,11 @@ export class WebStoreComponent implements OnInit {
         if (response.success) {
 
           this.wishlist.delete(slug);
+          this.snackBar.open('Product removed from Wishlist successfully', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });
         } else {
           console.log(response.message);
         }

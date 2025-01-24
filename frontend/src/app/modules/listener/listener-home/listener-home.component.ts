@@ -20,7 +20,7 @@ import {ArtistSimpleDto} from '../../../services/auth-services/dto/artist-dto';
   styleUrls: ['../artist-page/artist-music-page/artist-music-page.component.css','./listener-home.component.css']
 })
 export class ListenerHomeComponent implements OnInit {
-
+  userId : number = 0;
   protected readonly MyConfig = MyConfig;
   popularAlbums: MyPagedList<AlbumGetAllResponse> | null = null;
   popularParams: Params = {
@@ -55,6 +55,7 @@ export class ListenerHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userId = this.getUserIdFromToken();
     let request: AlbumPagedRequest  = {pageNumber: 1, pageSize: 50, isReleased: true, title: ""};
       this.albumGetService.handleAsync(request).subscribe({
         next: data => {
@@ -80,9 +81,26 @@ export class ListenerHomeComponent implements OnInit {
     })
   }
 
+  private getUserIdFromToken(): number {
+    let authToken = sessionStorage.getItem('authToken');
 
   loadMore() {
     this.infinitePage.push(this.infinitePage[this.infinitePage.length-1]+1);
     console.log("Scrolled")
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
+    }
+
+    try {
+      const parsedToken = JSON.parse(authToken);
+      return parsedToken.userId;
+    } catch (error) {
+      console.error('Error parsing authToken:', error);
+      return 0;
+    }
   }
 }

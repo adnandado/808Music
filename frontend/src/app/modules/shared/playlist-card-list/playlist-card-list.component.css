@@ -1,0 +1,8 @@
+.playlist-cards{
+  display: flex;
+  flex-direction: row;
+}
+.title{
+  font-weight: 444;
+
+}

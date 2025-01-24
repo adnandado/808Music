@@ -11,6 +11,17 @@ body {
   height: 100vh;
 
 }
+.username {
+  font-weight: 455;
+  font-size: 16px;
+  color: white;
+}
+.username:hover{
+  font-weight: 455;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.58);
+  cursor: pointer;
+}
 .username-and-pfp
 {
   display: flex;
@@ -25,7 +36,26 @@ body {
 }
 .playlist-title{
   font-weight: bold;
-  margin:0;
+  font-size: 6em;
+}
+.playlist-information {
+  margin-top: 1vw;
+display: flex;
+  flex-direction: row;
+}
+.songs-h{
+  font-weight: 445;
+  margin-left: 0.5vw;
+  font-size: 16px;
+  color: #7c7c7c;
+}
+
+.playlist-privacy
+{
+  color: #7c7c7c;
+
+  margin-bottom: 1.2vw;
+  font-size: 1.25em;
 }
 p{
   margin: 0;
@@ -71,11 +101,13 @@ p{
 }
 
 .playlist-cover {
-  height: 25vh;
-  width: 25vh;
+  height: 32vh;
+  width: 32vh;
   background-color: #A9A9A9;
   border-radius: 10px;
   background-size: cover;
+  background-position: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .playlist-info {
@@ -86,8 +118,7 @@ p{
 .playlist-details {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .playlist-details h2, .album-details h6, .album-details p {
@@ -96,9 +127,6 @@ p{
   display: block;
 }
 
-.playlist-details p {
-  color: #A9A9A9;
-}
 
 .album-title {
   font-weight: 500;
@@ -174,7 +202,6 @@ p{
   flex-direction: column;
   gap: 5px;
   color: white;
-  margin-left: 10px;
 }
 
 .track-duration, .track-streams {
