@@ -53,6 +53,7 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
 import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
   import {FollowersPageComponent} from './user-profile-page/follower-page/follower-page.component';
 import { FollowingPageComponent } from './user-profile-page/following-page/following-page.component';
+import { OrderListComponent } from './order-list/order-list.component';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { FollowingPageComponent } from './user-profile-page/following-page/follo
     UserProfilePageComponent,
     FollowersPageComponent,
     FollowingPageComponent,
+    OrderListComponent,
   ],
   imports: [
     CommonModule,

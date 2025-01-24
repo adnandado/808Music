@@ -22,6 +22,10 @@ import { DeleteConfirmationDialogComponent } from '../../../shared/delete-confir
 import { MusicPlayerService } from '../../../../services/music-player.service';
 import {TrackGetResponse} from '../../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 import {PlaylistUpdateDialogComponent} from './playlist-update-dialog/playlist-update-dialog.component';
+import {
+  SocialShareBottomSheetComponent
+} from '../../../shared/social-media-sharing/social-share-bottom-sheet.component';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-tracks-page',
@@ -46,12 +50,14 @@ export class TracksPageComponent implements OnInit {
     pageSize: 1000,
     PlaylistID: this.playlist?.playlistId!
   };
+  playlistUrl: string = '';
 
   constructor(
     private playlistTracksService: PlaylistTracksGetEndpointService,
     private playlistDetailsService: GetPlaylistByIdEndpointService,
     private playlistUpdateTracksService: PlaylistUpdateTracksService,
     private route: ActivatedRoute,
+    private bottomSheet : MatBottomSheet,
     private getPlaylistsByUserIdService: GetPlaylistsByUserIdEndpointService,
     private router: Router,
     private albumCoverService: AlbumCoverService,
@@ -65,6 +71,7 @@ export class TracksPageComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.getUserIdFromToken();
     const playlistId = +this.route.snapshot.paramMap.get('id')!;
+    this.playlistUrl = `${window.location.origin}/playlists/${playlistId}`;
 
     if (playlistId) {
       this.loadPlaylistTracks(playlistId);
@@ -153,7 +160,7 @@ export class TracksPageComponent implements OnInit {
       this.removeTrackFromPlaylistService.handleAsync(playlistId, trackId).subscribe({
         next: () => {
           console.log(`Track ${trackId} successfully removed from playlist ${playlistId}`);
-          this.loadPlaylistTracks(playlistId); // Osvježi listu pjesama
+          this.loadPlaylistTracks(playlistId);
         },
         error: (error) => {
           console.error('Error removing track:', error);
@@ -220,8 +227,9 @@ export class TracksPageComponent implements OnInit {
   protected readonly MyConfig = MyConfig;
 
   sharePlaylist() {
-    // Implementirati logiku za dijeljenje playliste
-  }
+    this.bottomSheet.open(SocialShareBottomSheetComponent, {
+      data: { url: this.playlistUrl },
+    });  }
 
   createFeaturedQueue(e: number) {
     this.musicPlayerService.createQueue(this.featuredTracks);
