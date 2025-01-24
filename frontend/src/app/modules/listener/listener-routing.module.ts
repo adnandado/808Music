@@ -29,6 +29,7 @@ import {InboxComponent} from './inbox/inbox.component';
 import {UserProfilePageComponent} from './user-profile-page/user-profile-page.component';
 import {FollowersPageComponent} from './user-profile-page/follower-page/follower-page.component';
 import {FollowingPageComponent} from './user-profile-page/following-page/following-page.component';
+import {OrderListComponent} from './order-list/order-list.component';
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
   children: [
@@ -55,6 +56,9 @@ const routes: Routes = [{
     },
     {
       path: 'search', component: SearchPageComponent
+    },
+    {
+      path: 'my-orders', component: OrderListComponent
     },
     {
       path: 'profile/:id', component: ArtistPageComponent
