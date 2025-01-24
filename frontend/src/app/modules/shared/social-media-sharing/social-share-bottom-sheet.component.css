@@ -1,0 +1,53 @@
+.copy-link-container {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.copy-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.url-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid rgba(204, 204, 204, 0.29);
+  border-radius: 8px;
+  font-size: 14px;
+  color: #f1f1f1;
+  background-color: #1e1a1d;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.social-share-bottom-sheet {
+  padding: 2vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.button-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.social-media-icons{
+  display: flex;
+  flex-direction: row;
+  margin-top: 1vw;
+}
+.social-share-bottom-sheet img {
+  filter: invert(50%) sepia(100%) saturate(1000%) hue-rotate(265deg) brightness(95%) contrast(90%);
+  transition: filter 0.3s ease;
+}
+
+.social-share-bottom-sheet img:hover {
+  filter: invert(66%) sepia(100%) saturate(1000%) hue-rotate(265deg) brightness(120%) contrast(95%);
+}
