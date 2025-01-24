@@ -111,4 +111,9 @@ export class SidenavComponent implements OnInit {
     const userId = this.getUserIdFromToken();
     this.router.navigate([`/listener/user/`,userId]);
   }
+
+  goHome() {
+    this.router.navigate([`/listener/home/`]);
+
+  }
 }

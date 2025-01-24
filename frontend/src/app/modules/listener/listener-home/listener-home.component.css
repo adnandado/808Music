@@ -5,3 +5,147 @@
   flex-direction: column;
   gap: 30px;
 }
+
+.event-carousel-container {
+  position: relative;
+  width: 100%;
+  height: 40vw;
+}
+
+.carousel-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 30px;
+  background-color: rgba(0, 0, 0, 0);
+  color: rgba(255, 255, 255, 0.44);
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+.prev:hover, .next:hover{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  background-color: rgba(0, 0, 0, 0);
+  color: rgba(255, 255, 255, 0.69);
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+.prev {
+  left: 20px;
+}
+h3{margin:0;}
+.next {
+  right: 20px;
+}
+.event-header{
+  font-weight: bold;
+}
+
+.event-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.event-slide::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)); /* Crni gradient */
+  z-index: 1;
+}
+
+.gradient {
+  width: 100%;
+  background-color: black;
+}
+.event-info {
+  position: absolute;
+  bottom: 5%;
+  right: 10%;
+  transform: translate(0, 0);
+  text-align: left;
+  color: white;
+  padding: 15px;
+  z-index: 2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.event-title {
+  font-size: 2.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+
+
+
+.event-image {
+  width: 100%;
+  height: 18vw;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 10px;
+}
+.event-image::before {
+  content: '';
+  border-radius: 10px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:linear-gradient(rgba(255, 255, 255, 0), rgba(21, 21, 21, 0.45), rgba(0, 0, 0, 0.86));; /* Poluprozirni crni gradient */
+  z-index: 1;
+}
+.event-informations{
+  text-transform: uppercase;
+  font-weight:bold;
+  font-size: 1.25em;
+}
+h1{
+  margin: 0;
+}
+.carousel-thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbnail {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: rgba(220, 212, 212, 0.59);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.thumbnail:hover {
+  background-color: rgba(230, 146, 248, 0.48);
+}
+
+.active-thumbnail {
+  background-color: rgba(230, 146, 248, 0.63);
+}

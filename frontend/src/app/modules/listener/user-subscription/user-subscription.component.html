@@ -1,7 +1,7 @@
 @if(!userSubscribed){
 
 
-  <div class="plans-container">
+  <div class="plans-container" [@pageAnimation]>
 <div class="stripe-container" *ngIf="selectedSubscription">
   <h2>{{ selectedSubscription.title }}</h2>
   <div class="stripe-form">
