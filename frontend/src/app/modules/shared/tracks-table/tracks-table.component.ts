@@ -60,7 +60,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() inArtistMode = true;
   @Input() isPlaylist = false;
   @Input() playlistId: number | null = null;
-
+  @Input() isUsersPlaylist = false;
   protected readonly MyConfig = MyConfig;
   @Input() tracks: TrackGetResponse[] = [];
   tracksDto: TrackWithPositionDto[] = []

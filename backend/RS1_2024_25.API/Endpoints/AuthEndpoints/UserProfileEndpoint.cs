@@ -27,7 +27,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
 
             if (!string.IsNullOrEmpty(user.pfpCoverPath))
             {
-                return Ok(new { ProfilePicturePath = user.pfpCoverPath });
+                return Ok(new { ProfilePicturePath = user.pfpCoverPath, Username = user.Username });
             }
             else
             {

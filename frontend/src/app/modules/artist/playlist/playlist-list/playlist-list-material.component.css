@@ -28,6 +28,7 @@ app-album-card {
   flex-grow: 0;
   flex-basis: auto;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
 }
 
@@ -46,10 +47,11 @@ div > h6 {
 }
 
 .title > h1 {
-  padding-top: 1vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+
   display: flex;
   flex-direction: row;
-  margin-left: 30px;
 }
 
 .flex-side {
@@ -71,7 +73,13 @@ div > h6 {
 }
 .playlist-actions {
 }
-
+.title-playlist {
+  font-weight: bold;
+  margin: 0;
+}
+h1 {
+  margin: 0;
+}
 .mat-menu-item {
   display: flex;
   justify-content: space-between;

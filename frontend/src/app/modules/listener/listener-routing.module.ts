@@ -26,6 +26,9 @@ import {ListenerHomeComponent} from './listener-home/listener-home.component';
 import {ArtistSearchResultPageComponent} from './artist-search-result-page/artist-search-result-page.component';
 import {SearchPageComponent} from '../shared/search-page/search-page.component';
 import {InboxComponent} from './inbox/inbox.component';
+import {UserProfilePageComponent} from './user-profile-page/user-profile-page.component';
+import {FollowersPageComponent} from './user-profile-page/follower-page/follower-page.component';
+import {FollowingPageComponent} from './user-profile-page/following-page/following-page.component';
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
   children: [
@@ -36,10 +39,19 @@ const routes: Routes = [{
       path: 'home', component: ListenerHomeComponent,
     },
     {
+      path: 'user/:id', component: UserProfilePageComponent,
+    },
+    {
       path: 'release/:id', component: ReleaseViewComponent,
     },
     {
       path: 'track/:id', component: PlayTrackComponent
+    },
+    {
+      path: 'user/:id/followers', component: FollowersPageComponent
+    },
+    {
+      path: 'user/:id/following', component: FollowingPageComponent
     },
     {
       path: 'search', component: SearchPageComponent

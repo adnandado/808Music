@@ -45,8 +45,10 @@
           @if (isPlaylist){
             <div class="track-cover-container">
               <img class="track-image" [src]="MyConfig.api_address + track.coverPath" alt="Track Cover" />
+              @if(isUsersPlaylist){
               <mat-icon *ngIf="showDeleteIcon" class="delete-icon" (click)="removeTrackFromPlaylist(track.id)">delete</mat-icon>
-            </div>
+              }
+                </div>
           }<div class="song-information">
           <p>{{ track.title }}</p>
           <div class="track-artists">

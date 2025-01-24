@@ -1,0 +1,25 @@
+<div class="following-container">
+  <button mat-icon-button class="go-back-button" (click)="goBack()">
+    <mat-icon class="go-back-arrow">arrow_back</mat-icon>
+  </button>
+  <h2 class="header-title">Following</h2>
+  <div class="followage-section"  *ngIf="following.length > 0; else noFollowing">
+    <div *ngFor="let user of following" class="user">
+      <img
+        class="followage-pfp"
+        (click)="user.artistId ? openArtistProfile(user.artistId) : openProfile(user.userId)"
+        [src]="mediaAddress + (user.artistId ? '/Images/Artistpfps/' + user.profilePicture : user.profilePicture)"
+        alt="Profile Picture"
+      />
+      <div class="username-profiletype">
+        <p class="username-followage">{{ user.username }}</p>
+        <p class="profile-undertext">
+          {{ user.artistId ? 'Artist' : 'Profile' }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <ng-template #noFollowing>
+    <p>This user is not following anyone.</p>
+  </ng-template>
+</div>

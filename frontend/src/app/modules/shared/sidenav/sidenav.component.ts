@@ -106,4 +106,9 @@ export class SidenavComponent implements OnInit {
   }
 
     protected readonly MyConfig = MyConfig;
+
+  openUserProfile() {
+    const userId = this.getUserIdFromToken();
+    this.router.navigate([`/listener/user/`,userId]);
+  }
 }

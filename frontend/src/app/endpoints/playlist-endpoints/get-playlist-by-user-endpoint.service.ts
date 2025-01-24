@@ -11,6 +11,7 @@ export interface PlaylistResponse {
   coverPath: string;
   username: string
   isLikedSongs : boolean;
+  userId : number;
 }
 
 @Injectable({

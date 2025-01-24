@@ -7,7 +7,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: 100%;
 }
-
+#card-element{
+  color:white;
+}
 h1 {
   text-align: center;
 }
@@ -82,8 +84,8 @@ input:focus {
   border: 1px solid #444444;
   border-radius: 4px;
   padding: 10px;
-  color: #E0E0E0;
   font-size: 16px;
+  color: white;
 }
 
 .StripeElement--focus {
@@ -96,6 +98,7 @@ input:focus {
 
 .StripeElement--webkit-autofill {
   background-color: #1E1E1E;
+  color: white;
 }
 
 button {

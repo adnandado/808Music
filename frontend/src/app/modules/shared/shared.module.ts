@@ -82,6 +82,7 @@ import { MessageContentCardComponent } from './message-content-card/message-cont
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import { PfpCropperDialogComponent } from './pfp-cropper-dialog/pfp-cropper-dialog.component';
 import {ImageCropperComponent} from 'ngx-image-cropper';
+import { PlaylistCardListComponent } from './playlist-card-list/playlist-card-list.component';
 
 @NgModule({
   declarations: [
@@ -129,6 +130,7 @@ import {ImageCropperComponent} from 'ngx-image-cropper';
     SearchForContentSheetComponent,
     MessageContentCardComponent,
     PfpCropperDialogComponent,
+    PlaylistCardListComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
@@ -221,7 +223,8 @@ import {ImageCropperComponent} from 'ngx-image-cropper';
     AlbumCardListComponent,
     ArtistBigCardComponent,
     ArtistBigCardListComponent,
-    MessageContentCardComponent
+    MessageContentCardComponent,
+    PlaylistCardListComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
