@@ -38,7 +38,8 @@
   justify-content: center;
   align-items: center;
   width: 3.5vw;
-  height: 3.5vw  ;
+  height: 3.5vw;
+  position: relative;
 }
 
 .sidenav-icons button:hover {
@@ -147,3 +148,27 @@ body {
   margin-left: 60px;
 }
 
+.hidden {
+  display: none;
+  position: absolute;
+  top: 0.75vw;
+  left: -0.9vw;
+
+}
+
+.hidden mat-icon{
+  font-size: 30px;
+  text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.display mat-icon {
+  font-size: 30px;
+  text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.display {
+  display: block;
+  position: absolute;
+  top: 0.75vw;
+  left: -0.9vw;
+}

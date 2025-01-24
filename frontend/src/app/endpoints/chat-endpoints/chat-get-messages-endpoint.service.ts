@@ -4,6 +4,9 @@ import {MyConfig} from '../../my-config';
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
 import {map, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {MyPagedRequest} from '../../helper/my-paged-request';
+import {MyPagedList} from '../../services/auth-services/dto/my-paged-list';
+import {buildHttpParams} from '../../helper/http-params.helper';
 
 export interface MessageGetResponse {
   id: number;
@@ -18,17 +21,21 @@ export interface MessageGetResponse {
   seen: boolean;
   seenAt: string;
 }
+export interface MessageGetRequest extends MyPagedRequest {
+  id: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class ChatGetMessagesEndpointService implements MyBaseEndpointAsync<number, MessageGetResponse[]> {
+export class ChatGetMessagesEndpointService implements MyBaseEndpointAsync<MessageGetRequest, MyPagedList<MessageGetResponse>> {
   private readonly url = `${MyConfig.api_address}/api/ChatGetMessagesEndpoint`;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  handleAsync(id: number): Observable<MessageGetResponse[]> {
-    return this.httpClient.get<MessageGetResponse[]>(this.url+"/"+id);
+  handleAsync(request: MessageGetRequest): Observable<MyPagedList<MessageGetResponse>> {
+    let params = buildHttpParams(request);
+    return this.httpClient.get<MyPagedList<MessageGetResponse>>(this.url, {params: params});
   }
 }

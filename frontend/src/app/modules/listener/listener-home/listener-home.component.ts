@@ -45,6 +45,7 @@ export class ListenerHomeComponent implements OnInit {
     needsToHaveSongs: "yes"
   }
 
+  infinitePage = [1];
 
   constructor(private router: Router,
               private trackGetAllService: TrackGetAllEndpointService,
@@ -83,6 +84,9 @@ export class ListenerHomeComponent implements OnInit {
   private getUserIdFromToken(): number {
     let authToken = sessionStorage.getItem('authToken');
 
+  loadMore() {
+    this.infinitePage.push(this.infinitePage[this.infinitePage.length-1]+1);
+    console.log("Scrolled")
     if (!authToken) {
       authToken = localStorage.getItem('authToken');
     }

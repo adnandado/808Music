@@ -4,10 +4,11 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow-y: auto;
 }
 
 .artist-card {
-  width: 20vw;
+  width: 19vw;
   color: white;
 }
 

@@ -1,19 +1,32 @@
 <div class="chat-box">
   <div class="chat-info">
-    <h3 class="title">{{ chat?.chatter }}</h3>
+    <div class="chatter-info">
+      <div class="pfp" [ngStyle]="{'background-image': 'url('+MyConfig.api_address+'/media'+chat?.chatterPfp}"></div>
+      <h3 class="title">{{ chat?.chatter }}</h3>
+    </div>
     <div class="actions">
-      <button mat-icon-button matTooltip="Mute chat">
-        <mat-icon>do_not_disturb_on</mat-icon>
-      </button>
-      <button mat-icon-button matTooltip="Block chat">
-        <mat-icon>block</mat-icon>
-      </button>
+      @if (!chat?.blocked || chat?.blockedByUserId == userId)
+      {
+        <button mat-icon-button matTooltip="Block chat" (click)="toggleBlock(chat)">
+          @if (!chat?.blocked)
+          {
+            <mat-icon>do_not_disturb_on</mat-icon>
+          } @else
+          {
+            <mat-icon>do_not_disturb_off</mat-icon>
+          }
+        </button>
+      } @else {
+        <h6 class="error">BLOCKED</h6>
+      }
     </div>
   </div>
   <div class="messages" id="messageBox">
     <app-messages-list [messages]="messages"></app-messages-list>
   </div>
   <div class="send-message">
+  @if (!chat?.blocked)
+  {
     <form class="input" [formGroup]="form" (ngSubmit)="sendMessage()">
       <input class="search-bar-input" type="text" formControlName="message" [placeholder]="'Message '+ chat?.chatter">
       <div class="actions2">
@@ -32,5 +45,16 @@
                                   [iconButton]="true"></app-message-content-card>
       </div>
     }
+  } @else {
+    <h3 class="error">Blocked by {{chat?.blockedByUser}}</h3>
+  }
   </div>
 </div>
+
+<div infiniteScroll
+     [fromRoot]="true"
+     [infiniteScrollContainer]="'#messageBox'"
+     [infiniteScrollUpDistance]="2"
+     [infiniteScrollThrottle]="500"
+     (scrolledUp)="loadMore()"
+></div>

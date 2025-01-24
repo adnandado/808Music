@@ -1,4 +1,4 @@
 export interface MyPagedRequest {
-  pageNumber: number;
-  pageSize: number;
+  pageNumber?: number;
+  pageSize?: number;
 }

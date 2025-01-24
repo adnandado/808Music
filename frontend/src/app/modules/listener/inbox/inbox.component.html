@@ -1,32 +1,46 @@
 <div class="inbox-page">
   <div class="chats">
     <h3 class="title">Chats</h3>
-    <button mat-fab class="create" (click)="openCreateSheet()">
-      <mat-icon>add</mat-icon>
-      Create a chat
-    </button>
+    <div class="actions">
+      <button mat-fab class="create" (click)="openCreateSheet()">
+        <mat-icon>add</mat-icon>
+        Create a chat
+      </button>
+
+      <mat-chip-listbox (change)="showHideBlocked($event)">
+        <mat-chip-option [value]="0" [selected]="showBlocked">Show Blocked</mat-chip-option>
+      </mat-chip-listbox>
+    </div>
     <app-search-bar [autoSearch]="true" [placeholder]="'Find chats'" (onSearchChange)="filterChats($event)"
                     class="no-margin"></app-search-bar>
     <div class="open-chats">
-      @for (c of getFilteredChats(); track c.id) {
+      @let filteredChats = getFilteredChats();
+      @for (c of filteredChats; track c.id) {
         <div class="chat-card" (click)="openChat(c)">
+          <div class="pfp" [ngStyle]="{'background-image':'url('+MyConfig.api_address+'/media'+c.chatterPfp}"></div>
           <div class="title-and-unreads">
-            <h6 class="title hide-overflow">{{ c.chatter }}</h6>
-            @if (c.numberOfUnreads > 0)
-            {
-              <div class="unreads">
-                <p>{{ getUnreadCount(c.numberOfUnreads) }}</p>
-              </div>
-            }
+            <div class="title-and-notis">
+              <h6 class="title hide-overflow">{{ c.chatter }}</h6>
+              @if (c.numberOfUnreads > 0) {
+                <div class="unreads">
+                  <p>{{ getUnreadCount(c.numberOfUnreads) }}</p>
+                </div>
+              }
+            </div>
+            <p class="last-message hide-overflow">{{ c.lastMessage == "" ? "No messages" : getLastMessage(c) }}</p>
+            <p
+              class="last-active hide-overflow">{{ c.createdAt > c.lastMessageAt ? "Created " + moment(c.createdAt).format("DD. MM. yyyy.") : moment(c.lastMessageAt).fromNow() }}</p>
           </div>
-          <p class="last-message hide-overflow">{{ c.lastMessage == "" ? "No messages" : getLastMessage(c) }}</p>
-          <p
-            class="last-active hide-overflow">{{ c.createdAt > c.lastMessageAt ? "Created " + moment(c.createdAt).format("DD. MM. yyyy.") : moment(c.lastMessageAt).fromNow() }}</p>
         </div>
+      }
+
+      @if (filteredChats.length == 0) {
+        <h3>No chats found</h3>
       }
     </div>
   </div>
   <div class="messages">
-    <app-chat-box [chat]="selectedChat" [messages]="selectedChatMessages" [scroll]="shouldScroll" (msgSent)="scroll()"></app-chat-box>
+    <app-chat-box [chat]="selectedChat" [messages]="selectedChatMessages" [scroll]="shouldScroll"
+                  (msgSent)="scroll()" (loadMoreMessages)="loadNewBatch($event)"></app-chat-box>
   </div>
 </div>

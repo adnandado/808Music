@@ -26,6 +26,7 @@ import {
 import {MatDialog} from '@angular/material/dialog';
 import {PleaseSubscribeComponent} from '../../shared/bottom-sheets/please-subscribe/please-subscribe.component';
 import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
+import {SendSongMessageComponent} from '../../shared/bottom-sheets/send-song-message/send-song-message.component';
 
 @Component({
   selector: 'app-music-player',
@@ -132,8 +133,11 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   messageBottomSheet() {
+    /*
     this.musicPlayerService.setAutoPlayStatus(!this.musicPlayerService.getAutoPlayStatus());
     console.log(this.musicPlayerService.getAutoPlayStatus());
+     */
+    let ref = this.queueManager.open(SendSongMessageComponent, {data: {track: this.track}});
   }
 
   private openPleaseSubscribeDialog(): void {

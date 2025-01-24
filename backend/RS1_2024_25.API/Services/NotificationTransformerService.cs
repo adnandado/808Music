@@ -25,7 +25,8 @@ namespace RS1_2024_25.API.Services
                         ImageUrl = $"/media/Images/AlbumCovers/{a.CoverPath}"
                     }).FirstOrDefaultAsync();
                 case nameof(Product):
-                    return await db.Albums.Where(a => a.Id == notification.ContentId).Select(a => new RichNotification
+                    await db.ProductPhotos.LoadAsync(cancellationToken);
+                    return await db.Products.Where(a => a.Id == notification.ContentId).Select(a => new RichNotification
                     {
                         Id = notification.Id,
                         Artist = a.Artist,
@@ -33,8 +34,9 @@ namespace RS1_2024_25.API.Services
                         ContentId = a.Id,
                         CreatedAt = notification.CreatedAt,
                         Type = notification.Type,
-                        Message = $"New {a.AlbumType.Type} out now!",
-                        ImageUrl = $"/media/Images/AlbumCovers/{a.CoverPath}"
+                        Message = $"New {a.ProductType.ToString()} out now!",
+                        ImageUrl = a.Photos.First() != null ? "/media" + a.Photos.First().ThumbnailPath : "/media/Images/liked_songs.png",
+                        Slug = a.Slug
                     }).FirstOrDefaultAsync();
                 default: return new RichNotification();
             }
@@ -52,5 +54,6 @@ namespace RS1_2024_25.API.Services
         public Artist? Artist { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Priority { get; set; } = false;
+        public string? Slug { get; set; }
     }
 }

@@ -15,10 +15,13 @@ export interface ChatGetResponse {
   lastMessage: string;
   muted: boolean;
   blocked: boolean;
+  blockedByUserId?: number;
+  blockedByUser?: string;
   createdAt: string;
   lastMessageAt: string;
   numberOfUnreads: number;
   lastMessageSenderId: number;
+  chatterPfp: string;
 }
 
 @Injectable({

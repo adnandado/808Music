@@ -1,4 +1,7 @@
 <div class="artist-music-page">
+
+  @for (i of infinitePage; track i;) {
+    <app-album-card-list title="Popular Releases" [albums]="popularAlbums" [queryParams]="popularParams"></app-album-card-list>
   <app-playlist-card-list
     [userId]="userId"
     [title]="'My Playlists'">
@@ -8,4 +11,14 @@
     <app-artist-big-card-list [artists]="popularArtists" [title]="'Popular Artists'" [numberDescription]="'followers'" [queryParams]="popArtistParams"></app-artist-big-card-list>
     <app-album-card-list title="Recent Releases" [albums]="recentAlbums" [queryParams]="recentParams"></app-album-card-list>
     <app-artist-big-card-list [artists]="mostStreamedArtists" [title]="'Most Streamed Artists'" [numberDescription]="'streams'" [queryParams]="mostStreamedArtistParams"></app-artist-big-card-list>
+  }
+</div>
+
+<div infiniteScroll
+     [infiniteScrollThrottle]="1000"
+     [infiniteScrollDistance]="2"
+     [fromRoot]="true"
+     [infiniteScrollContainer]="'.artist-music-page'"
+     (scrolled)="loadMore()"
+>
 </div>

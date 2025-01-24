@@ -66,6 +66,9 @@ export class NotificationCardComponent implements AfterViewInit {
       case "Album":
         this.router.navigate(["listener/release/"+this.notification?.contentId]);
         break;
+      case "Product":
+        this.router.navigate(["listener/product/"+this.notification?.slug]);
+        break;
       default: break;
     }
   }

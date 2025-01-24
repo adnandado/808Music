@@ -6,15 +6,33 @@
   <div class="sidenav-icons">
     <button mat-icon-button routerLink="/artist/dashboard" aria-label="Home">
       <mat-icon>analytics</mat-icon>
+
+      <div routerLink="/artist/dashboard" class="hidden" routerLinkActive="display">
+        <mat-icon>play_arrow</mat-icon>
+      </div>
     </button>
+
     <button mat-icon-button routerLink="/artist/search" aria-label="Search">
       <mat-icon>search</mat-icon>
+
+      <div routerLink="/artist/search" class="hidden" routerLinkActive="display">
+        <mat-icon>play_arrow</mat-icon>
+      </div>
     </button>
+
     <button mat-icon-button (click)="navigateTo('products')" aria-label="Shopping Cart">
       <mat-icon>store</mat-icon>
+
+      <div [class]="getArtistProductPath() == '' ? 'hidden' : 'display'">
+        <mat-icon>play_arrow</mat-icon>
+      </div>
     </button>
     <button mat-icon-button routerLink="/artist/album" aria-label="Albums">
       <mat-icon>album</mat-icon>
+
+      <div routerLink="/artist/album" class="hidden" routerLinkActive="display">
+        <mat-icon>play_arrow</mat-icon>
+      </div>
     </button>
 
 

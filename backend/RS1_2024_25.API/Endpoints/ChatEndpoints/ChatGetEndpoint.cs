@@ -31,8 +31,15 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
                 CreatedAt = c.CreatedAt,
                 LastMessageAt = c.LastMessageAt,
                 LastMessage = db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.Message).FirstOrDefault() ?? "",
-                NumberOfUnreads = db.ChatMessages.Where(cm => cm.UserChatId == c.Id && !cm.Seen).Count(),
+                NumberOfUnreads = db.ChatMessages.Where(cm => cm.UserChatId == c.Id && !cm.Seen 
+                && db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.SenderId).FirstOrDefault() != userId).Count(),
                 LastMessageSenderId = db.ChatMessages.Where(cm => cm.UserChatId == c.Id).OrderByDescending(cm => cm.SentAt).Select(cm => cm.SenderId).FirstOrDefault(),
+                ChatterPfp = c.PrimaryChatterId == userId ? 
+                (c.SecondaryChatter.pfpCoverPath == "" ? "/Images/ProfilePictures/placeholder.png" : c.SecondaryChatter.pfpCoverPath)
+                : 
+                (c.PrimaryChatter.pfpCoverPath == "" ? "/Images/ProfilePictures/placeholder.png" : c.PrimaryChatter.pfpCoverPath),
+                BlockedByUserId = c.BlockedByUserId,
+                BlockedByUser = c.BlockedByUser?.Username
             }).ToList();
 
             return Ok(response);
@@ -43,11 +50,14 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
     {
         public int Id { get; set; }
         public string Chatter { get; set; } = string.Empty;
+        public string ChatterPfp {  get; set; } = string.Empty;
         public string OtherChatter { get; set; } = string.Empty;
         public string LastMessage {  get; set; } = string.Empty;
         public int LastMessageSenderId { get; set; }
         public bool Muted { get; set; }
         public bool Blocked { get; set; }
+        public int? BlockedByUserId { get; set; }
+        public string? BlockedByUser { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastMessageAt { get; set; }
         public int NumberOfUnreads { get; set; }

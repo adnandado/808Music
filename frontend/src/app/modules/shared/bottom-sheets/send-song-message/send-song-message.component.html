@@ -1,0 +1,50 @@
+<div class="following-page">
+  <h3>Send to</h3>
+  <div class="search">
+    <app-search-bar [placeholder]="'Find chats'" [autoSearch]="true" (onSearchChange)="findChats($event)"></app-search-bar>
+  </div>
+  <div class="actions">
+    <button mat-stroked-button (click)="dismiss()" class="cancel">
+      Cancel
+    </button>
+  <button mat-flat-button (click)="sendMessages()" class="cancel" [disabled]="chatsToSendTo.length < 1">
+    <mat-icon>send</mat-icon>
+    Send
+  </button>
+  </div>
+  <div class="msg-cont">
+    <label>Message content</label>
+    <mat-form-field>
+      <input matInput [formControl]="message" placeholder="Tell them why you shared">
+    </mat-form-field>
+  </div>
+  <div class="following">
+    @let filteredChats = getChats();
+    @if(filteredChats.length > 0)
+    {
+      @for (a of filteredChats; track a.id) {
+        <div [ngStyle]="{'width':'100%'}">
+          <div class="flex-list">
+            <mat-card appearance="outlined">
+              <mat-card-content class="flex-content">
+                <div class="flex-controls">
+                  <div class="pfp" [ngStyle]="{'background-image': 'url('+MyConfig.api_address + '/media'+a.chatterPfp+')'}"></div>
+                  <h6>{{ a.chatter }}</h6>
+                </div>
+                <div class="flex-controls">
+                  <mat-checkbox (change)="checkChat($event, a)" [checked]="checkIfSelected(a)"></mat-checkbox>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="result-error">
+        <mat-icon>report</mat-icon>
+        <h6>No users that match your query found</h6>
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+      </div>
+    }
+  </div>
+</div>

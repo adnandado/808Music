@@ -19,7 +19,7 @@ import {TracksModule} from '../artist/tracks/tracks.module';
 import { PlayTrackComponent } from './play-track/play-track.component';
 import {MatDivider} from '@angular/material/divider';
 import { ArtistPageComponent } from './artist-page/artist-page.component';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
+import {MatTab, MatTabContent, MatTabGroup} from '@angular/material/tabs';
 import { ArtistMusicPageComponent } from './artist-page/artist-music-page/artist-music-page.component';
 import { ArtistAlbumsListComponent } from './artist-albums-list/artist-albums-list.component';
 import {AlbumModule} from '../artist/album/album.module';
@@ -48,6 +48,8 @@ import { MessageCardComponent } from './inbox/message-card/message-card.componen
   import {MatStep, MatStepper} from '@angular/material/stepper';
   import {EventpageComponent} from './eventpage/eventpage.component';
   import {ImageCropperComponent} from 'ngx-image-cropper';
+  import {InfiniteScrollDirective} from "ngx-infinite-scroll";
+  import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
   import {FollowersPageComponent} from './user-profile-page/follower-page/follower-page.component';
 import { FollowingPageComponent } from './user-profile-page/following-page/following-page.component';
@@ -113,6 +115,9 @@ import { FollowingPageComponent } from './user-profile-page/following-page/follo
     MatStep,
     MatMiniFabButton,
     ImageCropperComponent,
+    MatTabContent,
+    InfiniteScrollDirective,
+    MatProgressSpinner,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

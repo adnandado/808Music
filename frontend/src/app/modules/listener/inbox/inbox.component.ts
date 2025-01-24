@@ -9,7 +9,7 @@ import moment from 'moment';
 import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
 import {ChatService, MsgSeen} from '../../../services/chat.service';
 import {
-  ChatGetMessagesEndpointService,
+  ChatGetMessagesEndpointService, MessageGetRequest,
   MessageGetResponse
 } from '../../../endpoints/chat-endpoints/chat-get-messages-endpoint.service';
 import {
@@ -17,6 +17,8 @@ import {
 } from '../../../endpoints/notification-endpoints/notification-mark-as-read-endpoint.service';
 import {ChatMarkAsReadEndpointService} from '../../../endpoints/chat-endpoints/chat-mark-as-read-endpoint.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {MyConfig} from '../../../my-config';
+import {MatChipListboxChange} from '@angular/material/chips';
 
 @Component({
   selector: 'app-inbox',
@@ -31,6 +33,14 @@ export class InboxComponent implements OnInit {
   userId!: number;
   protected readonly JSON = JSON;
   protected readonly moment = moment;
+
+  showBlocked = false;
+
+  messagePagedRequest : MessageGetRequest = {
+    id: 0,
+    pageNumber: 1,
+    pageSize: 20
+  }
 
   receiveMessageCallback = (msg: MessageGetResponse) => {
     if(this.selectedChat?.id === msg.userChatId)
@@ -55,7 +65,7 @@ export class InboxComponent implements OnInit {
       audio.play();
     }
     let userChat = this.chats.find(val => val.id === msg.userChatId);
-    if(userChat && this.selectedChat?.id !== msg.userChatId)
+    if(userChat && this.selectedChat?.id !== msg.userChatId && msg.senderId !== this.userId)
     {
       userChat.numberOfUnreads++;
     }
@@ -83,7 +93,8 @@ export class InboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chatService.startConnection();
+    this.userId = this.auth.getAuthToken()!.userId;
+
     this.chatService.msgReceived$.subscribe(msg => {
       this.receiveMessageCallback(msg);
     })
@@ -95,11 +106,22 @@ export class InboxComponent implements OnInit {
       next: value => {
         this.chats = value;
         this.selectedChat = value[0];
+        this.messagePagedRequest.id = this.selectedChat.id;
         this.fetchMessages();
       }
     })
 
-    this.userId = this.auth.getAuthToken()!.userId;
+    this.chatService.chatBlocked$.subscribe(data => {
+      let chat = this.chats.find(val => val.id === data.id);
+      if(chat)
+      {
+        chat.blocked = data.isBlocked;
+        chat.blockedByUser = data.blockedByUser;
+        chat.blockedByUserId = data.blockedByUserId;
+      }
+    })
+
+
   }
 
   filterChats(queryString: string) {
@@ -121,14 +143,16 @@ export class InboxComponent implements OnInit {
 
   openChat(c: ChatGetResponse) {
     this.selectedChat = c;
+    this.messagePagedRequest.id = c.id;
     this.fetchMessages();
   }
 
   fetchMessages() {
-    this.getMessages.handleAsync(this.selectedChat!.id).subscribe({
+    this.messagePagedRequest.pageNumber = 1;
+    this.getMessages.handleAsync(this.messagePagedRequest).subscribe({
       next: data => {
-        this.selectedChatMessages = data;
-        this.markAsReadService.handleAsync({msgs: data}).subscribe({
+        this.selectedChatMessages = data.dataItems;
+        this.markAsReadService.handleAsync({msgs: data.dataItems}).subscribe({
           next: value => {
             console.log("Marked as read");
           }
@@ -139,11 +163,12 @@ export class InboxComponent implements OnInit {
   }
 
   getFilteredChats() {
+    let chats : ChatGetResponse[] = this.chats;
     if(this.queryString != "")
     {
-      return this.chats.filter(c => c.chatter.toLowerCase().includes(this.queryString.toLowerCase()));
+      chats = chats.filter(c => c.chatter.toLowerCase().includes(this.queryString.toLowerCase()));
     }
-    return this.chats;
+    return chats.filter(c => c.blocked == this.showBlocked);
   }
 
   protected readonly Math = Math;
@@ -159,5 +184,21 @@ export class InboxComponent implements OnInit {
 
   scroll() {
     this.shouldScroll = true;
+  }
+
+  protected readonly MyConfig = MyConfig;
+
+  showHideBlocked($event: MatChipListboxChange) {
+    this.showBlocked = !this.showBlocked;
+    this.filterChats(this.queryString);
+  }
+
+  loadNewBatch(page: number) {
+    this.messagePagedRequest.pageNumber = page;
+    this.getMessages.handleAsync(this.messagePagedRequest).subscribe({
+      next: data => {
+        this.selectedChatMessages.unshift(...data.dataItems);
+      }
+    })
   }
 }
