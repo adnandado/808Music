@@ -1,7 +1,39 @@
-<div class="artist-music-page">
+<div class="artist-music-page" [@pageAnimation]>
+  <h3 class="event-header">Events happening soon</h3>
+  <div class="event-carousel-container">
+
+    <div class="carousel-wrapper">
+      <button class="prev" (click)="prevSlide()">❮</button>
+
+      <div class="event-image" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + events[currentSlide].eventCover + ')'}">
+        <div class="gradient">
+      <div class="event-info">
+          <h1 class="event-title">{{ events[currentSlide]?.eventTitle }}</h1>
+          <p class="event-informations">{{ events[currentSlide]?.city }}, {{ events[currentSlide]?.eventDate | date: 'shortDate' }}</p>
+        </div></div>
+      </div>
+
+
+      <button class="next" (click)="nextSlide()">❯</button>
+    </div>
+
+    <div class="carousel-thumbnails">
+      <div *ngFor="let event of events; let i = index"
+           [ngClass]="{'active-thumbnail': i === currentSlide}"
+           class="thumbnail"
+           (click)="changeSlide(i)">
+      </div>
+    </div>
+
 
   @for (i of infinitePage; track i;) {
     <app-album-card-list title="Popular Releases" [albums]="popularAlbums" [queryParams]="popularParams"></app-album-card-list>
+  <app-playlist-card-list
+    [userId]="userId"
+    [title]="'My Playlists'">
+  </app-playlist-card-list>
+
+  <app-album-card-list title="Popular Releases" [albums]="popularAlbums" [queryParams]="popularParams"></app-album-card-list>
     <app-artist-big-card-list [artists]="popularArtists" [title]="'Popular Artists'" [numberDescription]="'followers'" [queryParams]="popArtistParams"></app-artist-big-card-list>
     <app-album-card-list title="Recent Releases" [albums]="recentAlbums" [queryParams]="recentParams"></app-album-card-list>
     <app-artist-big-card-list [artists]="mostStreamedArtists" [title]="'Most Streamed Artists'" [numberDescription]="'streams'" [queryParams]="mostStreamedArtistParams"></app-artist-big-card-list>
@@ -15,4 +47,5 @@
      [infiniteScrollContainer]="'.artist-music-page'"
      (scrolled)="loadMore()"
 >
+</div>
 </div>

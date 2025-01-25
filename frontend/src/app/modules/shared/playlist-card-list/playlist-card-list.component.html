@@ -1,0 +1,22 @@
+<div class="playlist-page">
+  <div>
+    <h3 class="title">{{ title }}</h3>
+    <div class="playlist-cards">
+      @for (playlist of playlists; track playlist.id; let i = $index) {
+        @if (i < 6 && !artistMode || i < 8 && artistMode) {
+          <app-playlist-card
+            [title]="playlist.title"
+            [imageUrl]="MyConfig.media_address + playlist.coverPath"
+            [id]="playlist.id"
+            [tooltip]="playlist.title"
+            [username]="playlist.username"
+            (onClick)="goToPlaylist($event)"
+            (onEdit)="goToEditPlaylist($event)"
+            (onDelete)="deletePlaylist($event)"
+            [hasControls]="artistMode"
+          ></app-playlist-card>
+        }
+      }
+    </div>
+  </div>
+</div>

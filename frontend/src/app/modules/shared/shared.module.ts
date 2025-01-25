@@ -1,5 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
@@ -82,8 +82,10 @@ import { MessageContentCardComponent } from './message-content-card/message-cont
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import { PfpCropperDialogComponent } from './pfp-cropper-dialog/pfp-cropper-dialog.component';
 import {ImageCropperComponent} from 'ngx-image-cropper';
+import { PlaylistCardListComponent } from './playlist-card-list/playlist-card-list.component';
 import { SendSongMessageComponent } from './bottom-sheets/send-song-message/send-song-message.component';
 import {MatCheckbox} from "@angular/material/checkbox";
+import {SocialShareBottomSheetComponent} from './social-media-sharing/social-share-bottom-sheet.component';
 import { SettingsComponent } from './settings/settings.component';
 import {
   MatDatepicker,
@@ -138,8 +140,10 @@ import {
     SearchForContentSheetComponent,
     MessageContentCardComponent,
     PfpCropperDialogComponent,
+    PlaylistCardListComponent,
     SendSongMessageComponent,
     SettingsComponent,
+    SocialShareBottomSheetComponent
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
   imports: [
@@ -204,6 +208,7 @@ import {
     MatDatepickerToggle,
     MatDatepickerInput,
     MatDatepickerToggleIcon,
+    NgOptimizedImage,
   ],
 
   exports: [
@@ -238,7 +243,9 @@ import {
     AlbumCardListComponent,
     ArtistBigCardComponent,
     ArtistBigCardListComponent,
-    MessageContentCardComponent
+    MessageContentCardComponent,
+    PlaylistCardListComponent,
+    SocialShareBottomSheetComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

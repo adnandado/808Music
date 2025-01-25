@@ -165,8 +165,11 @@ margin: 0;}
 .product {
   position: relative;
   width: 11vw;
+  height: 12vw;
   background-color: #161215;
   margin: 5px;
+  border: 0.1rem solid #4E444B;
+
   border-radius: 10px;
   padding: 5px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
@@ -195,6 +198,7 @@ margin: 0;}
 
 .product:hover {
   transform: scale(1.05);
+  background-color: rgba(230, 146, 248, 0.48);
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
 }
 

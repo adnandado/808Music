@@ -34,6 +34,7 @@ public class MyAppUser
     [ForeignKey(nameof(Subscription))]
     public int? SubscriptionId { get; set; }
     public Subscription? Subscription { get; set; }
+    public string HeaderColor { get; set; } = "#000000";
 
     public ICollection<UserOrders> UserOrders { get; set; }  // Veza prema narudžbama
     /*

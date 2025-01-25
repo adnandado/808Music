@@ -9,11 +9,30 @@ import {
   AddProductToWishlistEndpointService, AddProductToWishlistRequest, AddProductToWishlistResponse
 } from '../../../../endpoints/products-endpoints/add-to-wishlist-endpoint.service';
 import {MyConfig} from '../../../../my-config';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
+  animations: [
+    trigger('pageAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('0.4s ease-out', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('0.5s ease-in', style({ opacity: 0 }))
+      ])
+    ]),
+    trigger('profileImageAnimation', [
+      transition(':enter', [
+        style({ transform: 'scale(0)', opacity: 0 }),
+        animate('0.3s ease-out', style({ transform: 'scale(1)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class ProductDetailsComponent implements OnInit {
   product: ProductGetResponse | null = null;

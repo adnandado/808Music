@@ -38,8 +38,8 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                                          IsPublic = up.Playlist.IsPublic,
                                          CoverPath = up.Playlist.CoverPath,
                                          Username = user.Username,
-                                         IsLikedSongs = up.Playlist.isLikePlaylist
-
+                                         IsLikedSongs = up.Playlist.isLikePlaylist,
+                                         UserId = up.MyAppUserId
                                      })
                                      .ToListAsync(cancellationToken);
 
@@ -58,7 +58,7 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
             public int NumOfTracks { get; set; }
             public bool IsPublic { get; set; }
             public bool IsLikedSongs { get; set; }
-
+            public int UserId { get; set; }
             public string CoverPath { get; set; } = string.Empty;
             public string Username { get; set; } = string.Empty;
         }

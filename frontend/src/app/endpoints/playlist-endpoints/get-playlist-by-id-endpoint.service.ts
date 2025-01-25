@@ -10,6 +10,10 @@ export interface PlaylistByIdResponse {
   isPublic: boolean;
   coverPath: string;
   isLikePlaylist : boolean;
+  users: {
+    userId: number;
+    username: string;
+  }[];
 }
 
 @Injectable({

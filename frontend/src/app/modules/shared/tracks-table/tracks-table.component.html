@@ -61,25 +61,21 @@
 
         <div>
           <div class="song-rows">
-            @if (isPlaylist) {
-              <div class="track-cover-container">
-                <img class="track-image" [src]="MyConfig.api_address + track.coverPath" alt="Track Cover"/>
-                <mat-icon *ngIf="showDeleteIcon" class="delete-icon" (click)="removeTrackFromPlaylist(track.id)">
-                  delete
-                </mat-icon>
-              </div>
-            }
-            <div class="song-information">
-              <p>{{ track.title }}</p>
-              <div class="track-artists">
-                <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
-                <app-clickable-featured-artists [artists]="track.artists"
-                                                (onArtistClick)="goToArtistProfile($event)"></app-clickable-featured-artists>
-              </div>
-            </div>
-          </div>
-        </div>
-      </td>
+          @if (isPlaylist){
+            <div class="track-cover-container">
+              <img class="track-image" [src]="MyConfig.api_address + track.coverPath" alt="Track Cover" />
+              @if(isUsersPlaylist){
+              <mat-icon *ngIf="showDeleteIcon" class="delete-icon" (click)="removeTrackFromPlaylist(track.id)">delete</mat-icon>
+              }
+                </div>
+          }<div class="song-information">
+          <p>{{ track.title }}</p>
+          <div class="track-artists">
+            <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
+            <app-clickable-featured-artists [artists]="track.artists"
+                                            (onArtistClick)="goToArtistProfile($event)"></app-clickable-featured-artists>
+          </div></div></div>
+        </div>      </td>
 
     </ng-container>
 

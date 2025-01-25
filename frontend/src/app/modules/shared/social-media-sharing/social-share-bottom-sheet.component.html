@@ -1,0 +1,55 @@
+<div class="social-share-bottom-sheet">
+  <div class="copy-link-container">
+    <div class="copy-link">
+      <input
+        type="text"
+        [value]="data.url"
+        readonly
+        aria-label="Shareable link"
+        class="url-input"
+      />
+      <button (click)="copyToClipboard()" aria-label="Copy link to clipboard">
+        <img src="assets/icons/copy.svg" alt="Copy link" width="24" height="24" />
+      </button>
+    </div>
+  </div>
+
+<div class="social-media-icons">
+  <div class="button-layout">
+    <button mat-button (click)="shareOnTwitter()">
+      <img src="assets/icons/twitter.svg" alt="Twitter" width="24" height="24"> <p>Twitter</p>
+    </button>
+  </div>
+  <div class="button-layout">
+    <button mat-button (click)="shareOnMessenger()">
+      <img src="assets/icons/messenger.svg" alt="Messenger" width="24" height="24"> <p>Messenger</p>
+    </button>
+  </div>
+  <div class="button-layout">
+    <button mat-button (click)="shareOnWhatsApp()">
+      <img src="assets/icons/whatsapp.svg" alt="WhatsApp" width="24" height="24"> <p>WhatsApp</p>
+    </button>
+  </div>
+  <div class="button-layout">
+    <button mat-button (click)="shareOnViber()">
+      <img src="assets/icons/viber.svg" alt="LinkedIn" width="24" height="24"> <p>Viber</p>
+    </button>
+  </div>
+  <div class="button-layout">
+    <button mat-button (click)="shareOnLinkedIn()">
+      <img src="assets/icons/linkedin.svg" alt="LinkedIn" width="24" height="24"> <p>LinkedIn</p>
+    </button>
+  </div>
+  <div class="button-layout">
+    <button mat-button (click)="shareOnPinterest()">
+      <img src="assets/icons/pinterest.svg" alt="Pinterest" width="24" height="24"> <p>Pinterest</p>
+    </button>
+  </div>
+
+  <div class="button-layout">
+    <button mat-button (click)="shareOnReddit()">
+      <img src="assets/icons/reddit.svg" alt="Reddit" width="24" height="24"> <p>Reddit</p>
+    </button>
+  </div>
+</div>
+</div>

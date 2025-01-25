@@ -1,6 +1,6 @@
 <div class="sidenav">
   <div class="logo-container">
-    <img class="logo-image" [src]="MyConfig.media_address + '/808music_logo.png'" alt="Logo">
+    <img class="logo-image" (click)="goHome()" [src]="MyConfig.media_address + '/808music_logo.png'" alt="Logo">
     <hr class="divider">
   </div>
   <div class="sidenav-icons">
@@ -75,7 +75,8 @@
     />
     <div class="profile-menu" [ngClass]="{'show': isMenuVisible}">
       <ul>
-        <li (click)="navigateTo('profile')">Profile</li>
+        <li (click)="openUserProfile()">Profile</li>
+        <li (click)="navigateTo('/listener/my-orders')">Orders</li>
         <li (click)="openImageCropperDialog()">Change Picture</li>
         <li (click)="navigateTo('/listener/subscriptions')">Subscriptions</li>
         <li (click)="navigateTo('/listener/settings')">Settings</li>

@@ -1,7 +1,7 @@
 @if(!userSubscribed){
 
 
-  <div class="plans-container">
+  <div class="plans-container" [@pageAnimation]>
 <div class="stripe-container" *ngIf="selectedSubscription">
   <h2>{{ selectedSubscription.title }}</h2>
   <div class="stripe-form">
@@ -47,7 +47,7 @@
   <div class="subscription-card-current"
 > <div class="top"><p class="your-plan">Your plan</p><img class="logo" [src]="MyConfig.api_address + '/media/808music_blue.png'" alt="Dado"></div>
       <h3 class="subscription-title-current">{{ subscriptionDetails.subscription.title }}</h3>
-      <p class="subscription-price-current">Your next bill is  for €{{ subscriptionDetails.subscription.price | number:'1.2-2' }} on {{ moment(subscriptionDetails.subscription.endDate).format('DD/MM/YY') }}</p>
+      <p class="subscription-price-current">Your next bill is  for <strong>€{{ subscriptionDetails.subscription.price | number:'1.2-2' }}</strong> on <strong>{{ moment(subscriptionDetails.subscription.endDate).format('DD/MM/YY') }}</strong></p>
 
     </div>
   </div>

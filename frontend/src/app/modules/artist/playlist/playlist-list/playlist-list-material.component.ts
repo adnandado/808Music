@@ -83,14 +83,14 @@ export class PlaylistListMaterialComponent implements OnInit {
   }
   createPlaylist() {
     const dialogRef = this.dialog.open(PlaylistCreateDialogComponent, {
-      width: '900px', // Prilagodi širinu prema potrebi
-      data: {}, // Proslijedi dodatne podatke ako su potrebni
+      width: '900px',
+      data: {},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Playlist successfully created:', result);
-        // Dodaj logiku za osvježavanje liste playlista ili prikaz poruke korisniku
+        this.loadPlaylists();
       }
     });
   }
