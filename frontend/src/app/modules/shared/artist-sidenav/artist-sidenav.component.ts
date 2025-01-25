@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
 import {MyConfig} from '../../../my-config';
 import {UserProfileService} from '../../../endpoints/auth-endpoints/user-profile-endpoint.service';

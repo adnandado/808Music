@@ -19,10 +19,12 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         [HttpPost]
         public override async Task<ActionResult<AlbumInsertResponse>> HandleAsync([FromForm] AlbumInsertRequest request, CancellationToken cancellationToken = default)
         {
+            /*
             if (!request.HandleValidation())
             {
                 return BadRequest("Data not valid");
             }
+            */
 
             var jwt = tp.GetDecodedJwt(Request);
             bool isAdmin = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)!.Value == "Admin";
@@ -103,7 +105,6 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         public string Distributor { get; set; } = string.Empty;
         public DateTime ReleaseDate { get; set; }
         public int AlbumTypeId { get; set; } = 4;
-        public bool IsActive { get; set; } = false;
         public IFormFile? CoverImage { get; set; }
         public int ArtistId { get; set; }
 

@@ -56,6 +56,17 @@ export class SidenavComponent implements OnInit {
     const userId = this.getUserIdFromToken();
     console.log('User ID:', userId);
 
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        event.url.includes("/listener/home");
+        if(this.router.url.includes("/artist"))
+        {
+
+          setTimeout(() => { window.location.reload(); }, 100);
+        }
+      }
+    })
+
     if (userId) {
       this.userProfileService.getProfilePicture(userId).subscribe(
         (response) => {
