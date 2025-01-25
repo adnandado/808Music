@@ -1,0 +1,79 @@
+<div class="base-page">
+  <h1>Settings</h1>
+  <mat-divider></mat-divider>
+  <div class="options">
+    <div class="section">
+      <h3>Account</h3>
+      <form [formGroup]="form" (ngSubmit)="updateUser()">
+        <div class="first-last">
+          <div>
+            <app-my-mat-input [placeholder]="'First Name'" [title]="'First Name*'" [name]="'firstName'"
+                              formControlName="firstName"></app-my-mat-input>
+          </div>
+          <div>
+            <app-my-mat-input [placeholder]="'Last Name'" [title]="'Last Name*'" [name]="'lastName'"
+                              formControlName="lastName"></app-my-mat-input>
+          </div>
+        </div>
+        <div class="full-width">
+          <h6>Date of birth*</h6>
+          <mat-form-field>
+            <input matInput required formControlName="dateOfBirth" [matDatepicker]="datepicker">
+            <mat-datepicker-toggle matIconPrefix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <app-my-mat-input [placeholder]="'Username'" [title]="'Username*'" [name]="'username'"
+                          formControlName="username"></app-my-mat-input>
+        <app-my-mat-input [placeholder]="'Email'" [title]="'Email*'" [name]="'email'"
+                          formControlName="email"></app-my-mat-input>
+        <div class="full-width">
+          <h6>Country*</h6>
+          <mat-form-field>
+            <mat-select formControlName="countryId">
+              @for (c of countries; track c.id) {
+                <mat-option [value]="c.id">{{ c.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <app-my-mat-input [placeholder]="'Leave empty if you don\'t want to change your password'" [title]="'New password'" [name]="'newPassword'"
+                          formControlName="newPassword" [type]="'password'"></app-my-mat-input>
+
+        <button mat-flat-button (click)="openPasswordDialog()">Save changes</button>
+      </form>
+    </div>
+
+    <div class="section general-options">
+      <div>
+        <h3>Profile</h3>
+        <div class="autoplay">
+          <div class="pfp" [ngStyle]="{'background-image': 'url('+MyConfig.api_address+user?.pathToPfp+')'}"></div>
+          <button mat-flat-button (click)="openImageCropperDialog()">
+            <mat-icon>account_circle</mat-icon>
+            Change picture
+          </button>
+        </div>
+      </div>
+      <div>
+        <h3>Notifications</h3>
+        <div class="autoplay">
+          <button mat-flat-button (click)="openNotificationSettings()">
+            <mat-icon>settings</mat-icon>
+            Change preferences
+          </button>
+        </div>
+      </div>
+      <div>
+        <h3>Playback</h3>
+        <div class="autoplay">
+          <h6>Autoplay</h6>
+          <mat-slide-toggle [checked]="autoplayStatus" (change)="changeAutoplayStatus($event)"></mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

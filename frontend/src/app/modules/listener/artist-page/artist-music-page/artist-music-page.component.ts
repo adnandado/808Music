@@ -19,6 +19,9 @@ import {
 } from '../../../../endpoints/album-endpoints/album-get-all-endpoint.service';
 import {MyPagedList} from '../../../../services/auth-services/dto/my-paged-list';
 import {MyConfig} from '../../../../my-config';
+import {
+  AlbumGetSpotlightEndpointService
+} from '../../../../endpoints/album-endpoints/album-get-spotlight-endpoint.service';
 
 @Component({
   selector: 'app-artist-music-page',
@@ -51,7 +54,8 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
               private trackByIdService: TrackGetByIdEndpointService,
               private route: ActivatedRoute,
               private albumsGetService: AlbumGetAllEndpointService,
-              private getArtistService : ArtistGetByIdEndpointService,) {
+              private getArtistService : ArtistGetByIdEndpointService,
+              private getSpotlightService : AlbumGetSpotlightEndpointService,) {
   }
 
   ngAfterViewInit(): void {
@@ -89,7 +93,12 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
           this.albumsGetService.handleAsync({artistId: id, isReleased: true, title: "", pageSize: 6, pageNumber: 1}).subscribe({
             next: data => {
               this.albums = data;
-              this.featuredAlbum = data.dataItems[0];
+            }
+          })
+
+          this.getSpotlightService.handleAsync(id).subscribe({
+            next: data => {
+              this.featuredAlbum = data;
             }
           })
 

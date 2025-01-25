@@ -23,9 +23,18 @@
 }
 
 .spotlight-info {
+  position: absolute;
+  bottom: 1vw;
+  right: 1vw;
+  left: 1vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.spotlight-title:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .spotlight-info > h6 {
@@ -76,7 +85,7 @@ app-album-card {
 .banner-gradient {
   position: absolute;
   background: rgb(0,0,0);
-  background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8603816526610644) 25%, rgba(0,212,255,0) 100%);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7959558823529411) 13%, rgba(0,0,0,0.6082808123249299) 20%, rgba(0,0,0,0) 42%);
 }
 
 .view-all {
@@ -102,4 +111,8 @@ app-album-card {
 
 .featured-section {
   margin-top: 4vh;
+}
+
+.spotlight-container {
+  position: relative;
 }

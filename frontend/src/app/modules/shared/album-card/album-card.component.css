@@ -53,3 +53,18 @@
 .bold {
   font-weight: bold;
 }
+
+.artist-name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.highlighted {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.highlighted > p {
+  margin: 0;
+}

@@ -68,11 +68,16 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             {
                 Id = a.Id,
                 Artist = a.Artist.Name,
+                ArtistId = a.ArtistId,
                 CoverArt = a.CoverPath != "" ? $"/media/Images/AlbumCovers/{a.CoverPath}" : "/media/Images/playlist_placeholder.png",
                 ReleaseDate = a.ReleaseDate,
                 Title = a.Title,
                 Type = a.AlbumType.Type,
-                TrackCount = db.Tracks.Where(t => t.AlbumId == a.Id).Count()
+                TrackCount = db.Tracks.Where(t => t.AlbumId == a.Id).Count(),
+                IsHighlighted = db.AlbumSpotlights.Where(s => s.ArtistId == a.ArtistId).Count() > 0 ?
+                                db.AlbumSpotlights.Where(s => s.AlbumId == a.Id).FirstOrDefault() != null : 
+                                albums.Where(s => s.ReleaseDate < DateTime.Now).OrderByDescending(s => s.ReleaseDate).FirstOrDefault() == null ? false :
+                                albums.Where(s => s.ReleaseDate < DateTime.Now && db.Tracks.Where(t => t.AlbumId == s.Id).Count() > 0).OrderByDescending(s => s.ReleaseDate).FirstOrDefault().Id == a.Id,
             });
 
             if (request.IsReleased != null && request.IsReleased.Value)
@@ -111,5 +116,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         public string Artist { get; set; }
         public string Type { get; set; }
         public int TrackCount { get; set; } = -1;
+        public int ArtistId { get; set; }
+        public bool IsHighlighted { get; set; }
     }
 }

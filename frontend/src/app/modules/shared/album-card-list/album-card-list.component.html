@@ -9,6 +9,7 @@
                         [imageUrl]="MyConfig.api_address+album.coverArt"
                         [id]="album.id"
                         [tooltip]="album.title"
+                        [artistId]="album.artistId"
                         [artistName] = "album.artist"
                         (onClick)="goToAlbum($event)"
                         (onPlayClick)="playAlbum($event,false)"

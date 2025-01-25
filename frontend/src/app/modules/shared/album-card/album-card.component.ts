@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-album-card',
@@ -14,6 +15,10 @@ export class AlbumCardComponent {
   @Input() tooltip = "";
   @Input() artistName = "";
   @Input() numOfTracks = -1;
+  @Input() artistId: number = 1;
+  @Input() role: string = "";
+  @Input() isHighLighted : boolean = false;
+  @Input() releaseDate: number = 0;
 
   @Output() onEdit: EventEmitter<number> = new EventEmitter();
   @Output() onStats: EventEmitter<number> = new EventEmitter();
@@ -23,6 +28,9 @@ export class AlbumCardComponent {
   playBtnStyle = {
     'display': 'none',
     'bottom': '7vh'
+  }
+
+  constructor(private router: Router) {
   }
 
   replaceWithPlaceholder() {
@@ -64,4 +72,9 @@ export class AlbumCardComponent {
     this.onPlayClick.emit(this.id);
   }
 
+  goToArtist() {
+    this.router.navigate(['/listener/profile', this.artistId])
+  }
+
+  protected readonly Date = Date;
 }

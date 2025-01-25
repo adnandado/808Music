@@ -12,7 +12,10 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   overflow: visible;
   left: 0;
-  top: 0;  }
+  top: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
 .Active{
   opacity:1;
 
@@ -147,6 +150,15 @@ body {
   margin-left: 60px;
 }
 
+.display2 {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  z-index: 10;
+  top: 5px;
+  right: 5px;
+}
+
 .hidden {
   display: none;
   position: absolute;
@@ -162,6 +174,25 @@ body {
 
 .display {
   display: block;
+}
+
+.unreads {
+  box-sizing: border-box;
+  width: 25px;
+  height: 25px;
+  background: purple;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.unreads > p {
+  color: #EEDEE7;
+  display: block;
+  align-self: center;
+  font-weight: bold;
+  font-size: 13px;
+  margin: 0;
 }
 
 

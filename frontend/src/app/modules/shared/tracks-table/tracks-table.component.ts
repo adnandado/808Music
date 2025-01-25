@@ -50,6 +50,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {
   PlaylistTracksGetEndpointService
 } from '../../../endpoints/playlist-endpoints/playlist-get-tracks-endpoint.service';
+import {ArtistHandlerService} from '../../../services/artist-handler.service';
 
 @Component({
   selector: 'app-tracks-table',
@@ -86,6 +87,8 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  artist : ArtistSimpleDto | null = null;
+
   constructor(private getTrackService: TrackGetByIdEndpointService,
               private deleteTrackService: TrackDeleteEndpointService,
               private getAllTracksService: TrackGetAllEndpointService,
@@ -96,7 +99,8 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
               private getPlaylistsService: GetPlaylistsByUserIdEndpointService,
               private playlistUpdateTracksService: PlaylistUpdateTracksService,
               private removeTrackFromPlaylistService: RemoveTrackFromPlaylistService,
-              private playlistTracksService : PlaylistTracksGetEndpointService) {
+              private playlistTracksService : PlaylistTracksGetEndpointService,
+              private artistHandler: ArtistHandlerService) {
   }
   likedSongs: Map<number, boolean> = new Map();
   showDeleteIcon : boolean = true;
@@ -112,6 +116,11 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
 
      */
     this.dataSource.sort = this.sort;
+
+    if(this.inArtistMode)
+    {
+      this.artist = this.artistHandler.getSelectedArtist();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

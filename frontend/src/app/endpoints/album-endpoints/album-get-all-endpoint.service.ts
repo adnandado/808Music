@@ -31,8 +31,10 @@ export interface AlbumGetAllResponse {
   coverArt: string;
   releaseDate: string;
   artist: string;
+  artistId: number;
   type: string;
   trackCount: number;
+  isHighlighted: boolean;
 }
 
 @Injectable({
