@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS1_2024_25.API", "RS1_2024_25.API\RS1_2024_25.API.csproj", "{88D8E34A-713A-42BB-A5CC-246FA15BD7C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS1_2024_25.test", "RS1_2024_25.test\RS1_2024_25.test.csproj", "{BDF1F21D-2E7B-424E-8E02-CFF305EF61B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS1_2024_25.Tests", "RS1_2024_25.test\RS1_2024_25.Tests.csproj", "{BDF1F21D-2E7B-424E-8E02-CFF305EF61B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

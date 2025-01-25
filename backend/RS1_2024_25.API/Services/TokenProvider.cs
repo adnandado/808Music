@@ -86,10 +86,21 @@ namespace RS1_2024_25.API.Services
             var decodedToken = GetDecodedJwt(request);
             return decodedToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value!;
         }
+        public string GetJwtRoleClaimValue(string token)
+        {
+            var decodedToken = GetDecodedJwt(token);
+            return decodedToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value!;
+        }
 
         public string GetJwtClaimValue(HttpRequest request, string claimName)
         {
             var decodedToken = GetDecodedJwt(request);
+            return decodedToken.Claims.FirstOrDefault(x => x.Type == claimName)?.Value ?? string.Empty;
+        }
+
+        public string GetJwtClaimValue(string token, string claimName)
+        {
+            var decodedToken = GetDecodedJwt(token);
             return decodedToken.Claims.FirstOrDefault(x => x.Type == claimName)?.Value ?? string.Empty;
         }
 
