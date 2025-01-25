@@ -2,15 +2,19 @@
   <div class="lander">
     <div class="spotlight">
       <h5>SPOTLIGHT</h5>
-      <div class="album-cover" [ngStyle]="{'background-image':'url('+MyConfig.api_address+featuredAlbum?.coverArt +')'}">
+      <div class="spotlight-container">
+        <div class="album-cover"
+             [ngStyle]="{'background-image':'url('+MyConfig.api_address+featuredAlbum?.coverArt +')'}">
+        </div>
+        <div class="album-cover banner-gradient">
+          <div class="spotlight-info">
+            <h6 (click)="goToAlbum(featuredAlbum?.id ?? 1)" class="spotlight-title">{{ getTitle(featuredAlbum?.title) }}</h6>
+            <button mat-fab (click)="playFeatured()">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="album-cover banner-gradient">
-        <div class="spotlight-info">
-        <h6>{{getTitle(featuredAlbum?.title)}}</h6>
-        <button mat-fab (click)="playFeatured()">
-          <mat-icon>play_arrow</mat-icon>
-        </button>
-      </div></div>
     </div>
     <div class="popular">
       <h5>POPULAR</h5>
@@ -53,16 +57,16 @@
   <div>
     <h5>RELEASES</h5>
     <div class="album-cards">
-    @for (album of albums?.dataItems; track album.id) {
-      <app-album-card [title]="album.title"
-                      [subtitle]="album.type + ' • ' + getYear(album.releaseDate)"
-                      [imageUrl]="MyConfig.api_address+album.coverArt"
-                      [id]="album.id"
-                      [tooltip]="album.title"
-                      (onClick)="goToAlbum($event)"
-                      (onPlayClick)="playAlbum($event,false)"
-      ></app-album-card>
-    }
+      @for (album of albums?.dataItems; track album.id) {
+        <app-album-card [title]="album.title"
+                        [subtitle]="album.type + ' • ' + getYear(album.releaseDate)"
+                        [imageUrl]="MyConfig.api_address+album.coverArt"
+                        [id]="album.id"
+                        [tooltip]="album.title"
+                        (onClick)="goToAlbum($event)"
+                        (onPlayClick)="playAlbum($event,false)"
+        ></app-album-card>
+      }
       @if (albums != null) {
         @if (albums.dataItems.length >= 6) {
           <div class="view-all" (click)="viewAll(false)">...</div>
@@ -71,8 +75,7 @@
     </div>
   </div>
 
-  @if (featuredAlbums != null && featuredAlbums.dataItems.length > 0)
-  {
+  @if (featuredAlbums != null && featuredAlbums.dataItems.length > 0) {
     <div class="featured-section">
       <h5>FEATURED ON</h5>
       <div class="album-cards">
@@ -82,7 +85,7 @@
                           [imageUrl]="MyConfig.api_address+album.coverArt"
                           [id]="album.id"
                           [tooltip]="album.title"
-                          [artistName] = "album.artist"
+                          [artistName]="album.artist"
                           (onClick)="goToAlbum($event)"
                           (onPlayClick)="playAlbum($event,true)"
           ></app-album-card>

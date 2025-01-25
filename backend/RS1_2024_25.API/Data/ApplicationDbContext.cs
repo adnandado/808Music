@@ -51,6 +51,7 @@ namespace RS1_2024_25.API.Data
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<FollowForUser> FollowForUser { get; set; }
 
+        public DbSet<ArtistAlbumSpotlight> AlbumSpotlights { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

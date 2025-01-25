@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RS1_2024_25.API.Data;
 
@@ -11,9 +12,11 @@ using RS1_2024_25.API.Data;
 namespace RS1_2024_25.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250124115042_Spotlight")]
+    partial class Spotlight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,7 +132,7 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
-                    b.HasKey("ArtistId");
+                    b.HasKey("ArtistId", "AlbumId");
 
                     b.HasIndex("AlbumId");
 
@@ -184,10 +187,6 @@ namespace RS1_2024_25.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HeaderColor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -481,24 +480,6 @@ namespace RS1_2024_25.API.Migrations
                     b.HasIndex("ArtistId");
 
                     b.ToTable("Follows");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.FollowForUser", b =>
-                {
-                    b.Property<int>("FollowerUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartedFollowing")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("FollowerUserId", "FollowedUserId");
-
-                    b.HasIndex("FollowedUserId");
-
-                    b.ToTable("FollowForUser");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.Genre", b =>
@@ -1338,25 +1319,6 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("Artist");
 
                     b.Navigation("MyAppUser");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.FollowForUser", b =>
-                {
-                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "FollowedUser")
-                        .WithMany()
-                        .HasForeignKey("FollowedUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("RS1_2024_25.API.Data.Models.Auth.MyAppUser", "FollowerUser")
-                        .WithMany()
-                        .HasForeignKey("FollowerUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("FollowedUser");
-
-                    b.Navigation("FollowerUser");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.MyAppUserPreference", b =>

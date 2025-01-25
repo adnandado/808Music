@@ -8,6 +8,7 @@ export interface RegisterRequest {
   iD: number | null;
   username: string;
   password: string;
+  newPassword?: string;
   firstName: string;
   lastName: string;
   email: string;

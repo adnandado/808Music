@@ -86,6 +86,13 @@ import { PlaylistCardListComponent } from './playlist-card-list/playlist-card-li
 import { SendSongMessageComponent } from './bottom-sheets/send-song-message/send-song-message.component';
 import {MatCheckbox} from "@angular/material/checkbox";
 import {SocialShareBottomSheetComponent} from './social-media-sharing/social-share-bottom-sheet.component';
+import { SettingsComponent } from './settings/settings.component';
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerToggle,
+  MatDatepickerToggleIcon
+} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -135,6 +142,7 @@ import {SocialShareBottomSheetComponent} from './social-media-sharing/social-sha
     PfpCropperDialogComponent,
     PlaylistCardListComponent,
     SendSongMessageComponent,
+    SettingsComponent,
     SocialShareBottomSheetComponent
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
@@ -196,6 +204,10 @@ import {SocialShareBottomSheetComponent} from './social-media-sharing/social-sha
     ImageCropperComponent,
     MatCheckbox,
     RouterLinkActive,
+    MatDatepicker,
+    MatDatepickerToggle,
+    MatDatepickerInput,
+    MatDatepickerToggleIcon,
     NgOptimizedImage,
   ],
 

@@ -18,6 +18,7 @@ import {ProductAddEndpointService} from '../../endpoints/products-endpoints/prod
 import {TracksListComponent} from './tracks/tracks-list/tracks-list.component';
 import {SearchPageComponent} from '../shared/search-page/search-page.component';
 import {ArtistDashboardComponent} from './artist-dashboard/artist-dashboard.component';
+import {SettingsComponent} from '../shared/settings/settings.component';
 
 
 const routes: Routes = [
@@ -45,6 +46,10 @@ const routes: Routes = [
       {
         path: 'playlist',
         loadChildren: () => import("./playlist/playlist.module").then(m => m.PlaylistModule)
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent
       },
       {
         path: 'product-create',

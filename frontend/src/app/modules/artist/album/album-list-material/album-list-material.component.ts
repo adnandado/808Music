@@ -25,6 +25,7 @@ import {TrackGetAllEndpointService} from '../../../../endpoints/track-endpoints/
 import {MusicPlayerService} from '../../../../services/music-player.service';
 import {Location} from '@angular/common';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
+import {AlbumSpotlightEndpointService} from '../../../../endpoints/album-endpoints/album-spotlight-endpoint.service';
 
 @Component({
   selector: 'app-album-list-material',
@@ -54,6 +55,8 @@ export class AlbumListMaterialComponent implements OnInit {
 
   @Input() isHome : boolean = false;
 
+  artistRole : string = "";
+
   constructor(private albumService: AlbumGetAllEndpointService,
               private albumDeleteService: AlbumDeleteEndpointService,
               private router: Router,
@@ -63,7 +66,8 @@ export class AlbumListMaterialComponent implements OnInit {
               private route : ActivatedRoute,
               private getTracksService: TrackGetAllEndpointService,
               private musicPlayerService: MusicPlayerService,
-              private location: Location)
+              private location: Location,
+              private spotlightService : AlbumSpotlightEndpointService)
   {
   }
 
@@ -72,6 +76,7 @@ export class AlbumListMaterialComponent implements OnInit {
     {
       this.checkIfHome();
       this.homeCheck(this.router.url);
+      this.artistRole = this.artistHandler.getSelectedArtist()?.role ?? "";
     }
 
     this.periodFrom.valueChanges.subscribe(value => {
@@ -210,7 +215,12 @@ export class AlbumListMaterialComponent implements OnInit {
   }
 
   showStats(id: number) {
-
+    this.spotlightService.handleAsync({albumId: id}).subscribe({
+      next: (data) =>{
+        this.reloadData();
+        this.snackBar.open("Successfully highlighted release!", "Dismiss", {duration: 2000});
+      }
+    })
   }
 
   switchPage(e: PageEvent) {
@@ -329,5 +339,9 @@ export class AlbumListMaterialComponent implements OnInit {
 
   removeDate(periodTo: FormControl<Date | null>) {
     periodTo.setValue(null);
+  }
+
+  getMillis(releaseDate: string) {
+    return (new Date(releaseDate)).getTime();
   }
 }

@@ -93,21 +93,20 @@
       </div>
     }
     @if (hasControls) {
-      <div class="flex-controls">
-        <mat-card appearance="outlined" class="artist-card add-new-card"
-                  (click)="openCreate('/artist/album/create')">
-          <mat-card-header>
-            <mat-card-title-group>
-              <mat-card-title>New release</mat-card-title>
-              <mat-icon>add_circle</mat-icon>
-            </mat-card-title-group>
-          </mat-card-header>
-          <mat-card-content></mat-card-content>
-        </mat-card>
-        <a mat-stroked-button routerLink="/auth/logout">
-          Log out
-        </a>
-      </div>
+      @if (artistRole !== "Viewer") {
+        <div class="flex-controls">
+          <mat-card appearance="outlined" class="artist-card add-new-card"
+                    (click)="openCreate('/artist/album/create')">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>New release</mat-card-title>
+                <mat-icon>add_circle</mat-icon>
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content></mat-card-content>
+          </mat-card>
+        </div>
+      }
     }
     <div class="flex-container">
       @for (a of albums; track a.id) {
@@ -116,7 +115,7 @@
                         [hasControls]="hasControls" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
                         (onStats)="showStats($event)" (onClick)="checkoutTracks($event)"
                         [tooltip]="a.title + ' - ' + getDateString(a.releaseDate)" (onPlayClick)="playAlbum($event)"
-                        [numOfTracks]="hasControls ? a.trackCount : -1"></app-album-card>
+                        [numOfTracks]="hasControls ? a.trackCount : -1" [role]="artistRole" [isHighLighted]="a.isHighlighted" [releaseDate]="getMillis(a.releaseDate)"></app-album-card>
       }
     </div>
     <mat-paginator [length]="pagedList?.totalCount"

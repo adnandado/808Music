@@ -1,0 +1,82 @@
+.base-page {
+  padding-top: 2vh;
+  box-sizing: border-box;
+  padding-right: 1vw;
+}
+
+h1, h3 {
+  font-weight: 500;
+
+}
+
+form {
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  padding-top: 2vh;
+  color: #EEDEE7;
+  flex-basis: 30vw;
+}
+
+h3 {
+  color: white;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-width mat-form-field {
+  width: 100%;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+h6 {
+  margin: 0;
+}
+
+.autoplay {
+  display: flex;
+  gap: 2vh;
+  align-items: center;
+}
+
+.pfp {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-size: cover;
+  background-position: center;
+}
+
+.general-options
+{
+  display: flex;
+  flex-direction: column;
+  gap: 6vh;
+}
+
+.first-last {
+  display: flex;
+  justify-content: space-between;
+}
+
+.first-last div {
+  flex-basis: 45%;
+}
+
+@media only screen and (max-width: 600px) {
+  .options {
+    display: flex;
+    flex-direction: column;
+  }
+}

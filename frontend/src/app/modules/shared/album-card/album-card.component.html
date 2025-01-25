@@ -12,27 +12,31 @@
     <mat-card-title class="album-mat-card-title hide-overflow" (click)="emitClick()">{{getTitle()}}</mat-card-title>
     @if (artistName != "")
     {
-      <mat-card-subtitle class="album-mat-card-subtitle italic hide-overflow">{{artistName}}</mat-card-subtitle>
+      <mat-card-subtitle class="album-mat-card-subtitle italic hide-overflow artist-name" (click)="goToArtist()">{{artistName}}</mat-card-subtitle>
     }
   </mat-card-header>
     <mat-card-content class="album-mat-card-subtitle hide-overflow">{{subtitle}}</mat-card-content>
   @if (numOfTracks != -1)
   {
-    <mat-card-content class="album-mat-card-subtitle italic hide-overflow">{{numOfTracks}} tracks</mat-card-content>
+    <mat-card-content class="album-mat-card-subtitle italic hide-overflow"><div class="highlighted"><p>{{numOfTracks}} tracks</p> @if (isHighLighted && hasControls) {<mat-icon>stars</mat-icon>}</div></mat-card-content>
   }
   @if (hasControls)
   {
+    @if (role !== "Viewer") {
     <mat-card-actions class="album-mat-card-controls">
-      <button mat-icon-button (click)="emitDelete()">
+      <button mat-icon-button (click)="emitDelete()" matTooltip="Delete">
         <mat-icon>delete</mat-icon>
       </button>
-      <button mat-icon-button (click)="emitStats()">
-        <mat-icon>bar_chart</mat-icon>
-      </button>
-      <button mat-icon-button (click)="emitEdit()">
+      @if (!isHighLighted && releaseDate < Date.now() && numOfTracks > 0) {
+        <button mat-icon-button (click)="emitStats()" matTooltip="Highlight release">
+          <mat-icon>star</mat-icon>
+        </button>
+      }
+      <button mat-icon-button (click)="emitEdit()" matTooltip="Edit">
         <mat-icon>edit</mat-icon>
       </button>
     </mat-card-actions>
+    }
   } @else {
     <mat-card-content></mat-card-content>
   }
