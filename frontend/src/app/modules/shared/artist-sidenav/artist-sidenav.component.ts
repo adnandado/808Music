@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
-import {NavigationStart, Router} from '@angular/router';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
 import {MyConfig} from '../../../my-config';
 import {UserProfileService} from '../../../endpoints/auth-endpoints/user-profile-endpoint.service';
@@ -14,6 +14,7 @@ export class ArtistSidenavComponent implements OnInit {
   isMenuVisible: boolean = false;
   pathToPfp: string = `${MyConfig.api_address}`;
   pathToUserPfp: string = "";
+  reloadThePage: boolean = false;
 
   constructor(private router: Router, private artistHandlerService: ArtistHandlerService,
               private auth: MyUserAuthService,
@@ -36,6 +37,25 @@ export class ArtistSidenavComponent implements OnInit {
         }
     });
     }
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        event.url.includes("/artist");
+        if(this.router.url.includes("/listener"))
+        {
+          this.reloadThePage = true;
+          //setTimeout(() => { window.location.reload(); }, 100);
+        }
+      }
+      if(event instanceof NavigationEnd) {
+        if(this.reloadThePage)
+        {
+          this.reloadThePage = false;
+          window.location.reload();
+        }
+      }
+    })
+
     let artist = this.artistHandlerService.getSelectedArtist();
     if(artist) {
      this.pathToPfp = `${MyConfig.api_address}${artist.pfpPath}`;

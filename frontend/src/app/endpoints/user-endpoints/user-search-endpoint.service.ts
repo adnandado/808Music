@@ -7,12 +7,14 @@ import { Observable } from 'rxjs';
 
 export interface UserSearchRequest {
   searchString: string;
+  returnAmount?: number;
 }
 
 export interface UserSearchResponse {
   id: number;
   username: string;
   roleId?: number;
+  profilePicture?: string;
 }
 
 @Injectable({
@@ -26,10 +28,6 @@ export class UserSearchEndpointService implements MyBaseEndpointAsync<UserSearch
   }
 
   handleAsync(request: UserSearchRequest): Observable<UserSearchResponse[]> {
-      if(request.searchString === "")
-      {
-        return this.httpClient.get<UserSearchResponse[]>(this.url);
-      }
       let params = buildHttpParams(request);
       return this.httpClient.get<UserSearchResponse[]>(this.url, {params: params});
     }

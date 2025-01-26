@@ -31,6 +31,7 @@ export class SidenavComponent implements OnInit {
     }
   }
   chat$ : Subscription | null = null;
+  reloadThePage = false;
 
   constructor(private router: Router,
               private cdRef: ChangeDetectorRef,
@@ -61,8 +62,15 @@ export class SidenavComponent implements OnInit {
         event.url.includes("/listener/home");
         if(this.router.url.includes("/artist"))
         {
-
-          setTimeout(() => { window.location.reload(); }, 100);
+          this.reloadThePage = true;
+          //setTimeout(() => { window.location.reload(); }, 100);
+        }
+      }
+      if(event instanceof NavigationEnd) {
+        if(this.reloadThePage)
+        {
+          this.reloadThePage = false;
+          window.location.reload();
         }
       }
     })

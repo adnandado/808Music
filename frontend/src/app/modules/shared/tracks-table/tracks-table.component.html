@@ -2,7 +2,7 @@
   <div class="tracks-search-bar" *ngIf="allowPagination">
     <app-search-bar [placeholder]="'Search for a song'" (onSearchChange)="searchTracks($event)"></app-search-bar>
     <div class="controls">
-      <button mat-icon-button>
+      <button mat-icon-button (click)="openShareSheet()">
         <mat-icon>share</mat-icon>
       </button>
       @if (inArtistMode) {
@@ -123,6 +123,11 @@
             <mat-icon>playlist_add_circle</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="addToQueue(track)">
+              Add to queue
+            </button>
+            <mat-divider></mat-divider>
+            <h6 class="menu-title">Add to playlist:</h6>
             <button mat-menu-item *ngFor="let playlist of playlists" (click)="addToPlaylist(playlist.id)">
               <div class="dropdown-stuff">
                 {{ playlist.title }}
