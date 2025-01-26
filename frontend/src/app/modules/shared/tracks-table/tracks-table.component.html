@@ -98,12 +98,21 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item *ngFor="let playlist of playlists" (click)="addToPlaylist(playlist.id)">
-           <div class="dropdown-stuff">
-            {{ playlist.title }}</div>
+            <div class="dropdown-stuff">
+              <img class="playlist-cover" [src]="MyConfig.media_address + playlist.coverPath" alt="">
+              <p class="pl-title">{{ playlist.title }}</p>
+              <mat-checkbox
+                [checked]="isTrackInPlaylist(track.id, playlist.id)"
+              >
+              </mat-checkbox>
+            </div>
+
           </button>
         </mat-menu>
       </td>
     </ng-container>
+
+
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -92,14 +92,28 @@ song-information{
   color: #A9A9A9;
   text-align: center;
 }
-.dropdown-img{
-  width:3vw;
-}
-.dropdown-stuff{
-  display:flex;
-  flex-direction: row;
+.dropdown-stuff {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
+
+.playlist-cover {
+  width: 2vw;
+  height: 2vw;
+  margin-right: 0.5vw;
+}
+
+.pl-title {
+  flex-grow: 1;
+  margin: 0;
+}
+
+.mat-checkbox {
+  margin-left: auto;
+}
+
 .dropdown-stuff:hover{
 }
 .dropdown-menu {
@@ -113,8 +127,6 @@ song-information{
   padding: 10px;
   color: white;
 }
-
-
 
 .mat-column-artist-controls {
   padding: 0;
