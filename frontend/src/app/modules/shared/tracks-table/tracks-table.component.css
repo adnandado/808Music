@@ -161,3 +161,9 @@ song-information{
   margin:0;
 
 }
+
+.queue_btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -27,6 +27,7 @@ import {
 import {MyConfig} from '../../../../my-config';
 import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
 import {ChatToggleBlockEndpointService} from '../../../../endpoints/chat-endpoints/chat-toggle-block-endpoint.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-chat-box',
@@ -63,7 +64,8 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
               private changeDetectorRef: ChangeDetectorRef,
               private bottomSheet: MatBottomSheet,
               private auth: MyUserAuthService,
-              private blockToggleService: ChatToggleBlockEndpointService) {
+              private blockToggleService: ChatToggleBlockEndpointService,
+              private router: Router) {
   }
 
   ngAfterViewInit(): void {
@@ -155,5 +157,9 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
   loadMore() {
     this.page++;
     this.loadMoreMessages.emit(this.page);
+  }
+
+  goToUserProfile() {
+    this.router.navigate(["/listener/user", this.chat?.chatterId])
   }
 }

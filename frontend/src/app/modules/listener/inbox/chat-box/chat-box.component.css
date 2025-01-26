@@ -22,6 +22,11 @@
   margin: 0;
 }
 
+.title:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .messages {
   height: 76vh;
   width: 100%;

@@ -11,6 +11,7 @@ export interface ChatCreateRequest {
 export interface ChatGetResponse {
   id: number;
   chatter: string;
+  chatterId: number;
   otherChatter: string;
   lastMessage: string;
   muted: boolean;
