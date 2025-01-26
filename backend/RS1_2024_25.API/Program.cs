@@ -12,6 +12,9 @@ using RS1_2024_25.API.Services;
 using RS1_2024_25.API.Services.Interfaces;
 using System.Text;
 using static RS1_2024_25.API.Endpoints.CityEndpoints.ProductGetAllEndpoint;
+using FluentValidation;
+using RS1_2024_25.API.Data.Models.Auth;
+using FluentValidation.AspNetCore;
 
 
 var config = new ConfigurationBuilder()
@@ -109,6 +112,9 @@ builder.Services.AddTransient<DeleteService>();
 builder.Services.AddHostedService<MyBackgroundService>();
 builder.Services.AddSingleton<IMyCacheService, MyRedisCacheService>();
 builder.Services.AddTransient<NotificationTransformerService>();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<MyAppUser>();
 
 var app = builder.Build();
 

@@ -1,7 +1,7 @@
 <div class="login-page">
-  <!--<div><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spotify_logo_with_text.svg/640px-Spotify_logo_with_text.svg.png" width="500" height="150"></div>-->
   <div class="login-container">
-    <h2>Login - 808 Music</h2>
+    <div class="logo" [ngStyle]="{'background-image': 'url(/images/logo_qr.png)'}"></div>
+    <h2>Login</h2>
     <form (ngSubmit)="onLogin()">
       <div class="form-group">
         <label for="username">Username:</label>
@@ -14,17 +14,17 @@
         <a routerLink="/auth/forgot-password">Forgot password?</a>
       </div>
 
-      <div class="form-group">
-        <label for="rememberMe">Remember me </label>
-        <input [(ngModel)]="loginRequest.rememberMe" id="rememberMe" name="rememberMe" required type="checkbox">
+      <div class="form-group slide-toggle">
+        <label>Remember me</label>
+        <mat-slide-toggle labelPosition="before" (change)="loginRequest.rememberMe = $event.checked"></mat-slide-toggle>
       </div>
-
-      <button class="login-button" type="submit">Login</button>
-
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     </form>
+    <div class="dual-controls">
+      <button mat-stroked-button routerLink="/">Back to home</button>
+      <button mat-flat-button (click)="onLogin()">Login</button>
+    </div>
     <!--<button class="login-button" type="submit" (click)="LogData()">Show me</button>-->
-    <button class="login-button" routerLink="/">Back to home</button>
   </div>
 </div>
 

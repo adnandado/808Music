@@ -46,7 +46,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 user.pfpCoverPath = "/Images/ProfilePictures/placeholder.png";
             }
 
-            MyAppUser dupeUser = await db.MyAppUsers.FirstOrDefaultAsync(u => u.Username == request.Username || u.Email == request.Email);
+            MyAppUser dupeUser = await db.MyAppUsers.FirstOrDefaultAsync(u => u.Username.ToLower() == request.Username.ToLower() || u.Email.ToLower() == request.Email.ToLower());
             if(dupeUser != null && dupeUser != user)
             {
                 return BadRequest("Account with this email or username already exists");
@@ -60,8 +60,17 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
             user.CountryId = request.CountryId;
             user.IsActive = true;
 
-            string passHash = BCrypt.Net.BCrypt.EnhancedHashPassword(request.Password);
-            user.Password = passHash;
+            if(request.ID == null)
+            {
+                string passHash = BCrypt.Net.BCrypt.EnhancedHashPassword(request.Password);
+                user.Password = passHash;
+            }
+
+            if(request.NewPassword != null || request.ID != null)
+            {
+                string passHash = BCrypt.Net.BCrypt.EnhancedHashPassword(request.NewPassword);
+                user.Password = passHash;
+            }
 
             var likedSongsPlaylist = new Playlist
             {
@@ -96,6 +105,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
         public int? ID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; } 
+        public string? NewPassword { get; set; }
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "admin@admin.com";
@@ -110,10 +120,15 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 return false;
             if (!Regex.IsMatch(this.Password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))
                 return false;
-            if (!Regex.IsMatch(this.FirstName, "^[a-zA-Z'’\\- ]{1,50}$"))
+            if (!Regex.IsMatch(this.FirstName, "^[a-zA-ZčČćĆđĐšŠžŽ'’\\- ]{1,50}$"))
                 return false;            
-            if (!Regex.IsMatch(this.LastName, "^[a-zA-Z'’\\- ]{1,50}$"))
+            if (!Regex.IsMatch(this.LastName, "^[a-zA-ZčČćĆđĐšŠžŽ'’\\- ]{1,50}$"))
                 return false;
+            if(NewPassword != null)
+            {
+                if (!Regex.IsMatch(this.NewPassword, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))
+                    return false;
+            }
             return true;
         }
     }

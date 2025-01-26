@@ -9,12 +9,15 @@
                         [imageUrl]="MyConfig.api_address+album.coverArt"
                         [id]="album.id"
                         [tooltip]="album.title"
+                        [artistId]="album.artistId"
                         [artistName] = "album.artist"
                         (onClick)="goToAlbum($event)"
                         (onPlayClick)="playAlbum($event,false)"
                         (onEdit)="goToEdit($event)"
                         (onDelete)="deleteAlbum($event)"
                         [hasControls]="artistMode"
+                        [releaseDate]="getReleaseDateTime(album.releaseDate)"
+                        [role]="role"
         ></app-album-card>
         }
       }

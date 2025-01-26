@@ -4,11 +4,11 @@
 
 .tracks-page {
   padding-top: 1vh;
-  padding-right: 1vw;
   display: flex;
   justify-content: space-between;
   color: white;
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .tracks-list {
@@ -19,6 +19,8 @@
   flex-direction: column;
   gap: 35px;
   overflow-y: auto;
+  box-sizing: border-box;
+  padding-right: 2vw;
 }
 
 .track-page-controls {

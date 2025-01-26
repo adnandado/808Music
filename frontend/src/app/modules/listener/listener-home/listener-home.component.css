@@ -1,5 +1,5 @@
 .artist-music-page {
-  height: 93vh;
+  height: 94vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -10,6 +10,8 @@
   position: relative;
   width: 100%;
   height: 40vw;
+  box-sizing: border-box;
+  padding-right: 1vw;
 }
 
 .carousel-wrapper {

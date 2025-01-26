@@ -9,6 +9,7 @@ import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.c
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AlbumDeleteEndpointService} from '../../../endpoints/album-endpoints/album-delete-endpoint.service';
+import {ArtistHandlerService} from '../../../services/artist-handler.service';
 
 @Component({
   selector: 'app-album-card-list',
@@ -21,7 +22,7 @@ export class AlbumCardListComponent implements OnInit {
   @Input() title: string = "RELEASES";
   @Input() queryParams: Params | null = null;
   artistMode: boolean = false;
-
+  role = "";
   @Output() deletedAlbum = new EventEmitter<boolean>();
 
   constructor(private router: Router,
@@ -30,13 +31,15 @@ export class AlbumCardListComponent implements OnInit {
               private route: ActivatedRoute,
               private dialog: MatDialog,
               private snackBar: MatSnackBar,
-              private albumDeleteService : AlbumDeleteEndpointService) {
+              private albumDeleteService : AlbumDeleteEndpointService,
+              private artistHandler : ArtistHandlerService) {
   }
 
   ngOnInit(): void {
     if(this.router.url.includes("/artist/search"))
     {
       this.artistMode = true;
+      this.role = this.artistHandler.getSelectedArtist()?.role ?? "";
     }
   }
 
@@ -111,5 +114,9 @@ export class AlbumCardListComponent implements OnInit {
         });
       }
     })
+  }
+
+  getReleaseDateTime(releaseDate: string) {
+    return new Date(releaseDate).getTime();
   }
 }

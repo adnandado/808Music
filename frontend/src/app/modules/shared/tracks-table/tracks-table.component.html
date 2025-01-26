@@ -2,21 +2,30 @@
   <div class="tracks-search-bar" *ngIf="allowPagination">
     <app-search-bar [placeholder]="'Search for a song'" (onSearchChange)="searchTracks($event)"></app-search-bar>
     <div class="controls">
-    <button mat-icon-button><mat-icon>share</mat-icon></button>
-    @if (inArtistMode)
-    {
-      <button mat-fab extended (click)="emitCreate()"><mat-icon>add</mat-icon>Add new song</button>
-    } @else {
-      <button mat-icon-button (click)="toggleShuffle()"><mat-icon class="shuffle-button">
-        @if (!isShuffled)
-        {
-        shuffle
-        } @else {
-          shuffle_on
+      <button mat-icon-button (click)="openShareSheet()">
+        <mat-icon>share</mat-icon>
+      </button>
+      @if (inArtistMode) {
+        @if (artist != null && artist.role !== "Viewer") {
+          <button mat-fab extended (click)="emitCreate()">
+            <mat-icon>add</mat-icon>
+            Add new song
+          </button>
         }
-      </mat-icon></button>
-      <button mat-fab (click)="emitCreate()"><mat-icon>play_arrow</mat-icon></button>
-    }
+      } @else {
+        <button mat-icon-button (click)="toggleShuffle()">
+          <mat-icon class="shuffle-button">
+            @if (!isShuffled) {
+              shuffle
+            } @else {
+              shuffle_on
+            }
+          </mat-icon>
+        </button>
+        <button mat-fab (click)="emitCreate()">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      }
     </div>
   </div>
   <table mat-table matSort [dataSource]="tracks!">
@@ -29,15 +38,25 @@
     <ng-container matColumnDef="main-control">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let track">
-        <button mat-icon-button (click)="emitTrack(track.id)">
-          <mat-icon>{{ inArtistMode ? "edit" : "play_arrow" }}</mat-icon>
-        </button>
+        @if (inArtistMode)
+        {
+          @if (artist != null && artist.role !== "Viewer")
+          {
+            <button mat-icon-button (click)="emitTrack(track.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+        } @else {
+          <button mat-icon-button (click)="emitTrack(track.id)">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+        }
       </td>
     </ng-container>
 
 
     <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef> Title</th>
+      <th mat-header-cell *matHeaderCellDef>Title</th>
       <td mat-cell *matCellDef="let track">
 
         <div>
@@ -64,13 +83,17 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let track">
         @if (inArtistMode) {
-          <button mat-icon-button (click)="emitTrack(track.id)">
-            <mat-icon>bar_chart</mat-icon>
-          </button>
-          <button mat-icon-button (click)="deleteTrack(track.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        }@else{
+          @if (artist != null && artist.role !== "Viewer") {
+            <!--
+            <button mat-icon-button (click)="emitTrack(track.id)">
+              <mat-icon>bar_chart</mat-icon>
+            </button>
+            -->
+            <button mat-icon-button (click)="deleteTrack(track.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
+        } @else {
           <button mat-icon-button (click)="addToLikedSongs(track.id)">
             <mat-icon>{{ getLikeIcon(track.id) }}</mat-icon>
           </button>
@@ -81,7 +104,9 @@
 
     <ng-container matColumnDef="duration">
       <th mat-header-cell *matHeaderCellDef class="track-table-duration-cell"> Duration</th>
-      <td mat-cell *matCellDef="let track" class="track-table-duration-cell"> {{ track.length | secondsToDurationString }}</td>
+      <td mat-cell *matCellDef="let track"
+          class="track-table-duration-cell"> {{ track.length | secondsToDurationString }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="streams">
@@ -107,8 +132,23 @@
               </mat-checkbox>
             </div>
 
+        @if (!inArtistMode) {
+          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="toggleDropdown(track.id)">
+            <mat-icon>playlist_add_circle</mat-icon>
           </button>
-        </mat-menu>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="addToQueue(track)">
+              Add to queue
+            </button>
+            <mat-divider></mat-divider>
+            <h6 class="menu-title">Add to playlist:</h6>
+            <button mat-menu-item *ngFor="let playlist of playlists" (click)="addToPlaylist(playlist.id)">
+              <div class="dropdown-stuff">
+                {{ playlist.title }}
+              </div>
+            </button>
+          </mat-menu>
+        }
       </td>
     </ng-container>
 
@@ -118,6 +158,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   @if (allowPagination) {
-    <mat-paginator showFirstLastButtons [pageSize]="20" [length]="pagedResponse?.totalCount" [pageSizeOptions]="paginationOptions" (page)="setPageOpitions($event)"></mat-paginator>
+    <mat-paginator showFirstLastButtons [pageSize]="20" [length]="pagedResponse?.totalCount"
+                   [pageSizeOptions]="paginationOptions" (page)="setPageOpitions($event)"></mat-paginator>
   }
 </div>

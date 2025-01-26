@@ -1,6 +1,7 @@
 <div class="login-page">
   <div class="login-container">
-    <h2>Register an account with 808 Music</h2>
+    <div class="logo" [ngStyle]="{'background-image': 'url(/images/logo_qr.png)'}"></div>
+    <h2>Register an account</h2>
     <form *ngIf="!sentRequest" class="dual-control">
     <div class="form-group">
       <div class="form-group dual-control">
@@ -63,14 +64,14 @@
       </div>
     </form>
 
-    <div *ngIf="!sentRequest" class="dual-control">
-      <button  class="login-button sec-opt-btn" routerLink="/">Back to home</button>
-      <button class="login-button" (click)="registerUser()" [disabled]="checkButton()">Register</button>
+    <div *ngIf="!sentRequest" class="dual-controls">
+      <button  mat-stroked-button routerLink="/">Back to home</button>
+      <button mat-flat-button (click)="registerUser()" [disabled]="checkButton()">Register</button>
     </div>
 
     <div *ngIf="sentRequest" class="success-div">
       <h6>{{ successText }}</h6>
-      <button class="login-button" routerLink="../login">Go to login</button>
+      <button mat-stroked-button routerLink="../login">Go to login</button>
     </div>
 
     <!--<button class="login-button" type="submit" (click)="LogData()">Show me</button>-->

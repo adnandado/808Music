@@ -125,10 +125,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   removeNoti(noti: RichNotification | null) {
-    if(noti)
-    {
-      this.notifications = this.notifications.filter(n => n.id !== noti.id)
-    }
+    this.reloadData()
   }
 
   clearAllNotis() {

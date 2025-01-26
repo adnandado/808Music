@@ -121,6 +121,21 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("Artists");
                 });
 
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.ArtistAlbumSpotlight", b =>
+                {
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArtistId");
+
+                    b.HasIndex("AlbumId");
+
+                    b.ToTable("AlbumSpotlights");
+                });
+
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.ArtistTrack", b =>
                 {
                     b.Property<int>("Id")
@@ -1161,6 +1176,25 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired();
 
                     b.Navigation("AlbumType");
+
+                    b.Navigation("Artist");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.ArtistAlbumSpotlight", b =>
+                {
+                    b.HasOne("RS1_2024_25.API.Data.Models.Album", "Album")
+                        .WithMany()
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RS1_2024_25.API.Data.Models.Artist", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Album");
 
                     b.Navigation("Artist");
                 });

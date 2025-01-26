@@ -22,8 +22,12 @@
 
 .banner-gradient {
   position: absolute;
+  /*
   background: rgb(0,0,0);
   background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8603816526610644) 30%, rgba(0,212,255,0) 100%);
+   */
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7959558823529411) 15%, rgba(0,0,0,0.5858718487394958) 24%, rgba(0,0,0,0.31976540616246496) 35%, rgba(0,0,0,0) 65%);
   height: 33vh;
   width: 100%;
   border-radius: 10px;

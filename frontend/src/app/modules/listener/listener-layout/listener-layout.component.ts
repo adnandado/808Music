@@ -14,6 +14,8 @@ import {PleaseSubscribeComponent} from '../../shared/bottom-sheets/please-subscr
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {ChatService} from '../../../services/chat.service';
+import {Subscription} from 'rxjs';
+import {MessageGetResponse} from '../../../endpoints/chat-endpoints/chat-get-messages-endpoint.service';
 
 @Component({
   selector: 'app-listener-layout',
@@ -22,8 +24,9 @@ import {ChatService} from '../../../services/chat.service';
 })
 export class ListenerLayoutComponent implements OnInit, OnDestroy {
   showPleaseSubscribe = false;
+  chat$ : Subscription | null = null;
 
-  notiCallback = (data:RichNotification) => {
+  notiCallback = (data:RichNotification | MessageGetResponse) => {
     this.snackBar.open(data.message, "", {duration: 2000});
     let audio = new Audio('assets/notification.mp3');
     audio.play().catch(err => {console.log(err)});
@@ -40,6 +43,7 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.notificationsService.removeNotificationListener(this.notiCallback);
+    //this.chat$?.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -70,6 +74,8 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
     this.notificationsService.addNotificationListener(this.notiCallback);
 
     this.chatService.startConnection();
+
+    //this.chat$ = this.chatService.msgReceived$.subscribe(this.notiCallback);
   }
   private getUserIdFromToken(): number {
     let authToken = sessionStorage.getItem('authToken');

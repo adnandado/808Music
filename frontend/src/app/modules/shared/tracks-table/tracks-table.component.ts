@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
@@ -51,6 +51,7 @@ import {
   PlaylistTracksGetEndpointService
 } from '../../../endpoints/playlist-endpoints/playlist-get-tracks-endpoint.service';
 import {IsOnPlaylistService} from '../../../endpoints/playlist-endpoints/is-song-on-playlist-endpoint.service';
+import {ArtistHandlerService} from '../../../services/artist-handler.service';
 
 @Component({
   selector: 'app-tracks-table',
@@ -87,6 +88,9 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
   playlistTrackMap: Map<number, Map<number, boolean>> = new Map();
+
+  artist : ArtistSimpleDto | null = null;
+
   constructor(private getTrackService: TrackGetByIdEndpointService,
               private deleteTrackService: TrackDeleteEndpointService,
               private getAllTracksService: TrackGetAllEndpointService,
@@ -100,6 +104,8 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
               private playlistTracksService : PlaylistTracksGetEndpointService,
               private isOnPlaylist : IsOnPlaylistService,
               private removeFromPlaylist : RemoveTrackFromPlaylistService) {
+              private artistHandler: ArtistHandlerService,
+              private cdRef: ChangeDetectorRef) {
   }
   likedSongs: Map<number, boolean> = new Map();
   showDeleteIcon : boolean = true;
@@ -115,6 +121,12 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
 
      */
     this.dataSource.sort = this.sort;
+
+    if(this.inArtistMode)
+    {
+      this.artist = this.artistHandler.getSelectedArtist();
+    }
+    this.cdRef.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -454,4 +466,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
     return this.playlistTrackMap.get(playlistId)?.get(trackId) ?? false;
   }
 
+  addToQueue(track: TrackGetResponse) {
+    this.musicPlayerService.addToQueue(track);
+  }
 }

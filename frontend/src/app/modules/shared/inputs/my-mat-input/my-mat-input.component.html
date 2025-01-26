@@ -2,7 +2,7 @@
   <h6>{{title}}</h6>
   <mat-form-field [ngStyle]="{'width':'100%'}">
     <mat-label>{{title}}</mat-label>
-    <input matInput [placeholder]="placeholder" [name]="name" [formControl]="formControl">
+    <input matInput [placeholder]="placeholder" [name]="name" [formControl]="formControl" [type]="type">
       @if (formControl.hasError("required") && !formControl.untouched)
       {
         <mat-hint [ngStyle]="{'color':'red', 'padding':0, 'margin':0, 'font-style':'italic'}">Required Field</mat-hint>

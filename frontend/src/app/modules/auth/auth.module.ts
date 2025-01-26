@@ -9,13 +9,15 @@ import {TwoFactorComponent} from './two-factor/two-factor.component';
 import {FormsModule} from '@angular/forms';
 import { LogoutComponent } from './logout/logout.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
-import {MatFormField} from "@angular/material/form-field";
+import {MatFormField, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from '@angular/material/input';
 import {MatHeaderRow} from '@angular/material/table';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatCard, MatCardContent} from "@angular/material/card";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { PassStrengthMeterComponent } from './pass-strength-meter/pass-strength-meter.component';
+import {MatButton} from "@angular/material/button";
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -38,7 +40,10 @@ import { PassStrengthMeterComponent } from './pass-strength-meter/pass-strength-
     MatHeaderRow,
     MatCheckbox,
     MatCard,
-    MatCardContent
+    MatCardContent,
+    MatButton,
+    MatSlideToggle,
+    MatSuffix
   ]
 })
 export class AuthModule {

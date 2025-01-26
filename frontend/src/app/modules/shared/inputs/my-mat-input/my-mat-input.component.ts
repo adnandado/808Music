@@ -26,6 +26,7 @@ export class MyMatInputComponent implements ControlValueAccessor, OnChanges, Aft
     @Input() placeholder = "";
     @Input() validators : ValidatorFn[] = [];
     @Input() initialValue = "";
+    @Input() type = "text";
     public formControl = new FormControl();
 
     ngOnChanges(): void {

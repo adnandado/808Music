@@ -11,6 +11,11 @@
   gap: 5px;
 }
 
+.artist-small-header:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .artist-small img, .artist-small h6 {
   margin: 0;
 }

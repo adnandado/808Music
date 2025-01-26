@@ -15,7 +15,7 @@ import {MatSnackBar, MatSnackBarRef, TextOnlySnackBar} from '@angular/material/s
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  loginRequest: LoginRequest = {username: 'admin', password: 'admin123', rememberMe: false};
+  loginRequest: LoginRequest = {username: '', password: '', rememberMe: false};
   errorMessage: string | null = null;
   redirectUrl: string = "/listener/home";
   snackbarRef : MatSnackBarRef<TextOnlySnackBar> | null = null;

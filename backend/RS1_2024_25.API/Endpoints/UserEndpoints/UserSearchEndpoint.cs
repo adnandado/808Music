@@ -24,18 +24,20 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
 
             if(request.SearchString != string.Empty)
             {
-                return Ok(queryable.Where(u => u.Username.ToLower().Contains(request.SearchString.ToLower())).Take(5).Select(a => new UserSearchResponse
+                return Ok(queryable.Where(u => u.Username.ToLower().Contains(request.SearchString.ToLower())).Take(request.ReturnAmount).Select(a => new UserSearchResponse
                 {
                     Id = a.ID,
-                    Username = a.Username
+                    Username = a.Username,
+                    ProfilePicture = a.pfpCoverPath != "" ? a.pfpCoverPath : "/Images/ProfilePictures/placeholder.png"
                 }).ToList());
             }
             else
             {
-                return Ok(queryable.Take(5).Select(a => new UserSearchResponse
+                return Ok(queryable.Take(request.ReturnAmount).Select(a => new UserSearchResponse
                 {
                     Id = a.ID,
-                    Username = a.Username
+                    Username = a.Username,
+                    ProfilePicture = a.pfpCoverPath != "" ? a.pfpCoverPath : "/Images/ProfilePictures/placeholder.png"
                 }).ToList());
             }
         }
@@ -44,11 +46,13 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
     public class UserSearchRequest
     {
         public string SearchString { get; set; } = string.Empty;
+        public int ReturnAmount { get; set; } = 5;
     }
 
     public class UserSearchResponse
     {
         public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
+        public string ProfilePicture { get; set; } = string.Empty;
     }
 }

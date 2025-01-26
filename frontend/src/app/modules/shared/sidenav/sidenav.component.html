@@ -39,6 +39,12 @@
     <button mat-icon-button routerLink="/listener/notifications" aria-label="Notifications">
       <mat-icon>notifications</mat-icon>
 
+      @if (unreads != null && unreads.unreadNotificationsCount > 0) {
+        <div routerLink="/listener/notifications" class="display2 unreads" routerLinkActive="hidden">
+          <p>{{ unreads.unreadNotificationsCount }}</p>
+        </div>
+      }
+
       <div routerLink="/listener/notifications" class="hidden" routerLinkActive="display">
         <mat-icon>play_arrow</mat-icon>
       </div>
@@ -46,6 +52,12 @@
 
     <button mat-icon-button routerLink="/listener/chat" aria-label="Socials">
       <mat-icon>textsms</mat-icon>
+
+      @if (unreads != null && unreads.unreadMessaggesCount > 0) {
+        <div routerLink="/listener/chat" class="display2 unreads" routerLinkActive="hidden">
+          <p>{{ unreads.unreadMessaggesCount }}</p>
+        </div>
+      }
 
       <div routerLink="/listener/chat" class="hidden" routerLinkActive="display">
         <mat-icon>play_arrow</mat-icon>
@@ -67,9 +79,9 @@
         <li (click)="navigateTo('/listener/my-orders')">Orders</li>
         <li (click)="openImageCropperDialog()">Change Picture</li>
         <li (click)="navigateTo('/listener/subscriptions')">Subscriptions</li>
-        <li (click)="navigateTo('settings')">Settings</li>
-        <hr />
-        <li (click)="navigateTo('/artist/album')">808 for Artist</li>
+        <li (click)="navigateTo('/listener/settings')">Settings</li>
+        <hr/>
+        <li (click)="navigateTo('/artist/dashboard')">808 for Artist</li>
         <li (click)="navigateTo('/auth/logout')">Log Out</li>
       </ul>
     </div>
