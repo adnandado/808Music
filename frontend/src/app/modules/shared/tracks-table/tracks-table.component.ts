@@ -103,7 +103,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
               private removeTrackFromPlaylistService: RemoveTrackFromPlaylistService,
               private playlistTracksService : PlaylistTracksGetEndpointService,
               private isOnPlaylist : IsOnPlaylistService,
-              private removeFromPlaylist : RemoveTrackFromPlaylistService) {
+              private removeFromPlaylist : RemoveTrackFromPlaylistService,
               private artistHandler: ArtistHandlerService,
               private cdRef: ChangeDetectorRef) {
   }

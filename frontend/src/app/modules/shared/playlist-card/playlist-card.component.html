@@ -2,8 +2,13 @@
           [matTooltip]="tooltip"
           matTooltipPosition="above"
           matTooltipShowDelay="500" matTooltipHideDelay="250" >
-  <img [src]="imageUrl" matCardImage alt="Playlist Cover" (click)="openPlaylist()" (error)="replaceWithPlaceholder()" id="thumbnail">
-  <mat-card-header class="playlist-mat-card-header">
+  <div [ngStyle]="{'background-image': 'url(' + imageUrl + ')'}"
+       class="playlist-image"
+       matCardImage
+       (click)="openPlaylist()"
+       (error)="replaceWithPlaceholder()"
+       id="thumbnail">
+  </div>  <mat-card-header class="playlist-mat-card-header">
     <mat-card-title class="playlist-mat-card-title" (click)="emitClick()">{{getTitle()}}</mat-card-title>
     <mat-card-subtitle class="playlist-mat-card-subtitle">{{subtitle}}</mat-card-subtitle>
     <mat-card-subtitle class="playlist-author" (click)="openPlaylist()">by {{getAuthor()}}</mat-card-subtitle>
