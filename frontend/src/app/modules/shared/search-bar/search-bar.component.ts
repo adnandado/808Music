@@ -13,6 +13,7 @@ export class SearchBarComponent implements AfterViewInit{
   @Input() placeholder = "";
   @Output() onSearchChange: EventEmitter<string> = new EventEmitter();
   @Input() autoSearch: boolean = true;
+  @Input() isHome!: boolean;
 
   ngAfterViewInit(): void {
     if(this.autoSearch){

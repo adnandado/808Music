@@ -257,4 +257,8 @@ export class TracksPageComponent implements OnInit {
   openProfile() {
     this.router.navigate([`/listener/user-profile/`, this.playlistOwnerId]);
   }
+
+  filterSearch($event: string) {
+    this.loadPlaylistTracks(this.playlist?.playlistId!);
+  }
 }
