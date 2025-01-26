@@ -2,7 +2,7 @@
   <div class="chat-info">
     <div class="chatter-info">
       <div class="pfp" [ngStyle]="{'background-image': 'url('+MyConfig.api_address+'/media'+chat?.chatterPfp}"></div>
-      <h3 class="title">{{ chat?.chatter }}</h3>
+      <h3 class="title" (click)="goToUserProfile()">{{ chat?.chatter }}</h3>
     </div>
     <div class="actions">
       @if (!chat?.blocked || chat?.blockedByUserId == userId)

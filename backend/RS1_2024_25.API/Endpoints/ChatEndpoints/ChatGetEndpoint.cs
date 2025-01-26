@@ -39,7 +39,8 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
                 : 
                 (c.PrimaryChatter.pfpCoverPath == "" ? "/Images/ProfilePictures/placeholder.png" : c.PrimaryChatter.pfpCoverPath),
                 BlockedByUserId = c.BlockedByUserId,
-                BlockedByUser = c.BlockedByUser?.Username
+                BlockedByUser = c.BlockedByUser?.Username,
+                ChatterId = c.PrimaryChatterId == userId ? c.SecondaryChatter.ID : c.PrimaryChatter.ID
             }).ToList();
 
             return Ok(response);
@@ -50,6 +51,7 @@ namespace RS1_2024_25.API.Endpoints.ChatEndpoints
     {
         public int Id { get; set; }
         public string Chatter { get; set; } = string.Empty;
+        public int ChatterId { get; set; }
         public string ChatterPfp {  get; set; } = string.Empty;
         public string OtherChatter { get; set; } = string.Empty;
         public string LastMessage {  get; set; } = string.Empty;
