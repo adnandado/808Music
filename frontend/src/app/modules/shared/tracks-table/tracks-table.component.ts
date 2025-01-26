@@ -50,6 +50,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {
   PlaylistTracksGetEndpointService
 } from '../../../endpoints/playlist-endpoints/playlist-get-tracks-endpoint.service';
+import {IsOnPlaylistService} from '../../../endpoints/playlist-endpoints/is-song-on-playlist-endpoint.service';
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
 
 @Component({
@@ -86,6 +87,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() allowPagination = true;
 
   @ViewChild(MatSort) sort!: MatSort;
+  playlistTrackMap: Map<number, Map<number, boolean>> = new Map();
 
   artist : ArtistSimpleDto | null = null;
 
@@ -100,8 +102,11 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
               private playlistUpdateTracksService: PlaylistUpdateTracksService,
               private removeTrackFromPlaylistService: RemoveTrackFromPlaylistService,
               private playlistTracksService : PlaylistTracksGetEndpointService,
-              private artistHandler: ArtistHandlerService,
-              private cdRef: ChangeDetectorRef) {
+              private isOnPlaylist : IsOnPlaylistService,
+              private removeFromPlaylist : RemoveTrackFromPlaylistService,
+              private artistHandler : ArtistHandlerService,
+  private cdRef : ChangeDetectorRef) {
+
   }
   likedSongs: Map<number, boolean> = new Map();
   showDeleteIcon : boolean = true;
@@ -168,8 +173,25 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
       },
     });
   }
+  initializePlaylistCheckboxes(trackId: number): void {
+    if (!this.playlists.length) return;
 
-
+    this.playlists.forEach(playlist => {
+      const request = { playlistId: playlist.id, trackId: trackId };
+      console.log("checkbox", request);
+      this.isOnPlaylist.handleAsync(request).subscribe({
+        next: (response) => {
+          if (!this.playlistTrackMap.has(playlist.id)) {
+            this.playlistTrackMap.set(playlist.id, new Map());
+          }
+          this.playlistTrackMap.get(playlist.id)!.set(trackId, response.isAlreadyOnPlaylist);
+        },
+        error: (error) => {
+          console.error(`Error checking track ${trackId} on playlist ${playlist.id}:`, error);
+        },
+      });
+    });
+  }
 
   ngOnInit(): void {
      this.reloadData();
@@ -200,7 +222,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
       this.getPlaylistsService.handleAsync(userId).subscribe({
         next: (playlists) => {
           this.playlists = playlists;
-          console.log(this.playlists); // Dodaj ovo za debagovanje
+          console.log(this.playlists);
 
         },
         error: (error) => {
@@ -212,8 +234,10 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   toggleDropdown(trackId: number) {
     this.selectedTrackId = trackId;
+    this.initializePlaylistCheckboxes(trackId);
     this.showPlaylistDropdown = !this.showPlaylistDropdown;
-    console.log(this.showPlaylistDropdown);  // Provjeri vrednost
+
+    console.log(this.showPlaylistDropdown);
 
   }
   getDuration(id:number) {
@@ -236,6 +260,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
     this.shouldDisplayControls = b;
     console.log(this.shouldDisplayControls);
   }
+
 
   emitTrack(id: number) {
     /*
@@ -404,23 +429,42 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
     });
   }
   addToPlaylist(playlistId: number) {
-
     if (this.selectedTrackId) {
-      const request: PlaylistUpdateTracksRequest = {
-        playlistId: playlistId,
-        trackIds: [this.selectedTrackId],
-      };
+      const isInPlaylist = this.isTrackInPlaylist(this.selectedTrackId, playlistId);
 
-      this.playlistUpdateTracksService.handleAsync(request).subscribe({
-        next: () => {
-          this.snackBar.open('Track added to playlist!', 'Dismiss', { duration: 3500 });
-          this.showPlaylistDropdown = false;
-        },
-        error: (error) => {
-          console.error('Error adding track to playlist:', error);
-        },
-      });
+      if (isInPlaylist) {
+        this.removeTrackFromPlaylistService.handleAsync(playlistId, this.selectedTrackId).subscribe({
+          next: () => {
+            this.snackBar.open('Track removed from playlist!', 'Dismiss', { duration: 3500 });
+            this.playlistTrackMap.get(playlistId)?.set(this.selectedTrackId!, false);
+            this.showPlaylistDropdown = false;
+          },
+          error: (error) => {
+            console.error('Error removing track from playlist:', error);
+          },
+        });
+      } else {
+        const request: PlaylistUpdateTracksRequest = {
+          playlistId: playlistId,
+          trackIds: [this.selectedTrackId],
+        };
+
+        this.playlistUpdateTracksService.handleAsync(request).subscribe({
+          next: () => {
+            this.snackBar.open('Track added to playlist!', 'Dismiss', { duration: 3500 });
+            this.showPlaylistDropdown = false;
+          },
+          error: (error) => {
+            console.error('Error adding track to playlist:', error);
+          },
+        });
+      }
     }
+  }
+
+
+  isTrackInPlaylist(trackId : number, playlistId: number) {
+    return this.playlistTrackMap.get(playlistId)?.get(trackId) ?? false;
   }
 
   addToQueue(track: TrackGetResponse) {
