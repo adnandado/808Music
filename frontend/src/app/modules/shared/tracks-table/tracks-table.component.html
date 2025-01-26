@@ -115,13 +115,24 @@
           (click)="displayControls(true)"> {{ track.streams }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="add-to-playlist-controls">
+
+
+
+      <ng-container matColumnDef="add-to-playlist-controls">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let track">
+        @if (!inArtistMode) {
         <button mat-icon-button [matMenuTriggerFor]="menu" (click)="toggleDropdown(track.id)">
           <mat-icon>playlist_add_circle</mat-icon>
         </button>
+
         <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="addToQueue(track)">
+            Add to queue
+          </button>
+          <mat-divider></mat-divider>
+          <h6 class="menu-title">Add to playlist:</h6>
+
           <button mat-menu-item *ngFor="let playlist of playlists" (click)="addToPlaylist(playlist.id)">
             <div class="dropdown-stuff">
               <img class="playlist-cover" [src]="MyConfig.media_address + playlist.coverPath" alt="">
@@ -131,28 +142,15 @@
               >
               </mat-checkbox>
             </div>
-
-        @if (!inArtistMode) {
-          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="toggleDropdown(track.id)">
-            <mat-icon>playlist_add_circle</mat-icon>
           </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="addToQueue(track)">
-              Add to queue
-            </button>
-            <mat-divider></mat-divider>
-            <h6 class="menu-title">Add to playlist:</h6>
-            <button mat-menu-item *ngFor="let playlist of playlists" (click)="addToPlaylist(playlist.id)">
-              <div class="dropdown-stuff">
-                {{ playlist.title }}
-              </div>
-            </button>
-          </mat-menu>
+
+        </mat-menu>
+
         }
       </td>
     </ng-container>
 
-
+    
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

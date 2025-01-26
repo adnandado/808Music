@@ -44,6 +44,11 @@
   margin-top: 2px;
   font-style: italic;
 }
+.playlist-image {
+  height: 10vw;
+  background-size: cover;
+  background-position: center;
+}
 
 #thumbnail {
   object-fit: inherit;

@@ -31,7 +31,9 @@ app-album-card {
   flex-wrap: wrap;
   flex-direction: row;
 }
-
+.row{
+  margin-bottom: 1vw;
+}
 mat-paginator {
   border-radius: 15px;
 }
