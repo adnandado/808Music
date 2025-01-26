@@ -11,7 +11,11 @@
       {
         <mat-icon>explicit</mat-icon>
       }
+      <div class="title-like-row">
       <h6 class="track-title" [matTooltip]="track?.title" (click)="goToRelease()">{{track?.title}}</h6>
+      <button mat-icon-button class="btn" (click)="addToLikedSongs(track?.id)">
+        <mat-icon class="like-icon">{{ getLikeIcon(track?.id) }}</mat-icon>
+      </button></div>
       <app-clickable-featured-artists [artists]="track?.artists ?? null"></app-clickable-featured-artists>
     </div>
   @if (isSubbed) {
@@ -27,9 +31,23 @@
       <button mat-icon-button matTooltip="Send to users" (click)="messageBottomSheet()">
         <mat-icon>send</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Add to playlist">
+      <button mat-icon-button matTooltip="Add to playlist" (click)="playlistDropdown(track?.id)" [matMenuTriggerFor]="menu">
         <mat-icon>library_add</mat-icon>
       </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let playlist of playlists" (click)="addToPlaylist(playlist.id)">
+          <div class="dropdown-stuff">
+            <img class="playlist-cover" [src]="MyConfig.media_address + playlist.coverPath" alt="">
+            <p class="pl-title">{{ playlist.title }}</p>
+            <mat-checkbox
+              [checked]="isTrackInPlaylist(track!.id, playlist.id)"
+            >
+            </mat-checkbox>
+          </div>
+
+        </button>
+      </mat-menu>
+
       <button mat-icon-button matTooltip="Manage queue" (click)="openQueueManager()">
         <mat-icon>queue_music</mat-icon>
       </button>

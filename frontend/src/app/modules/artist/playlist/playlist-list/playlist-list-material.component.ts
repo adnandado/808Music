@@ -66,8 +66,7 @@ export class PlaylistListMaterialComponent implements OnInit {
           complete: () => {
             this.snackBar.open(`"${playlist?.title}" deleted successfully.`, 'Dismiss', { duration: 3000 });
             this.loadPlaylists();
-            window.location.reload();
-
+this.loadPlaylists();
           }
         });
       }

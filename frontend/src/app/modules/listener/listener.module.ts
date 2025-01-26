@@ -54,6 +54,8 @@ import { UserProfilePageComponent } from './user-profile-page/user-profile-page.
   import {FollowersPageComponent} from './user-profile-page/follower-page/follower-page.component';
 import { FollowingPageComponent } from './user-profile-page/following-page/following-page.component';
 import { OrderListComponent } from './order-list/order-list.component';
+  import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+  import {MatCheckbox} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -120,6 +122,10 @@ import { OrderListComponent } from './order-list/order-list.component';
     MatTabContent,
     InfiniteScrollDirective,
     MatProgressSpinner,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+    MatCheckbox,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
