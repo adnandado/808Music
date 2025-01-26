@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
@@ -100,7 +100,8 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
               private playlistUpdateTracksService: PlaylistUpdateTracksService,
               private removeTrackFromPlaylistService: RemoveTrackFromPlaylistService,
               private playlistTracksService : PlaylistTracksGetEndpointService,
-              private artistHandler: ArtistHandlerService) {
+              private artistHandler: ArtistHandlerService,
+              private cdRef: ChangeDetectorRef) {
   }
   likedSongs: Map<number, boolean> = new Map();
   showDeleteIcon : boolean = true;
@@ -121,6 +122,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
     {
       this.artist = this.artistHandler.getSelectedArtist();
     }
+    this.cdRef.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -419,5 +421,9 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
         },
       });
     }
+  }
+
+  addToQueue(track: TrackGetResponse) {
+    this.musicPlayerService.addToQueue(track);
   }
 }

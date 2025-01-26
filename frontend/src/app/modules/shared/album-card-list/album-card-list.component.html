@@ -16,6 +16,8 @@
                         (onEdit)="goToEdit($event)"
                         (onDelete)="deleteAlbum($event)"
                         [hasControls]="artistMode"
+                        [releaseDate]="getReleaseDateTime(album.releaseDate)"
+                        [role]="role"
         ></app-album-card>
         }
       }

@@ -19,7 +19,7 @@ export class TrackCardComponent implements AfterViewInit{
   };
 
   cardStyle = {
-    width: '30vw'
+    width: '32vw'
   };
 
   showPlayButton(b: boolean) {

@@ -1,6 +1,7 @@
+@let data = fillMeter(password);
 <div class="s-component">
   <div class="s-meter">
-    <div class="s-value" [ngStyle]="fillMeter()"></div>
+    <div class="s-value" [ngStyle]="data.css"></div>
   </div>
-  <p class="s-text">{{strengthText}}</p>
+  <p class="s-text">{{data.text}}</p>
 </div>

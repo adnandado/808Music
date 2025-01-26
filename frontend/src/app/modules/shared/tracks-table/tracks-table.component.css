@@ -137,3 +137,15 @@ song-information{
   gap: 10px;
   align-items: center;
 }
+
+.menu-title {
+  color: #EEDEE7;
+  font-weight: 500;
+  font-size: 14px;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-right: 12px;
+  padding-left: 6px;
+  margin:0;
+
+}
