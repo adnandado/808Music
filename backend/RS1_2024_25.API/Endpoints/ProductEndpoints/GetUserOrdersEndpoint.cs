@@ -27,6 +27,7 @@ namespace RS1_2024_25.API.Endpoints.OrderEndpoints
         {
             var orders = await _db.UserOrders
                 .Where(uo => uo.MyAppUserId == request.UserId)
+                .OrderByDescending(uo => uo.Order.DateAdded)
                 .Select(uo => new OrderItem
                 {
                     OrderId = uo.Order.Id,

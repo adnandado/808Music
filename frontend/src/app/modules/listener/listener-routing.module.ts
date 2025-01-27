@@ -31,6 +31,9 @@ import {UserProfilePageComponent} from './user-profile-page/user-profile-page.co
 import {FollowersPageComponent} from './user-profile-page/follower-page/follower-page.component';
 import {FollowingPageComponent} from './user-profile-page/following-page/following-page.component';
 import {OrderListComponent} from './order-list/order-list.component';
+import {
+  OrderConfirmationDialogComponent
+} from './web-store/checkout/order-confirmation-dialog/order-confirmation-dialog.component';
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
   children: [

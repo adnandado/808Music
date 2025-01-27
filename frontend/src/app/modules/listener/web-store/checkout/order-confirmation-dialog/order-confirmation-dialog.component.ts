@@ -26,7 +26,7 @@ export class OrderConfirmationDialogComponent {
   }
 
   onBackToHome(): void {
-    this.router.navigate(['/home']);
+    this.router.navigate(['listener/home']);
     this.dialogRef.close();
 
   }
