@@ -19,6 +19,7 @@ import {TracksListComponent} from './tracks/tracks-list/tracks-list.component';
 import {SearchPageComponent} from '../shared/search-page/search-page.component';
 import {ArtistDashboardComponent} from './artist-dashboard/artist-dashboard.component';
 import {SettingsComponent} from '../shared/settings/settings.component';
+import {ProductEditComponent} from './products/product-edit/product-edit.component';
 
 
 const routes: Routes = [
@@ -56,7 +57,11 @@ const routes: Routes = [
         component: ProductsCreateComponent
       },
       {
-        path: ':artistName/products',
+        path: 'product-edit',
+        component: ProductEditComponent
+      },
+      {
+        path: ':artistName/products/:id',
         component: ProductListComponent
       },
     ]

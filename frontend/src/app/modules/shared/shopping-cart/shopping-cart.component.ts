@@ -4,6 +4,7 @@ import { RemoveFromShoppingCartService } from '../../../endpoints/products-endpo
 import { UpdateShoppingCartService } from '../../../endpoints/products-endpoints/update-shopping-cart-endpoint.service';
 import { MyConfig } from '../../../my-config';
 import {Router} from '@angular/router';
+import {CartUpdateService} from './shopping-cart.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -20,7 +21,8 @@ export class ShoppingCartComponent implements OnInit {
     private removeFromCartService: RemoveFromShoppingCartService,
     private updateShoppingCartService: UpdateShoppingCartService,
     private router : Router,
-    private cdRef : ChangeDetectorRef
+    private cdRef : ChangeDetectorRef,
+    private cartUpdateService: CartUpdateService,
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +32,12 @@ export class ShoppingCartComponent implements OnInit {
     } else {
       console.error('User not authenticated');
     }
+    this.cartUpdateService.cartUpdated$.subscribe(() => {
+      const userId = this.getUserIdFromToken();
+      if (userId) {
+        this.loadCart(userId);
+      }
+    });
   }
 
   private getUserIdFromToken(): number {
