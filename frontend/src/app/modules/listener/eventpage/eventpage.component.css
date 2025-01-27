@@ -74,6 +74,8 @@ p{
   width: 100%;
   height: 14vw;
   position: relative;
+  background-size: cover;
+  background-position: center;
 }
 .artist-name{
   font-size: 1.5em;
