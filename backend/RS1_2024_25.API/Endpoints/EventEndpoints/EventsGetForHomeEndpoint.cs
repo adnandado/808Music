@@ -36,6 +36,8 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
                     EventCover = e.EventCover,
                     Longitude = e.Longitude,
                     Latitude = e.Latitude,
+                    ArtistId = e.ArtistId,
+                    ArtistName = e.Artist.Name,
                 })
                 .ToArrayAsync(cancellationToken);
 
@@ -53,6 +55,8 @@ namespace RS1_2024_25.API.Endpoints.EventEndpoints
             public string? EventCover { get; set; }
             public decimal Longitude { get; set; }
             public decimal Latitude { get; set; }
+            public string ArtistName { get; set; }
+            public int ArtistId { get; set; }
         }
     }
 }

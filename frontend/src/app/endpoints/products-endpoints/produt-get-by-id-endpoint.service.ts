@@ -13,6 +13,7 @@ export interface ProductGetResponse {
   slug: string;
   photoPaths?: string[];
   artistPhoto?: string;
+  artistId : number;
   artistName?: string;
   bio: string;
   discountedPrice : number;

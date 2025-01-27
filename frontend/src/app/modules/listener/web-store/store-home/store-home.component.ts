@@ -56,6 +56,57 @@ export class WebStoreComponent implements OnInit {
   isWishlistItem: boolean = false;
   searchControl = new FormControl();
   filteredProducts: Product[] = [];
+  randomPlaceholder: string = '';
+
+  placeholderOptions: string[] = [
+    "Did Kanye drop something again?",
+    "I heard GNX is really good, maybe a GNX Vinyl?",
+    "A hoodie for your next date?",
+    "Something to go with your espresso?",
+    "Well, I'm shocked you didn't search for that shirt earlier",
+    "I think 808 shop is the best! But don't tell 808 Music",
+    "What’s trending today?",
+    "I heard Travis dropped some new shirts",
+    "Wow, you're here again! You really love exploring!",
+    "ERROR 404 : Search not working! Just kidding, what can I find for you?",
+    "New album, new merch, are you in?",
+    "Want to show off your style with something fresh?",
+    "Need something to match your new kicks?",
+    "Searching for the latest tour merch?",
+    "Your style, your merch. What are you feeling?",
+    "Is it time to update your merch collection?",
+    "What's up with that JPEG guy?",
+    "Rep your favorite artist with the latest gear",
+    "I dont know where you're from but be careful with color coordination",
+    "Get the best pieces from the hottest artists",
+    "Looking for that exclusive drop? Let's find it",
+    "The search for the perfect merch ends here",
+    "Your favorite band just dropped something new",
+    "Something as smooth as Charlie Wilson's voice?",
+    "Run it back with some Outkast shirts!",
+    "Well well well, it's you again",
+    "You think that The Dale Gribble Bluegrass Experience will make some merch?  ",
+    "RIP MF DOOM",
+    "RIP DMX",
+    "RIP BIGGIE",
+    "RIP PAC",
+    "YEEZY SZN APPROACHING!",
+    "Wake up, Mr. West!",
+    "I AM MUSIC",
+    "Wake me up when Carti drops",
+    "We can help you to rep that new Yeezy first at school!",
+    "Oh, it's you again!",
+    "Ariana’s tour merch is out – stay sweet and stylish!",
+    "You want to tell me you didnt check out Sabrinas new merch???",
+    "DAMN!",
+    "I feel like Gucci Mane in 2006 ♪♫♩♫",
+    "01001110 01100101 01110010 01100100",
+    "Let me explain why I wear this mask",
+    "You look familiar...",
+    "Love Sosa!",
+
+  ];
+
   constructor(
     private productsGetTopWishlistedService: ProductsGetTopWishlistedService,
     private newestProductService: ProductsGetNewestService,
@@ -71,6 +122,8 @@ export class WebStoreComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.setRandomPlaceholder();
+
     this.searchControl.valueChanges.pipe(
       debounceTime(300),
       switchMap((searchTerm: string) => {
@@ -288,4 +341,9 @@ export class WebStoreComponent implements OnInit {
   }
 
   protected readonly MyConfig = MyConfig;
+
+  private setRandomPlaceholder() {
+    const randomIndex = Math.floor(Math.random() * this.placeholderOptions.length);
+    this.randomPlaceholder = this.placeholderOptions[randomIndex];
+  }
 }

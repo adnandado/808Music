@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ConfirmDialogComponent} from '../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
 import {MyConfig} from "../../../../my-config";
+import {ProductEditComponent} from '../product-edit/product-edit.component';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -75,9 +76,17 @@ export class ProductListComponent implements OnInit {
   }
 
 
-  toggleEdit(slug: string): void {
-    this.isEditing[slug] = !this.isEditing[slug];
-    this.newImagePreview = null;
+  toggleEdit(product: Product): void {
+    const dialogRef = this.dialog.open(ProductEditComponent, {
+      width: '500px',
+      data: product
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadProducts(); // Ponovno učitaj proizvode ako je bilo promjena
+      }
+    });
   }
 
   saveProduct(product: Product): void {
@@ -101,7 +110,6 @@ export class ProductListComponent implements OnInit {
           duration: 3000,
         });
         this.loadProducts();
-        this.toggleEdit(product.slug);
       },
       error: (err: HttpErrorResponse) => {
         this.snackBar.open('Product update failed!.', 'Close', {

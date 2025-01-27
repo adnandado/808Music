@@ -13,6 +13,8 @@ export interface UpcomingEvent {
   eventTitle: string;
   latitude: number;
   longitude: number;
+  artistName : string;
+  artistId : number;
 }
 
 @Injectable({

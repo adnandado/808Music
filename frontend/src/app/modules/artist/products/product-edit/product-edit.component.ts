@@ -1,11 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  ProductUpdateEndpointService
-} from '../../../../../endpoints/products-endpoints/product-update-endpoint.service';
-import { Product } from '../../../../../endpoints/products-endpoints/product-get-by-artist-id.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Product} from '../../../../endpoints/products-endpoints/product-get-by-artist-id.service';
+import {ProductUpdateEndpointService} from '../../../../endpoints/products-endpoints/product-update-endpoint.service';
 
 @Component({
   selector: 'app-product-edit',

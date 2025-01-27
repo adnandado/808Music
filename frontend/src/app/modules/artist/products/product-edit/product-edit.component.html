@@ -1,16 +1,16 @@
 <h1 mat-dialog-title>Edit Product</h1>
 <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
   <div mat-dialog-content>
-    <p>Title</p>
+    <p class="input-title">Title</p>
     <input formControlName="title" class="product-input" placeholder="Title">
-    <p>Price</p>
+    <p class="input-title">Price</p>
     <input formControlName="price" class="product-input" type="number" min="1" placeholder="Price">
-    <p>Quantity</p>
+    <p class="input-title">Quantity</p>
     <input formControlName="quantity" class="product-input" type="number" min="0" placeholder="Quantity">
-    <p>Sale%</p>
+    <p class="input-title">Sale%</p>
     <input formControlName="saleAmount" class="product-input" type="number" min="0" placeholder="Sale Percentage">
-    <p>Bio</p>
-    <input formControlName="bio" class="product-input" placeholder="Bio">
+    <p class="input-title">Bio</p>
+    <textarea formControlName="bio" class="product-bio" placeholder="Bio"></textarea>
 
     <div class="image-edit">
       <label for="image-upload">Change Image</label>

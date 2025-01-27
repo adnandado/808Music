@@ -20,7 +20,13 @@ export interface ProductSalesStats {
   quantitySold: number;
   totalRevenue: number;
 }
-
+export interface WeeklyStatsData {
+ streams: number;
+ followers : number;
+ revenue : number;
+ weekStart : string;
+ weekEnd : string;
+}
 export interface StreamStats {
   trackId: number;
   trackTitle: string;
@@ -34,9 +40,13 @@ export interface GetArtistDashboardResponse {
   totalFollowers: number;
   totalRevenueAllProducts : number;
   lastFollowerDate?: string;
+  statsByWeek : WeeklyStatsData[];
   followers: FollowerStats[];
   productSales: ProductSalesStats[];
   lastStreams: StreamStats[];
+  quantitySold: ProductSalesStats[];
+  saleAmount: ProductSalesStats[];
+
   artistName: string;
   followerGrowth: boolean;
   revenueGrowth : boolean;

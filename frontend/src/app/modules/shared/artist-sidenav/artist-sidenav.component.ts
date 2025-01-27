@@ -84,7 +84,7 @@ export class ArtistSidenavComponent implements OnInit {
       console.log('Selected Artist Name:', selectedArtistName);
 
       if (selectedArtistName) {
-        this.router.navigate([`/artist/${selectedArtistName.name}/products`]);
+        this.router.navigate([`/artist/${selectedArtistName.name}/products/${selectedArtistName.id}`]);
       } else {
         console.error('No artist selected');
         alert('No artist selected.');
