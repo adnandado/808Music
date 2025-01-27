@@ -22,7 +22,7 @@
   </ng-template>
 
   <div class="event-details" *ngIf="selectedEvent">
-    <img class="selected-event-img" [src]="MyConfig.media_address + selectedEvent.eventCover" alt="Event Cover" />
+    <div class="selected-event-img" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + selectedEvent.eventCover + ')'}" alt="Event Cover"></div>
     <div class="small-event-date-div">
     <p class="event-date-small1">{{ moment(selectedEvent.eventDate).format('Do')  }}</p>
       <p class="event-date-small2">{{ moment(selectedEvent.eventDate).format('MMM\t')  }}</p>

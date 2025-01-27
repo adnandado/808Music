@@ -5,7 +5,7 @@
     <div class="carousel-wrapper">
       <button class="prev" (click)="prevSlide()">❮</button>
 
-      <div class="event-image" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + events[currentSlide].eventCover + ')'}">
+      <div class="event-image" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + events[currentSlide]?.eventCover + ')'}">
         <div class="gradient">
       <div class="event-info">
           <h1 class="event-title">{{ events[currentSlide]?.eventTitle }}</h1>
