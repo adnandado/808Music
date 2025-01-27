@@ -7,7 +7,7 @@
   <div class="search-bar">
     <mat-form-field class="full-width">
       <mat-label>Search products</mat-label>
-      <input #searchInput type="text" matInput placeholder="Did Kanye drop something again?" [formControl]="searchControl" [matAutocomplete]="auto">
+      <input #searchInput type="text" matInput [placeholder]="randomPlaceholder" [formControl]="searchControl" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="viewProduct($event.option.value)">
         <mat-option class = "Adnan" *ngFor="let product of filteredProducts" [value]="product.slug">
           <img [src]="MyConfig.media_address + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="autocomplete-product-image">

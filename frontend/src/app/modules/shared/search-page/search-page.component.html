@@ -59,8 +59,8 @@
           <h3 class="user-h3">Users</h3>
           <div class="followage-section">
             @for (user of users; track user.id) {
-              <div class="user">
-                <img class="followage-pfp" (click)="openProfile(user.id)"
+              <div class="user"  (click)="openProfile(user.id)">
+                <img class="followage-pfp"
                      [src]="MyConfig.media_address + user.profilePicture" alt="Profile Picture" width="40" height="40">
                 <div class="username-profiletype">
                   <p class="username-followage hide-overflow">{{ user.username }}</p>

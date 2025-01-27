@@ -10,6 +10,8 @@ import {
 } from '../../../../endpoints/products-endpoints/add-to-wishlist-endpoint.service';
 import {MyConfig} from '../../../../my-config';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {CartUpdateService} from '../../../shared/shopping-cart/shopping-cart.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-details',
@@ -43,11 +45,12 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductGetByIdEndpointService,
-  private addToShoppingCartService: AddToShoppingCartEndpointService,
-  private addProductToWishlist: AddProductToWishlistEndpointService,
-    private router : Router,
+    private addToShoppingCartService: AddToShoppingCartEndpointService,
+    private addProductToWishlist: AddProductToWishlistEndpointService,
+    private router : Router,  private cartUpdateService: CartUpdateService,
+    private snackBar : MatSnackBar
 
-) {}
+  ) {}
 
   ngOnInit(): void {
     const productSlug = this.route.snapshot.paramMap.get('slug');
@@ -95,8 +98,12 @@ export class ProductDetailsComponent implements OnInit {
       this.addToShoppingCartService.handleAsync(request).subscribe({
         next: (response) => {
           if (response.success) {
-            console.log('Product added to cart:', response.message);
-window.location.reload();      } else {
+            this.snackBar.open('Product added to Cart successfully', 'Close', {
+              duration: 1500,
+              verticalPosition: 'bottom',
+              horizontalPosition: 'center'
+            });            this.cartUpdateService.notifyCartUpdated();
+          } else {
             console.error('Failed to add product to cart:', response.message);
           }
         },
@@ -156,10 +163,18 @@ window.location.reload();      } else {
     this.addProductToWishlist.handleAsync(request).subscribe(
       (response: AddProductToWishlistResponse) => {
         if (response.success) {
-this.ngOnInit();
+          this.snackBar.open('Product added to Wishlist successfully', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });
+          this.ngOnInit();
         } else {
-          alert('Error: ' + response.message);
-        }
+          this.snackBar.open('Product already on Wishlist', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });             }
       },
       (error) => {
         alert('An error occurred: ' + error.message);
@@ -169,7 +184,7 @@ this.ngOnInit();
 
   protected readonly MyConfig = MyConfig;
 
-  goToArtistPage() {
-    this.router.navigate(['/listener/profile/4'])
+  goToArtistPage(artistId: number) {
+    this.router.navigate(['/listener/profile/', artistId])
   }
 }

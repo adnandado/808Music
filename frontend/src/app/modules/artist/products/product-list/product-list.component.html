@@ -1,5 +1,5 @@
 
-<body>
+
 
 <div>
   <mat-card class="add-product" appearance="outlined" (click)="goToCreate()">
@@ -13,46 +13,36 @@
   </mat-card>
 </div>
 <div class="container">
-  <main class="main-content">
-
-
     <div class="products">
-      <div *ngFor="let product of products" class="product">
-        <div *ngIf="!isEditing[product.slug]">
-          <img [src]="MyConfig.media_address + product.photoPaths[product.photoPaths.length - 1]" alt="{{ product.title }}" class="product-image">
-          <p class="product-name">{{ product.title }}</p>
-          <p class="product-price">{{ updateCalculatedPrice(product)}}$</p>
-          <button class="product-button" (click)="toggleEdit(product.slug)">Edit</button>
-          <button class="product-button" (click)="deleteProduct(product.slug)">Delete</button>
-          <button class="product-button" (click)="viewProduct(product.slug)">View Details</button>
-        </div>
 
-        <div *ngIf="isEditing[product.slug]">
-          <p class="edit-title">Title</p>
-          <input [(ngModel)]="product.title" class="product-input" placeholder="Title">
-          <p class="edit-title">Price</p>
-          <input [(ngModel)]="product.price" class="product-input" min="1"/>
-          <p class="edit-title">Quantity</p>
-          <input [(ngModel)]="product.quantity" class="product-input" type="number" placeholder="Quantity" min="0">
-          <p class="edit-title">Sale%</p>
-          <input [(ngModel)]="product.saleAmount" class="product-input" type="number" placeholder="SaleAmount" min="0">
-          <p class="edit-title">Bio</p>
-          <input [(ngModel)]="product.bio" class="product-input" placeholder="bio">
-          <div class="image-edit">
-            <label for="image-upload">Change Image</label>
-            <input type="file" id="image-upload" (change)="onImageChange($event, product)">
-            <div *ngIf="newImagePreview">
-              <p>Preview:</p>
-              <img [src]="newImagePreview" alt="Image preview" class="image-preview">
-            </div>
-          </div>
-          <button class="product-button" (click)="saveProduct(product)">Save</button>
-          <button class="product-button" (click)="toggleEdit(product.slug)">Cancel</button>
+    <div
+      *ngFor="let product of products"
+      class="product" matTooltip="{{ product.title }}" matTooltipPosition="above"
+
+    >        <div *ngIf="!isEditing[product.slug]">
+
+      <img
+        [src]="MyConfig.media_address  + product.photoPaths[product.photoPaths.length - 1]"
+        alt="{{ product.title }}"
+        class="product-image"
+      >
+      <div class="product-info">
+        <div class="product-title-and-price">
+          <p class="product-name hide-overflow">{{ product.title }}</p>
+          <p class="product-price">{{ updateCalculatedPrice(product) }}$</p>
+
+        </div>
+        <div class="crud-buttons">
+        <button class="product-button" (click)="toggleEdit(product)"><mat-icon>edit</mat-icon></button>
+        <button class="product-button" (click)="deleteProduct(product.slug)"><mat-icon>delete_forever</mat-icon></button>
+        <button class="product-button" (click)="viewProduct(product.slug)"><mat-icon>visibility</mat-icon></button>
         </div>
       </div>
+
     </div>
-  </main>
-</div>
+
+    </div>
+    </div>
 
 
-</body>
+    </div>

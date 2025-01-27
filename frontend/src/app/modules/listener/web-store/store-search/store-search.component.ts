@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {ProductsSearchService} from '../../../../endpoints/products-endpoints/search-by-title-endpoint.service';
 import {MyConfig} from '../../../../my-config';
+import {Product} from '../product.model';
+import {debounceTime, switchMap} from 'rxjs/operators';
+import {
+  ProductAutocompleteService
+} from '../../../../endpoints/products-endpoints/product-autocomplete-endpoint.service';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-search-results',
@@ -13,6 +19,8 @@ export class StoreSearchComponent implements OnInit {
   keyword: string = '';
   currentPage: number = 1;
   noResults: boolean = false;
+  filteredProducts: Product[] = [];
+  searchControl = new FormControl();
 
   pageSize: number = 10;
   totalResults: number = 0;
@@ -22,7 +30,8 @@ export class StoreSearchComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productsSearchService: ProductsSearchService,
-    private router: Router
+    private router: Router, private searchService : ProductAutocompleteService,
+
   ) {}
 
   ngOnInit() {
@@ -35,6 +44,25 @@ export class StoreSearchComponent implements OnInit {
         this.fetchResults();
       }
     });
+
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      switchMap((searchTerm: string) => {
+        if (!searchTerm.trim()) {
+          return [];
+        }
+        const request = { keyword: searchTerm };
+        return this.searchService.handleAsync(request);
+      })
+    ).subscribe(
+      (products) => {
+        this.filteredProducts = products;
+      },
+      (error) => {
+        console.error('Error during product search:', error);
+        this.filteredProducts = [];
+      }
+    );
   }
 
   fetchResults(): void {
@@ -58,11 +86,13 @@ export class StoreSearchComponent implements OnInit {
     this.router.navigate(['listener/product', slug]);
   }
 
-  searchProducts(keyword: string) {
-    this.keyword = keyword;
-    this.currentPage = 1;
-    this.updateUrlParams();
-    this.fetchResults();
+  searchProducts(keyword: string): void {
+    if (!keyword.trim()) {
+      return;
+    }
+    this.router.navigate(['/listener/product-search'], {
+      queryParams: { keyword },
+    });
   }
 
   changePage(newPage: number): void {
@@ -87,7 +117,12 @@ export class StoreSearchComponent implements OnInit {
     this.updateUrlParams();
     this.fetchResults();
   }
-
+  updateCalculatedPrice(product: Product): string {
+    const calculatedPrice = product.saleAmount > 0
+      ? product.price * (1 - product.saleAmount)
+      : product.price;
+    return calculatedPrice.toFixed(2);
+  }
   updateUrlParams(): void {
     this.router.navigate(['/listener/product-search'], {
       queryParams: {

@@ -26,6 +26,7 @@ import {
   SocialShareBottomSheetComponent
 } from '../../../shared/social-media-sharing/social-share-bottom-sheet.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-tracks-page',
@@ -64,7 +65,7 @@ export class TracksPageComponent implements OnInit {
     private removeTrackFromPlaylistService: RemoveTrackFromPlaylistService,
     private deletePlaylistService: DeletePlaylistService,
     private dialog: MatDialog,
-    private musicPlayerService: MusicPlayerService,
+    private musicPlayerService: MusicPlayerService, private location : Location
 
   ) {}
 
@@ -170,10 +171,7 @@ export class TracksPageComponent implements OnInit {
   }
 
   goBack(): void {
-  if(this.playlistDetails?.users[0].userId != this.getUserIdFromToken())
-  { this.router.navigate([`/listener/user/`, this.playlistDetails?.users[0].userId]);}
-  else
-  { this.router.navigate([`/listener/playlist/`]); }
+  this.location.back();
   }
 
   getTotalTrackLength(): string {

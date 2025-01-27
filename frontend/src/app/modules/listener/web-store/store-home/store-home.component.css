@@ -123,13 +123,12 @@ input.mat-input-element {
 }
 
 .search-button:hover {
-  background-color: #5a5a5a;
-}
+  background-color: rgba(230, 146, 248, 0.48);}
 
 .category-shortcuts {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  margin-top: 0.25vw;
 }
 
 .category-shortcuts a {

@@ -45,6 +45,8 @@ import {NgxImageZoomModule} from 'ngx-image-zoom';
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from '@angular/material/stepper';
 import { ArtistDashboardComponent } from './artist-dashboard/artist-dashboard.component';
+import {ProductEditComponent} from './products/product-edit/product-edit.component';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { ArtistDashboardComponent } from './artist-dashboard/artist-dashboard.co
     ManageUsersComponent,
     JoinArtistProfileComponent,
     ArtistDashboardComponent,
+    ProductEditComponent
   ],
   imports: [
     CommonModule,
@@ -107,7 +110,10 @@ import { ArtistDashboardComponent } from './artist-dashboard/artist-dashboard.co
     MatStepperNext,
     MatStepper,
     MatStepLabel,
-    MatStepperPrevious
+    MatStepperPrevious,
+    MatDialogContent,
+    MatDialogTitle,
+    MatDialogActions
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -121,7 +121,7 @@ public class OrderAddEndpoint : MyEndpointBaseAsync
                 mailBody.Append("<tr>");
                 mailBody.Append("<td style='padding: 8px;'>" + orderDetail.Product.Title + "</td>");
                 mailBody.Append("<td style='padding: 8px;'>" + orderDetail.Quantity + "</td>");
-                mailBody.Append("<td style='padding: 8px;'>$" + orderDetail.UnitPrice + "</td>");
+                mailBody.Append("<td style='padding: 8px;'>$" + orderDetail.UnitPrice * (1-orderDetail.Discount) + "</td>");
                 mailBody.Append("</tr>");
             }
             mailBody.Append("</tbody>");

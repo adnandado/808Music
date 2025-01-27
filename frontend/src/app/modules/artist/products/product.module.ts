@@ -10,37 +10,45 @@ import {MatAnchor, MatButton, MatIconAnchor, MatIconButton} from '@angular/mater
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle, MatCardTitleGroup} from '@angular/material/card';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
-    declarations: [],
+    declarations: [
+
+  ],
     exports: [
 
     ],
-    imports: [
-        CommonModule,
-        ProductRoutingModule,
-        MatFormField,
-        MatSlideToggle,
-        SharedModule,
-        MatIcon,
-        MatInput,
-        MatButton,
-        MatAnchor,
-        MatCardHeader,
-        MatCard,
-        MatCardTitle,
-        MatCardContent,
-        MatCardTitleGroup,
-        MatFormFieldModule,
-        MatIconAnchor,
-        MatIconButton,
-        MatAutocomplete,
-        MatOption,
-        MatAutocompleteTrigger,
-        MatMenu,
-        MatMenuTrigger,
-        MatMenuItem
-    ]
+  imports: [
+    CommonModule,
+    ProductRoutingModule,
+    MatFormField,
+    ReactiveFormsModule,
+    MatSlideToggle,
+    SharedModule,
+    MatIcon,
+    MatInput,
+    MatButton,
+    MatAnchor,
+    MatCardHeader,
+    MatCard,
+    MatCardTitle,
+    MatCardContent,
+    MatCardTitleGroup,
+    MatFormFieldModule,
+    MatIconAnchor,
+    MatIconButton,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
+    MatMenu,
+    MatMenuTrigger,
+    MatMenuItem,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle
+  ]
 })
 export class ProductModule { }

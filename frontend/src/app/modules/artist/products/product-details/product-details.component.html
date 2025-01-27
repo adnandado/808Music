@@ -4,7 +4,7 @@
     <div class="carousel-wrapper">
       <button class="prev" (click)="prevSlide()">❮</button>
       <lib-ngx-image-zoom
-        [thumbImage]="MyConfig.api_address+'/media' + (product?.thumbnailPath?.[currentSlide] ?? '')"
+        [thumbImage]="MyConfig.api_address + '/media' + (product?.thumbnailPath?.[currentSlide] ?? '')"
         [fullImage]="MyConfig.media_address + (product?.photoPaths?.[currentSlide] ?? '')">
       </lib-ngx-image-zoom>
 
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="artist-info" (click)="goToArtistPage()">
+  <div class="artist-info" (click)="goToArtistPage(product!.artistId)">
     <img *ngIf="product?.artistPhoto" [src]="MyConfig.media_address + 'Images/Artistpfps/' + product?.artistPhoto" alt="Artist Photo" class="artist-photo">
     <p class="artist-name">{{ product?.artistName ?? 'Unknown Artist' }}</p>
   </div>

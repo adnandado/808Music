@@ -97,8 +97,9 @@ h2{
   cursor: pointer;
 }
 .profile-stats{
-  margin-top: 1.5vw;
+  margin-top: 2vw;
   display: flex;
+  font-weight: 480;
   flex-direction: row;
 }
 .big-username{

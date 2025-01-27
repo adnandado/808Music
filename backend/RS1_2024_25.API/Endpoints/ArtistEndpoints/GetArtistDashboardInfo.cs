@@ -38,19 +38,6 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
             .Where(at => at.ArtistId == request.ArtistId)
             .SumAsync(at => at.Track.Streams, cancellationToken);
 
-        var last5Streams = await _db.ArtistsTracks
-            .Where(at => at.ArtistId == request.ArtistId)
-            .SelectMany(at => at.Track.TrackStreams)
-            .OrderByDescending(sd => sd.StreamedAt)
-            .Take(5)
-            .Select(sd => new StreamStats
-            {
-                TrackId = sd.TrackId,
-                TrackTitle = sd.Track.Title,
-                StreamedAt = sd.StreamedAt
-            })
-            .ToListAsync(cancellationToken);
-
         var followers = await _db.Follows
             .Where(f => f.ArtistId == request.ArtistId)
             .Select(f => new FollowerStats
@@ -77,129 +64,172 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
                 ProductId = p.Id,
                 ProductTitle = p.Title,
                 QuantitySold = p.SoldItems,
-                TotalRevenue = p.SoldItems * (decimal)p.Price
+                TotalRevenue = (decimal)p.RevenueFromProduct
             })
             .ToListAsync(cancellationToken);
 
-        var totalRevenueAllProducts = await _db.Products
-     .Where(p => p.ArtistId == request.ArtistId)
-     .SumAsync(p => p.RevenueFromProduct, cancellationToken);
+        var highestPriceSold = productSales
+          .Where(ps => ps.QuantitySold > 0)
+          .OrderByDescending(ps => ps.TotalRevenue)
+          .Take(5)
+          .ToList();
 
-        var last5Sales = productSales
+        var mostSales = productSales
             .Where(ps => ps.QuantitySold > 0)
-            .OrderByDescending(ps => ps.TotalRevenue) 
+            .OrderByDescending(ps => ps.QuantitySold)
             .Take(5)
             .ToList();
+        var last5Products = await _db.OrderDetails
+    .Where(od => od.Product.ArtistId == request.ArtistId)  
+    .OrderByDescending(od => od.Order.DateAdded)  
+    .Take(5)  
+    .Select(od => new ProductSalesStats
+    {
+        ProductId = od.Product.Id,
+        ProductTitle = od.Product.Title,
+        QuantitySold = od.Quantity,
+        TotalRevenue = od.Quantity * (od.UnitPrice * (1-od.Discount))
+    })
+    .ToListAsync(cancellationToken);
 
-       
+        var totalRevenueAllProducts = await _db.Products
+            .Where(p => p.ArtistId == request.ArtistId)
+            .SumAsync(p => p.RevenueFromProduct, cancellationToken);
+
         var currentDate = DateTime.UtcNow;
-
         var currentWeekStart = currentDate.StartOfWeek(DayOfWeek.Monday);
+        var statsByWeek = new List<WeeklyStatsData>();
+        int currentWeekFollowersCount = 0;
+        int lastWeekFollowersCount = 0;
 
-        var currentWeekEnd = currentWeekStart.AddDays(7);
+        for (int i = 0; i < 4; i++)
+        {
+            var weekStart = currentWeekStart.AddDays(-7 * i);
+            var weekEnd = weekStart.AddDays(7);
+
+            var streamsThisWeekForLoop = await _db.ArtistsTracks
+                .Where(at => at.ArtistId == request.ArtistId)
+                .SelectMany(at => at.Track.TrackStreams)
+                .CountAsync(ts => ts.StreamedAt >= weekStart && ts.StreamedAt < weekEnd, cancellationToken);
+
+            var followersThisWeekCountInLoop = followers
+                .Count(f => f.StartedFollowing >= weekStart && f.StartedFollowing < weekEnd);
+
+            var revenueThisWeekForLoop = await _db.OrderDetails
+                .Join(_db.Order, od => od.OrderId, o => o.Id, (od, o) => new { od, o })
+                .Where(x => x.o.DateAdded >= weekStart && x.o.DateAdded < weekEnd)
+                .Where(x => x.od.Product.ArtistId == request.ArtistId)
+                .SumAsync(x => x.od.Quantity * x.od.UnitPrice, cancellationToken);
+
+            statsByWeek.Add(new WeeklyStatsData
+            {
+                Streams = streamsThisWeekForLoop,
+                Followers = followersThisWeekCountInLoop,
+                Revenue = revenueThisWeekForLoop,
+                WeekStart = weekStart,
+                WeekEnd = weekEnd
+            });
+
+            if (i == 0)
+            {
+                currentWeekFollowersCount = followersThisWeekCountInLoop;
+            }
+            else if (i == 1)
+            {
+                lastWeekFollowersCount = followersThisWeekCountInLoop;
+            }
+        }
 
         var lastWeekStart = currentWeekStart.AddDays(-7);
-
         var lastWeekEnd = currentWeekStart.AddDays(-1);
 
+        var followersThisWeekCount = followers.Count(f => f.StartedFollowing >= currentWeekStart);
+        var followersLastWeekCount = followers.Count(f => f.StartedFollowing >= lastWeekStart && f.StartedFollowing < currentWeekStart);
 
-        var followersThisWeek = followers
-            .Count(f => f.StartedFollowing >= currentWeekStart);
-
-        var followersLastWeek = followers
-            .Count(f => f.StartedFollowing >= lastWeekStart && f.StartedFollowing < currentWeekStart);
-
-        bool followerGrowth = followersThisWeek > followersLastWeek;
-
-        var query = from od in _db.OrderDetails
-                    join o in _db.Order on od.OrderId equals o.Id
-                    join p in _db.Products on od.ProductId equals p.Id
-                    where o.DateAdded >= currentWeekStart && o.DateAdded < currentWeekEnd
-                    select new
-                    {
-                        Revenue = od.Quantity * od.UnitPrice, 
-                        OrderDate = o.DateAdded
-                    };
-
-
-        var lastWeekQuery = from od in _db.OrderDetails
-                            join o in _db.Order on od.OrderId equals o.Id
-                            join p in _db.Products on od.ProductId equals p.Id
-                            where o.DateAdded >= lastWeekStart && o.DateAdded < currentWeekStart
-                            select new
-                            {
-                                Revenue = od.Quantity * od.UnitPrice, 
-                                OrderDate = o.DateAdded
-                            };
-        var revenueThisWeek = await query.SumAsync(x => x.Revenue, cancellationToken);
-        var revenueLastWeek = await lastWeekQuery.SumAsync(x => x.Revenue, cancellationToken);
-
-        bool isRevenueThisWeekHigher = revenueThisWeek > revenueLastWeek;
-
-
-
-
-        var streamsThisWeek = await _db.ArtistsTracks
-    .Where(at => at.ArtistId == request.ArtistId)
-    .SelectMany(at => at.Track.TrackStreams)
-    .CountAsync(ts => ts.StreamedAt >= currentWeekStart, cancellationToken);
-
-        var streamsLastWeek = await _db.ArtistsTracks
-            .Where(at => at.ArtistId == request.ArtistId)
-            .SelectMany(at => at.Track.TrackStreams)
-            .CountAsync(ts => ts.StreamedAt >= lastWeekStart && ts.StreamedAt < currentWeekStart, cancellationToken);
-
-        bool streamGrowth = streamsThisWeek > streamsLastWeek;
-   
         decimal followerGrowthPercentage = 0;
         bool isFollowerGrowthPositive = false;
 
-        if (followersLastWeek == 0 && followersThisWeek > 0)
+        if (followersLastWeekCount == 0 && followersThisWeekCount > 0)
         {
-            followerGrowthPercentage = 100; 
+            followerGrowthPercentage = 100;
             isFollowerGrowthPositive = true;
         }
-        else if (followersLastWeek > 0)
+        else if (followersLastWeekCount > 0)
         {
-            var growth = ((decimal)(followersThisWeek - followersLastWeek) / followersLastWeek) * 100;
+            var growth = ((decimal)(followersThisWeekCount - followersLastWeekCount) / followersLastWeekCount) * 100;
             followerGrowthPercentage = Math.Abs(growth);
             isFollowerGrowthPositive = growth >= 0;
         }
 
-      
+        var revenueThisWeekForTotal = await _db.OrderDetails
+            .Join(_db.Order, od => od.OrderId, o => o.Id, (od, o) => new { od, o })
+            .Where(x => x.o.DateAdded >= currentWeekStart && x.o.DateAdded < currentDate)
+            .Where(x => x.od.Product.ArtistId == request.ArtistId)
+            .SumAsync(x => x.od.Quantity * x.od.UnitPrice, cancellationToken);
+
+        var revenueLastWeekForTotal = await _db.OrderDetails
+            .Join(_db.Order, od => od.OrderId, o => o.Id, (od, o) => new { od, o })
+            .Where(x => x.o.DateAdded >= lastWeekStart && x.o.DateAdded < currentWeekStart)
+               .Where(x => x.od.Product.ArtistId == request.ArtistId)
+            .SumAsync(x => x.od.Quantity * x.od.UnitPrice, cancellationToken);
+
         decimal revenueGrowthPercentage = 0;
         bool isRevenueGrowthPositive = false;
 
-        if (revenueLastWeek == 0 && revenueThisWeek > 0)
+        if (revenueLastWeekForTotal == 0 && revenueThisWeekForTotal > 0)
         {
-            revenueGrowthPercentage = 100; 
+            revenueGrowthPercentage = 100;
             isRevenueGrowthPositive = true;
         }
-        else if (revenueLastWeek > 0)
+        else if (revenueLastWeekForTotal > 0)
         {
-            var growth = ((revenueThisWeek - revenueLastWeek) / revenueLastWeek) * 100;
-            revenueGrowthPercentage = Math.Abs(growth); 
-            isRevenueGrowthPositive = growth >= 0; 
-        }
+            var growth = ((revenueThisWeekForTotal - revenueLastWeekForTotal) / revenueLastWeekForTotal) * 100;
+            revenueGrowthPercentage = Math.Abs(growth);
+            isRevenueGrowthPositive = growth >= 0;
 
-        
+        }
+        var last5Streams = await _db.ArtistsTracks
+           .Where(at => at.ArtistId == request.ArtistId)
+           .SelectMany(at => at.Track.TrackStreams)
+           .OrderByDescending(sd => sd.StreamedAt)
+           .Take(5)
+           .Select(sd => new StreamStats
+           {
+               TrackId = sd.TrackId,
+               TrackTitle = sd.Track.Title,
+               StreamedAt = sd.StreamedAt
+           })
+           .ToListAsync(cancellationToken);
+
+        var streamsThisWeekForTotal = await _db.ArtistsTracks
+            .Where(at => at.ArtistId == request.ArtistId)
+            .SelectMany(at => at.Track.TrackStreams)
+            .CountAsync(ts => ts.StreamedAt >= currentWeekStart, cancellationToken);
+
+        var streamsLastWeekForTotal = await _db.ArtistsTracks
+            .Where(at => at.ArtistId == request.ArtistId)
+            .SelectMany(at => at.Track.TrackStreams)
+            .CountAsync(ts => ts.StreamedAt >= lastWeekStart && ts.StreamedAt < currentWeekStart, cancellationToken);
+
         decimal streamGrowthPercentage = 0;
         bool isStreamGrowthPositive = false;
 
-        if (streamsLastWeek == 0 && streamsThisWeek > 0)
+        if (streamsLastWeekForTotal == 0 && streamsThisWeekForTotal > 0)
         {
-            streamGrowthPercentage = 100; 
+            streamGrowthPercentage = 100;
             isStreamGrowthPositive = true;
         }
-        else if (streamsLastWeek > 0)
+        else if (streamsLastWeekForTotal > 0)
         {
-            var growth = ((decimal)(streamsThisWeek - streamsLastWeek) / streamsLastWeek) * 100;
+            var growth = ((decimal)(streamsThisWeekForTotal - streamsLastWeekForTotal) / streamsLastWeekForTotal) * 100;
             streamGrowthPercentage = Math.Abs(growth); 
             isStreamGrowthPositive = growth >= 0;
         }
 
-
-
+        bool revenueGrowth = isRevenueGrowthPositive;
+        bool streamGrowth = isStreamGrowthPositive;
+        bool followerGrowth = isFollowerGrowthPositive;
+        statsByWeek.Reverse();
         return new GetArtistDashboardResponse
         {
             Success = true,
@@ -207,17 +237,19 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
             TotalFollowers = followers.Count,
             TotalRevenueAllProducts = totalRevenueAllProducts,
             FollowerGrowth = followerGrowth,
-            RevenueGrowth = isRevenueThisWeekHigher,
+            FollowerGrowthPercentage = followerGrowthPercentage,
+            IsFollowerGrowthPositive = isFollowerGrowthPositive,
+            RevenueGrowth = revenueGrowth,
             StreamGrowth = streamGrowth,
-            LastFollowerDate = lastFollowerDate,
-            Followers = last5Followers,
-            ProductSales = last5Sales,
-            LastStreams = last5Streams,
-            ArtistName = artist.Name,
-            FollowerGrowthPercentage = followerGrowthPercentage,  
             RevenueGrowthPercentage = revenueGrowthPercentage,
             StreamGrowthPercentage = streamGrowthPercentage,
-
+            LastStreams = last5Streams,
+            LastFollowerDate = lastFollowerDate,
+            Followers = last5Followers,
+            ProductSales = last5Products,
+            StatsByWeek = statsByWeek,
+            SaleAmount = highestPriceSold,
+            QuantitySold = mostSales,
         };
     }
 
@@ -225,7 +257,6 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
     {
         public required int ArtistId { get; set; }
     }
-
 
     public class GetArtistDashboardResponse
     {
@@ -237,17 +268,20 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
         public DateTime? LastFollowerDate { get; set; }
         public List<FollowerStats> Followers { get; set; } = new();
         public List<ProductSalesStats> ProductSales { get; set; } = new();
-        public List<StreamStats> LastStreams { get; set; } = new();
-        public string ArtistName { get; set; } = string.Empty;
+        public List<ProductSalesStats> QuantitySold { get; set; } = new();
+        public List<ProductSalesStats> SaleAmount { get; set; } = new();
 
+
+        public List<WeeklyStatsData> StatsByWeek { get; set; } = new();
+        public List<StreamStats> LastStreams { get; set; } = new();
         public bool FollowerGrowth { get; set; }
-        public bool RevenueGrowth { get; set; }
+        public decimal FollowerGrowthPercentage { get; set; }
         public bool StreamGrowth { get; set; }
         public decimal StreamGrowthPercentage { get; set; }
+        public bool RevenueGrowth { get; set; }
         public decimal RevenueGrowthPercentage { get; set; }
-        public decimal FollowerGrowthPercentage { get; set; }
+        public bool IsFollowerGrowthPositive { get; set; }
     }
-
 
     public class FollowerStats
     {
@@ -262,9 +296,16 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
         public required string ProductTitle { get; set; }
         public required int QuantitySold { get; set; }
         public required decimal TotalRevenue { get; set; }
-
     }
 
+    public class WeeklyStatsData
+    {
+        public int Streams { get; set; }
+        public int Followers { get; set; }
+        public decimal Revenue { get; set; }
+        public DateTime WeekStart { get; set; }
+        public DateTime WeekEnd { get; set; }
+    }
     public class StreamStats
     {
         public required int TrackId { get; set; }

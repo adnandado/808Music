@@ -9,7 +9,8 @@
         <div class="gradient">
       <div class="event-info">
           <h1 class="event-title">{{ events[currentSlide]?.eventTitle }}</h1>
-          <p class="event-informations">{{ events[currentSlide]?.city }}, {{ events[currentSlide]?.eventDate | date: 'shortDate' }}</p>
+
+        <p class="event-informations">{{ events[currentSlide]?.artistName }} ◈ {{ events[currentSlide]?.city }}, {{ events[currentSlide]?.eventDate | date: 'shortDate' }}</p>
         </div></div>
       </div>
 

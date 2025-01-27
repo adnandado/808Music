@@ -66,7 +66,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 user.Password = passHash;
             }
 
-            if(request.NewPassword != null || request.ID != null)
+            if(request.NewPassword != null && request.ID != null)
             {
                 string passHash = BCrypt.Net.BCrypt.EnhancedHashPassword(request.NewPassword);
                 user.Password = passHash;

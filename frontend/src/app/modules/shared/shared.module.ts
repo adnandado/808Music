@@ -94,6 +94,7 @@ import {
   MatDatepickerToggleIcon
 } from "@angular/material/datepicker";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {CartUpdateService} from './shopping-cart/shopping-cart.service';
 
 @NgModule({
   declarations: [
@@ -144,7 +145,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     PlaylistCardListComponent,
     SendSongMessageComponent,
     SettingsComponent,
-    SocialShareBottomSheetComponent
+    SocialShareBottomSheetComponent,
 // Dodajemo UnauthorizedComponent u deklaracije
   ],
     imports: [
@@ -247,7 +248,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     ArtistBigCardListComponent,
     MessageContentCardComponent,
     PlaylistCardListComponent,
-    SocialShareBottomSheetComponent
+    SocialShareBottomSheetComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

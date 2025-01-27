@@ -105,7 +105,9 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
               private isOnPlaylist : IsOnPlaylistService,
               private removeFromPlaylist : RemoveTrackFromPlaylistService,
               private artistHandler: ArtistHandlerService,
-              private cdRef: ChangeDetectorRef) {
+              private cdRef: ChangeDetectorRef,
+  ) {
+
   }
   likedSongs: Map<number, boolean> = new Map();
   showDeleteIcon : boolean = true;
