@@ -10,6 +10,8 @@ using static ProductUpdateEndpoint;
 using System.Text;
 using NAudio.Utils;
 using System.Runtime.ConstrainedExecution;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp;
 
 public class ProductUpdateEndpoint : MyEndpointBaseAsync
     .WithRequest<ProductUpdateRequest>
@@ -65,14 +67,21 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
                     await photo.CopyToAsync(stream, cancellationToken);
                 }
 
+                var thumbnailFileName = Guid.NewGuid().ToString() + "_thumb" + Path.GetExtension(photo.FileName);
+                var thumbnailFilePath = Path.Combine(uploadFolder, "thumbnails", thumbnailFileName);
+
+                GenerateThumbnail(filePath, thumbnailFilePath);  
+
                 var productPhoto = new ProductPhoto
                 {
                     Path = $"/images/products/{fileName}",
+                    ThumbnailPath = $"/images/products/thumbnails/{thumbnailFileName}", 
                     ProductId = product.Id
                 };
 
                 _db.ProductPhotos.Add(productPhoto);
             }
+
         }
 
         await _db.SaveChangesAsync(cancellationToken);
@@ -123,7 +132,16 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
             Bio = product.Bio,
         };
     }
-
+    private void GenerateThumbnail(string sourcePath, string destinationPath, int width = 400, int height = 300)
+    {
+        using var image = SixLabors.ImageSharp.Image.Load(sourcePath);
+        image.Mutate(x => x.Resize(new ResizeOptions
+        {
+            Size = new SixLabors.ImageSharp.Size(width, height),
+            Mode = ResizeMode.Max
+        }));
+        image.Save(destinationPath);
+    }
 
     public class ProductUpdateRequest
     {

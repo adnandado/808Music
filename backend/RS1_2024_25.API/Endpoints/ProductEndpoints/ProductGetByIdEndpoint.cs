@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
+using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper.Api;
 using static ProductGetByIdEndpoint;
 
@@ -26,8 +27,8 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
                                 PhotoPaths = p.Photos.Select(photo => photo.Path).ToList(),
                                 ArtistName = p.Artist.Name,  
                                 ArtistPhoto = p.Artist.ProfilePhotoPath,
-                                ThumbnailPath = p.Photos.Select(thumbnail => thumbnail.ThumbnailPath).ToList(), 
-
+                                ThumbnailPath = p.Photos.Select(thumbnail => thumbnail.ThumbnailPath).ToList(),
+                                ArtistId = p.Artist.Id,
                                 SaleAmount = p.SaleAmount, 
                                 Bio = p.Bio,
                                 DiscountedPrice = p.SaleAmount > 0
@@ -52,6 +53,7 @@ public class ProductGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsy
         public string Slug { get; set; }
         public List<string> PhotoPaths { get; set; } = new();
         public string ArtistName { get; set; } 
+        public int ArtistId { get; set; }
         public string ArtistPhoto { get; set; }
         public string Bio { get; set; }
         public decimal DiscountedPrice { get; internal set; }

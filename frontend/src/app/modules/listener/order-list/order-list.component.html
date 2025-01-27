@@ -31,13 +31,13 @@
               <span class="product-name">{{ detail.productName }}</span>
             </td>
             <td class="product-quantity">{{ detail.quantity }}</td>
-            <td class="product-total">{{ detail.totalPrice | currency }}</td>
+            <td class="product-total">{{ detail.unitPrice * (1-detail.discount) * detail.quantity| currency }}</td>
           </tr>
           </tbody>
         </table>
 
         <div class="status-row">
-          <p class="order-status">Status: <p class="status-color">{{ order.status }}</p>
+          <p class="order-status">Status: <p class="status-color">{{ order.status }}...</p>
         </div>
       </div>
     </div>
