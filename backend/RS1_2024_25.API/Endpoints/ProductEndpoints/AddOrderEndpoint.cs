@@ -102,7 +102,7 @@ public class OrderAddEndpoint : MyEndpointBaseAsync
             mailBody.Append("<html><body style='background-color: #f0f0f0; margin: 0; padding: 0;'>");
             mailBody.Append("<div style='width: 100%; background-color: #f0f0f0; padding: 20px; box-sizing: border-box;'>");
             mailBody.Append("<img src='https://i.imgur.com/gZqaDjj.png' alt='Order Confirmation' style='width: 100px; height: auto; display: block; margin: 20px auto;' />");
-            mailBody.Append("<div style='max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px;'>"); // Centrirano tijelo s bijelom pozadinom
+            mailBody.Append("<div style='max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px;'>"); 
             mailBody.Append("<h2 style='color: #2c3e50; text-align: left;'>Hi " + myAppUser.Username + ",</h2>");
             mailBody.Append("<p style='font-size: 16px; color: #34495e; text-align: left;'>Thank you for your order. Your order #Code is <strong>" + order.OrderCode + "</strong>.</p>");
             mailBody.Append("<br/>");
@@ -130,7 +130,7 @@ public class OrderAddEndpoint : MyEndpointBaseAsync
             mailBody.Append("<p style='font-size: 16px; color: #34495e; text-align: left; margin-top: 20px;'>");
             mailBody.Append("<strong>Total Price: </strong>$" + order.TotalPrice);
             mailBody.Append("</p>");
-            mailBody.Append("<p style='font-size: 12px; color: #34495e; text-align: left;'>You can track your order status on our <a href='http://808music.com/' style='color: #d92bf9;'>website</a>.</p>");
+            mailBody.Append("<p style='font-size: 12px; color: #34495e; text-align: left;'>You can track your order status on our <a href='http://localhost:4200/listener/my-orders' style='color: #d92bf9;'>website</a>.</p>");
 
             mailBody.Append("<br><p style='font-size: 12px; color: #34495e; text-align: left;'>Thank you, <br/>808 Music</p>");
             mailBody.Append("</div>");

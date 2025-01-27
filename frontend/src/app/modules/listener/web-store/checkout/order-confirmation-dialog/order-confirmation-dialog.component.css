@@ -1,23 +1,48 @@
-h2 {
+.dialog-edit {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
   color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #333333;
 }
 
-h3 {
-  color: white;
+.dialog-edit h2 {
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.dialog-edit h3 {
+  font-size: 18px;
+  margin: 20px 0;
+  font-weight: 422;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .icon-container {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
-  height: 30px;
+  width: 100px;
+  height: 100px;
+  color: #333333;
+  background-color: #19971c;
   border-radius: 50%;
-  background-color: grey;
-  margin-right: 10px;
 }
 
-.check-icon {
-  color: green;
-  font-size: 52px;
+.check
+{
+  filter: invert(50%) sepia(100%) saturate(1000%) hue-rotate(265deg) brightness(95%) contrast(90%);
+  transition: filter 0.3s ease;
+
+  margin-bottom: 1vw;
 }
+
