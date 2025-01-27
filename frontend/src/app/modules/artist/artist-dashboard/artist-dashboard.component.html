@@ -1,13 +1,17 @@
-<div *ngIf="loading">Loading...</div>
-<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-<div *ngIf="!loading && artistDashboardData">
+<div *ngIf="!loading && artistDashboardData" class="whatever" [@fadeInOut]>
 
-  <h2 class="artistname">{{ artistDashboardData.artistName }}'S DASHBOARD - {{ currentDate | date:'d MMM yyyy' }}</h2>
 
   <section class="header-info">
     <div class="header-item">
       <div class="text">
         <p class="number-title">STREAMS</p>
+        <mat-icon
+          matTooltip="Percentage results are based on this week in comparison with last weeks growth only, not overall."
+          matTooltipPosition="below"
+          class="info-icon"
+        >
+          help_outline
+        </mat-icon>
         <p class="number">{{ artistDashboardData.totalStreams }}</p>
         <div class="growth-indicator">
           <mat-icon
@@ -15,15 +19,15 @@
             style="color: #07bd07; font-size: 30px; width: 30px; height: 30px;"
             class="green-arrow">arrow_outward</mat-icon>
 
-            <mat-icon *ngIf="!artistDashboardData.streamGrowth"
-              style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
-              class="red-arrow">call_received</mat-icon>
+          <mat-icon *ngIf="!artistDashboardData.streamGrowth"
+                    style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
+                    class="red-arrow">call_received</mat-icon>
 
           <span class="percentage-growth" [ngClass]="{
             'positive-growth': artistDashboardData.streamGrowth,
             'negative-growth': !artistDashboardData.streamGrowth
           }">
-            {{ artistDashboardData.streamGrowth ? '+' : '-' }}{{ artistDashboardData.streamGrowthPercentage }}%
+            {{ artistDashboardData.streamGrowth ? '+' : '-' }}{{ artistDashboardData.streamGrowthPercentage | number:'1.0-0' }}%
           </span>
         </div>
       </div>
@@ -32,6 +36,13 @@
     <div class="header-item">
       <div class="text">
         <p class="number-title">FOLLOWERS</p>
+        <mat-icon
+          matTooltip="Percentage results are based on this week in comparison with last weeks growth only, not overall."
+          matTooltipPosition="below"
+          class="info-icon"
+        >
+          help_outline
+        </mat-icon>
         <p class="number">{{ artistDashboardData.totalFollowers }}</p>
         <div class="growth-indicator">
           <mat-icon
@@ -39,15 +50,15 @@
             style="color: #07bd07; font-size: 30px; width: 30px; height: 30px;"
             class="green-arrow">arrow_outward</mat-icon>
 
-            <mat-icon *ngIf="!artistDashboardData.followerGrowth"
-              style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
-              class="red-arrow">call_received</mat-icon>
+          <mat-icon *ngIf="!artistDashboardData.followerGrowth"
+                    style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
+                    class="red-arrow">call_received</mat-icon>
 
           <span class="percentage-growth" [ngClass]="{
             'positive-growth': artistDashboardData.followerGrowth,
             'negative-growth': !artistDashboardData.followerGrowth
           }">
-            {{ artistDashboardData.followerGrowth ? '+' : '-' }}{{ artistDashboardData.followerGrowthPercentage }}%
+            {{ artistDashboardData.followerGrowth ? '+' : '-' }}{{ artistDashboardData.followerGrowthPercentage | number:'1.0-0' }}%
           </span>
         </div>
       </div>
@@ -56,36 +67,44 @@
     <div class="header-item">
       <div class="text">
         <p class="number-title">REVENUE</p>
-        <p class="number">{{ formatNumber(artistDashboardData.totalRevenueAllProducts, 'en') }}€</p>
+        <mat-icon
+          matTooltip="Percentage results are based on this week in comparison with last weeks growth only, not overall."
+          matTooltipPosition="below"
+          class="info-icon"
+        >
+          help_outline
+        </mat-icon>
+        <p class="number">{{ artistDashboardData.totalRevenueAllProducts | number:'1.2-2' }}€</p>
         <div class="growth-indicator">
           <mat-icon
             *ngIf="artistDashboardData.revenueGrowth"
             style="color: #07bd07; font-size: 30px; width: 30px; height: 30px; "
             class="green-arrow">arrow_outward</mat-icon>
-            <mat-icon  *ngIf="!artistDashboardData.revenueGrowth"
-              style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
-              class="red-arrow">call_received</mat-icon>
+          <mat-icon  *ngIf="!artistDashboardData.revenueGrowth"
+                     style="color: #ae0017; font-size: 30px; width: 30px; height: 30px;"
+                     class="red-arrow">call_received</mat-icon>
 
           <span class="percentage-growth" [ngClass]="{
             'positive-growth': artistDashboardData.revenueGrowth,
             'negative-growth': !artistDashboardData.revenueGrowth
           }">
-            {{ artistDashboardData.revenueGrowth ? '+' : '-' }}{{ artistDashboardData.revenueGrowthPercentage }}%
+            {{ artistDashboardData.revenueGrowth ? '+' : '-' }}{{ artistDashboardData.revenueGrowthPercentage | number:'1.0-0' }}%
           </span>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="dashboard-tables">
 
+
+  <div class="dashboard-tables">
     <section class="table-section">
       <h2 class="table-title">Last 5 Streams</h2>
       <table>
         <thead>
         <tr>
           <th>Track Title</th>
-          <th>Streamed At</th>
+          <th>Streamed</th>
         </tr>
         </thead>
         <tbody>
@@ -98,7 +117,7 @@
     </section>
 
     <section class="table-section">
-      <h2 class="table-title">Last 5 Followers</h2>
+      <h2 class="table-title" [@fadeInOut]>Last 5 Followers</h2>
       <table>
         <thead>
         <tr>
@@ -114,9 +133,14 @@
         </tbody>
       </table>
     </section>
-
     <section class="table-section">
-      <h2 class="table-title">Best selling products</h2>
+      <h2 class="table-title">{{ getTableTitle() }}</h2>
+
+        <span class="change-data">
+      <mat-icon (click)="prevDataType()" class="change-icon">arrow_back_ios_new</mat-icon>
+      <mat-icon (click)="nextDataType()" class="change-icon">arrow_forward_ios</mat-icon>
+    </span>
+
       <table>
         <thead>
         <tr>
@@ -125,14 +149,31 @@
           <th>Total Revenue</th>
         </tr>
         </thead>
-        <tbody>
-        <tr *ngFor="let sale of artistDashboardData.productSales">
-          <td>{{ sale.productTitle }}</td>
-          <td>{{ sale.quantitySold }}</td>
-          <td>{{ sale.totalRevenue | currency }}</td>
+        <tbody *ngIf="artistDashboardData && selectedDataType" >
+        <tr *ngFor="let sale of artistDashboardData[selectedDataType]">
+          <td [@fadeInOut]>{{ sale.productTitle }}</td>
+          <td [@fadeInOut]>{{ sale.quantitySold}}</td>
+          <td [@fadeInOut]>{{ sale.totalRevenue| currency }}</td>
         </tr>
         </tbody>
       </table>
     </section>
+
   </div>
+  <div class="graph-row">
+
+  <section id="streams-section" class="chart-section">
+    <canvas id="streamsChart"></canvas>
+  </section>
+
+  <section id="followers-section" class="chart-section">
+    <canvas id="followersChart"></canvas>
+  </section>
+
+  <section id="revenue-section" class="chart-section">
+    <canvas id="revenueChart"></canvas>
+  </section>
 </div>
+</div>
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>

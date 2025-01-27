@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Edit Product</h1>
+<form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+  <div mat-dialog-content>
+    <p>Title</p>
+    <input formControlName="title" class="product-input" placeholder="Title">
+    <p>Price</p>
+    <input formControlName="price" class="product-input" type="number" min="1" placeholder="Price">
+    <p>Quantity</p>
+    <input formControlName="quantity" class="product-input" type="number" min="0" placeholder="Quantity">
+    <p>Sale%</p>
+    <input formControlName="saleAmount" class="product-input" type="number" min="0" placeholder="Sale Percentage">
+    <p>Bio</p>
+    <input formControlName="bio" class="product-input" placeholder="Bio">
+
+    <div class="image-edit">
+      <label for="image-upload">Change Image</label>
+      <input type="file" id="image-upload" (change)="onImageChange($event)">
+      <div *ngIf="newImagePreview">
+        <p>Preview:</p>
+        <img [src]="newImagePreview" alt="Image preview" class="image-preview">
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Save</button>
+  </div>
+</form>
