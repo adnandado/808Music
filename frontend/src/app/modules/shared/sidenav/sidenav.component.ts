@@ -24,6 +24,11 @@ export class SidenavComponent implements OnInit {
 
   unreads : UnreadsResponse | null = null;
   notiReceive = (noti : RichNotification) => {
+    if(noti.type === "Message" && this.router.url.includes("/chat"))
+    {
+      return;
+    }
+
     this.unreads!.unreadNotificationsCount++;
     if(this.unreads!.unreadNotificationsCount > 99)
     {
@@ -31,6 +36,7 @@ export class SidenavComponent implements OnInit {
     }
   }
   chat$ : Subscription | null = null;
+  chatNoti$! : Subscription;
   reloadThePage = false;
 
   constructor(private router: Router,
@@ -92,6 +98,7 @@ export class SidenavComponent implements OnInit {
     }
 
     this.notificationService.addNotificationListener(this.notiReceive);
+    this.chatNoti$ = this.chatService.msgNotify$.subscribe(this.notiReceive);
     this.chat$ = this.chatService.msgReceived$.subscribe(msg => {
       this.unreads!.unreadMessaggesCount++;
       if (this.unreads!.unreadMessaggesCount > 99) {

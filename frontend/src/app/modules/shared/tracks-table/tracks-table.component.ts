@@ -77,10 +77,10 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   pagedResponse: MyPagedList<TrackGetResponse> | null = null;
   @Input() pagedRequest: TrackGetAllRequest = {
     pageNumber: 1,
-    pageSize: 20,
+    pageSize: 10,
   }
   @Output() onCreateClick: EventEmitter<void> = new EventEmitter();
-  paginationOptions = [20, 35, 50]
+  paginationOptions = [10, 20, 35, 50]
   @Input() reload = true;
   shouldDisplayControls = false;
   isShuffled = false;

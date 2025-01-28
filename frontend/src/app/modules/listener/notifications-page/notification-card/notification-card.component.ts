@@ -8,6 +8,11 @@ import {MusicPlayerService} from '../../../../services/music-player.service';
 import {
   NotificationMarkAsReadEndpointService
 } from '../../../../endpoints/notification-endpoints/notification-mark-as-read-endpoint.service';
+import {ChatMarkAsReadEndpointService} from '../../../../endpoints/chat-endpoints/chat-mark-as-read-endpoint.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {
+  ChatMessageMarkAsReadEndpointService
+} from '../../../../endpoints/chat-endpoints/chat-message-mark-as-read-endpoint.service';
 
 @Component({
   selector: 'app-notification-card',
@@ -26,13 +31,16 @@ export class NotificationCardComponent implements AfterViewInit {
               private tracksGetService : TrackGetAllEndpointService,
               private musicPlayerService: MusicPlayerService,
               private markAsReadService: NotificationMarkAsReadEndpointService,
-              private cd : ChangeDetectorRef) {
+              private cd : ChangeDetectorRef,
+              private msgMarkAsRead : ChatMessageMarkAsReadEndpointService,
+              private snackBar: MatSnackBar,) {
   }
 
 
   ngAfterViewInit(): void {
       this.thumbnail = {
-        'background-image': `url(${MyConfig.api_address}${this.notification?.imageUrl})`
+        'background-image': `url(${MyConfig.api_address}${this.notification?.imageUrl})`,
+        'border-radius': this.notification?.type === "Message" ? "50%" : "15px"
       }
       this.cd.detectChanges();
   }
@@ -69,6 +77,9 @@ export class NotificationCardComponent implements AfterViewInit {
       case "Product":
         this.router.navigate(["listener/product/"+this.notification?.slug]);
         break;
+      case "Message":
+        this.router.navigate(["listener/chat/"], {queryParams: {chat: this.notification?.contentId}});
+        break;
       default: break;
     }
   }
@@ -97,11 +108,22 @@ export class NotificationCardComponent implements AfterViewInit {
   markAsRead() {
     if(this.notification)
     {
+      if(this.notification.type !== "Message")
+      {
       this.markAsReadService.handleAsync(this.notification?.id).subscribe({
         next: data => {
-            console.log('markedAsRead');
+            this.snackBar.open("Marked as read.", "Dismiss", {duration: 1000});
             this.emitReadNotification();
         }});
+      }
+      else {
+        this.msgMarkAsRead.handleAsync({messageId: this.notification.id}).subscribe({
+          next: data => {
+            this.snackBar.open("Marked as read.", "Dismiss", {duration: 1000});
+            this.emitReadNotification();
+          }
+        })
+      }
     }
   }
 

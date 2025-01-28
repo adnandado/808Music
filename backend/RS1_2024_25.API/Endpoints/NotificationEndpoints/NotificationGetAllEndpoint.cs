@@ -30,6 +30,18 @@ namespace RS1_2024_25.API.Endpoints.NotificationEndpoints
                 result.Add(richNoti);
             }
 
+            var msgs = await db.ChatMessages.Where(cm => (cm.UserChat.SecondaryChatterId == userId || cm.UserChat.PrimaryChatterId == userId) && cm.SenderId != userId && !cm.UserChat.Blocked && !cm.Seen).Include(cm => cm.UserChat)
+                .ToListAsync(cancellationToken);
+
+            foreach(var msg in msgs)
+            {
+                var richNoti = await nt.GetRichNotificationAsync(msg);
+                richNoti.Priority = richNoti.Type == preference;
+                result.Add(richNoti);
+            }
+
+            result = result.OrderByDescending(rn => rn.CreatedAt).ToList();
+
             return Ok(result);
         }
     }

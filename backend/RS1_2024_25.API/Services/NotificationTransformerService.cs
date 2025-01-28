@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 
@@ -15,6 +16,7 @@ namespace RS1_2024_25.API.Services
                 case nameof(Album):
                     return await db.Albums.Where(a => a.Id == notification.ContentId).Select(a => new RichNotification
                     {
+                        Guid = Guid.NewGuid().ToString(),
                         Id = notification.Id,
                         Artist = a.Artist,
                         Title = a.Title,
@@ -28,6 +30,7 @@ namespace RS1_2024_25.API.Services
                     await db.ProductPhotos.LoadAsync(cancellationToken);
                     return await db.Products.Where(a => a.Id == notification.ContentId).Select(a => new RichNotification
                     {
+                        Guid = Guid.NewGuid().ToString(),
                         Id = notification.Id,
                         Artist = a.Artist,
                         Title = a.Title,
@@ -41,10 +44,27 @@ namespace RS1_2024_25.API.Services
                 default: return new RichNotification();
             }
         }
+
+        public async Task<RichNotification> GetRichNotificationAsync(ChatMessage notification, CancellationToken cancellationToken = default)
+        {
+            await db.MyAppUsers.LoadAsync(cancellationToken);
+            return new RichNotification
+            {
+                Guid = Guid.NewGuid().ToString(),
+                Id = notification.Id,
+                ContentId= notification.UserChatId,
+                Message = $"New message from {notification.Sender.Username}",
+                Type = "Message",
+                Title = notification.Message,
+                CreatedAt = notification.SentAt,
+                ImageUrl = notification.Sender.pfpCoverPath != "" ? "/media" + notification.Sender.pfpCoverPath : "/media/Images/ProfilePictures/placeholder.png"
+            };
+        }
     }
 
     public class RichNotification
     {
+        public string Guid { get; set; } = string.Empty;
         public int Id { get; set; }
         public int ContentId { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
