@@ -6,6 +6,7 @@ import {Artist} from '../endpoints/album-endpoints/album-get-by-id-endpoint.serv
 import {Router} from '@angular/router';
 
 export interface RichNotification {
+  guid: string;
   id: number;
   contentId: number;
   imageUrl: string;

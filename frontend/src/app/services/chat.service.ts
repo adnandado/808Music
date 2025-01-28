@@ -37,6 +37,9 @@ export class ChatService {
   private chatBlocked = new Subject<ChatBlockResponse>();
   chatBlocked$ = this.chatBlocked.asObservable();
 
+  private msgNotify = new Subject<RichNotification>();
+  msgNotify$ = this.msgNotify.asObservable();
+
   constructor(private authService: MyUserAuthService, private router: Router) { }
 
   public startConnection(): void {
@@ -72,6 +75,11 @@ export class ChatService {
     this.hubConnection.on("chatBlocked", (data: ChatBlockResponse) => {
       console.log(data);
       this.chatBlocked.next(data);
+    });
+
+    this.hubConnection.on("notifyMessage", (data: RichNotification) => {
+      console.log(data);
+      this.msgNotify.next(data);
     });
   }
 

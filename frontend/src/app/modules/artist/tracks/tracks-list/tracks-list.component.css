@@ -84,3 +84,20 @@
   width: fit-content;
   height: fit-content;
 }
+
+.distributor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #A9A9A9;
+}
+
+.release-date {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.release-date mat-icon {
+  margin-bottom: 5px;
+}

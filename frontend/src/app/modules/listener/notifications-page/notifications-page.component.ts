@@ -24,11 +24,15 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {
   UserPreferenceBottomSheetComponent
 } from '../../shared/bottom-sheets/user-preference-bottom-sheet/user-preference-bottom-sheet.component';
-import {map} from 'rxjs';
+import {map, Subscription} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {
   ManageFollowingBottomSheetComponent
 } from '../../shared/bottom-sheets/manage-following-bottom-sheet/manage-following-bottom-sheet.component';
+import {
+  ChatMessageMarkAsReadEndpointService
+} from '../../../endpoints/chat-endpoints/chat-message-mark-as-read-endpoint.service';
+import {ChatService} from '../../../services/chat.service';
 
 @Component({
   selector: 'app-notifications-page',
@@ -47,6 +51,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     this.filterNotis();
   }
   priotity: number = 0;
+  chat$! : Subscription;
 
   constructor(private notificationsService: NotificationsService,
               private auth: MyUserAuthService,
@@ -56,10 +61,13 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
               private markAsReadService : NotificationMarkAsReadEndpointService,
               private getPreferenceService : NotificationGetPreferenceEndpointService,
               private bottomSheet : MatBottomSheet,
-              private snackBar : MatSnackBar) {}
+              private snackBar : MatSnackBar,
+              private msgMarkAsRead: ChatMessageMarkAsReadEndpointService,
+              private chatService: ChatService) {}
 
   ngOnDestroy(): void {
     this.notificationsService.removeNotificationListener(this.notiCallback);
+    this.chat$.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -71,6 +79,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       });
 
     this.notificationsService.addNotificationListener(this.notiCallback);
+    this.chat$ = this.chatService.msgNotify$.subscribe(this.notiCallback);
   }
 
   filterSelectedType(e: MatChipSelectionChange) {
@@ -135,10 +144,20 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if(data)
       {
         for (const n of this.notifications) {
-          this.markAsReadService.handleAsync(n.id).subscribe({
-            next: data => {
-              this.removeNoti(n);
-          }})
+          if(n.type !== "Message")
+          {
+            this.markAsReadService.handleAsync(n.id).subscribe({
+              next: data => {
+                this.removeNoti(n);
+            }})
+          }
+          else {
+            this.msgMarkAsRead.handleAsync({messageId: n.id}).subscribe({
+              next: data => {
+                this.removeNoti(n);
+              }
+            })
+          }
         }
       }
     }});

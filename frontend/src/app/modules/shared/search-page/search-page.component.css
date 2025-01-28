@@ -71,3 +71,8 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.username-followage:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

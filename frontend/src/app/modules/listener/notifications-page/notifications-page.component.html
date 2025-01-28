@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="notifications-panel">
-      @for (n of filteredNotifications; track n.id) {
+      @for (n of filteredNotifications; track n.guid; let i = $index) {
         @if (!n.hidden) {
           <app-notification-card [notification]="n" (onRead)="removeNoti($event)"></app-notification-card>
         }
