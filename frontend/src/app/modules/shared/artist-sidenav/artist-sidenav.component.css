@@ -103,7 +103,9 @@
   position: absolute;
   bottom: 0vw;
   left: 5vw;
-  background-color: #333333;
+  background-color:#161215;
+  border: 0.1rem solid #4E444B;
+
   color: white;
   border-radius: 8px;
   padding: 5px;
@@ -137,7 +139,7 @@
 }
 
 .profile-menu li:hover {
-  background-color: #656464;
+  background-color: #4D3D50;
 }
 
 .profile-menu hr {

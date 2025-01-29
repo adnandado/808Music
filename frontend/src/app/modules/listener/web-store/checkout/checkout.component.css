@@ -126,7 +126,22 @@ button:hover {
   text-align: center;
   margin-top: 15px;
 }
+.error{
+  color: red;
+}
 
+#country{
+  width: 10vw;
+  height: 2vw;
+  background-color: #333333;
+  color: white;
+  margin-bottom: 0.6vw;
+  border-radius: 5px;
+}
+.country-place{
+  display: flex;
+  flex-direction: column;
+}
 .payment-success {
   color: palevioletred;
   text-align: center;

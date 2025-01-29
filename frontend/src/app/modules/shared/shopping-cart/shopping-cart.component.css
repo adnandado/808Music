@@ -11,7 +11,9 @@
   border: none;
   cursor: pointer;
 }
-
+.cart-icon:hover{
+  color: #86638e;
+}
 .item-count {
   position: absolute;
   top: -7px;

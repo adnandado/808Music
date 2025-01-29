@@ -76,7 +76,7 @@ body {
 }
 
 .search-button:hover {
-  background-color: rgba(230, 146, 248, 0.48);}
+  background-color: #4D3D50;}
 
 .search-input {
   width: 100%;
@@ -145,7 +145,7 @@ mat-form-field {
 
 .product:hover {
   transform: scale(1.05);
-  background-color: rgba(230, 146, 248, 0.48);
+  background-color: #4D3D50;
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
 }
 

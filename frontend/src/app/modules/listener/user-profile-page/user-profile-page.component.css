@@ -154,6 +154,6 @@ cursor: pointer;
   border: #4e444b 1px solid;
 }
 .user:hover{
-  background-color: rgba(230, 146, 248, 0.48);
+  background-color: #4D3D50;
   border-radius: 15px;
 }

@@ -3,6 +3,7 @@ import { ProductAddEndpointService, ProductAddRequest, ProductAddResponse } from
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ArtistHandlerService } from '../../../../services/artist-handler.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-create',
@@ -47,6 +48,7 @@ export class ProductsCreateComponent {
   constructor(
     private productService: ProductAddEndpointService,
     private router: Router,
+    private location: Location,
     private artistHandlerService: ArtistHandlerService,
     private cdr: ChangeDetectorRef
   ) {  this.productData.clothesType = 0;
@@ -101,13 +103,7 @@ export class ProductsCreateComponent {
   }
 
   backToList() {
-    const selectedArtist = this.artistHandlerService.getSelectedArtist();
-    if (selectedArtist && selectedArtist.name) {
-      const artistName = selectedArtist.name.toLowerCase().replace(/\s+/g, '-');
-      this.router.navigate([`/artist/${artistName}/products`]);
-    } else {
-      alert('No valid artist selected');
-    }
+   this.location.back();
   }
 
   onFilesSelected(event: any): void {

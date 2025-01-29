@@ -9,3 +9,6 @@ background: none;
   border-style: none;
   cursor: pointer;
 }
+.wishlist-icon:hover{
+  color: #86638e;
+}

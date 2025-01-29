@@ -77,6 +77,10 @@ p{
   background-size: cover;
   background-position: center;
 }
+.buy-tickets:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
 .artist-name{
   font-size: 1.5em;
   font-weight: bold;
@@ -136,7 +140,8 @@ display:flex;
 
   }
 .buy-tickets{background: transparent;
-font-size: 2em;
+font-size: 1.5em;
+  text-decoration: none;
 cursor: pointer;
   border-style: none;
 color: white;

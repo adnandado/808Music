@@ -47,7 +47,10 @@
   gap: 15px;
   align-items: center;
 }
+.chat-card:hover {
+  background-color: #4D3D50;
 
+}
 .chat-card:hover {
   cursor: pointer;
 }
