@@ -18,15 +18,16 @@
       <div class="sort-and-results">
 
         <div class="sort-dropdown">
-          <select [(ngModel)]="sortBy" (change)="changeSortOrder()">
-            <option value="" disabled selected>Sort</option>
-            <option value="dateCreatedNewest">Date created - Newest first</option>
-            <option value="dateCreatedOldest">Date created - Oldest first</option>
-            <option value="priceHighest">Price - Highest first</option>
-            <option value="priceLowest">Price - Lowest first</option>
-            <option value="saleHighest">Sale - Highest first</option>
+          <select [(ngModel)]="selectedSortOption" (ngModelChange)="changeSortOrder()">
+            <option value="" disabled selected>Select Sort Option</option>
+            <option *ngFor="let option of sortOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
           </select>
         </div>
+
+
+
       </div>
 
 
@@ -37,7 +38,7 @@
   <div class="products">
     <div class="product-row">
       <div class = "product-size" *ngIf="searchResults.length; else noResults">
-        <div *ngFor="let product of searchResults" class="product" (click)="viewProduct(product.slug)">
+        <div *ngFor="let product of searchResults" matTooltip="{{ product.title }}" matTooltipPosition="above" class="product" (click)="viewProduct(product.slug)">
           <div class="sale-badge" *ngIf="product.saleAmount > 0">
             -{{ (product.saleAmount * 100).toFixed(0) }}%
           </div>

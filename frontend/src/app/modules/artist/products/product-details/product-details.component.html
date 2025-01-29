@@ -22,13 +22,13 @@
       <p *ngIf="product?.discountedPrice !== product?.price" class="original-price">
         {{ product?.price | currency }}
       </p>
-      <!-- Discounted Price -->
       <p class="price">{{ product?.discountedPrice | currency }}</p>
     </div>
   </div>
 
   <div class="artist-info" (click)="goToArtistPage(product!.artistId)">
-    <img *ngIf="product?.artistPhoto" [src]="MyConfig.media_address + 'Images/Artistpfps/' + product?.artistPhoto" alt="Artist Photo" class="artist-photo">
+    <div class="artist-photo" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address +'Images/Artistpfps/'+ product?.artistPhoto + ')'}" alt="Event Cover"></div>
+
     <p class="artist-name">{{ product?.artistName ?? 'Unknown Artist' }}</p>
   </div>
 

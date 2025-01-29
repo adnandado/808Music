@@ -26,20 +26,43 @@
         <div>
           <label for="name">Name</label>
           <input id="name" formControlName="name" type="text" required />
+          <div *ngIf="checkoutForm.get('name')?.invalid && checkoutForm.get('name')?.touched">
+            <small class="error" *ngIf="checkoutForm.get('name')?.hasError('required')">Name is required.</small>
+            <small class="error" *ngIf="checkoutForm.get('name')?.hasError('minlength')">Name must be at least 2 characters long.</small>
+            <small class="error" *ngIf="checkoutForm.get('name')?.hasError('pattern')">Name can only contain letters and spaces.</small>
+
+          </div>
         </div>
-        <div>
+
+        <div class="country-place">
           <label for="country">Country</label>
-          <input id="country" formControlName="country" type="text" required />
+          <select id="country" formControlName="country" required>
+            <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+          </select>
+          <div *ngIf="checkoutForm.get('country')?.invalid && checkoutForm.get('country')?.touched">
+            <small class="error" *ngIf="checkoutForm.get('country')?.hasError('required')">Country is required.</small>
+          </div>
         </div>
+
         <div>
           <label for="city">City</label>
           <input id="city" formControlName="city" type="text" required />
+          <div *ngIf="checkoutForm.get('city')?.invalid && checkoutForm.get('city')?.touched">
+            <small class="error" *ngIf="checkoutForm.get('city')?.hasError('required')">City is required.</small>
+          </div>
         </div>
+
         <div>
           <label for="phoneNumber">Phone Number</label>
           <input id="phoneNumber" formControlName="phoneNumber" type="text" required />
+          <div *ngIf="checkoutForm.get('phoneNumber')?.invalid && checkoutForm.get('phoneNumber')?.touched">
+            <small class="error" *ngIf="checkoutForm.get('phoneNumber')?.hasError('required')">Phone number is required.</small>
+            <small class="error" *ngIf="checkoutForm.get('phoneNumber')?.hasError('pattern')">Phone number must be 9 digits.</small>
+          </div>
         </div>
       </form>
+
+
     </mat-step>
 
     <mat-step label="Payment">

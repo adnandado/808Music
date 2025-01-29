@@ -25,7 +25,7 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
                 .GreaterThanOrEqualTo(0).WithMessage("Quantity cannot be negative.");
 
             RuleFor(x => x.SaleAmount)
-                .InclusiveBetween(0m, 1m).WithMessage("Sale amount must be between 0 and 1.");
+                .InclusiveBetween(0m, 100).WithMessage("Sale amount must be between 0 and 100.");
 
             RuleFor(x => x.Slug)
                 .NotEmpty().WithMessage("Slug is required.");

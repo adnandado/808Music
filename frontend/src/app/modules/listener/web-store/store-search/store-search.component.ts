@@ -26,7 +26,14 @@ export class StoreSearchComponent implements OnInit {
   totalResults: number = 0;
 
   sortBy: string = 'dateCreatedNewest';
-
+  selectedSortOption: string = 'dateCreatedNewest';
+  sortOptions = [
+    { value: 'dateCreatedNewest', label: 'Date created - Newest first' },
+    { value: 'dateCreatedOldest', label: 'Date created - Oldest first' },
+    { value: 'priceHighest', label: 'Price - Highest first' },
+    { value: 'priceLowest', label: 'Price - Lowest first' },
+    { value: 'saleHighest', label: 'Sale - Highest first' },
+  ];
   constructor(
     private route: ActivatedRoute,
     private productsSearchService: ProductsSearchService,
@@ -102,15 +109,15 @@ export class StoreSearchComponent implements OnInit {
   }
 
   changeSortOrder(): void {
-    if (this.sortBy === 'dateCreatedNewest') {
+    if (this.selectedSortOption === 'dateCreatedNewest') {
       this.sortBy = 'datecreatednewest';
-    } else if (this.sortBy === 'dateCreatedOldest') {
+    } else if (this.selectedSortOption === 'dateCreatedOldest') {
       this.sortBy = 'datecreatedoldest';
-    } else if (this.sortBy === 'priceHighest') {
+    } else if (this.selectedSortOption === 'priceHighest') {
       this.sortBy = 'discountedpricehighest';
-    } else if (this.sortBy === 'priceLowest') {
+    } else if (this.selectedSortOption === 'priceLowest') {
       this.sortBy = 'discountedpricelowest';
-    } else if (this.sortBy === 'saleHighest') {
+    } else if (this.selectedSortOption === 'saleHighest') {
       this.sortBy = 'salelowest';
     }
 

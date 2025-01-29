@@ -68,7 +68,7 @@ export class PlaylistCreateOrEditComponent implements OnInit {
     }
 
     if (this.playlist.id) {
-      this.updatePlaylist(formData, this.playlist.id);  // Ažuriranje playliste
+      this.updatePlaylist(formData, this.playlist.id);
     } else {
       this.createPlaylist(formData);
     }

@@ -1,7 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {ProductByTypeService} from '../../../../endpoints/products-endpoints/products-by-type-endpoint.service';
 import {MyConfig} from '../../../../my-config';
+import {Product} from '../product.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {
+  RemoveProductFromWishlistService
+} from '../../../../endpoints/products-endpoints/remove-item-from-wishlist-endpoint.service';
+import {
+  AddProductToWishlistEndpointService,
+  AddProductToWishlistRequest,
+  AddProductToWishlistResponse
+} from '../../../../endpoints/products-endpoints/add-to-wishlist-endpoint.service';
+import {
+  ProductIsOnWishlistService
+} from '../../../../endpoints/products-endpoints/is-product-on-wishlist-endpoint.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-search-results',
@@ -17,8 +31,16 @@ export class BytypeComponent implements OnInit {
   pageNumbers: number[] = [];
   pageSize: number = 10;
   totalResults: number = 0;
-
+  wishlist: Set<string> = new Set();
+  selectedSortOption: string = 'dateCreatedNewest';
   sortBy: string = 'dateCreatedNewest';
+  sortOptions = [
+    { value: 'dateCreatedNewest', label: 'Date created - Newest first' },
+    { value: 'dateCreatedOldest', label: 'Date created - Oldest first' },
+    { value: 'priceHighest', label: 'Price - Highest first' },
+    { value: 'priceLowest', label: 'Price - Lowest first' },
+    { value: 'saleHighest', label: 'Sale - Highest first' },
+  ];
 
   productTypes = [
     { value: 0, label: 'Clothes' },
@@ -32,7 +54,10 @@ export class BytypeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productByTypeService: ProductByTypeService,
-    private router: Router
+    private router: Router, private snackBar : MatSnackBar,
+    private removeProductFromWishlistService : RemoveProductFromWishlistService,
+    private addProductToWishlist : AddProductToWishlistEndpointService,
+    private productIsOnWishlistService: ProductIsOnWishlistService, private cdr : ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -43,7 +68,7 @@ export class BytypeComponent implements OnInit {
       this.productType = params['productType'] ? +params['productType'] : null;
       this.currentPage = +params['page'] || 1;
       this.sortBy = params['sortBy'] || 'dateCreatedNewest';
-
+      this.cdr.detectChanges();
       if (this.productType !== null) {
         this.fetchResults();
       }
@@ -59,6 +84,7 @@ export class BytypeComponent implements OnInit {
             this.searchResults = results.products;
             this.totalResults = results.total;
             this.noResults = this.searchResults.length === 0;
+            this.checkWishlistStatus();
           },
           error: (err) => {
             console.error(err);
@@ -85,6 +111,28 @@ export class BytypeComponent implements OnInit {
     }
   }
 
+  checkWishlistStatus(): void {
+    const userId = this.getUserIdFromToken();
+    if (!userId) return;
+
+    const requests = this.searchResults.map(product =>
+      this.productIsOnWishlistService.handleAsync({ productSlug: product.slug, userId })
+    );
+
+    forkJoin(requests).subscribe(
+      responses => {
+        this.wishlist.clear();
+        responses.forEach((response, index) => {
+          if (response.isOnWishlist) {
+            this.wishlist.add(this.searchResults[index].slug);
+          }
+        });
+      },
+      error => {
+        console.error('Error checking wishlist status:', error);
+      }
+    );
+  }
 
   searchByType(): void {
     this.currentPage = 1;
@@ -92,15 +140,15 @@ export class BytypeComponent implements OnInit {
     this.fetchResults();
   }
   changeSortOrder(): void {
-    if (this.sortBy === 'dateCreatedNewest') {
+    if (this.selectedSortOption === 'dateCreatedNewest') {
       this.sortBy = 'datecreatednewest';
-    } else if (this.sortBy === 'dateCreatedOldest') {
+    } else if (this.selectedSortOption === 'dateCreatedOldest') {
       this.sortBy = 'datecreatedoldest';
-    } else if (this.sortBy === 'priceHighest') {
+    } else if (this.selectedSortOption === 'priceHighest') {
       this.sortBy = 'discountedpricehighest';
-    } else if (this.sortBy === 'priceLowest') {
+    } else if (this.selectedSortOption === 'priceLowest') {
       this.sortBy = 'discountedpricelowest';
-    } else if (this.sortBy === 'saleHighest') {
+    } else if (this.selectedSortOption === 'saleHighest') {
       this.sortBy = 'salelowest';
     }
 this.currentPage = 1;
@@ -131,13 +179,95 @@ this.currentPage = 1;
   }
 
 
-  toggleWishlist($event: MouseEvent, product: any) {
+  private addToWish(slug: string) {
+    const userId = this.getUserIdFromToken();
+    if (userId === null) {
+      alert('You must be logged in to add items to the wishlist.');
+      return;
+    }
+    const request: AddProductToWishlistRequest = {
+      productSlug: slug,
+      userId: userId
+    };
+    this.addProductToWishlist.handleAsync(request).subscribe(
+      (response: AddProductToWishlistResponse) => {
+        if (response.success) {
+          this.ngOnInit();
+          this.snackBar.open('Product added to Wishlist successfully', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });
 
+        } else {
+          alert('Error: ' + response.message);
+        }
+      },
+      (error) => {
+        alert('An error occurred: ' + error.message);
+      }
+    );
+  }
+  toggleWishlist(event: MouseEvent, product: Product): void {
+    event.stopPropagation();
+    const userId = this.getUserIdFromToken();
+    if (userId === null) {
+      alert('You must be logged in to add items to the wishlist.');
+      return;
+    }
+    if (this.isOnWishlist(product)) {
+      this.removeFromWishlist(product.slug);
+    } else {
+      this.addToWish(product.slug);
+    }
+  }
+  private removeFromWishlist(slug: string) {
+    const userId = this.getUserIdFromToken();
+
+    this.removeProductFromWishlistService.removeProductFromWishlist({
+      productSlug: slug,
+      userId: userId
+    }).subscribe(
+      (response) => {
+        if (response.success) {
+
+          this.wishlist.delete(slug);
+          this.snackBar.open('Product removed from Wishlist successfully', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });
+        } else {
+          console.log(response.message);
+        }
+      },
+      (error) => {
+        console.error('Error removing from wishlist:', error);
+      }
+    );
+  }
+  isOnWishlist(product: Product): boolean {
+    return this.wishlist.has(product.slug);
   }
 
-  isOnWishlist(product: any) {
-    return false;
-  }
+  private getUserIdFromToken(): number {
+    let authToken = sessionStorage.getItem('authToken');
 
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
+    }
+
+    try {
+      const parsedToken = JSON.parse(authToken);
+      return parsedToken.userId;
+    } catch (error) {
+      console.error('Error parsing authToken:', error);
+      return 0;
+    }
+  }
   protected readonly MyConfig = MyConfig;
 }

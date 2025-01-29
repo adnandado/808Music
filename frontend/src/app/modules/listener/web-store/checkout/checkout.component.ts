@@ -11,7 +11,9 @@ import {
   OrderAddResponse
 } from '../../../../endpoints/products-endpoints/add-order-endpoint.service';
 import { OrderConfirmationDialogComponent } from './order-confirmation-dialog/order-confirmation-dialog.component';
-import {MyConfig} from "../../../../my-config";
+import { MyConfig } from "../../../../my-config";
+
+import * as countries from 'country-list';
 
 @Component({
   selector: 'app-checkout',
@@ -28,7 +30,7 @@ export class CheckoutComponent implements OnInit {
   card: StripeCardElement | null = null;
   stripeClientSecret: string | null = null;
   currentStep: number = 0;
-
+  countries: string[] = [];
   errorMessage: string = '';
   paymentSuccess: boolean = false;
   orderCode: string = '';
@@ -44,14 +46,16 @@ export class CheckoutComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.checkoutForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', Validators.required,  Validators.minLength(2),
+        Validators.pattern('^[a-zA-Z ]*$')],
       country: ['', Validators.required],
       city: ['', Validators.required],
-      phoneNumber: ['', Validators.required]
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]]
     });
   }
 
   async ngOnInit() {
+    this.countries = countries.getNames();
     this.userId = this.getUserIdFromToken();
     if (this.userId) {
       this.fetchCartItems();
@@ -164,5 +168,5 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-    protected readonly MyConfig = MyConfig;
+  protected readonly MyConfig = MyConfig;
 }

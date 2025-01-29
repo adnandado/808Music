@@ -123,7 +123,7 @@ input.mat-input-element {
 }
 
 .search-button:hover {
-  background-color: rgba(230, 146, 248, 0.48);}
+  background-color: #4D3D50;}
 
 .category-shortcuts {
   display: flex;
@@ -140,7 +140,7 @@ input.mat-input-element {
 }
 
 .category-shortcuts a:hover {
-  color: rgba(230, 146, 248, 0.48);
+  color: #4D3D50;
 
 }
 
@@ -196,7 +196,7 @@ input.mat-input-element {
 
 .product:hover {
   transform: scale(1.05);
-  background-color: rgba(230, 146, 248, 0.48);
+  background-color: #4D3D50;
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
 }
 

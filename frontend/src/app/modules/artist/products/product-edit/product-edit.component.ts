@@ -20,9 +20,8 @@ export class ProductEditComponent implements OnInit {
     private dialogRef: MatDialogRef<ProductEditComponent>,
     private updateService: ProductUpdateEndpointService,
     private snackBar: MatSnackBar,
-    private fb: FormBuilder // Dodan FormBuilder
+    private fb: FormBuilder
   ) {
-    // Kreiranje Reactive Form-a sa inicijalnim vrednostima
     this.productForm = this.fb.group({
       title: [data.title, [Validators.required]],
       price: [data.price, [Validators.required, Validators.min(1)]],
@@ -58,7 +57,7 @@ export class ProductEditComponent implements OnInit {
     const formData = new FormData();
     const updatedProduct = this.productForm.value;
 
-    formData.append('slug', this.data.slug); // Originalni slug iz podataka
+    formData.append('slug', this.data.slug);
     formData.append('title', updatedProduct.title);
     formData.append('price', updatedProduct.price.toString());
     formData.append('quantity', updatedProduct.quantity.toString());
@@ -74,7 +73,7 @@ export class ProductEditComponent implements OnInit {
     this.updateService.handleAsync(formData).subscribe({
       next: () => {
         this.snackBar.open('Product updated successfully!', 'Close', { duration: 3000 });
-        this.dialogRef.close(true); // Zatvori dialog s uspjehom
+        this.dialogRef.close(true);
       },
       error: () => {
         this.snackBar.open('Failed to update product.', 'Close', { duration: 3000 });
@@ -83,6 +82,6 @@ export class ProductEditComponent implements OnInit {
   }
 
   cancel(): void {
-    this.dialogRef.close(false); // Zatvori dialog bez promjena
+    this.dialogRef.close(false);
   }
 }

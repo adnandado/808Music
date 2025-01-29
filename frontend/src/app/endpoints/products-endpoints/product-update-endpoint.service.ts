@@ -17,7 +17,7 @@ export interface ProductUpdateResponse {
   providedIn: 'root'
 })
 export class ProductUpdateEndpointService {
-  readonly url = `${MyConfig.api_address}/api/ProductUpdateEndpoint`; // Ispravan URL
+  readonly url = `${MyConfig.api_address}/api/ProductUpdateEndpoint`;
 
   constructor(private httpClient: HttpClient) {}
 

@@ -16,10 +16,10 @@ export class OrderConfirmationDialogComponent {
     private cdr: ChangeDetectorRef,
     private router: Router
   ) {
-    console.log('Dialog data:', data);  // Provjeriti podatke koji se prosljeđuju
+    console.log('Dialog data:', data);
     if (data && data.orderCode) {
       this.orderCode = data.orderCode;
-      console.log('Received orderCode:', this.orderCode);  // Ispisujemo orderCode
+      console.log('Received orderCode:', this.orderCode);
     } else {
       console.error('No orderCode received');
     }
