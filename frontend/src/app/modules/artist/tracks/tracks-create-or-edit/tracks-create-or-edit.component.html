@@ -12,7 +12,7 @@
   @if (oldTrack != null) {
     <div class="player">
       <h6>Current song file</h6>
-      <audio controls [src]="MyConfig.api_address + '/api/TrackStreamEndpoint/' + oldTrack.id"></audio>
+      <audio controls [src]="MyConfig.api_address + '/api/TrackStreamEndpoint?trackId=' + oldTrack.id + '&jwt=' + jwt + '&artistMode=true'"></audio>
     </div>
   }
 

@@ -18,6 +18,7 @@ export class PassStrengthMeterComponent implements OnInit, AfterViewInit, OnChan
 
   ngOnChanges(changes: SimpleChanges): void {
     this.strengthPoints = 0;
+    this.data = this.fillMeter(this.password);
   }
 
   constructor(private cdRef: ChangeDetectorRef) {
@@ -88,7 +89,7 @@ export class PassStrengthMeterComponent implements OnInit, AfterViewInit, OnChan
           }}
         case 4:
           return {
-            text: "Password is moderate.",
+            text: "Password is above moderate.",
             css: {
             'width': '80%',
             'background-color': 'lightgreen',

@@ -125,6 +125,28 @@ namespace RS1_2024_25.API.Services
             return false;
         }
 
+        public bool AuthorizeUserArtist(string token, int artistToCheck, string[] roleNames)
+        {
+            var jwt = GetDecodedJwt(token);
+            for (int i = 0; i < roleNames.Length; i++)
+            {
+                string artistIds = jwt.Claims.FirstOrDefault(c => c.Type == roleNames[i])?.Value ?? string.Empty;
+                if (artistIds == string.Empty)
+                {
+                    continue;
+                }
+                string[] aIdsArray = artistIds.Split(",");
+                for (int j = 0; j < aIdsArray.Length; j++)
+                {
+                    if (int.Parse(aIdsArray[j]) == artistToCheck)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public string CreateRefreshToken()
         {
             byte[] bytes = new byte[64];

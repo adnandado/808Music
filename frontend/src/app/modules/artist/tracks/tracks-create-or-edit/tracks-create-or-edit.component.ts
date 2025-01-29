@@ -25,6 +25,7 @@ import {ArtistHandlerService} from '../../../../services/artist-handler.service'
 import {ArtistSimpleDto} from '../../../../services/auth-services/dto/artist-dto';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MyConfig} from '../../../../my-config';
+import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
 
 @Component({
   selector: 'app-tracks-create-or-edit',
@@ -45,6 +46,8 @@ export class TracksCreateOrEditComponent implements OnInit {
 
   selectedArtists : ArtistTrackDto[]= [];
 
+  jwt = "";
+
   @Output() onUpdate: EventEmitter<any> = new EventEmitter();
   snackBar: MatSnackBar = inject(MatSnackBar);
   location: Location = inject(Location);
@@ -56,11 +59,14 @@ export class TracksCreateOrEditComponent implements OnInit {
               private artistHandler: ArtistHandlerService,
               private router: Router,
               private postTrackService: TrackInsertOrUpdateEndpointService,
+              private auth: MyUserAuthService,
               ) {
   }
 
   ngOnInit(): void {
     this.reloadData();
+
+    this.jwt = this.auth.getAuthToken()?.token ?? "";
 
     this.router.events.subscribe(event => {
       if(event instanceof NavigationStart) {
