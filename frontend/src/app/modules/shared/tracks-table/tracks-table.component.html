@@ -159,7 +159,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   @if (allowPagination) {
-    <mat-paginator showFirstLastButtons [pageSize]="20" [length]="pagedResponse?.totalCount"
+    <mat-paginator showFirstLastButtons [pageSize]="pagedRequest.pageSize" [length]="pagedResponse?.totalCount"
                    [pageSizeOptions]="paginationOptions" (page)="setPageOpitions($event)"></mat-paginator>
   }
 </div>

@@ -25,7 +25,7 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
             return Ok(new UnreadsResponse
             {
                 UnreadMessaggesCount = unreadMsgCount,
-                UnreadNotificationsCount = unreadNotisCount
+                UnreadNotificationsCount = unreadNotisCount + unreadMsgCount
             });
         }
     }

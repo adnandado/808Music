@@ -72,29 +72,32 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 user.Password = passHash;
             }
 
-            var likedSongsPlaylist = new Playlist
+
+            if(request.ID == null)
             {
-                Title = "Liked songs",
-                IsPublic = false,
-                isLikePlaylist = true,
-                CoverPath = "/Images/liked_songs.png",
-                NumOfTracks = 0
-            };
+                var likedSongsPlaylist = new Playlist
+                {
+                    Title = "Liked songs",
+                    IsPublic = false,
+                    isLikePlaylist = true,
+                    CoverPath = "/Images/liked_songs.png",
+                    NumOfTracks = 0
+                };
 
            
-            db.Playlists.Add(likedSongsPlaylist);
-            await db.SaveChangesAsync(); 
+                db.Playlists.Add(likedSongsPlaylist);
+                await db.SaveChangesAsync(); 
 
             
-            var userPlaylist = new UserPlaylist
-            {
-                MyAppUserId = user.ID,  
-                PlaylistId = likedSongsPlaylist.Id 
-            };
-
+                var userPlaylist = new UserPlaylist
+                {
+                    MyAppUserId = user.ID,  
+                    PlaylistId = likedSongsPlaylist.Id 
+                };
          
-            db.UserPlaylist.Add(userPlaylist);
-            await db.SaveChangesAsync();
+                db.UserPlaylist.Add(userPlaylist);
+                await db.SaveChangesAsync();
+            }
 
             return Ok(request.ID == null ? "User account registered" : "User account updated");
         }

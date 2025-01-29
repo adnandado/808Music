@@ -26,6 +26,15 @@
     </div>
 
     <app-tracks-table [pagedRequest]="pagedRequest" (onMainClick)="editTrack($event)" [inArtistMode]="artistMode" (onCreateClick)="addNew()" [reload]="reloadTable"></app-tracks-table>
+    <div class="distributor">
+      <div>© {{album?.distributor}}</div>
+      <div class="release-date">
+        <div>{{moment(album?.releaseDate).format('DD. MMMM yyyy.')}}</div>
+        <mat-icon>
+          calendar_month
+        </mat-icon>
+      </div>
+    </div>
   </div>
   @if (artistMode) {
     <div class="side-island" [ngStyle]="isHome ? {'flex-basis':'0'} : {}">

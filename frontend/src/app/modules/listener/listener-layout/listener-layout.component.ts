@@ -26,7 +26,12 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
   showPleaseSubscribe = false;
   chat$ : Subscription | null = null;
 
-  notiCallback = (data:RichNotification | MessageGetResponse) => {
+  notiCallback = (data:RichNotification) => {
+    if(data.type === "Message" && this.router.url.includes("/chat"))
+    {
+      return;
+    }
+
     this.snackBar.open(data.message, "", {duration: 2000});
     let audio = new Audio('assets/notification.mp3');
     audio.play().catch(err => {console.log(err)});
@@ -43,6 +48,7 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.notificationsService.removeNotificationListener(this.notiCallback);
+    this.chat$?.unsubscribe();
     //this.chat$?.unsubscribe();
   }
 
@@ -75,7 +81,7 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
 
     this.chatService.startConnection();
 
-    //this.chat$ = this.chatService.msgReceived$.subscribe(this.notiCallback);
+    this.chat$ = this.chatService.msgNotify$.subscribe(this.notiCallback);
   }
   private getUserIdFromToken(): number {
     let authToken = sessionStorage.getItem('authToken');

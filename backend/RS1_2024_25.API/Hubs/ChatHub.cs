@@ -8,11 +8,12 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using RS1_2024_25.API.Endpoints.ChatEndpoints;
+using RS1_2024_25.API.Services;
 
 namespace RS1_2024_25.API.Hubs
 {
     [Authorize]
-    public class ChatHub(ApplicationDbContext db) : Hub
+    public class ChatHub(ApplicationDbContext db, NotificationTransformerService nt) : Hub
     {
         public override async Task OnConnectedAsync()
         {
@@ -72,6 +73,14 @@ namespace RS1_2024_25.API.Hubs
 
             await Clients.User(Context.UserIdentifier!).SendAsync("receiveMessage", response);
             await Clients.User(receiverId.ToString()).SendAsync("receiveMessage", response);
+
+            RichNotification rn = await nt.GetRichNotificationAsync(chatMessage);
+            var user = await db.MyAppUserPreferences.FindAsync(receiverId);
+            if(user != null)
+            {
+                rn.Priority = user.NotificationTypePriority == rn.Type;
+            }
+            await Clients.User(receiverId.ToString()).SendAsync("notifyMessage", rn);
             return 200;
         }
     }

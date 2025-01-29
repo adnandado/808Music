@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChatGetEndpointService} from '../../../endpoints/chat-endpoints/chat-get-endpoint.service';
 import {ChatGetResponse} from '../../../endpoints/chat-endpoints/chat-create-endpoint.service';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
@@ -19,13 +19,15 @@ import {ChatMarkAsReadEndpointService} from '../../../endpoints/chat-endpoints/c
 import {HttpErrorResponse} from '@angular/common/http';
 import {MyConfig} from '../../../my-config';
 import {MatChipListboxChange} from '@angular/material/chips';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.css'
 })
-export class InboxComponent implements OnInit {
+export class InboxComponent implements OnInit, OnDestroy {
   chats : ChatGetResponse[] = [];
   queryString = "";
   selectedChat: ChatGetResponse | null = null;
@@ -33,6 +35,10 @@ export class InboxComponent implements OnInit {
   userId!: number;
   protected readonly JSON = JSON;
   protected readonly moment = moment;
+
+  chatReceive$!: Subscription;
+  chatSeen$!: Subscription;
+  chatBlocked$!: Subscription;
 
   showBlocked = false;
 
@@ -89,29 +95,54 @@ export class InboxComponent implements OnInit {
               private chatService : ChatService,
               private getMessages : ChatGetMessagesEndpointService,
               private auth: MyUserAuthService,
-              private markAsReadService : ChatMarkAsReadEndpointService,) {
+              private markAsReadService : ChatMarkAsReadEndpointService,
+              private route: ActivatedRoute) {
+  }
+
+  ngOnDestroy(): void {
+    this.chatSeen$.unsubscribe();
+    this.chatBlocked$.unsubscribe();
+    this.chatReceive$.unsubscribe();
   }
 
   ngOnInit(): void {
     this.userId = this.auth.getAuthToken()!.userId;
 
-    this.chatService.msgReceived$.subscribe(msg => {
+    this.chatReceive$ = this.chatService.msgReceived$.subscribe(msg => {
       this.receiveMessageCallback(msg);
     })
-    this.chatService.msgSeen$.subscribe(msg => {
+    this.chatSeen$ = this.chatService.msgSeen$.subscribe(msg => {
       this.msgSeenCallback(msg);
     })
 
     this.getChatsService.handleAsync().subscribe({
       next: value => {
         this.chats = value;
-        this.selectedChat = value[0];
-        this.messagePagedRequest.id = this.selectedChat.id;
+
+        this.route.queryParams.subscribe(params => {
+          let chatId = params['chat'];
+          if(chatId)
+          {
+            let chat = this.chats.find(val => val.id === Number.parseInt(chatId, 10));
+            if(chat !== undefined)
+            {
+              this.selectedChat = chat;
+            }
+            else {
+              this.selectedChat = value[0];
+            }
+          }
+          else {
+              this.selectedChat = value[0];
+          }
+          this.messagePagedRequest.id = this.selectedChat!.id;
+        })
+
         this.fetchMessages();
       }
     })
 
-    this.chatService.chatBlocked$.subscribe(data => {
+    this.chatBlocked$ = this.chatService.chatBlocked$.subscribe(data => {
       let chat = this.chats.find(val => val.id === data.id);
       if(chat)
       {

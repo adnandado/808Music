@@ -134,6 +134,12 @@ flex-direction: row;}
   text-align: left;
   font-size: 1em;
 }
+
+.username-followage:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .username-profiletype{
   margin-left: 1vw;
 }

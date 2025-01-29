@@ -23,6 +23,7 @@ import {
   GetPlaylistsByUserIdEndpointService, PlaylistResponse
 } from '../../../../endpoints/playlist-endpoints/get-playlist-by-user-endpoint.service';
 import {PlaylistDialogComponent} from '../../../shared/playlist-detail/playlist-dialog.component';
+import moment from 'moment';
 
 @Component({
   selector: 'app-tracks-page',
@@ -250,4 +251,6 @@ export class TracksListComponent implements OnInit {
       }
     })
   }
+
+  protected readonly moment = moment;
 }

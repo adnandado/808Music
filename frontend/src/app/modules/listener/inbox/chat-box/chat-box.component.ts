@@ -28,13 +28,14 @@ import {MyConfig} from '../../../../my-config';
 import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
 import {ChatToggleBlockEndpointService} from '../../../../endpoints/chat-endpoints/chat-toggle-block-endpoint.service';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-chat-box',
   templateUrl: './chat-box.component.html',
   styleUrl: './chat-box.component.css'
 })
-export class ChatBoxComponent implements AfterViewInit, OnChanges {
+export class ChatBoxComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() chat: ChatGetResponse | null = null;
   form = new FormGroup({
     message: new FormControl('', [Validators.required]),
@@ -51,6 +52,8 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
   @Output() loadMoreMessages : EventEmitter<number> = new EventEmitter();
   sendDisabled: boolean = false;
   msgDiv!: HTMLDivElement;
+  chatBlocked$! : Subscription;
+  msgReceive$!: Subscription;
 
   result: MessageContent | null = null;
 
@@ -65,18 +68,23 @@ export class ChatBoxComponent implements AfterViewInit, OnChanges {
               private bottomSheet: MatBottomSheet,
               private auth: MyUserAuthService,
               private blockToggleService: ChatToggleBlockEndpointService,
-              private router: Router) {
+              private router: Router,) {
+  }
+
+  ngOnDestroy(): void {
+    this.chatBlocked$.unsubscribe();
+    this.msgReceive$.unsubscribe();
   }
 
   ngAfterViewInit(): void {
     this.msgDiv = document.getElementById("messageBox") as HTMLDivElement;
     setTimeout(() => {this.msgDiv.scrollTop = this.msgDiv.scrollHeight}, 100);
     this.changeDetectorRef.detectChanges();
-    this.chatService.msgReceived$.subscribe(msg => {
+    this.msgReceive$ = this.chatService.msgReceived$.subscribe(msg => {
       setTimeout(() => {this.msgDiv.scrollTop = this.msgDiv.scrollHeight}, 100);
     })
 
-    this.chatService.chatBlocked$.subscribe(blockedChat => {
+    this.chatBlocked$ = this.chatService.chatBlocked$.subscribe(blockedChat => {
       if(blockedChat.id === this.chat?.id) {
         this.chat.blockedByUser = blockedChat.blockedByUser
         this.chat.blocked = blockedChat.isBlocked
