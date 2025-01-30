@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, NgZone, ChangeDetectorRef, HostListener} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GetShoppingCartService } from '../../../../endpoints/products-endpoints/get-shopping-cart-endpoint.service';
@@ -14,6 +14,7 @@ import { OrderConfirmationDialogComponent } from './order-confirmation-dialog/or
 import { MyConfig } from "../../../../my-config";
 
 import * as countries from 'country-list';
+import {UserService} from '../../../../endpoints/user-endpoints/get-user-info-endpoints.service';
 
 @Component({
   selector: 'app-checkout',
@@ -34,7 +35,7 @@ export class CheckoutComponent implements OnInit {
   errorMessage: string = '';
   paymentSuccess: boolean = false;
   orderCode: string = '';
-
+  email = '';
   constructor(
     private getShoppingCartService: GetShoppingCartService,
     private stripeService: StripeService,
@@ -43,11 +44,14 @@ export class CheckoutComponent implements OnInit {
     private router: Router,
     private ngzone: NgZone,
     private changeDetectorRef: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog, private userService : UserService
   ) {
     this.checkoutForm = this.fb.group({
-      name: ['', Validators.required,  Validators.minLength(2),
-        Validators.pattern('^[a-zA-Z ]*$')],
+      name: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(2),
+        Validators.pattern('^[a-zA-Z ]*$')
+      ])],
       country: ['', Validators.required],
       city: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]]
@@ -55,6 +59,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.userId = this.getUserIdFromToken();
+    this.userService.getUserInfo(this.userId!).subscribe({
+      next: (userInfo) => {this.email = userInfo.email;}
+    })
+    console.log(this.email);
     this.countries = countries.getNames();
     this.userId = this.getUserIdFromToken();
     if (this.userId) {
@@ -117,10 +126,9 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
-    const email = "adnan@gmail.com";
     const amountInCents = Math.round(this.totalPrice * 100);
 
-    this.stripeService.createPaymentIntent(amountInCents, email).subscribe(
+    this.stripeService.createPaymentIntent(amountInCents, this.email).subscribe(
       async (response) => {
         const clientSecret = response.clientSecret;
         const { error, paymentIntent } = await this.stripe!.confirmCardPayment(clientSecret, {
@@ -128,7 +136,7 @@ export class CheckoutComponent implements OnInit {
             card: this.card!,
             billing_details: {
               name: this.checkoutForm.value.name,
-              email: email
+              email: this.email
             }
           }
         });
@@ -167,6 +175,28 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
+  @HostListener('window:keydown.enter', ['$event'])
+  handleEnter(event: KeyboardEvent) {
+    event.preventDefault();
+    this.goToNextStep();
+  }
+
+  goToNextStep() {
+
+    if (this.currentStep === 0) {
+      this.currentStep++;
+    } else if (this.currentStep === 1 && this.checkoutForm.valid) {
+      console.log('Form is valid, moving to step 2');
+      this.currentStep++;
+    } else if (this.currentStep === 2) {
+      if (this.checkoutForm.valid) {
+        this.handleSubmit();
+      } else {
+        this.errorMessage = 'Invalid Form.';
+      }
+    }
+  }
+
 
   protected readonly MyConfig = MyConfig;
 }

@@ -12,6 +12,7 @@ import {MyConfig} from '../../../../my-config';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {CartUpdateService} from '../../../shared/shopping-cart/shopping-cart.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-product-details',
@@ -44,6 +45,7 @@ export class ProductDetailsComponent implements OnInit {
   quantity: number = 1;
   constructor(
     private route: ActivatedRoute,
+    private location: Location,
     private productService: ProductGetByIdEndpointService,
     private addToShoppingCartService: AddToShoppingCartEndpointService,
     private addProductToWishlist: AddProductToWishlistEndpointService,
@@ -186,5 +188,9 @@ export class ProductDetailsComponent implements OnInit {
 
   goToArtistPage(artistId: number) {
     this.router.navigate(['/listener/profile/', artistId])
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

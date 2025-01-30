@@ -46,12 +46,15 @@ font-size: 15px;
   align-items: flex-start;
   text-align: left;
   background-color: #1E1E1E;
-  width: 40%;
+  width: 50%;
   border-radius: 12px;
-  height: 97vh;
+  min-height: 97vh;
   margin-left: auto;
   margin-right: auto;
+  height: auto;
+  overflow: hidden;
 }
+
 .ngxImageZoomThumbnail{
   max-height: 300px;
 }
@@ -88,8 +91,22 @@ font-size: 15px;
   display: flex;
   gap: 10px;
   overflow-x: auto;
+  margin-bottom: 0.5vw;
 }
-
+.track-page-controls {
+  display: flex;
+  position: absolute;
+  justify-content: space-between;
+}
+.go-back-button {
+  width: fit-content;
+  height: fit-content;
+}
+.go-back-arrow {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
 .thumbnail {
   margin: 0 5px;
   cursor: pointer;
@@ -135,11 +152,13 @@ font-size: 15px;
   text-decoration: line-through;
   color: #B0B0B0;
   font-size: 1rem;
+  margin: 0;
 }
 
 .price {
   font-size: 1.3rem;
   font-weight: bold;
+  margin: 0;
 }
 
 

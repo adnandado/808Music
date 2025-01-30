@@ -1,7 +1,6 @@
 * {
   color: white;
   box-sizing: border-box;
-
 }
 .flex-page {
   display: flex;
@@ -9,6 +8,7 @@
   flex-direction: row;
   padding: 0;
   height: 100vh;
+  margin-left: vw;
 }
 .add-playlist{color:white;
   border: 1px solid #444444;

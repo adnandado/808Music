@@ -15,7 +15,7 @@ public class ProductAddEndpoint : MyEndpointBaseAsync
     {
         private readonly ApplicationDbContext _db;
 
-        public ProductAddEndpoint(ApplicationDbContext db)
+        public ProductAddEndpoint(ApplicationDbContext db, RS1_2024_25.API.Services.Interfaces.IMyFileHandler _fileHandler)
         {
             _db = db;
         }
