@@ -22,20 +22,24 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
             var user = await db.MyAppUsers.Include(u => u.Subscription)
                             .FirstOrDefaultAsync(u => u.ID == userId, cancellationToken);
 
-
-            if (user.Subscription == null || user.Subscription.EndDate < DateTime.UtcNow)
+            if ((user.Subscription == null || user.Subscription.EndDate < DateTime.UtcNow) && request.ArtistMode != null && !request.ArtistMode.Value)
             {
                 return Unauthorized(new { message = "Your subscription has expired or is not active." });
             }
             //TODO Check for active subscription
-
+            
             Track? track = request.TrackId <= 0 ? await db.Tracks.FirstOrDefaultAsync(cancellationToken) : await cs.GetAsync<Track>($"track-{request.TrackId}", cancellationToken);
             if(track == null)
             {
-                track = await db.Tracks.FindAsync(request.TrackId);
+                track = await db.Tracks.Where(t => t.Id == request.TrackId).Include(t => t.Album).FirstOrDefaultAsync(cancellationToken);
                 if (track == null)
                     return BadRequest();
                 await cs.SetAsync($"track-{request.TrackId}", track, cancellationToken);
+            }
+
+            if (request.ArtistMode != null && request.ArtistMode.Value && !tp.AuthorizeUserArtist(request.Jwt, track.Album!.ArtistId, ["Owner", "General Manager", "Streaming Manager"]))
+            {
+                return Unauthorized();
             }
 
             var stream = await fh.GetFileAsStreamAsync(Path.Combine(cfg["StaticFilePaths:Tracks"]!, track.TrackPath));
@@ -49,5 +53,6 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
     {
         public int TrackId { get; set; } = -1;
         public string Jwt {  get; set; } = string.Empty;
+        public bool? ArtistMode { get; set; }
     }
 }

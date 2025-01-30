@@ -32,14 +32,14 @@
 
       <div class="form-group">
         <label for="password">Password:</label>
-        <input [(ngModel)]="regData.password" id="password" name="password" required type="text" (input)="validatePassword()" class="">
+        <input [(ngModel)]="regData.password" id="password" name="password" required type="password" (input)="validatePassword()" class="">
       </div>
 
         <pass-strength-meter [password]="regData.password"></pass-strength-meter>
 
       <div class="form-group">
         <label for="repeatPassword">Repeat password:</label>
-        <input [(ngModel)]="repeatPassword" id="repeatPassword" name="repeatPassword" required type="text" (input)="validateIfSamePassword()" class="">
+        <input [(ngModel)]="repeatPassword" id="repeatPassword" name="repeatPassword" required type="password" (input)="validateIfSamePassword()" class="">
       </div>
 
       <div class="padder"></div>
