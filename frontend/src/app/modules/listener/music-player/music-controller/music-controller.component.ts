@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {TrackGetResponse} from '../../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 import {SecondsToDurationStringPipe} from '../../../../services/pipes/seconds-to-string.pipe';
 import {MatSliderDragEvent} from '@angular/material/slider';
@@ -105,7 +105,34 @@ export class MusicControllerComponent implements OnInit {
         }
       }, 250);
   }
+  @HostListener('window:keydown.space', ['$event'])
+  handleSpacebar(event: KeyboardEvent) {
+    event.preventDefault();
+    this.changePlayerState();
+  }
 
+  @HostListener('window:keydown.shift.n', ['$event'])
+  handleSkipNext(event: KeyboardEvent) {
+    event.preventDefault();
+    this.skipNext();
+  }
+
+  @HostListener('window:keydown.shift.b', ['$event'])
+  handleSkipPrevious(event: KeyboardEvent) {
+    event.preventDefault();
+    this.skipPrevious();
+  }
+  @HostListener('window:keydown.shift.s', ['$event'])
+  handleToggleShuffle(event: KeyboardEvent) {
+    event.preventDefault();
+    this.setShuffleState();
+  }
+
+  @HostListener('window:keydown.shift.r', ['$event'])
+  handleToggleRepeat(event: KeyboardEvent) {
+    event.preventDefault();
+    this.setLoopState();
+  }
   setCurrentPlaybackTime(e: number) {
     this.currentPlaybackTime = e;
     window.localStorage.setItem("currentPlaybackTime", this.currentPlaybackTime.toString());
