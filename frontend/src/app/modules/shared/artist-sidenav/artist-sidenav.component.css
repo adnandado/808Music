@@ -84,8 +84,8 @@
 }
 
 .profile-picture {
-  width: 3.5vw;
-  height: 3.5vw;
+  width: 3.75vw;
+  height: 3.75vw;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #333333;

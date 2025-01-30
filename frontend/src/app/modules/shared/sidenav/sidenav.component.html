@@ -68,11 +68,11 @@
   <div class="profile-container">
     <hr class="divider">
 
-    <img
+    <div
       class="profile-picture"
-      [src]="pathToPfp"
+      [ngStyle]="{'background-image': 'url('+pathToPfp+')'}"
       (click)="toggleMenu()"
-    />
+    ><div>
     <div class="profile-menu" [ngClass]="{'show': isMenuVisible}">
       <ul>
         <li (click)="openUserProfile()">Profile</li>

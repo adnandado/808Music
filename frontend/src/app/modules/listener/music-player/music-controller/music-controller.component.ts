@@ -107,32 +107,59 @@ export class MusicControllerComponent implements OnInit {
   }
   @HostListener('window:keydown.space', ['$event'])
   handleSpacebar(event: KeyboardEvent) {
+    if (event.target instanceof HTMLInputElement ||
+      event.target instanceof HTMLTextAreaElement ||
+      event.target instanceof HTMLSelectElement) {
+      return;
+    }
     event.preventDefault();
     this.changePlayerState();
   }
 
   @HostListener('window:keydown.shift.n', ['$event'])
   handleSkipNext(event: KeyboardEvent) {
+    if (event.target instanceof HTMLInputElement ||
+      event.target instanceof HTMLTextAreaElement ||
+      event.target instanceof HTMLSelectElement) {
+      return;
+    }
     event.preventDefault();
     this.skipNext();
   }
 
   @HostListener('window:keydown.shift.b', ['$event'])
   handleSkipPrevious(event: KeyboardEvent) {
+    if (event.target instanceof HTMLInputElement ||
+      event.target instanceof HTMLTextAreaElement ||
+      event.target instanceof HTMLSelectElement) {
+      return;
+    }
     event.preventDefault();
     this.skipPrevious();
   }
+
   @HostListener('window:keydown.shift.s', ['$event'])
   handleToggleShuffle(event: KeyboardEvent) {
+    if (event.target instanceof HTMLInputElement ||
+      event.target instanceof HTMLTextAreaElement ||
+      event.target instanceof HTMLSelectElement) {
+      return;
+    }
     event.preventDefault();
     this.setShuffleState();
   }
 
   @HostListener('window:keydown.shift.r', ['$event'])
   handleToggleRepeat(event: KeyboardEvent) {
+    if (event.target instanceof HTMLInputElement ||
+      event.target instanceof HTMLTextAreaElement ||
+      event.target instanceof HTMLSelectElement) {
+      return;
+    }
     event.preventDefault();
     this.setLoopState();
   }
+
   setCurrentPlaybackTime(e: number) {
     this.currentPlaybackTime = e;
     window.localStorage.setItem("currentPlaybackTime", this.currentPlaybackTime.toString());

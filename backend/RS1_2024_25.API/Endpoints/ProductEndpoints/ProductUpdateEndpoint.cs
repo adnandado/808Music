@@ -4,14 +4,11 @@ using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using static ProductUpdateEndpoint;
-using System.Text;
-using NAudio.Utils;
-using System.Runtime.ConstrainedExecution;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp;
+using static ProductUpdateEndpoint;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 public class ProductUpdateEndpoint : MyEndpointBaseAsync
     .WithRequest<ProductUpdateRequest>
@@ -20,12 +17,14 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
     private readonly ApplicationDbContext _db;
     private readonly IMyMailService _mailService;
     private readonly IConfiguration _configuration;
+    private readonly IMyFileHandler _fileHandler;
 
-    public ProductUpdateEndpoint(ApplicationDbContext db, IMyMailService mailService, IConfiguration configuration)
+    public ProductUpdateEndpoint(ApplicationDbContext db, IMyMailService mailService, IConfiguration configuration, IMyFileHandler fileHandler)
     {
         _db = db;
         _mailService = mailService;
         _configuration = configuration;
+        _fileHandler = fileHandler;
     }
 
     [HttpPut]
@@ -70,18 +69,38 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
                 var thumbnailFileName = Guid.NewGuid().ToString() + "_thumb" + Path.GetExtension(photo.FileName);
                 var thumbnailFilePath = Path.Combine(uploadFolder, "thumbnails", thumbnailFileName);
 
-                GenerateThumbnail(filePath, thumbnailFilePath);  
+                GenerateThumbnail(filePath, thumbnailFilePath);
 
                 var productPhoto = new ProductPhoto
                 {
                     Path = $"/images/products/{fileName}",
-                    ThumbnailPath = $"/images/products/thumbnails/{thumbnailFileName}", 
+                    ThumbnailPath = $"/images/products/thumbnails/{thumbnailFileName}",
                     ProductId = product.Id
                 };
 
                 _db.ProductPhotos.Add(productPhoto);
             }
+        }
 
+        if (request.RemovePhotoIds != null && request.RemovePhotoIds.Any())
+        {
+            foreach (var photoId in request.RemovePhotoIds)
+            {
+                var photo = await _db.ProductPhotos.FirstOrDefaultAsync(p => p.Id == photoId, cancellationToken);
+                if (photo != null)
+                {
+                    if (!string.IsNullOrEmpty(photo.Path))
+                    {
+                        _fileHandler.DeleteFile(_configuration["StaticFilePaths:Products"] + photo.Path);
+                    }
+                    if (!string.IsNullOrEmpty(photo.ThumbnailPath))
+                    {
+                        _fileHandler.DeleteFile(_configuration["StaticFilePaths:Products"] + photo.ThumbnailPath);
+                    }
+
+                    _db.ProductPhotos.Remove(photo);
+                }
+            }
         }
 
         await _db.SaveChangesAsync(cancellationToken);
@@ -132,6 +151,7 @@ public class ProductUpdateEndpoint : MyEndpointBaseAsync
             Bio = product.Bio,
         };
     }
+
     private void GenerateThumbnail(string sourcePath, string destinationPath, int width = 400, int height = 300)
     {
         using var image = SixLabors.ImageSharp.Image.Load(sourcePath);
