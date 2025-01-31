@@ -4,13 +4,13 @@
   width: 9vw;
   height: 9vw;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
-margin-left:auto;
-margin-right: auto;}
+  margin-left:auto;
+  margin-right: auto;}
 .followage-section{
   display: flex;
   flex-direction: row;
   background-color: rgba(22, 18, 21, 0.03);
-border-radius: 15px;
+  border-radius: 15px;
 }
 .button{
   right: 2vw;
@@ -46,7 +46,7 @@ border-radius: 15px;
 
 }
 .profile-info{
- position: absolute;
+  position: absolute;
   bottom: 0;
   left: 18.5vw;
   margin-bottom: 1vw;
@@ -107,14 +107,14 @@ h2{
   font-size: 6.5em;
 }
 .profile-sections{
-position: relative;
-align-items: end;
+  position: relative;
+  align-items: end;
   background-color: rgba(22, 18, 21, 0.03);
-justify-content: space-between;
+  justify-content: space-between;
   flex-grow: 0;
-flex-basis: auto;
-display: flex;
-flex-direction: row;}
+  flex-basis: auto;
+  display: flex;
+  flex-direction: row;}
 .user-info{
   position: relative;
   display: flex;
@@ -146,9 +146,9 @@ flex-direction: row;}
 .user{
   display: flex;
   flex-direction: column;
-width: 10.5vw;
+  width: 10.5vw;
   margin-right: 1vw;
-cursor: pointer;
+  cursor: pointer;
   background-color: #161215;
   border-radius: 15px;
   border: #4e444b 1px solid;
@@ -156,4 +156,8 @@ cursor: pointer;
 .user:hover{
   background-color: #4D3D50;
   border-radius: 15px;
+}
+.playlist-row{
+  display: flex;
+  flex-direction: row;
 }

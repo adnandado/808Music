@@ -29,7 +29,7 @@ export class ProductListComponent implements OnInit {
     private updateService: ProductUpdateEndpointService,
     private deleteService: ProductDeleteEndpointService,
     private router: Router,
-  private artistHandlerService: ArtistHandlerService,
+    private artistHandlerService: ArtistHandlerService,
     private dialog: MatDialog,
     private snackBar : MatSnackBar
   ) {}
@@ -192,5 +192,5 @@ export class ProductListComponent implements OnInit {
     product.saleAmount = product.saleAmount * 100;
   }
 
-    protected readonly MyConfig = MyConfig;
+  protected readonly MyConfig = MyConfig;
 }

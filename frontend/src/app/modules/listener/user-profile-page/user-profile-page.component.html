@@ -9,33 +9,34 @@
       </div>
     }
     <div class="user-info">
-    <div class="profile-picture">
-      <img [src]="pathToPfp" alt="Profile Picture" class="profile-img" [@profileImageAnimation]>
-    </div>
+      <div class="profile-picture">
+        <img [src]="pathToPfp" alt="Profile Picture" class="profile-img" [@profileImageAnimation]>
+      </div>
 
-    <div class="profile-info">
-      <h2 class="big-username">{{ username }}</h2>
-      <div class="profile-stats">
-        <p >{{playlists?.length}} Public Playlists ·</p>
+      <div class="profile-info">
+        <h2 class="big-username">{{ username }}</h2>
+        <div class="profile-stats">
+          <p >{{playlists?.length}} Public Playlists ·</p>
 
-        <p class="followersnfollowing" (click) ="goToFollowers()"> {{followers.length}} Followers ·</p>
+          <p class="followersnfollowing" (click) ="goToFollowers()"> {{followers?.length}} Followers ·</p>
 
-        <p class="followersnfollowing" (click) ="goToFollowing()">  {{followingUsers.length}} Following</p>
+          <p class="followersnfollowing" (click) ="goToFollowing()">  {{followingUsers?.length}} Following</p>
 
         </div>
 
       </div>
     </div>
     @if(!isUserPage()){
-    @if(!isFollowing){
-      <button class="button" (click)="follow()">Follow</button>} @else {
-      <button class="unfollow-button" (click)="follow()">Unfollow</button>
-    }  }
+      @if(!isFollowing){
+        <button class="button" (click)="follow()">Follow</button>} @else {
+        <button class="unfollow-button" (click)="follow()">Unfollow</button>
+      }  }
 
   </div>
   <div class="profile-sections">
     <div class="section playlists-section">
       <h3 class="big-names">Playlists</h3>
+      <div class="playlist-row">
       <div (click)="openPlaylist(playlist.id)" *ngFor="let playlist of playlists || [] | slice:0:maxVisibleFollowage">
         <app-playlist-card matTooltip="{{ playlist.title }}" matTooltipPosition="below" [title]="playlist.title"
                            [imageUrl]="MyConfig.media_address + playlist.coverPath"
@@ -44,9 +45,9 @@
                            [hasControls]="false"
                            (onClick)="openPlaylist(playlist.id)">
         </app-playlist-card>
-      </div>
-      </div>
+      </div></div>
     </div>
+  </div>
   <p *ngIf="playlists?.length === 0">No playlists available.</p>
 
   <h3 class="big-names" (click)="goToFollowers()">Followers</h3>
@@ -56,8 +57,8 @@
         <img class="followage-pfp" [src]="MyConfig.media_address + user.profilePicture" alt="Profile Picture">
         <div class="username-profiletype">
 
-        <p class="username-followage">{{ user.username }}</p>
-        <p class="profile-undertext">Profile</p>      </div>
+          <p class="username-followage">{{ user.username }}</p>
+          <p class="profile-undertext">Profile</p>      </div>
 
       </div>
     </div>
@@ -72,15 +73,15 @@
         <div class="user" (click)="openArtistProfile(user.artistId)">
           <img class="followage-pfp"  [src]="MyConfig.media_address + '/Images/Artistpfps/' + user.profilePicture" alt="Profile Picture" width="40" height="40">
           <div class="username-profiletype">
-          <p class="username-followage">{{ user.username }}</p>
-          <p class="profile-undertext">Artist</p></div>
+            <p class="username-followage">{{ user.username }}</p>
+            <p class="profile-undertext">Artist</p></div>
         </div>
       } @else {
         <div class="user" (click)="openProfile(user.userId)">
           <img class="followage-pfp"  [src]="MyConfig.media_address + user.profilePicture" alt="Profile Picture" width="40" height="40">
-         <div class="username-profiletype">
-          <p class="username-followage">{{ user.username }}</p>
-          <p class="profile-undertext">Profile</p></div>
+          <div class="username-profiletype">
+            <p class="username-followage">{{ user.username }}</p>
+            <p class="profile-undertext">Profile</p></div>
         </div>
       }
     </div>

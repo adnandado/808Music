@@ -6,7 +6,7 @@ using RS1_2024_25.API.Helper.Api;
 
 namespace RS1_2024_25.API.Endpoints.ProductEndpoints
 {
-    public class ProductGetByArtistEndpoint : MyEndpointBaseAsync.WithRequest<int>.WithResult<ProductGetByArtistEndpoint.ProductGetByArtistResponse[]>
+    public class ProductGetByArtistEndpoint : MyEndpointBaseAsync.WithRequest<ProductGetByArtistEndpoint.ProductGetByArtistRequest>.WithResult<ProductGetByArtistEndpoint.ProductGetByArtistResponse[]>
     {
         private readonly ApplicationDbContext _db;
 
@@ -15,16 +15,58 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
             _db = db;
         }
 
-        [HttpGet("api/ProductGetByArtist/{artistId}")]
-        public override async Task<ProductGetByArtistResponse[]> HandleAsync(int artistId, CancellationToken cancellationToken = default)
+        [HttpGet]
+        public override async Task<ProductGetByArtistResponse[]> HandleAsync(
+            [FromQuery] ProductGetByArtistRequest request,
+            CancellationToken cancellationToken = default)
         {
-            var result = await _db.Products
-                .Where(p => p.ArtistId == artistId )  // Filtriranje prema ArtistId
+            var query = _db.Products
+                .Where(p => p.ArtistId == request.ArtistId)
                 .Include(p => p.Photos)
                 .Include(p => p.Artist)
+                .AsQueryable();
+
+            if (request.MinPrice.HasValue)
+                query = query.Where(p => p.Price >= request.MinPrice.Value);
+
+            if (request.MaxPrice.HasValue)
+                query = query.Where(p => p.Price <= request.MaxPrice.Value);
+
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+                query = query.Where(p => p.Title.Contains(request.SearchQuery));
+
+            if (request.SortByPrice != null)
+            {
+                query = request.SortByPrice == "asc"
+                    ? query.OrderBy(p => p.Price)
+                    : query.OrderByDescending(p => p.Price);
+            }
+
+            if (request.SortBySaleAmount != null)
+            {
+                query = request.SortBySaleAmount == "asc"
+                    ? query.OrderBy(p => p.SaleAmount)
+                    : query.OrderByDescending(p => p.SaleAmount);
+            }
+
+            if (request.SortByOldest != null)
+            {
+                query = request.SortByOldest == "true"
+                    ? query.OrderBy(p => p.DateCreated)
+                    : query.OrderByDescending(p => p.DateCreated);
+            }
+
+            if (request.SortByNewest != null)
+            {
+                query = request.SortByNewest == "true"
+                    ? query.OrderByDescending(p => p.DateCreated)
+                    : query.OrderBy(p => p.DateCreated);
+            }
+
+            var result = await query
                 .Select(p => new ProductGetByArtistResponse
-                {   
-                    Slug = p.Slug,  
+                {
+                    Slug = p.Slug,
                     Title = p.Title,
                     Price = p.Price,
                     Quantity = p.QtyInStock,
@@ -41,8 +83,21 @@ namespace RS1_2024_25.API.Endpoints.ProductEndpoints
             return result;
         }
 
+        public class ProductGetByArtistRequest
+        {
+            public int ArtistId { get; set; }
+            public float? MinPrice { get; set; }
+            public float? MaxPrice { get; set; }
+            public string? SearchQuery { get; set; }
+            public string? SortByPrice { get; set; }
+            public string? SortBySaleAmount { get; set; }
+            public string? SortByOldest { get; set; } 
+            public string? SortByNewest { get; set; }  
+        }
+
         public class ProductGetByArtistResponse
-        {   public required string Slug { get; set; }
+        {
+            public required string Slug { get; set; }
             public required string Title { get; set; }
             public required float Price { get; set; }
             public int Quantity { get; set; }
