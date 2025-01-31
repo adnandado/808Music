@@ -152,8 +152,8 @@ ul li {
   justify-content: space-between;
 }
 .graph-row{
-   display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
 }
 .table-title{

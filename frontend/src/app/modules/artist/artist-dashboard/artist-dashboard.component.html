@@ -136,7 +136,7 @@
     <section class="table-section">
       <h2 class="table-title">{{ getTableTitle() }}</h2>
 
-        <span class="change-data">
+      <span class="change-data">
       <mat-icon (click)="prevDataType()" class="change-icon">arrow_back_ios_new</mat-icon>
       <mat-icon (click)="nextDataType()" class="change-icon">arrow_forward_ios</mat-icon>
     </span>
@@ -162,18 +162,18 @@
   </div>
   <div class="graph-row">
 
-  <section id="streams-section" class="chart-section">
-    <canvas id="streamsChart"></canvas>
-  </section>
+    <section id="streams-section" class="chart-section">
+      <canvas id="streamsChart"></canvas>
+    </section>
 
-  <section id="followers-section" class="chart-section">
-    <canvas id="followersChart"></canvas>
-  </section>
+    <section id="followers-section" class="chart-section">
+      <canvas id="followersChart"></canvas>
+    </section>
 
-  <section id="revenue-section" class="chart-section">
-    <canvas id="revenueChart"></canvas>
-  </section>
-</div>
+    <section id="revenue-section" class="chart-section">
+      <canvas id="revenueChart"></canvas>
+    </section>
+  </div>
 </div>
 <div *ngIf="loading">Loading...</div>
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>

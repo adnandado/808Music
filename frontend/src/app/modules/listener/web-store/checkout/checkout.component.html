@@ -8,7 +8,7 @@
         <ul class="order-items">
           <li *ngFor="let item of cartItems">
             <img [src]="MyConfig.media_address + item.productPhoto" alt="Product Image" class="product-photo" />
-            <div>
+            <div class="product-information">
               <h3>{{ item.productTitle }}</h3>
               <p>{{ item.discountedPrice | number: '1.2-2' }}$</p>
               <p>Quantity: {{ item.quantity }}</p>

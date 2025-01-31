@@ -78,7 +78,7 @@ export class ShoppingCartComponent implements OnInit {
 
   calculateTotalPrice(): void {
     this.totalPrice = this.cartItems.reduce(
-      (sum, item) => sum + item.totalPrice, // Koristi totalPrice koji backend već vraća
+      (sum, item) => sum + item.totalPrice,
       0
     );
   }

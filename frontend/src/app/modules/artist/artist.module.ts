@@ -47,6 +47,7 @@ import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} f
 import { ArtistDashboardComponent } from './artist-dashboard/artist-dashboard.component';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
 import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
+import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -113,7 +114,9 @@ import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/mater
     MatStepperPrevious,
     MatDialogContent,
     MatDialogTitle,
-    MatDialogActions
+    MatDialogActions,
+    CdkDropList,
+    CdkDrag
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

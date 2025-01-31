@@ -87,7 +87,15 @@ input:focus {
   font-size: 16px;
   color: white;
 }
+h3{
+  margin: 0;
+}
+p{
+  margin: 0;
+}
+.product-information{
 
+}
 .StripeElement--focus {
   border-color: palevioletred;
 }

@@ -13,7 +13,7 @@
   </mat-card>
 </div>
 <div class="container">
-    <div class="products">
+  <div class="products">
 
     <div
       *ngFor="let product of products"
@@ -33,16 +33,16 @@
 
         </div>
         <div class="crud-buttons">
-        <button class="product-button" (click)="toggleEdit(product)"><mat-icon>edit</mat-icon></button>
-        <button class="product-button" (click)="deleteProduct(product.slug)"><mat-icon>delete_forever</mat-icon></button>
-        <button class="product-button" (click)="viewProduct(product.slug)"><mat-icon>visibility</mat-icon></button>
+          <button class="product-button" (click)="toggleEdit(product)"><mat-icon>edit</mat-icon></button>
+          <button class="product-button" (click)="deleteProduct(product.slug)"><mat-icon>delete_forever</mat-icon></button>
+          <button class="product-button" (click)="viewProduct(product.slug)"><mat-icon>visibility</mat-icon></button>
         </div>
       </div>
 
     </div>
 
     </div>
-    </div>
+  </div>
 
 
-    </div>
+</div>
