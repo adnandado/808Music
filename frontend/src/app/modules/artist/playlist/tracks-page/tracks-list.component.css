@@ -36,18 +36,78 @@ body {
 }
 .playlist-title{
   font-weight: bold;
-  font-size: 6em;
+  font-size: 5em;
+  line-height: 0.8em;
+}
+.menu-row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+p{
+  margin: 0;
+}
+.group-icon{
+  color:white;
+  font-size: 25px;
+}
+.user-pfp{
+  width: 2vw;
+  height: 2vw;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+}
+.user-pfp:hover{
+  cursor: pointer;
+}
+.big-icon {
+  font-size: 2vw;
+  width: 2vw;
+  height: 2vw;
+  color: white;
+
+}
+ .material-symbols-outlined {
+   font-variation-settings:
+     'FILL' 0,
+     'wght' 400,
+     'GRAD' 0,
+     'opsz' 24
+ }
+.user-row{
+  display: flex;
+  flex-direction: row;
+}
+.collab-button
+{
+  background-color: transparent;
+  border-style  : none;
+  width: 3vw; height: 3vw;
+}
+.collab-button:hover
+{
+  background-color: rgba(128, 128, 128, 0.09);
+ cursor: pointer;
+  border-radius: 50%;
+
+}
+.menu-text{
+  align-items: center;
 }
 .playlist-information {
   margin-top: 1vw;
 display: flex;
   flex-direction: row;
+  margin-bottom: 0.5vw;
 }
 .songs-h{
   font-weight: 445;
   margin-left: 0.5vw;
-  font-size: 16px;
+  font-size: 19px;
   color: #7c7c7c;
+  align-content: center;
 }
 
 .playlist-privacy
@@ -109,6 +169,8 @@ p{
   background-position: center;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+
 
 .playlist-info {
   display: flex;

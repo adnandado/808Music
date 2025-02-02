@@ -17,41 +17,48 @@ import { PlaylistUpdateDialogComponent } from './tracks-page/playlist-update-dia
 import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 import { PlaylistCreateDialogComponent } from './tracks-page/playlist-create-dialog/playlist-create-dialog.component';
 import {MatTooltip} from '@angular/material/tooltip';
+import { AddCollaboratorDialogComponent } from './tracks-page/add-collaborator-dialog/add-collaborator-dialog.component';
+import { AddCollaboratorComponent } from './add-collaborator/add-collaborator.component';
+import {ListenerModule} from '../../listener/listener.module';
+import { CollaboratorListDialogComponent } from './tracks-page/collaborator-list-dialog/collaborator-list-dialog.component';
+import {MatDivider} from "@angular/material/divider";
 
 
 @NgModule({
-    declarations: [PlaylistListMaterialComponent, PlaylistCreateOrEditComponent, TracksPageComponent, PlaylistUpdateDialogComponent, PlaylistCreateDialogComponent],
+    declarations: [PlaylistListMaterialComponent, PlaylistCreateOrEditComponent, TracksPageComponent, PlaylistUpdateDialogComponent, PlaylistCreateDialogComponent, AddCollaboratorDialogComponent, AddCollaboratorComponent, CollaboratorListDialogComponent],
     exports: [
         TracksPageComponent
     ],
-  imports: [
-    CommonModule,
-    PlaylistRoutingModule,
-    MatFormField,
-    MatSlideToggle,
-    SharedModule,
-    MatIcon,
-    MatInput,
-    MatButton,
-    MatAnchor,
-    MatCardHeader,
-    MatCard,
-    MatCardTitle,
-    MatCardContent,
-    MatCardTitleGroup,
-    MatFormFieldModule,
-    MatIconAnchor,
-    MatIconButton,
-    MatAutocomplete,
-    MatOption,
-    MatAutocompleteTrigger,
-    MatMenu,
-    MatMenuTrigger,
-    MatMenuItem,
-    MatDialogActions,
-    MatDialogContent,
-    MatDialogTitle,
-    MatTooltip
-  ]
+    imports: [
+        CommonModule,
+        PlaylistRoutingModule,
+        MatFormField,
+        MatSlideToggle,
+        SharedModule,
+        MatIcon,
+        MatInput,
+        MatButton,
+        MatAnchor,
+        MatCardHeader,
+        MatCard,
+        MatCardTitle,
+        MatCardContent,
+        MatCardTitleGroup,
+        MatFormFieldModule,
+        MatIconAnchor,
+        MatIconButton,
+        MatAutocomplete,
+        MatOption,
+        MatAutocompleteTrigger,
+        MatMenu,
+        MatMenuTrigger,
+        MatMenuItem,
+        MatDialogActions,
+        MatDialogContent,
+        MatDialogTitle,
+        MatTooltip,
+        ListenerModule,
+        MatDivider
+    ]
 })
 export class PlaylistModule { }

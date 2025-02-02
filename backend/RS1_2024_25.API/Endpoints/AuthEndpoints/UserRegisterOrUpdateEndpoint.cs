@@ -92,7 +92,8 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 var userPlaylist = new UserPlaylist
                 {
                     MyAppUserId = user.ID,  
-                    PlaylistId = likedSongsPlaylist.Id 
+                    PlaylistId = likedSongsPlaylist.Id,
+                    IsOwner = true
                 };
          
                 db.UserPlaylist.Add(userPlaylist);

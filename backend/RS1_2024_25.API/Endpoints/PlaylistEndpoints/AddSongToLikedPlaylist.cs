@@ -62,7 +62,9 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                 var userPlaylist = new UserPlaylist
                 {
                     MyAppUserId = user.ID,
-                    PlaylistId = likedSongsPlaylist.Id
+                    PlaylistId = likedSongsPlaylist.Id,
+                    IsOwner = true
+
                 };
 
                 _db.UserPlaylist.Add(userPlaylist);
@@ -92,7 +94,8 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
             {
                 PlaylistId = likedSongsPlaylist.Id,
                 TrackId = track.Id,
-                TrackOrder = likedSongsPlaylist.NumOfTracks + 1 
+                TrackOrder = likedSongsPlaylist.NumOfTracks + 1,
+                DateAdded = DateTime.UtcNow,
             };
 
             _db.PlaylistTracks.Add(playlistTrack);

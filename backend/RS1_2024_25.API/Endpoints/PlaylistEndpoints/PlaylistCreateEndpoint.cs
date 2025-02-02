@@ -61,7 +61,8 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
     var userPlaylist = new UserPlaylist
     {
         MyAppUserId = userId,
-        PlaylistId = playlist.Id
+        PlaylistId = playlist.Id,
+        IsOwner = true,
     };
     _db.UserPlaylist.Add(userPlaylist);
     await _db.SaveChangesAsync(cancellationToken);
@@ -81,7 +82,6 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    // Dodavanje pjesama u playlistu
     if (request.TrackIds != null && request.TrackIds.Any())
     {
         foreach (var trackId in request.TrackIds)

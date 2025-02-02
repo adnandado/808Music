@@ -151,12 +151,31 @@ export class TracksListComponent implements OnInit {
       alert('No playlists found');
     }
   }
+  private getUserIdFromToken(): number {
+    let authToken = sessionStorage.getItem('authToken');
 
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
+    }
+
+    try {
+      const parsedToken = JSON.parse(authToken);
+      return parsedToken.userId;
+    } catch (error) {
+      console.error('Error parsing authToken:', error);
+      return 0;
+    }
+  }
   addTrackToPlaylist(playlistId: number, track: TrackGetResponse): void {
     if (this.currentUserId) {
       const request = {
         playlistId,
-        trackIds: [track.id]
+        trackIds: [track.id],
+        userId : this.getUserIdFromToken()
       };
 
       this.playlistUpdateService.handleAsync(request).subscribe({

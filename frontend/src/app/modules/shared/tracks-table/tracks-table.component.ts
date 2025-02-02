@@ -2,7 +2,7 @@ import {
   AfterViewInit, ChangeDetectorRef,
   Component,
   EventEmitter,
-  inject,
+  inject, input,
   Input,
   OnChanges,
   OnInit,
@@ -14,7 +14,7 @@ import {MyConfig} from '../../../my-config';
 import {
   ArtistTrackDto,
   TrackGetByIdEndpointService,
-  TrackGetResponse
+  TrackGetResponse, TrackUserInfoDto
 } from '../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {TrackWithPositionDto} from '../../../services/auth-services/dto/TrackWithPositionDto';
@@ -61,8 +61,11 @@ import {ArtistHandlerService} from '../../../services/artist-handler.service';
 export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() inArtistMode = true;
   @Input() isPlaylist = false;
+  @Input() trackInfo : TrackUserInfoDto [] = [];
   @Input() playlistId: number | null = null;
   @Input() isUsersPlaylist = false;
+  @Input() isCollaborative = false;
+
   protected readonly MyConfig = MyConfig;
   @Input() tracks: TrackGetResponse[] = [];
   tracksDto: TrackWithPositionDto[] = []
@@ -132,8 +135,10 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if(this.isCollaborative)
+      this.displayedColumns = ["position", "main-control", "title", "addedby", "artist-controls", "duration", "streams", "add-to-playlist-controls"];
 
-      if(this.reload)
+    if(this.reload)
       {
           console.log("changes");
           this.reloadData();
@@ -195,7 +200,8 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit(): void {
-     this.reloadData();
+    console.log('u track table veli', this.isCollaborative);
+    this.reloadData();
     this.loadPlaylists();
 
     this.musicPlayerService.shuffleToggled.subscribe({
@@ -223,6 +229,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
       this.getPlaylistsService.handleAsync(userId).subscribe({
         next: (playlists) => {
           this.playlists = playlists;
+
           console.log(this.playlists);
 
         },
@@ -447,6 +454,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit {
       } else {
         const request: PlaylistUpdateTracksRequest = {
           playlistId: playlistId,
+          userId : this.getUserIdFromToken(),
           trackIds: [this.selectedTrackId],
         };
 

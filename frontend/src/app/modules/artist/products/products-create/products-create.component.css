@@ -17,6 +17,13 @@ form {
   border-radius: 5px;
 
 }
+.error{
+  color: red;
+  margin: 0;
+  font-weight: 325;
+  font-size: 0.75em;
+}
+
 h1 {
   color:rgba(230, 146, 248, 0.48);
   font-family: 'Arial', sans-serif;

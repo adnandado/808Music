@@ -12,6 +12,14 @@
   border-radius: 5px;
 
 }
+.user-photo{
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+
+  width: 2.1vw;
+  height: 2.1vw;
+}
 .track-cover-container:hover .delete-icon{
   display:block;
 }
@@ -161,6 +169,7 @@ song-information{
   margin:0;
 
 }
+
 
 .queue_btn {
   display: flex;

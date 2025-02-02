@@ -1,0 +1,98 @@
+* {
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  padding: 20px;
+  background-color: #121212;
+  border-radius: 10px;
+  width: 92%;
+  position: relative;
+  overflow-y: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+}
+
+h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #b3b3b3;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+  margin-bottom: 0.5vw;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.info {
+  flex-grow: 1;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.role {
+  font-size: 14px;
+  color: #a0a0a0;
+}
+.remove-button{
+  background-color: transparent;
+  border-style: none;
+  font-size: 1.25em;
+
+  width: 2vw;
+  height: 2.25vw;
+}
+.collab-h{
+  font-weight: bold;
+  margin-left: 0.5vw;
+  font-size: 2em;
+}
+
+
+.remove-button:hover {
+  cursor: pointer;
+  border-radius: 50%;
+  width: 2vw;
+  height: 2.25vw;
+}

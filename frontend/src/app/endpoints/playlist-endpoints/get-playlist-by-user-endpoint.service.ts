@@ -12,6 +12,8 @@ export interface PlaylistResponse {
   username: string
   isLikedSongs : boolean;
   userId : number;
+  ownerUsername : string;
+  isCollaborative : boolean;
 }
 
 @Injectable({

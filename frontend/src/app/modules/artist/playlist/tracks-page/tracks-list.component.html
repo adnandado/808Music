@@ -17,19 +17,39 @@
           <p class="playlist-privacy">{{ playlistDetails?.isPublic ? 'Public playlist' : 'Private playlist' }}</p>
 <h2 class="playlist-title">{{ playlistDetails?.title }}</h2>
           <div class="playlist-information">
-          <p class="username" (click)="openProfile()"> {{ username }}</p>
+            <div class="user-row" *ngFor="let user of playlistDetails?.users">
+              <div (click)="openProfile(user.userId)" class="user-pfp" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + user.profilePicture + ')'}" [matTooltip]="user.username"
+                   matTooltipPosition="above"></div>
+            </div>
           <p class="songs-h">• {{ playlistDetails?.numOfTracks }} songs, {{ getTotalTrackLength() }}</p></div>
           @if(!isLikedSongs){
+
           <div class="playlist-actions">
-            <button mat-icon-button [matMenuTriggerFor]="menu">
-              <mat-icon>more_horiz</mat-icon>
+            @if(isOwner){
+            <button class="collab-button" (click)="copyInviteLink()" [matTooltip]="'Invite a collaborator to ' +playlistDetails!.title!"
+                    matTooltipPosition="above"><mat-icon class="big-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group_add</mat-icon ></button>
+            }
+            <button class="collab-button" [matMenuTriggerFor]="menu" [matTooltip]="'More actions for ' +playlistDetails!.title!"
+                    matTooltipPosition="above">
+              <mat-icon class="big-icon">more_horiz</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="sharePlaylist()">Share this playlist</button>
-
-              <button mat-menu-item (click)="editPlaylist()">Edit Playlist</button>
-              <button mat-menu-item (click)="deletePlaylist()">Delete this playlist</button>
-
+              <div class="menu-row">
+              <button mat-menu-item (click)="sharePlaylist()">
+                <mat-icon >share</mat-icon>
+                <p >Share this playlist</p></button></div>
+              @if(isOwner){
+                @if(isCollaborative){
+                <button mat-menu-item (click)="manageCollaborators()">
+                  <mat-icon class="menu-text">groups</mat-icon>
+                  Manage Collaborators</button>}
+              <button mat-menu-item (click)="editPlaylist()">
+                <mat-icon class="menu-text">edit</mat-icon>
+                Edit Playlist</button>
+              <button mat-menu-item (click)="deletePlaylist()">
+                <mat-icon class="menu-text">delete</mat-icon>
+                Delete this playlist</button>
+}
             </mat-menu>
           </div>  }
         </div>
@@ -44,6 +64,8 @@
       [pagedRequest]="myFeaturedRequest"
       [allowPagination]="false"
       [isPlaylist] = "true"
+      [isCollaborative] = "isCollaborative"
+      [trackInfo]="trackUserInfo"
       [playlistId]="playlistDetails?.id!"
       [isUsersPlaylist]="isUsersPlaylist"
     ></app-tracks-table>

@@ -1,0 +1,16 @@
+
+<mat-dialog-content class="container">
+  <div class="playlist-cover" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + playlistDetails?.coverPath + ')'}">
+    <div class="overlay-text">
+      <img class="group" src="assets/icons/group.svg" alt="WhatsApp" width="50" height="50">
+
+      <p class="upper-text">{{ ownerName }} invited you to join {{ playlistName }}</p>
+
+    </div>
+
+    <div class="action-buttons">
+      <button (click)="acceptInvite()" class="accept-button">Join playlist</button>
+      <button (click)="declineInvite()" class="decline-button">Not now</button>
+    </div>
+  </div>
+</mat-dialog-content>
