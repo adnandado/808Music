@@ -6,6 +6,7 @@ import { MyConfig } from '../../my-config';
 export interface PlaylistUpdateTracksRequest {
   playlistId: number;
   trackIds: number[];
+  userId : number;
 }
 
 @Injectable({

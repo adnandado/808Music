@@ -1,0 +1,115 @@
+.playlist-cover {
+  width: 100%;
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.container {
+  height: 97vh;
+  overflow-y: hidden;
+}
+
+.playlist-cover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.playlist-cover::before {
+  content: '';
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:linear-gradient(rgba(90, 90, 90, 0), rgba(21, 21, 21, 0.68), rgba(0, 0, 0, 0.86));; /* Poluprozirni crni gradient */
+  z-index: 1;
+}
+.overlay-text {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  color: white;
+  z-index: 2;
+  padding: 16px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+p{
+  margin: 0;
+}
+.upper-text {
+  font-size: 1.35em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  white-space: nowrap; text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
+0px -5px 35px rgba(255,255,255,0.3);
+}
+
+
+.action-buttons {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+}
+
+.accept-button {
+  background-color: white;
+  color: black;
+  padding: 8px 16px;
+  border-style: none;
+  font-size: 14px;
+  text-transform: none;
+  font-weight: bold;
+  border-radius: 30px;
+}
+.accept-button:hover {
+  cursor: pointer;
+  background-color: transparent;
+  border: white 1px solid;
+  color: white;
+}
+.decline-button {
+  background-color: transparent;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  text-transform: none;
+  font-weight: bold;
+
+  border-style: none;
+}
+
+.decline-button:hover{
+  text-decoration: underline;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.mat-dialog-actions {
+  z-index: 4;
+}
+.group {
+  filter: invert(100%) brightness(100%) contrast(100%);
+  transition: filter 0.3s ease;
+  margin-bottom: 0.5vw;
+  box-shadow: 2px 8px 6px rgba(0,0,0,0.2),
+  0px -5px 35px rgba(255,255,255,0.3);
+}
+

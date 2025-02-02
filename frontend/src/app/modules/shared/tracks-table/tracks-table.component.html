@@ -78,7 +78,17 @@
         </div>      </td>
 
     </ng-container>
-
+    @if(isCollaborative){
+      <ng-container matColumnDef="addedby">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let track">
+          <div class="user-photo"
+               [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + track.trackUserInfo.addedByUserProfilePhotoPath + ')'}"
+               [matTooltip]="track.trackUserInfo.addedByUsername"
+               matTooltipPosition="above">
+          </div>
+        </td>
+      </ng-container>}
     <ng-container matColumnDef="artist-controls">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let track">

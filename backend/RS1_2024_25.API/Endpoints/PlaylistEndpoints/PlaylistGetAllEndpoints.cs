@@ -47,22 +47,26 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
         public async Task<IActionResult> GetPlaylistByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var playlist = await _db.Playlists
-                .Where(p => p.Id == id)
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Title,
-                    p.NumOfTracks,
-                    p.IsPublic,
-                    p.CoverPath,
-                    p.isLikePlaylist,
-                    Users = p.UserPlaylists.Select(up => new
-                    {
-                        UserId = up.MyAppUserId,
-                        Username = up.User.Username
-                    }).ToList()
-                })
-                .FirstOrDefaultAsync(cancellationToken);
+           .Where(p => p.Id == id)
+           .Select(p => new
+           {
+               p.Id,
+               p.Title,
+               p.NumOfTracks,
+               p.IsPublic,
+               p.CoverPath,
+               p.IsCollaborative,
+               p.isLikePlaylist,
+               Users = p.UserPlaylists.Select(up => new
+               {
+                   UserId = up.MyAppUserId,
+                   Username = up.User.Username,
+                   ProfilePicture = up.User.pfpCoverPath, 
+                   IsOwner = up.IsOwner         
+               }).ToList()
+           })
+           .FirstOrDefaultAsync(cancellationToken);
+
 
             if (playlist == null)
             {

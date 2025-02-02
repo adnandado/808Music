@@ -20,13 +20,21 @@ import { GetPlaylistsByUserIdEndpointService } from '../../../../endpoints/playl
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from '../../../shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { MusicPlayerService } from '../../../../services/music-player.service';
-import {TrackGetResponse} from '../../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
+import {
+  TrackGetResponse,
+  TrackUserInfoDto
+} from '../../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 import {PlaylistUpdateDialogComponent} from './playlist-update-dialog/playlist-update-dialog.component';
 import {
   SocialShareBottomSheetComponent
 } from '../../../shared/social-media-sharing/social-share-bottom-sheet.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {Location} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {CollaboratorListDialogComponent} from './collaborator-list-dialog/collaborator-list-dialog.component';
+import {
+  PlaylistAddOrRemoveCollaboratorService
+} from '../../../../endpoints/playlist-endpoints/add-or-remove-collaborator-endpoint.service';
 
 @Component({
   selector: 'app-tracks-page',
@@ -38,6 +46,8 @@ export class TracksPageComponent implements OnInit {
   playlistDetails: PlaylistByIdResponse | null = null;
   username: string = 'Loading...';
   userId: number = 0;
+  isCollaborative = false;
+  isOwner = false;
   playlistOwnerId = 0;
   coverPaths: { [trackId: number]: string } = {};
   showDeleteIcon: boolean = true;
@@ -46,6 +56,7 @@ export class TracksPageComponent implements OnInit {
   filteredTracks: TrackGetResponse[] = [];
   isUsersPlaylist = false;
   featuredTracks: TrackGetResponse[] = [];
+  trackUserInfo: TrackUserInfoDto[] = [];
   myFeaturedRequest: { pageNumber: number; pageSize: number; PlaylistID : number } = {
     pageNumber: 1,
     pageSize: 1000,
@@ -65,7 +76,9 @@ export class TracksPageComponent implements OnInit {
     private removeTrackFromPlaylistService: RemoveTrackFromPlaylistService,
     private deletePlaylistService: DeletePlaylistService,
     private dialog: MatDialog,
-    private musicPlayerService: MusicPlayerService, private location : Location
+    private musicPlayerService: MusicPlayerService, private location : Location,
+    private snackBar : MatSnackBar,
+    private playlistAddOrRemoveCollaboratorService : PlaylistAddOrRemoveCollaboratorService
 
   ) {}
 
@@ -102,30 +115,42 @@ export class TracksPageComponent implements OnInit {
     this.playlistTracksService.handleAsync(request).subscribe({
       next: (response) => {
         this.featuredTracks = response.dataItems || [];
+        this.trackUserInfo = this.extractTrackUserInfo(response.dataItems);
+        console.log(this.trackUserInfo);
+        console.log(response);
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error fetching playlist tracks:', err);
       },
     });
+  }private extractTrackUserInfo(tracks: TrackGetResponse[]): any[] {
+    return tracks.map(track => track.trackUserInfo).flat();
   }
 
-    private loadPlaylistDetails(playlistId: number): void {
+  private loadPlaylistDetails(playlistId: number): void {
     this.playlistDetailsService.handleAsync(playlistId).subscribe({
       next: (response) => {
         this.playlistDetails = response;
         this.username = response.users[0].username;
-        this.playlistOwnerId = response.users[0].userId;
+        this.playlistOwnerId = response.users.find(user => user.isOwner)?.userId || 0; // Pronalaženje ID-a vlasnika
+        this.isCollaborative = response.isCollaborative;
         this.isLikedSongs = response.isLikePlaylist;
-        if(response.users[0].userId == this.getUserIdFromToken())
-        {this.isUsersPlaylist = true;}
+
+
+        this.isOwner = this.playlistOwnerId === this.getUserIdFromToken();
+
+        if (response.users[0].userId == this.getUserIdFromToken()) {
+          this.isUsersPlaylist = true;
+        }
+
         console.log(this.isUsersPlaylist);
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error fetching playlist details:', err);
       },
     });
-
   }
+
 
   searchTracks(searchTerm: string): Observable<MyPagedList<TrackGetResponse>> {
     const request: PlaylistTracksGetRequest = { title: searchTerm, playlistId: this.playlistDetails?.id || 0, pageNumber: 1, pageSize: 10 };
@@ -136,6 +161,7 @@ export class TracksPageComponent implements OnInit {
     if (!this.playlistDetails) return;
 
     const request: PlaylistUpdateTracksRequest = {
+      userId : this.getUserIdFromToken(),
       playlistId: this.playlistDetails.id,
       trackIds: [trackId],
     };
@@ -144,7 +170,7 @@ export class TracksPageComponent implements OnInit {
       next: () => {
         console.log(`Track with ID ${trackId} added to playlist`);
         if (this.playlistDetails?.id) {
-          this.loadPlaylistTracks(this.playlistDetails.id); // Osvježi listu pjesama
+          this.loadPlaylistTracks(this.playlistDetails.id);
         } else {
           console.error('Playlist details or ID is null');
         }
@@ -173,6 +199,41 @@ export class TracksPageComponent implements OnInit {
   goBack(): void {
   this.location.back();
   }
+  generateInviteLink(): string {
+    if (!this.playlistDetails) return '';
+
+    const playlistId = this.playlistDetails.id;
+    const inviteToken = Math.random().toString(36).substr(2, 25);
+    const ownerId = this.getUserIdFromToken();
+    this.snackBar.open('Link copied to Clipboard!', 'Close', {
+      duration: 1500,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'center'
+    });
+    return `${window.location.origin}/listener/playlist/collaborate?p=${playlistId}&${inviteToken}&oiwd=${ownerId}`;
+  }
+  copyInviteLink(): void {
+    if (this.playlistDetails && this.playlistDetails.users.length === 5) {
+      this.snackBar.open('Collab capacity is five users per playlist', 'Close', {
+        duration: 3000,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center',
+      });
+    } else {
+      const link = this.generateInviteLink();
+      navigator.clipboard.writeText(link).then(() => {
+        console.log('Invite link copied to clipboard:', link);
+        this.snackBar.open('Link copied to Clipboard!', 'Close', {
+          duration: 1500,
+          verticalPosition: 'bottom',
+          horizontalPosition: 'center',
+        });
+      }).catch(err => {
+        console.error('Failed to copy invite link:', err);
+      });
+    }
+  }
+
 
   getTotalTrackLength(): string {
     const totalSeconds = this.featuredTracks?.reduce((total, track) => total + track.length, 0) || 0;
@@ -182,7 +243,7 @@ export class TracksPageComponent implements OnInit {
   }
 
   deletePlaylist(): void {
-    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent); // Otvoriti dijalog za potvrdu
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -252,11 +313,45 @@ export class TracksPageComponent implements OnInit {
     });
   }
 
-  openProfile() {
-    this.router.navigate([`/listener/user-profile/`, this.playlistOwnerId]);
+  openProfile(userId: number) {
+    this.router.navigate([`/listener/user/`, userId]);
   }
 
   filterSearch($event: string) {
     this.loadPlaylistTracks(this.playlist?.playlistId!);
   }
+
+  protected readonly open = open;
+
+  manageCollaborators() {
+    if (!this.playlistDetails) return;
+
+    const dialogRef = this.dialog.open(CollaboratorListDialogComponent, {
+      width: '500px',
+      data: {
+        collaborators: this.playlistDetails.users,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const request = {
+          ownerId : this.getUserIdFromToken(),
+          collaboratorId : result.userId,
+          playlistId : this.playlistDetails!.id,
+        }
+
+        this.playlistAddOrRemoveCollaboratorService.handleAsync(request).subscribe(result => {
+          this.loadPlaylistDetails(this.playlistDetails?.id!);
+          this.snackBar.open('User removed as Collaborator successfully!', 'Close', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'center'
+          });
+        });
+        console.log('Collaborators dialog closed with result:', result);
+      }
+    });
+  }
+
 }

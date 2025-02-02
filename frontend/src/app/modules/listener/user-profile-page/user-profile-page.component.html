@@ -40,7 +40,7 @@
       <div (click)="openPlaylist(playlist.id)" *ngFor="let playlist of playlists || [] | slice:0:maxVisibleFollowage">
         <app-playlist-card matTooltip="{{ playlist.title }}" matTooltipPosition="below" [title]="playlist.title"
                            [imageUrl]="MyConfig.media_address + playlist.coverPath"
-                           [username]="playlist.username"
+                           [username]="playlist.ownerUsername"
                            [id]="playlist.id"
                            [hasControls]="false"
                            (onClick)="openPlaylist(playlist.id)">

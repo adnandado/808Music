@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="header">
+    <div class="header section">
+    <h2 class="collab-h">Shared with</h2>
+    </div>
+    <button class="close-btn" (click)="closeDialog()">×</button>
+
+  </div>
+
+  <ul>
+    <li *ngFor="let user of sortedCollaborators">
+      <img [src]="MyConfig.media_address + user.profilePicture" alt="Profile Picture">
+      <div class="info">
+        <span class="username">{{ user.username }} <span *ngIf="user.isOwner">(you)</span></span>
+        <span class="role">{{ user.isOwner ? 'Owner' : 'Collaborator' }}</span>
+
+      </div>
+      <button *ngIf="user.userId !== userId" (click)="removeCollab(user.userId)" class="remove-button"
+              [matTooltip]="'Remove Collaborator'"
+              matTooltipPosition="above">-</button>
+
+    </li>
+  </ul>
+</div>

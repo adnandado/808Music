@@ -21,7 +21,7 @@
       <div class="row" *ngFor="let playlist of playlists || []">
         <app-playlist-card matTooltip="{{ playlist.title }}" matTooltipPosition="below" [title]="playlist.title"
                            [imageUrl]="MyConfig.media_address + playlist.coverPath"
-                           [username]="playlist.username"
+                           [username]="playlist.ownerUsername"
                            [id]="playlist.id"
                            [hasControls]="false"
                            (onDelete)="deletePlaylist(playlist.id)"

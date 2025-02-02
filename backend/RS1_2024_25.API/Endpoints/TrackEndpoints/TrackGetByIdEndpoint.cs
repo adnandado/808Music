@@ -55,6 +55,8 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
         public string CoverPath { get; set; } = string.Empty;
         public List<ArtistTrackDto> Artists { get; set; }
         public int AlbumId { get; set; }
+        public TrackUserInfoDto TrackUserInfo { get; set; }
+
     }
 
     public class ArtistTrackDto
@@ -63,5 +65,10 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
         public string Name { get; set; } = string.Empty;
         public string PfpPath { get; set; } = string.Empty;
         public bool IsLead { get; set; }
+    }
+    public class TrackUserInfoDto
+    {
+        public string AddedByUsername { get; set; }
+        public string AddedByUserProfilePhotoPath { get; set; }
     }
 }

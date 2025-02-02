@@ -10,9 +10,12 @@ export interface PlaylistByIdResponse {
   isPublic: boolean;
   coverPath: string;
   isLikePlaylist : boolean;
+  isCollaborative : boolean;
   users: {
     userId: number;
     username: string;
+    profilePicture : string;
+    isOwner : boolean;
   }[];
 }
 

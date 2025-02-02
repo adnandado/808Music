@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ArtistHandlerService } from '../../../../services/artist-handler.service';
 import { Location } from '@angular/common';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-product-create',
@@ -42,7 +43,7 @@ export class ProductsCreateComponent {
     { id: 4, name: 'Hoodie' },
     { id: 5, name: 'Socks' },
   ];
-
+  createForm : FormGroup;
   showClothesType = true;
 
   constructor(
@@ -50,46 +51,60 @@ export class ProductsCreateComponent {
     private router: Router,
     private location: Location,
     private artistHandlerService: ArtistHandlerService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+
   ) {  this.productData.clothesType = 0;
+    this.createForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      price: [0, [Validators.required, Validators.min(0.01)]],
+      quantity: [0, [Validators.required, Validators.min(0)]],
+      isDigital: [false, Validators.required],
+      productType: [0, Validators.required],
+      clothesType: [0],
+      bio: ['', [Validators.required, Validators.maxLength(1000)]],
+      photos: [[], Validators.required]
+    });
   }
 
   onProductTypeChange(cbChange: Event): void {
+    let cb = (cbChange.target as HTMLSelectElement).value;
 
-    let cb = (cbChange.target as HTMLSelectElement).value
-    console.log(this.productData.clothesType);
     if (cb === '0') {
-
       this.showClothesType = true;
-      this.productData.clothesType = 0;
-      console.log(this.showClothesType);
-
+      this.createForm.get('clothesType')?.setValue(0);
     } else {
       this.showClothesType = false;
-      console.log(this.showClothesType);
-
-      this.productData.clothesType = null;
+      this.createForm.get('clothesType')?.disable();
+      this.createForm.get('clothesType')?.setValue(null);
     }
+
     this.cdr.detectChanges();
   }
-
-
   createProduct() {
-    console.log( this.productData.clothesType);
-    console.log( this.productData.productType);
+    this.createForm.markAllAsTouched();
+
+    const formValues = { ...this.createForm.value };
+
+    this.productData = {
+      ...formValues,
+      photos: this.productData.photos,
+    };
 
     const selectedArtist = this.artistHandlerService.getSelectedArtist();
     if (selectedArtist && selectedArtist.id) {
       this.productData.artistId = selectedArtist.id;
+      console.log(selectedArtist.id);
     } else {
       alert('No valid artist selected');
       return;
     }
 
     if (!this.productData.title || this.productData.price <= 0 || this.productData.quantity < 0) {
-      alert('Title, price (must be > 0), and quantity (must be >= 0) are required.');
       return;
     }
+
+    console.log('Final Product Data:', this.productData);
 
     this.productService.handleAsync(this.productData).subscribe({
       next: (response: ProductAddResponse) => {
@@ -97,19 +112,23 @@ export class ProductsCreateComponent {
       },
       error: (err: HttpErrorResponse) => {
         console.error("Error creating product:", err);
-        alert("There was an error creating the product.");
       }
     });
   }
 
+
+
   backToList() {
-   this.location.back();
+    this.location.back();
   }
 
   onFilesSelected(event: any): void {
     const files: FileList = event.target.files;
+    console.log("Files selected:", files);
+
     if (files.length > 0) {
       this.productData.photos = Array.from(files);
+      console.log("Selected Photos:", this.productData.photos);
 
       this.previewPhotos = [];
       Array.from(files).forEach((file) => {
@@ -121,4 +140,9 @@ export class ProductsCreateComponent {
       });
     }
   }
+
+
+
+
+
 }

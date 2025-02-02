@@ -40,7 +40,9 @@ public class PlaylistUpdateTracksEndpoint : ControllerBase
                 {
                     PlaylistId = playlist.Id,
                     TrackId = trackId,
-                    TrackOrder = localNumOfTracks 
+                    TrackOrder = localNumOfTracks,
+                    AddedByUserId = request.UserId,
+                    DateAdded = DateTime.UtcNow,
                 };
 
                 _db.PlaylistTracks.Add(playlistTrack);
@@ -64,7 +66,8 @@ public class PlaylistUpdateTracksEndpoint : ControllerBase
 }
 
 public class PlaylistUpdateTracksRequest
-{
+{   
+    public required int UserId { get; set; }
     public required int PlaylistId { get; set; }
     public List<int> TrackIds { get; set; } = new();
 }

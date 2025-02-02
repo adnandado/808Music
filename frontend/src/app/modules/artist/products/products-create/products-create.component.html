@@ -1,64 +1,73 @@
 <div>
+  <form [formGroup]="createForm" (ngSubmit)="createProduct()">
 
-  <form>
-    <h1>Create Product</h1>
     <div>
       <label>Title:</label>
-      <input type="text" [(ngModel)]="productData.title" name="title">
+      <input type="text" formControlName="title">
+      <div class="error" *ngIf="createForm.get('title')?.invalid && createForm.get('title')?.touched">
+        Title has to be between 3 and 100 characters.
+      </div>
     </div>
 
     <div>
       <label>Price:</label>
-      <input type="number" [(ngModel)]="productData.price" name="price" min="0">
+      <input type="number" formControlName="price" min="0">
+      <div class="error" *ngIf="createForm.get('price')?.invalid && createForm.get('price')?.touched">
+        Price is required and has to be greater than 0.
+      </div>
     </div>
 
     <div>
       <label>Quantity:</label>
-      <input type="number" [(ngModel)]="productData.quantity" name="quantity" min="0">
+      <input type="number" formControlName="quantity" min="0">
+      <div class="error" *ngIf="createForm.get('quantity')?.invalid && createForm.get('quantity')?.touched">
+      Quantity is required and must be 0 or greater
+      </div>
     </div>
 
-
     <div>
-      <label>Is Digital?</label>
-      <input type="checkbox" [(ngModel)]="productData.isDigital" name="isDigital">
+      <label>Is Digital</label>
+      <input type="checkbox" formControlName="isDigital">
     </div>
 
     <div>
       <label>Product Type:</label>
-      <select class="combobox" [(ngModel)]="productData.productType" (change)="onProductTypeChange($event)" name="productType">
+      <select class="combobox" formControlName="productType" (change)="onProductTypeChange($event)">
         <option *ngFor="let type of productTypes" [value]="type.id">{{ type.name }}</option>
       </select>
     </div>
 
     <div>
       <label>Clothes Type:</label>
-      <select class="combobox" [(ngModel)]="productData.clothesType" name="clothesType" [disabled]="!showClothesType">
+      <select class="combobox" formControlName="clothesType" [disabled]="!showClothesType">
         <option *ngFor="let type of clothesTypes" [value]="type.id">{{ type.name }}</option>
       </select>
     </div>
 
-
-
-
     <div>
       <label>Bio:</label>
-      <textarea class="bio" [(ngModel)]="productData.bio" name="bio"></textarea>
-    </div>
-
-    <div>
-      <label>Photos:</label>
-      <label class="custom-upload">
-Upload product pictures        <input class="upload-pic" type="file" (change)="onFilesSelected($event)" multiple>
-
-      </label>
-      <div class="photo-preview" *ngIf="previewPhotos.length > 0">
-        <img *ngFor="let photo of previewPhotos" [src]="photo" alt="Photo preview">
+      <textarea class="bio" formControlName="bio"></textarea>
+      <div class="error" *ngIf="createForm.get('bio')?.invalid && createForm.get('bio')?.touched">
+        Product bio is required
       </div>
     </div>
 
+    <div>
+      <label>Product Photos:</label>
+      <label class="custom-upload">
+Load product photos
+        <input class="upload-pic" type="file"  (change)="onFilesSelected($event)" multiple>
+      </label>
+      <div class="photo-preview" *ngIf="previewPhotos.length > 0">
+        <img *ngFor="let photo of previewPhotos" [src]="photo" alt="photo preview">
+      </div>
+      <div class="error" *ngIf="createForm.get('photos')?.invalid && createForm.get('photos')?.touched">
+        Product has to have at least one photo.
+      </div>
+    </div>
 
     <div class="control-btns">
-      <button type="button" (click)="createProduct()">Create</button>
+      <button type="submit" >Create</button>
       <button type="button" (click)="backToList()">Cancel</button>
     </div>
   </form>

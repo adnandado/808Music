@@ -15,6 +15,6 @@ namespace RS1_2024_25.API.Data.Models
         [ForeignKey(nameof(Playlist))]
         public int PlaylistId { get; set; }
         public Playlist Playlist { get; set; }
-
+        public bool IsOwner { get; set; } = false;
     }
 }

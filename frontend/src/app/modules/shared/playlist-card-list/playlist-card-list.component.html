@@ -10,7 +10,7 @@
             [imageUrl]="MyConfig.media_address + playlist.coverPath"
             [id]="playlist.id"
             [tooltip]="playlist.title"
-            [username]="playlist.username"
+            [username]="playlist.ownerUsername"
             (onClick)="goToPlaylist($event)"
             (onEdit)="goToEditPlaylist($event)"
             (onDelete)="deletePlaylist($event)"

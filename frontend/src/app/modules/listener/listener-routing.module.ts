@@ -34,6 +34,8 @@ import {OrderListComponent} from './order-list/order-list.component';
 import {
   OrderConfirmationDialogComponent
 } from './web-store/checkout/order-confirmation-dialog/order-confirmation-dialog.component';
+import {AddCollaboratorDialogComponent} from '../artist/playlist/tracks-page/add-collaborator-dialog/add-collaborator-dialog.component';
+import {AddCollaboratorComponent} from '../artist/playlist/add-collaborator/add-collaborator.component';
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
   children: [
@@ -46,6 +48,8 @@ const routes: Routes = [{
     {
       path: 'user/:id', component: UserProfilePageComponent,
     },
+    { path: 'playlist/collaborate', component: AddCollaboratorComponent },
+
     {
       path: 'release/:id', component: ReleaseViewComponent,
     },

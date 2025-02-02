@@ -8,85 +8,95 @@ using RS1_2024_25.API.Helper.Api;
 
 namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
 {
-    public class PlaylistTracksGetEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
-        .WithRequest<PlaylistTracksGetRequest>
-        .WithActionResult<MyPagedList<TrackGetResponse>>
+   public class PlaylistTracksGetEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+    .WithRequest<PlaylistTracksGetRequest>
+    .WithActionResult<MyPagedList<TrackGetResponse>>
+{
+    [Authorize]
+    [HttpGet]
+    public override async Task<ActionResult<MyPagedList<TrackGetResponse>>> HandleAsync([FromQuery] PlaylistTracksGetRequest request, CancellationToken cancellationToken = default)
     {
-        [Authorize]
-        [HttpGet]
-        public override async Task<ActionResult<MyPagedList<TrackGetResponse>>> HandleAsync([FromQuery] PlaylistTracksGetRequest request, CancellationToken cancellationToken = default)
+        var tracks = db.PlaylistTracks
+            .Where(pt => pt.PlaylistId == request.PlaylistId)
+            .OrderBy(pt => pt.TrackOrder)
+            .Select(pt => pt.Track)
+            .AsQueryable();
+
+        await db.Artists.LoadAsync();
+        await db.Albums.LoadAsync();
+
+        // Filtriranje prema zahtjevima
+        if (request.FeaturedArtists != null)
         {
-            var tracks = db.PlaylistTracks
-                .Where(pt => pt.PlaylistId == request.PlaylistId)
-                .OrderBy(pt => pt.TrackOrder)
-                .Select(pt => pt.Track)
-                .AsQueryable();
-
-            await db.Artists.LoadAsync();
-            await db.Albums.LoadAsync();
-
-            // Filtriranje prema zahtjevima
-            if (request.FeaturedArtists != null)
+            foreach (int artistId in request.FeaturedArtists)
             {
-                foreach (int artistId in request.FeaturedArtists)
-                {
-                    tracks = db.ArtistsTracks
-                        .Where(at => at.ArtistId == artistId && !at.IsLead)
-                        .Select(at => at.Track)
-                        .Where(t => tracks.Contains(t));
-                }
+                tracks = db.ArtistsTracks
+                    .Where(at => at.ArtistId == artistId && !at.IsLead)
+                    .Select(at => at.Track)
+                    .Where(t => tracks.Contains(t));
             }
-
-            if (request.IsReleased != null)
-            {
-                tracks = tracks.Where(t => t.Album.ReleaseDate < DateTime.Now);
-            }
-
-            if (request.AlbumId != null)
-            {
-                tracks = tracks.Where(t => t.AlbumId == request.AlbumId);
-            }
-
-            if (request.LeadArtistId != null)
-            {
-                tracks = tracks.Where(t => t.Album.ArtistId == request.LeadArtistId);
-            }
-
-            if (!string.IsNullOrEmpty(request.Title))
-            {
-                tracks = tracks.Where(t => t.Title.ToLower().Contains(request.Title.ToLower()));
-            }
-
-            if (request.SortByStreams)
-            {
-                tracks = tracks.OrderByDescending(t => t.Streams);
-            }
-            else
-            {
-                tracks = tracks.OrderByDescending(t => t.Album!.ReleaseDate);
-            }
-
-            var filteredTracks = tracks.Select(t => new TrackGetResponse
-            {
-                Id = t.Id,
-                isExplicit = t.isExplicit,
-                Length = t.Length,
-                Streams = t.Streams,
-                Title = t.Title,
-                CoverPath = "/media/Images/AlbumCovers/" + t.Album.CoverPath,
-                Artists = db.ArtistsTracks.Where(at => at.TrackId == t.Id).Select(at => new ArtistTrackDto
-                {
-                    Id = at.ArtistId,
-                    IsLead = at.IsLead,
-                    Name = at.Artist.Name,
-                    PfpPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath,
-                }).ToList(),
-                AlbumId = t.AlbumId
-            });
-
-            return await MyPagedList<TrackGetResponse>.CreateAsync(filteredTracks, request, cancellationToken);
         }
+
+        if (request.IsReleased != null)
+        {
+            tracks = tracks.Where(t => t.Album.ReleaseDate < DateTime.Now);
+        }
+
+        if (request.AlbumId != null)
+        {
+            tracks = tracks.Where(t => t.AlbumId == request.AlbumId);
+        }
+
+        if (request.LeadArtistId != null)
+        {
+            tracks = tracks.Where(t => t.Album.ArtistId == request.LeadArtistId);
+        }
+
+        if (!string.IsNullOrEmpty(request.Title))
+        {
+            tracks = tracks.Where(t => t.Title.ToLower().Contains(request.Title.ToLower()));
+        }
+
+        if (request.SortByStreams)
+        {
+            tracks = tracks.OrderByDescending(t => t.Streams);
+        }
+        else
+        {
+            tracks = tracks.OrderByDescending(t => t.Album!.ReleaseDate);
+        }
+
+        var filteredTracks = tracks.Select(t => new TrackGetResponse
+        {
+            Id = t.Id,
+            isExplicit = t.isExplicit,
+            Length = t.Length,
+            Streams = t.Streams,
+            Title = t.Title,
+            CoverPath = "/media/Images/AlbumCovers/" + t.Album.CoverPath,
+            Artists = db.ArtistsTracks.Where(at => at.TrackId == t.Id).Select(at => new ArtistTrackDto
+            {
+                Id = at.ArtistId,
+                IsLead = at.IsLead,
+                Name = at.Artist.Name,
+                PfpPath = "/media/Images/ArtistPfps/" + at.Artist.ProfilePhotoPath,
+            }).ToList(),
+            TrackUserInfo = db.PlaylistTracks
+                    .Where(tu => tu.TrackId == t.Id && tu.PlaylistId == request.PlaylistId)
+                    .OrderByDescending(tu => tu.DateAdded) // Pretpostavljamo da postoji polje 'AddedAt' za praćenje vremena kada je pjesma dodana
+                    .Select(tu => new TrackUserInfoDto
+                    {
+                        AddedByUsername = tu.AddedByUser.Username,
+                        AddedByUserProfilePhotoPath = tu.AddedByUser.pfpCoverPath
+                    })
+                    .FirstOrDefault() 
+
+        });
+
+        return await MyPagedList<TrackGetResponse>.CreateAsync(filteredTracks, request, cancellationToken);
     }
+}
+
 
     public class PlaylistTracksGetRequest : MyPagingRequest
     {

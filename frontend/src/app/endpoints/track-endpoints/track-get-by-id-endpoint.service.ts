@@ -10,7 +10,10 @@ export interface ArtistTrackDto {
   pfpPath: string;
   isLead: boolean;
 }
-
+export interface TrackUserInfoDto{
+  addedByUsername : string;
+  addedByUserProfilePhotoPath : string;
+}
 export interface TrackGetResponse {
   id: number;
   title: string;
@@ -18,6 +21,7 @@ export interface TrackGetResponse {
   streams: number;
   isExplicit: boolean;
   coverPath: string;
+  trackUserInfo : TrackUserInfoDto[];
   artists: ArtistTrackDto[];
   albumId: number;
 }

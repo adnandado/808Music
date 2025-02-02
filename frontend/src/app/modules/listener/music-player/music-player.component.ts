@@ -248,6 +248,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       } else {
         const request: PlaylistUpdateTracksRequest = {
           playlistId: playlistId,
+          userId : this.getUserIdFromToken(),
           trackIds: [this.selectedTrackId],
         };
 
