@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {
   ArtistDetailResponse,
   ArtistGetByIdEndpointService
@@ -22,13 +22,14 @@ import {MyConfig} from '../../../../my-config';
 import {
   AlbumGetSpotlightEndpointService
 } from '../../../../endpoints/album-endpoints/album-get-spotlight-endpoint.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-artist-music-page',
   templateUrl: './artist-music-page.component.html',
   styleUrl: './artist-music-page.component.css'
 })
-export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
+export class ArtistMusicPageComponent implements OnInit, AfterViewInit, OnDestroy{
   @Input() artist : ArtistDetailResponse | null = null;
   myPagedRequest : TrackGetAllRequest = {
     pageSize: 5,
@@ -48,9 +49,20 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
   featuredAlbums: MyPagedList<AlbumGetAllResponse> | null = null;
   featuredAlbum: AlbumGetAllResponse | null= null;
 
+  isPlayingThisAlbum: boolean = false;
+  playingState: boolean = false;
+
+  state$! : Subscription;
+  trackChange$! : Subscription;
+
+  ngOnDestroy(): void {
+    this.state$.unsubscribe();
+    this.trackChange$.unsubscribe();
+  }
+
   constructor(private router: Router,
               private trackGetAllService: TrackGetAllEndpointService,
-              private musicPlayerService: MusicPlayerService,
+              protected musicPlayerService: MusicPlayerService,
               private trackByIdService: TrackGetByIdEndpointService,
               private route: ActivatedRoute,
               private albumsGetService: AlbumGetAllEndpointService,
@@ -99,6 +111,7 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
           this.getSpotlightService.handleAsync(id).subscribe({
             next: data => {
               this.featuredAlbum = data;
+              this.isPlayingThisAlbum = this.musicPlayerService.getLastPlayedSong()?.albumId == this.featuredAlbum.id && this.musicPlayerService.getQueueType() === "album";
             }
           })
 
@@ -115,6 +128,11 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit{
           })
         }
       })
+    this.playingState = this.musicPlayerService.getPlayState();
+
+    this.state$ = this.musicPlayerService.playStateChange.subscribe(state => this.playingState = state);
+    this.trackChange$ = this.musicPlayerService.trackEvent.subscribe(track =>
+      this.isPlayingThisAlbum = track.albumId == this.featuredAlbum?.id && this.musicPlayerService.getQueueType() === "album");
   }
 
   createQueue(e: number) {

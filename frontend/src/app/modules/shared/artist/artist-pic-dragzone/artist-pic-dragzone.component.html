@@ -33,9 +33,21 @@
         </mat-card-title-group>
       </mat-card-header>
       <mat-card-content>
+        @if(withCrop) {
+          <image-cropper
+            class="crop"
+            [imageFile]="file ?? undefined"
+            (imageCropped)="imageCropped($event)"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="cropAspectRatio"
+            [containWithinAspectRatio]="containInAspectRatio"
+            (loadImageFailed)="loadImageFailed()">
+          </image-cropper>
+        } @else {
         <div [ngStyle]="{'background-image': 'url(' + fileUrl + ')',
         'width':'500px', 'height':'150px', 'background-size':'cover',
         'background-repeat': 'no-repeat', 'background-position': 'center', 'border-radius':'10px'}"></div>
+        }
       </mat-card-content>
       <mat-card-actions>
         <button mat-icon-button (click)="removeFile()">

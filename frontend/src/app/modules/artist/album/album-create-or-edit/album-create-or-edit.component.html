@@ -16,7 +16,7 @@
         <div class="current-cover" [ngStyle]="{'background-image': 'url('+ getPath() +')'}"></div>
       </div>
     }
-    <div [ngStyle]="album.coverImage != undefined ? {'margin-bottom': '33vh'} : {}">
+    <div>
       <h6> @if (album.id) {
         New Cover
       } @else {

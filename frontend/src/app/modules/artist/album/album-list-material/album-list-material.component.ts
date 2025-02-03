@@ -1,4 +1,4 @@
-import {Component, HostListener, inject, Input, OnInit} from '@angular/core';
+import {Component, HostListener, inject, Input, OnInit, ViewChild} from '@angular/core';
 import {
   AlbumGetAllEndpointService,
   AlbumGetAllResponse, AlbumPagedRequest
@@ -17,7 +17,7 @@ import {
   AlbumType,
   AlbumTypeGetAllEndpointService
 } from "../../../../endpoints/album-endpoints/album-type-get-all-endpoint.service";
-import {MatChipSelectionChange} from "@angular/material/chips";
+import {MatChipOption, MatChipSelectionChange} from "@angular/material/chips";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {FormControl} from '@angular/forms';
@@ -46,7 +46,7 @@ export class AlbumListMaterialComponent implements OnInit {
   pagedRequest : AlbumPagedRequest = {
     title: "",
   }
-  defaultPageSize = 20;
+  defaultPageSize = 18;
   albumTitleQuery = new FormControl("");
   periodTo = new FormControl<Date | null>(null);
   periodFrom = new FormControl<Date | null>(null);
@@ -56,6 +56,8 @@ export class AlbumListMaterialComponent implements OnInit {
   @Input() isHome : boolean = false;
 
   artistRole : string = "";
+
+  @ViewChild('All') chip! : MatChipOption;
 
   constructor(private albumService: AlbumGetAllEndpointService,
               private albumDeleteService: AlbumDeleteEndpointService,
@@ -148,13 +150,7 @@ export class AlbumListMaterialComponent implements OnInit {
     this.pagedRequest.pageNumber = 1;
     this.pagedRequest.pageSize = this.defaultPageSize;
 
-    this.albumService.handleAsync(this.pagedRequest).subscribe(
-      a => {
-        this.pagedList = a;
-        this.albums = a.dataItems
-        console.log(JSON.stringify(a.dataItems[0]))
-      }
-    )
+    this.reloadData();
 
     this.albumTypeGet.handleAsync(null).subscribe(t => {
       this.albumTypes = t;
@@ -261,13 +257,45 @@ export class AlbumListMaterialComponent implements OnInit {
       e.source.select();
       this.pagedRequest.isReleased = undefined;
     }
-    else if(e.selected)
+    else if(!e.selected && e.isUserInput)
+    {
+      this.chip.select();
+      this.pagedRequest.isReleased = undefined;
+      this.pagedRequest.getUnlisted = undefined;
+      return;
+    }
+    /*
+    else if(e.source.id)
     {
       this.pagedRequest.isReleased = e.source.value as boolean;
     }
     else {
       this.pagedRequest.isReleased = undefined;
     }
+
+     */
+
+    if(e.source.id === "3")
+    {
+      this.pagedRequest.isReleased = true;
+      this.pagedRequest.artistMode = true;
+      this.pagedRequest.getUnlisted = true;
+    }
+
+    if(e.source.id === "1")
+    {
+      this.pagedRequest.isReleased = e.source.value as boolean;
+      this.pagedRequest.artistMode = undefined;
+      this.pagedRequest.getUnlisted = undefined;
+    }
+
+    if(e.source.id === "2")
+    {
+      this.pagedRequest.isReleased = e.source.value as boolean;
+      this.pagedRequest.artistMode = undefined;
+      this.pagedRequest.getUnlisted = undefined;
+    }
+
     this.reloadData();
   }
 
@@ -276,6 +304,7 @@ export class AlbumListMaterialComponent implements OnInit {
       next: data => {
         this.pagedList = data;
         this.albums = data.dataItems;
+        console.log(data);
       },
       error: (err:HttpErrorResponse) => {
         this.snackBar.open(err.error, "Dismiss", {
@@ -294,20 +323,18 @@ export class AlbumListMaterialComponent implements OnInit {
     this.router.events.subscribe(event => {
       if(event instanceof NavigationStart)
       {
-        this.homeCheck(event.url);
+        let home = this.homeCheck(event.url);
+        if(home)
+        {
+          this.reloadData();
+        }
       }
     })
   }
 
   homeCheck(url: string) {
-    if(url == "/artist/album")
-    {
-      this.reloadData();
-      this.isHome = true;
-    }
-    else {
-      this.isHome = false;
-    }
+    this.isHome = url == "/artist/album";
+    return url == "/artist/album";
   }
 
   checkoutTracks(e: number) {

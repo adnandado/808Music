@@ -45,7 +45,7 @@ export class SearchPageComponent implements OnInit{
   query = "";
 
   artistRequest: UserArtistSearchRequest = {
-    sortByStreams: true,
+    sortByPopularity: true,
     searchString:"",
     returnAmount: 1000,
   }

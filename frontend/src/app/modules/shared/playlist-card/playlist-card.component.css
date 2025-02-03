@@ -10,7 +10,7 @@
   overflow-x: hidden;
   margin: 0 auto;
   margin-right: 1.25vw;
-
+  position: relative;
 }
 
 .hide-overflow {
@@ -61,3 +61,8 @@
   border-radius: 4px;
 }
 
+.play-button {
+  position: absolute;
+  bottom: 5vh;
+  right: 10px;
+}

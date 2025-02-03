@@ -34,12 +34,15 @@
         <div>
           <h6>Status:</h6>
           <mat-chip-listbox>
-            <mat-chip-option [id]="'0'" (selectionChange)="filterReleaseStatus($event)"
+            <mat-chip-option [id]="'0'" (selectionChange)="filterReleaseStatus($event)" #All
                              [selected]="pagedRequest.isReleased == undefined">All
             </mat-chip-option>
             <mat-divider [vertical]="true" [ngStyle]="{'padding-right': '10px'}"></mat-divider>
             <mat-chip-option [id]="'1'" (selectionChange)="filterReleaseStatus($event)" [value]="true">
               Released
+            </mat-chip-option>
+            <mat-chip-option [id]="'3'" (selectionChange)="filterReleaseStatus($event)" [value]="true">
+              Unlisted
             </mat-chip-option>
             <mat-chip-option [id]="'2'" (selectionChange)="filterReleaseStatus($event)" [value]="false">
               Upcoming
@@ -115,11 +118,12 @@
                         [hasControls]="hasControls" (onDelete)="deleteAlbum($event)" (onEdit)="editAlbum($event)"
                         (onStats)="showStats($event)" (onClick)="checkoutTracks($event)"
                         [tooltip]="a.title + ' - ' + getDateString(a.releaseDate)" (onPlayClick)="playAlbum($event)"
-                        [numOfTracks]="hasControls ? a.trackCount : -1" [role]="artistRole" [isHighLighted]="a.isHighlighted" [releaseDate]="getMillis(a.releaseDate)"></app-album-card>
+                        [numOfTracks]="hasControls ? a.trackCount : -1" [role]="artistRole" [isHighLighted]="a.isHighlighted"
+                        [releaseDate]="getMillis(a.releaseDate)" [artistName]="hasControls ? '' : a.artist" [artistId]="a.artistId"></app-album-card>
       }
     </div>
     <mat-paginator [length]="pagedList?.totalCount"
-                   [pageSize]="defaultPageSize" [pageSizeOptions]="[10, 15, 20, 50]" showFirstLastButtons
+                   [pageSize]="defaultPageSize" [pageSizeOptions]="[12, 18, 36, 60]" showFirstLastButtons
                    (page)="switchPage($event)"></mat-paginator>
   </div>
   @if (!isHome) {

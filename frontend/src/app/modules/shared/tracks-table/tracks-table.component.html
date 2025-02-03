@@ -1,10 +1,13 @@
 <div class="tracks-table">
-  <div class="tracks-search-bar" *ngIf="allowPagination">
+  <div class="tracks-search-bar" *ngIf="allowPagination || isPlaylist">
     <app-search-bar [placeholder]="'Search for a song'" (onSearchChange)="searchTracks($event)"></app-search-bar>
     <div class="controls">
-      <button mat-icon-button (click)="openShareSheet()">
-        <mat-icon>share</mat-icon>
-      </button>
+      @if(!isPlaylist)
+      {
+        <button mat-icon-button (click)="openShareSheet()">
+          <mat-icon>share</mat-icon>
+        </button>
+      }
       @if (inArtistMode) {
         @if (artist != null && artist.role !== "Viewer") {
           <button mat-fab extended (click)="emitCreate()">
@@ -22,9 +25,16 @@
             }
           </mat-icon>
         </button>
-        <button mat-fab (click)="emitCreate()">
-          <mat-icon>play_arrow</mat-icon>
-        </button>
+        @if (!isPlayingThisAlbum)
+        {
+          <button mat-fab (click)="emitCreate()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+        } @else {
+          <button mat-fab (click)="musicPlayerService.togglePlayState()">
+            <mat-icon>{{playingState ? 'pause' : 'play_arrow'}}</mat-icon>
+          </button>
+        }
       }
     </div>
   </div>
@@ -32,7 +42,7 @@
 
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>#</th>
-      <td mat-cell *matCellDef="let track">{{ getPosition(track.id) }}</td>
+      <td mat-cell *matCellDef="let track" [class]="!inArtistMode && currentTrack?.id == track.id ? '' : ''">{{ getPosition(track.id) }}</td>
     </ng-container>
 
     <ng-container matColumnDef="main-control">
@@ -46,9 +56,13 @@
               <mat-icon>edit</mat-icon>
             </button>
           }
-        } @else {
+        } @else if(currentTrack?.id !== track.id){
           <button mat-icon-button (click)="emitTrack(track.id)">
             <mat-icon>play_arrow</mat-icon>
+          </button>
+        } @else {
+          <button mat-icon-button (click)="musicPlayerService.togglePlayState()" class="bold">
+            <mat-icon>{{playingState ? 'pause' : 'play_arrow'}}</mat-icon>
           </button>
         }
       </td>
@@ -69,7 +83,7 @@
               }
                 </div>
           }<div class="song-information">
-          <p>{{ track.title }}</p>
+          <p [class]="!inArtistMode && currentTrack?.id == track.id ? 'bold' : ''">{{ track.title }}</p>
           <div class="track-artists">
             <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
             <app-clickable-featured-artists [artists]="track.artists"

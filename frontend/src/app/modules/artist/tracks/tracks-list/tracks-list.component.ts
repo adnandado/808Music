@@ -208,7 +208,7 @@ export class TracksListComponent implements OnInit {
     return false;
   }
 
-  goBack() {
+  goBack(e: MouseEvent) {
     if(this.artistMode)
     {
       this.router.navigate(['/artist/album']);
@@ -228,9 +228,13 @@ export class TracksListComponent implements OnInit {
       this.router.navigate(["edit",e], {relativeTo:this.route, queryParams: {albumId: this.album!.id}});
     }
     else {
-      this.musicPlayerService.createQueue(this.tracks,{display:this.album?.title + " - " + this.album?.type.type, value: "./listener/release/"+this.album?.id})
-      this.musicPlayerService.skipTo(this.tracks.find(x=> x.id == e)!);
-      console.log(this.tracks.find(x=> x.id == e)!)
+      this.tracksGetAllService.handleAsync({pageNumber: 1, pageSize: 100000, albumId: this.album!.id}).subscribe({
+        next: data => {
+          this.musicPlayerService.createQueue(data.dataItems,{display:this.album?.title + " - " + this.album?.type.type, value: "./listener/release/"+this.album?.id})
+          this.musicPlayerService.skipTo(data.dataItems.find(x=> x.id == e)!);
+          console.log(this.tracks.find(x=> x.id == e)!)
+        }
+      });
     }
 
     //this.router.navigate(["/artist/tracks/"+this.album!.id+"/edit/"+e.id], { queryParams: {albumId: this.album!.id}});
@@ -242,7 +246,11 @@ export class TracksListComponent implements OnInit {
       this.router.navigate(["create"], {relativeTo:this.route, queryParams: {albumId: this.album!.id}});
     }
     else {
-      this.musicPlayerService.createQueue(this.tracks, {display:this.album?.title + " - " + this.album?.type.type, value: "./listener/release/"+this.album?.id})
+      this.tracksGetAllService.handleAsync({pageNumber:1, pageSize:100000, albumId: this.album?.id}).subscribe({
+        next: data => {
+          this.musicPlayerService.createQueue(data.dataItems, {display:this.album?.title + " - " + this.album?.type.type, value: "./listener/release/"+this.album?.id})
+        }
+      })
     }
   }
 

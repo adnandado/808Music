@@ -4,9 +4,18 @@
     <h6 class="artist-name hide-overflow" (click)="goToArtist()">{{ artist?.name }}</h6>
     <p class="follow-count hide-overflow">{{getFollowCount()}}</p>
   </div>
-  <div class="play-button" (click)="playArtist()" [ngStyle]="playBtnSyle">
-    <mat-icon>
-      play_arrow
-    </mat-icon>
-  </div>
+  @if (!isPlayingThisAlbum)
+  {
+    <div class="play-button" (click)="playArtist()" [ngStyle]="playBtnSyle">
+      <mat-icon>
+        play_arrow
+      </mat-icon>
+    </div>
+  } @else {
+    <div class="play-button" (click)="musicPlayerService.togglePlayState()" [ngStyle]="playBtnSyle">
+      <mat-icon>
+        {{playingState ? 'pause' : 'play_arrow'}}
+      </mat-icon>
+    </div>
+  }
 </div>

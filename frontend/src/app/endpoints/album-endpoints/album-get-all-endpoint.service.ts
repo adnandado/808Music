@@ -23,6 +23,8 @@ export interface AlbumPagedRequest {
   periodTo?: string;
   periodFrom?: string;
   sortByPopularity?: boolean;
+  artistMode?:boolean;
+  getUnlisted?: boolean;
 }
 
 export interface AlbumGetAllResponse {

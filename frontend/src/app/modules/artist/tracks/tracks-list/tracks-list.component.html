@@ -1,7 +1,7 @@
 <div class="tracks-page">
   <div class="tracks-list" [ngStyle]="isHome ? {'flex-basis':'100vw'} : {}">
     <div class="track-page-controls">
-      <button mat-icon-button class="go-back-button" (click)="goBack()">
+      <button mat-icon-button class="go-back-button" (click)="goBack($event)">
         <mat-icon class="go-back-arrow">arrow_back</mat-icon>
       </button>
     </div>

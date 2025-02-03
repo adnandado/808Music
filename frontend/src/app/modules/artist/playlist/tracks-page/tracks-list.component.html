@@ -68,6 +68,7 @@
       [trackInfo]="trackUserInfo"
       [playlistId]="playlistDetails?.id!"
       [isUsersPlaylist]="isUsersPlaylist"
+      (onCreateClick)="startPlaylist($event)"
     ></app-tracks-table>
 
 
