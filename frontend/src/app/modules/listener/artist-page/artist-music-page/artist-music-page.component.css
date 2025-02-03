@@ -48,7 +48,7 @@
 }
 
 .popular {
-  height: 47vh;
+  height: fit-content;
   flex-basis: 45vw;
   overflow-y: hidden;
 }
