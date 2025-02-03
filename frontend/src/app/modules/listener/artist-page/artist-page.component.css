@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  padding-right: 0.5vw;
 }
 
 .artist-page {
@@ -13,11 +12,12 @@
 
 .banner {
   position: absolute;
+  background-color: #00B2A9;
   width: 100%;
-  height: 100%;
+  height: 33vh;
+  border-radius: 10px;
   background-size: cover;
   background-position: center;
-  border-radius: 10px;
 }
 
 .banner-gradient {
@@ -33,24 +33,21 @@
   border-radius: 10px;
 }
 
-
 .controls {
-  position: absolute;
-  bottom: 0;
-  left: 10px;
+  position: relative;
   display: flex;
   justify-content: space-between;
+  align-content: end;
   align-items: center;
-  z-index: 2;
-  width: calc(100% - 20px);
+  padding-top: 24vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-bottom: 3vh;
 }
-
-
 
 .name > h2 {
   font-weight: 500;
   margin-bottom: 0;
-  padding-bottom: 0;
 }
 
 .name {
@@ -58,37 +55,25 @@
   gap: 10px;
   align-items: center;
 }
-.banner-controls {
-  position: relative;
-  width: 100%;
-  height: 33vh;
-  overflow: hidden;
-  border-radius: 10px;
-}
+
 
 .actions {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  padding: 0;
+  gap: 5px;
   justify-content: end;
-  margin-bottom: 0.5vw;
 }
+
 .actions-options {
   display: flex;
   justify-content: space-evenly;
   gap: 5px;
   align-items: center;
-
 }
 
 .followers {
   text-align: end;
-  color: rgba(169, 169, 169, 0.81);
-  font-size: 0.9vw;
-  margin:0;
-  font-weight: 455;
-  text-transform: uppercase;
+  color: #A9A9A9;
 }
 
 .shuffle > mat-icon {
@@ -105,7 +90,7 @@
 
 .back-button {
   position: absolute;
-  top: 10px;
+  top: 25px;
   left: 5px;
   z-index: 3;
 }

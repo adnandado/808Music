@@ -155,8 +155,8 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
     if (!this.artist || !this.artistStats) return;
 
     this.dialog.open(ArtistDialogComponent, {
-      width: '900px',
-      height: '550px',
+      width: '950px',
+      height: '600px',
       maxWidth: 'none',
       panelClass: 'custom-dialog-container',
       data: { artist: this.artist, artistStats: this.artistStats }
