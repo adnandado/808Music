@@ -23,6 +23,9 @@ import {
 } from '../../../endpoints/artist-endpoints/get-artist-bio-endpoint.service';
 import {ArtistDialogComponent} from './artist-dialog/artist-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {
+  GetUserArtistStatsEndpointService
+} from '../../../endpoints/user-endpoints/get-user-artist-stats-endpoint.service';
 
 @Component({
   selector: 'app-artist-page',
@@ -40,7 +43,7 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
 
   state$! : Subscription;
   trackChange$! : Subscription;
-
+  userArtistStats : GetUserArtistStatsEndpointService | null = null;
   artistStats : GetArtistBioResponse | null = null;
 
   ngOnDestroy(): void {
@@ -60,7 +63,8 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
               private location: Location,
               private snackBar : MatSnackBar,
               private getArtistInfo : GetArtistBioEndpointService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private userArtistService : GetUserArtistStatsEndpointService
               ) { }
 
     ngOnInit(): void {

@@ -1,4 +1,9 @@
 import {
+  AnimationCurves,
+  AnimationDurations,
+  MatCommonModule
+} from "./chunk-YLGR4HG7.js";
+import {
   animate,
   animateChild,
   keyframes,
@@ -8,11 +13,6 @@ import {
   transition,
   trigger
 } from "./chunk-OPRBR5CV.js";
-import {
-  AnimationCurves,
-  AnimationDurations,
-  MatCommonModule
-} from "./chunk-YLGR4HG7.js";
 import {
   AriaDescriber,
   ENTER,

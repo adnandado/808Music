@@ -56,6 +56,9 @@
   </div>
   <p *ngIf="playlists?.length === 0">No playlists available.</p>
 
+  <app-artist-big-card-list [isProfile] = "true" [artist]="lastStreamed" [title]="'Last streamed'" [numberDescription]="'followers'" ></app-artist-big-card-list>
+
+
   <h3 class="big-names" (click)="goToFollowers()">Followers</h3>
   <div class="followage-section">
     <div *ngFor="let user of (showAllFollowers ? followers : followers | slice:0:maxVisibleFollowage)">

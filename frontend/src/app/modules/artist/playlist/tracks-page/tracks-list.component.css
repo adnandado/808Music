@@ -133,12 +133,11 @@ p{
 }
 
 .tracks-list {
-  height: 97vh;
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 35px;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 .cover-more{
   display: flex;
@@ -174,7 +173,7 @@ p{
 
 .playlist-info {
   display: flex;
-  gap: 15px;
+  gap: 10px;
 }
 
 .playlist-details {
