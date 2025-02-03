@@ -26,7 +26,8 @@
                            [hasControls]="false"
                            (onDelete)="deletePlaylist(playlist.id)"
                            (onEdit)="editPlaylist(playlist.id)"
-                           (onClick)="openPlaylist(playlist.id)">
+                           (onClick)="openPlaylist(playlist.id)"
+                           (onPlayClick)="startPlaylist($event, playlist)">
         </app-playlist-card>
       </div>
     </div>

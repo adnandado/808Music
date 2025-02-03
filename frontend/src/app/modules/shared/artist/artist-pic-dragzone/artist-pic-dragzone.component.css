@@ -1,8 +1,5 @@
 .img-drag-drop {
   width: 100%;
-  height: 14vh;
-  border: 1px solid #EEDEE7;
-  border-radius: 30px;
   position: relative;
   color: #EEDEE7;
 }
@@ -10,6 +7,8 @@
 .dd-landing {
   position: relative;
   margin-bottom: 4vh;
+  border: 1px solid #EEDEE7;
+  border-radius: 30px;
 }
 
 .dd-landing p, .dd-landing h6 {

@@ -16,9 +16,16 @@
             shuffle
           }</mat-icon>
         </button>
-        <button mat-fab (click)="playArtist()">
-          <mat-icon>play_arrow</mat-icon>
-        </button>
+        @if (!isPlayingThisAlbum)
+        {
+          <button mat-fab (click)="playArtist()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+        } @else {
+          <button mat-fab (click)="musicPlayerService.togglePlayState()">
+            <mat-icon>{{playingState ? 'pause' : 'play_arrow'}}</mat-icon>
+          </button>
+        }
         <h2>{{ artist?.name }}</h2>
       </div>
       <div class="actions">

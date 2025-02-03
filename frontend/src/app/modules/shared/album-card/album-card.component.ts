@@ -1,12 +1,14 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {MusicPlayerService} from '../../../services/music-player.service';
 
 @Component({
   selector: 'app-album-card',
   templateUrl: './album-card.component.html',
   styleUrl: './album-card.component.css'
 })
-export class AlbumCardComponent {
+export class AlbumCardComponent implements OnInit, OnDestroy {
   @Input() title: string = "";
   @Input() subtitle: string = "";
   @Input() imageUrl: string = "";
@@ -30,7 +32,28 @@ export class AlbumCardComponent {
     'bottom': '7vh'
   }
 
-  constructor(private router: Router) {
+  isPlayingThisAlbum: boolean = false;
+  playingState: boolean = false;
+
+  state$! : Subscription;
+  trackChange$! : Subscription;
+
+  constructor(private router: Router,
+              protected musicPlayerService: MusicPlayerService,) {
+  }
+
+  ngOnDestroy(): void {
+    this.state$.unsubscribe();
+    this.trackChange$.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.isPlayingThisAlbum = this.musicPlayerService.getLastPlayedSong()?.albumId == this.id && this.musicPlayerService.getQueueType() === "album";
+    this.playingState = this.musicPlayerService.getPlayState();
+
+    this.state$ = this.musicPlayerService.playStateChange.subscribe(state => this.playingState = state);
+    this.trackChange$ = this.musicPlayerService.trackEvent.subscribe(track =>
+      this.isPlayingThisAlbum = track.albumId == this.id && this.musicPlayerService.getQueueType() === "album");
   }
 
   replaceWithPlaceholder() {

@@ -61,4 +61,11 @@ export class ArtistCreateOrEditComponent implements OnChanges {
   emitCancel() {
     this.cancelEvent.emit();
   }
+
+  getPixels() : string {
+    let obj : any = URL.createObjectURL(this.artist.profileBackground!);
+    let size = `${obj.naturalHeight}px`;
+    URL.revokeObjectURL(obj)
+    return size;
+  }
 }

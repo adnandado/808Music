@@ -176,3 +176,8 @@ song-information{
   align-items: center;
   justify-content: space-between;
 }
+
+.bold {
+  font-weight: bold;
+  color:#E692F8;
+}

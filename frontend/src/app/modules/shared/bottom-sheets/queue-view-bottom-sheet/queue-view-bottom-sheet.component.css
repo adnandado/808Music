@@ -25,6 +25,11 @@
   font-size: 18px;
 }
 
+.track-title:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .position {
   font-size: 13px;
   color: #A9A9A9;

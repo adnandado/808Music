@@ -30,4 +30,10 @@ export class QueueViewBottomSheetComponent implements OnInit {
   dismissSheet() {
     this.sheetRef.dismiss();
   }
+
+  skipTo(track: TrackGetResponse) {
+    this.musicPlayerService.skipTo(track);
+    //this.removeSong(track);
+    this.dismissSheet();
+  }
 }

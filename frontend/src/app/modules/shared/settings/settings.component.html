@@ -1,34 +1,34 @@
 <div class="base-page">
-  <h1>Settings</h1>
+  <h1>{{'SETTINGS.Title' | translate}}</h1>
   <mat-divider></mat-divider>
   <div class="options">
     <div class="section">
-      <h3>Account</h3>
+      <h3>{{'SETTINGS.ACCOUNT.Title' | translate}}</h3>
       <form [formGroup]="form" (ngSubmit)="updateUser()">
         <div class="first-last">
           <div>
-            <app-my-mat-input [placeholder]="'First Name'" [title]="'First Name*'" [name]="'firstName'"
+            <app-my-mat-input [placeholder]="getTranslation('SETTINGS.ACCOUNT.FirstName')" [title]="getTranslation('SETTINGS.ACCOUNT.FirstName')" [name]="'firstName'"
                               formControlName="firstName"></app-my-mat-input>
           </div>
           <div>
-            <app-my-mat-input [placeholder]="'Last Name'" [title]="'Last Name*'" [name]="'lastName'"
+            <app-my-mat-input [placeholder]="getTranslation('SETTINGS.ACCOUNT.LastName')" [title]="getTranslation('SETTINGS.ACCOUNT.LastName')" [name]="'lastName'"
                               formControlName="lastName"></app-my-mat-input>
           </div>
         </div>
         <div class="full-width">
-          <h6>Date of birth*</h6>
+          <h6>{{'SETTINGS.ACCOUNT.DateOfBirth' | translate}}</h6>
           <mat-form-field>
             <input matInput required formControlName="dateOfBirth" [matDatepicker]="datepicker">
             <mat-datepicker-toggle matIconPrefix [for]="datepicker"></mat-datepicker-toggle>
             <mat-datepicker #datepicker></mat-datepicker>
           </mat-form-field>
         </div>
-        <app-my-mat-input [placeholder]="'Username'" [title]="'Username*'" [name]="'username'"
+        <app-my-mat-input [placeholder]="getTranslation('SETTINGS.ACCOUNT.Username')" [title]="getTranslation('SETTINGS.ACCOUNT.Username')" [name]="'username'"
                           formControlName="username"></app-my-mat-input>
-        <app-my-mat-input [placeholder]="'Email'" [title]="'Email*'" [name]="'email'"
+        <app-my-mat-input [placeholder]="getTranslation('SETTINGS.ACCOUNT.Email')" [title]="getTranslation('SETTINGS.ACCOUNT.Email')" [name]="'email'"
                           formControlName="email"></app-my-mat-input>
         <div class="full-width">
-          <h6>Country*</h6>
+          <h6>{{'SETTINGS.ACCOUNT.Country' | translate}}</h6>
           <mat-form-field>
             <mat-select formControlName="countryId">
               @for (c of countries; track c.id) {
@@ -37,38 +37,49 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <app-my-mat-input [placeholder]="'Leave empty if you don\'t want to change your password'" [title]="'New password'" [name]="'newPassword'"
+        <app-my-mat-input [placeholder]="getTranslation('SETTINGS.ACCOUNT.NewPassPlaceholder')" [title]="getTranslation('SETTINGS.ACCOUNT.NewPassword')" [name]="'newPassword'"
                           formControlName="newPassword" [type]="'password'"></app-my-mat-input>
 
-        <button mat-flat-button (click)="openPasswordDialog()">Save changes</button>
+        <button mat-flat-button (click)="openPasswordDialog()">{{'SETTINGS.ACCOUNT.SaveChanges' | translate}}</button>
       </form>
     </div>
 
     <div class="section general-options">
       <div>
-        <h3>Profile</h3>
+        <h3>{{'SETTINGS.PROFILE.Title' | translate}}</h3>
         <div class="autoplay">
           <div class="pfp" [ngStyle]="{'background-image': 'url('+MyConfig.api_address+user?.pathToPfp+')'}"></div>
           <button mat-flat-button (click)="openImageCropperDialog()">
             <mat-icon>account_circle</mat-icon>
-            Change picture
+            {{'SETTINGS.PROFILE.ChangePicture' | translate}}
           </button>
         </div>
       </div>
       <div>
-        <h3>Notifications</h3>
-        <div class="autoplay">
+        <h3>{{'SETTINGS.NOTIFICATIONS.Title' | translate}}</h3>
+        <div class="autoplay col-controls">
           <button mat-flat-button (click)="openNotificationSettings()">
             <mat-icon>settings</mat-icon>
-            Change preferences
+            {{'SETTINGS.NOTIFICATIONS.Preferences' | translate}}
+          </button>
+          <button mat-flat-button (click)="openFollowingSettings()">
+            <mat-icon>manage_accounts</mat-icon>
+            {{'SETTINGS.NOTIFICATIONS.Following' | translate}}
           </button>
         </div>
       </div>
       <div>
-        <h3>Playback</h3>
+        <h3>{{'SETTINGS.PLAYBACK.Title' | translate}}</h3>
         <div class="autoplay">
-          <h6>Autoplay</h6>
+          <h6>{{'SETTINGS.PLAYBACK.Autoplay' | translate}}</h6>
           <mat-slide-toggle [checked]="autoplayStatus" (change)="changeAutoplayStatus($event)"></mat-slide-toggle>
+        </div>
+      </div>
+
+      <div>
+        <h3>{{'SETTINGS.LANGUAGE.Title' | translate}}</h3>
+        <div class="autoplay">
+          <app-language-selector></app-language-selector>
         </div>
       </div>
     </div>

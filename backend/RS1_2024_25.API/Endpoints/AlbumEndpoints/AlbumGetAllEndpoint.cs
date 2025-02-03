@@ -80,7 +80,7 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
                                 albums.Where(s => s.ReleaseDate < DateTime.Now && db.Tracks.Where(t => t.AlbumId == s.Id).Count() > 0).OrderByDescending(s => s.ReleaseDate).FirstOrDefault().Id == a.Id,
             });
 
-            if (request.IsReleased != null && request.IsReleased.Value)
+            if (request.IsReleased != null && request.IsReleased.Value && (request.ArtistMode == null || (request.ArtistMode != null && !request.ArtistMode.Value)))
             {
                 albumsResponse = albumsResponse.Where(a => a.TrackCount > 0);
             }
@@ -88,6 +88,11 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
             if (request.SortByPopularity)
             {
                 albumsResponse = albumsResponse.OrderByDescending(a => db.Tracks.Where(t => t.AlbumId == a.Id).Sum(t => t.Streams));
+            }
+
+            if(request.GetUnlisted != null && request.GetUnlisted.Value)
+            {
+                albumsResponse = albumsResponse.Where(a => a.TrackCount == 0);
             }
 
             var pagedList = await MyPagedList<AlbumGetAllResponse>.CreateAsync(albumsResponse, request, cancellationToken);
@@ -106,6 +111,8 @@ namespace RS1_2024_25.API.Endpoints.AlbumEndpoints
         public DateTime? PeriodFrom { get; set; }
         public DateTime? PeriodTo { get; set; }
         public bool SortByPopularity { get; set; } = false;
+        public bool? ArtistMode { get; set; }
+        public bool? GetUnlisted { get; set; }
     }
 
     public class AlbumGetAllResponse {

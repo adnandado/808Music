@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   ArtistDetailResponse,
@@ -16,6 +16,7 @@ import {
 } from '../../../endpoints/follow-endpoints/toggle-notifications-endpoint.service';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-artist-page',
@@ -23,10 +24,21 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrl: './artist-page.component.css',
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}]
 })
-export class ArtistPageComponent implements OnInit {
+export class ArtistPageComponent implements OnInit, OnDestroy {
   artist: ArtistDetailResponse | null = null;
   hasTracks: boolean = true;
   followInfo: Follow | null = null;
+
+  isPlayingThisAlbum: boolean = false;
+  playingState: boolean = false;
+
+  state$! : Subscription;
+  trackChange$! : Subscription;
+
+  ngOnDestroy(): void {
+    this.state$.unsubscribe();
+    this.trackChange$.unsubscribe();
+  }
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -48,6 +60,8 @@ export class ArtistPageComponent implements OnInit {
             this.artistService.handleAsync(id as number).subscribe({
               next: data => {
                 this.artist = data;
+                this.isPlayingThisAlbum = this.musicPlayerService.getLastPlayedSong()?.artists[0].id == this.artist?.id
+                  && this.musicPlayerService.getQueueType() === "artist";
                 console.log(this.artist);
 
                 this.checkFollowService.handleAsync(data.id).subscribe({next: val => {
@@ -60,6 +74,11 @@ export class ArtistPageComponent implements OnInit {
               }})
           }
         })
+      this.playingState = this.musicPlayerService.getPlayState();
+
+      this.state$ = this.musicPlayerService.playStateChange.subscribe(state => this.playingState = state);
+      this.trackChange$ = this.musicPlayerService.trackEvent.subscribe(track =>
+        this.isPlayingThisAlbum = track.artists[0].id == this.artist?.id && this.musicPlayerService.getQueueType() === "artist");
     }
 
   protected readonly MyConfig = MyConfig;
@@ -69,9 +88,9 @@ export class ArtistPageComponent implements OnInit {
   }
 
   playArtist() {
-    this.trackGetAllService.handleAsync({pageNumber:1, pageSize:20, leadArtistId:this.artist?.id}).subscribe({
+    this.trackGetAllService.handleAsync({pageNumber:1, pageSize:10000, leadArtistId:this.artist?.id, sortByStreams: true}).subscribe({
       next: data => {
-        this.musicPlayerService.createQueue(data.dataItems, {display: this.artist?.name ?? "Artist profile", value: "/listener/profile/"+this.artist?.id});
+        this.musicPlayerService.createQueue(data.dataItems, {display: this.artist?.name ?? "Artist profile", value: "/listener/profile/"+this.artist?.id}, "artist");
       }
     });
   }

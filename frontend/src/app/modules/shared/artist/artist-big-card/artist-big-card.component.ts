@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {formatNumber} from '@angular/common';
 import {ArtistSimpleDto} from '../../../../services/auth-services/dto/artist-dto';
 import {MyConfig} from '../../../../my-config';
@@ -6,16 +6,38 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MusicPlayerService} from '../../../../services/music-player.service';
 import {TrackGetAllEndpointService} from '../../../../endpoints/track-endpoints/track-get-all-endpoint.service';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-artist-big-card',
   templateUrl: './artist-big-card.component.html',
   styleUrl: './artist-big-card.component.css'
 })
-export class ArtistBigCardComponent {
+export class ArtistBigCardComponent implements OnInit, OnDestroy {
   @Input() artist : ArtistSimpleDto | null = null;
-  @Input() numberDescription = "followers"
-  constructor(private musicPlayerService: MusicPlayerService,
+  @Input() numberDescription = "followers";
+
+  isPlayingThisAlbum: boolean = false;
+  playingState: boolean = false;
+
+  state$! : Subscription;
+  trackChange$! : Subscription;
+
+  ngOnDestroy(): void {
+    this.state$.unsubscribe();
+    this.trackChange$.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.isPlayingThisAlbum = this.musicPlayerService.getLastPlayedSong()?.artists[0].id == this.artist?.id && this.musicPlayerService.getQueueType() === "artist";
+    this.playingState = this.musicPlayerService.getPlayState();
+
+    this.state$ = this.musicPlayerService.playStateChange.subscribe(state => this.playingState = state);
+    this.trackChange$ = this.musicPlayerService.trackEvent.subscribe(track =>
+      this.isPlayingThisAlbum = track.artists[0].id == this.artist?.id && this.musicPlayerService.getQueueType() === "artist");
+  }
+
+  constructor(protected musicPlayerService: MusicPlayerService,
               private trackGetAllService: TrackGetAllEndpointService,
               private router : Router,) {}
 
@@ -46,18 +68,18 @@ export class ArtistBigCardComponent {
   playArtist() {
     if(this.artist)
     {
-      this.trackGetAllService.handleAsync({leadArtistId: this.artist.id, isReleased: true, pageSize:50, sortByStreams:true, pageNumber: 1}).subscribe({
+      this.trackGetAllService.handleAsync({leadArtistId: this.artist.id, isReleased: true, pageSize:10000, sortByStreams:true, pageNumber: 1}).subscribe({
         next: e => {
           if(e.dataItems.length > 0)
           {
-            this.musicPlayerService.createQueue(e.dataItems, {display: this.artist!.name, value: "/listener/profile/"+this.artist!.id});
+            this.musicPlayerService.createQueue(e.dataItems, {display: this.artist!.name, value: "/listener/profile/"+this.artist!.id}, "artist");
           }
           else {
-            this.trackGetAllService.handleAsync({featuredArtists: [this.artist!.id], isReleased: true, pageSize:50, sortByStreams:true, pageNumber: 1}).subscribe({
+            this.trackGetAllService.handleAsync({featuredArtists: [this.artist!.id], isReleased: true, pageSize:10000, sortByStreams:true, pageNumber: 1}).subscribe({
               next: data => {
                 if(data.dataItems.length > 0)
                 {
-                  this.musicPlayerService.createQueue(data.dataItems, {display: this.artist!.name, value: "/listener/profile/"+this.artist!.id});
+                  this.musicPlayerService.createQueue(data.dataItems, {display: this.artist!.name, value: "/listener/profile/"+this.artist!.id},"artist");
                 }
               }
             })

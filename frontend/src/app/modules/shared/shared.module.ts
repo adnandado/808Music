@@ -95,6 +95,7 @@ import {
 } from "@angular/material/datepicker";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {CartUpdateService} from './shopping-cart/shopping-cart.service';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -212,6 +213,7 @@ import {CartUpdateService} from './shopping-cart/shopping-cart.service';
         MatDatepickerToggleIcon,
         NgOptimizedImage,
         MatProgressSpinner,
+        TranslatePipe,
     ],
 
   exports: [

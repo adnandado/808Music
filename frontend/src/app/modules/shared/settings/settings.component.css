@@ -2,6 +2,7 @@
   padding-top: 2vh;
   box-sizing: border-box;
   padding-right: 1vw;
+  color: white;
 }
 
 h1, h3 {
@@ -72,6 +73,13 @@ h6 {
 
 .first-last div {
   flex-basis: 45%;
+}
+
+.col-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  align-items: flex-start;
 }
 
 @media only screen and (max-width: 600px) {

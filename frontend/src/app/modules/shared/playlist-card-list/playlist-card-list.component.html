@@ -15,6 +15,7 @@
             (onEdit)="goToEditPlaylist($event)"
             (onDelete)="deletePlaylist($event)"
             [hasControls]="artistMode"
+            (onPlayClick)="startPlaylist($event, playlist)"
           ></app-playlist-card>
         }
       }

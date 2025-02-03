@@ -10,15 +10,17 @@ import {TranslateService} from '@ngx-translate/core';
 export class LanguageSelectorComponent implements OnInit {
   placeholder: string = "";
 
-  constructor(private translateService: TranslateService) {
+  constructor(protected translateService: TranslateService) {
   }
 
   ngOnInit() {
     this.getPlaceholder();
+    console.log(this.translateService.currentLang);
   }
 
   setLang(e: MatSelectChange) {
-    this.translateService.use(e.value as string);
+    this.translateService.use(e.value as string)
+    window.localStorage.setItem('lang', e.value as string);
   }
 
   getPlaceholder() {
