@@ -38,8 +38,8 @@
   display: flex;
   justify-content: space-between;
   align-content: end;
-  align-items: center;
-  padding-top: 24vh;
+  align-items: end;
+  padding-top: 21.5vh;
   padding-left: 1vw;
   padding-right: 1vw;
   margin-bottom: 3vh;
@@ -90,7 +90,11 @@
 
 .back-button {
   position: absolute;
-  top: 25px;
+  top: 7px;
   left: 5px;
   z-index: 3;
+}
+
+.banner-controls {
+  position: relative;
 }

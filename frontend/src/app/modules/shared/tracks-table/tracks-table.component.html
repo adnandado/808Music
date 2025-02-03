@@ -2,8 +2,7 @@
   <div class="tracks-search-bar" *ngIf="allowPagination || isPlaylist">
     <app-search-bar [placeholder]="'Search for a song'" (onSearchChange)="searchTracks($event)"></app-search-bar>
     <div class="controls">
-      @if(!isPlaylist)
-      {
+      @if (!isPlaylist) {
         <button mat-icon-button (click)="openShareSheet()">
           <mat-icon>share</mat-icon>
         </button>
@@ -25,14 +24,13 @@
             }
           </mat-icon>
         </button>
-        @if (!isPlayingThisAlbum)
-        {
+        @if (!isPlayingThisAlbum) {
           <button mat-fab (click)="emitCreate()">
             <mat-icon>play_arrow</mat-icon>
           </button>
         } @else {
           <button mat-fab (click)="musicPlayerService.togglePlayState()">
-            <mat-icon>{{playingState ? 'pause' : 'play_arrow'}}</mat-icon>
+            <mat-icon>{{ playingState ? 'pause' : 'play_arrow' }}</mat-icon>
           </button>
         }
       }
@@ -42,29 +40,37 @@
 
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>#</th>
-      <td mat-cell *matCellDef="let track" [class]="!inArtistMode && currentTrack?.id == track.id ? '' : ''">{{ getPosition(track.id) }}</td>
+      <td mat-cell *matCellDef="let track"
+          [class]="!inArtistMode && currentTrack?.id == track.id ? 'bold' : ''">{{ getPosition(track.id) }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="main-control">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let track">
-        @if (inArtistMode)
-        {
-          @if (artist != null && artist.role !== "Viewer")
-          {
+        <div class="x30">
+        @if (inArtistMode) {
+          @if (artist != null && artist.role !== "Viewer") {
             <button mat-icon-button (click)="emitTrack(track.id)">
               <mat-icon>edit</mat-icon>
             </button>
           }
-        } @else if(currentTrack?.id !== track.id){
+        } @else if (currentTrack?.id !== track.id) {
           <button mat-icon-button (click)="emitTrack(track.id)">
             <mat-icon>play_arrow</mat-icon>
           </button>
         } @else {
-          <button mat-icon-button (click)="musicPlayerService.togglePlayState()" class="bold">
-            <mat-icon>{{playingState ? 'pause' : 'play_arrow'}}</mat-icon>
-          </button>
+          @if (showAnim && playingState) {
+            <div [ngStyle]="{'padding-bottom': '5px'}">
+              <ng-lottie [styles]="{'padding': '0 0 0 5px'}"  [width]="'30px'" [height]="'30px'" [options]="options"></ng-lottie>
+            </div>
+          } @else {
+            <button mat-icon-button (click)="musicPlayerService.togglePlayState()" class="bold">
+              <mat-icon>{{ playingState ? 'pause' : 'play_arrow' }}</mat-icon>
+            </button>
+          }
         }
+        </div>
       </td>
     </ng-container>
 
@@ -75,24 +81,30 @@
 
         <div>
           <div class="song-rows">
-          @if (isPlaylist){
-            <div class="track-cover-container">
-              <img class="track-image" [src]="MyConfig.api_address + track.coverPath" alt="Track Cover" />
-              @if(isUsersPlaylist){
-              <mat-icon *ngIf="showDeleteIcon" class="delete-icon" (click)="removeTrackFromPlaylist(track.id)">delete</mat-icon>
-              }
-                </div>
-          }<div class="song-information">
-          <p [class]="!inArtistMode && currentTrack?.id == track.id ? 'bold' : ''">{{ track.title }}</p>
-          <div class="track-artists">
-            <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
-            <app-clickable-featured-artists [artists]="track.artists"
-                                            (onArtistClick)="goToArtistProfile($event)"></app-clickable-featured-artists>
-          </div></div></div>
-        </div>      </td>
+            @if (isPlaylist) {
+              <div class="track-cover-container">
+                <img class="track-image" [src]="MyConfig.api_address + track.coverPath" alt="Track Cover"/>
+                @if (isUsersPlaylist) {
+                  <mat-icon *ngIf="showDeleteIcon" class="delete-icon" (click)="removeTrackFromPlaylist(track.id)">
+                    delete
+                  </mat-icon>
+                }
+              </div>
+            }
+            <div class="song-information">
+              <p [class]="!inArtistMode && currentTrack?.id == track.id ? 'bold' : ''">{{ track.title }}</p>
+              <div class="track-artists">
+                <mat-icon class="tracks-explicit-icon" *ngIf="track.isExplicit">explicit</mat-icon>
+                <app-clickable-featured-artists [artists]="track.artists"
+                                                (onArtistClick)="goToArtistProfile($event)"></app-clickable-featured-artists>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
 
     </ng-container>
-    @if(isCollaborative){
+    @if (isCollaborative) {
       <ng-container matColumnDef="addedby">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let track">
@@ -102,7 +114,8 @@
                matTooltipPosition="above">
           </div>
         </td>
-      </ng-container>}
+      </ng-container>
+    }
     <ng-container matColumnDef="artist-controls">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let track">
@@ -141,46 +154,45 @@
     </ng-container>
 
 
-
-      <ng-container matColumnDef="add-to-playlist-controls">
+    <ng-container matColumnDef="add-to-playlist-controls">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let track">
         @if (!inArtistMode) {
-        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="toggleDropdown(track.id)">
-          <mat-icon>playlist_add</mat-icon>
-        </button>
-
-        <mat-menu #menu="matMenu">
-          <div class="queue_btn">
-            <button class="queue_btn" mat-menu-item (click)="addToQueue(track)">
-              Add to queue
-              <mat-icon>queue_music</mat-icon>
-            </button>
-          </div>
-          <mat-divider></mat-divider>
-          <h6 class="menu-title">Add to playlist:</h6>
-
-          <button mat-menu-item *ngFor="let playlist of playlists" (click)="addToPlaylist(playlist.id)">
-            <div class="dropdown-stuff">
-              <img class="playlist-cover" [src]="MyConfig.media_address + playlist.coverPath" alt="">
-              <p class="pl-title">{{ playlist.title }}</p>
-              <mat-checkbox
-                [checked]="isTrackInPlaylist(track.id, playlist.id)"
-              >
-              </mat-checkbox>
-            </div>
+          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="toggleDropdown(track.id)">
+            <mat-icon>playlist_add</mat-icon>
           </button>
 
-        </mat-menu>
+          <mat-menu #menu="matMenu">
+            <div class="queue_btn">
+              <button class="queue_btn" mat-menu-item (click)="addToQueue(track)">
+                Add to queue
+                <mat-icon>queue_music</mat-icon>
+              </button>
+            </div>
+            <mat-divider></mat-divider>
+            <h6 class="menu-title">Add to playlist:</h6>
+
+            <button mat-menu-item *ngFor="let playlist of playlists" (click)="addToPlaylist(playlist.id)">
+              <div class="dropdown-stuff">
+                <img class="playlist-cover" [src]="MyConfig.media_address + playlist.coverPath" alt="">
+                <p class="pl-title">{{ playlist.title }}</p>
+                <mat-checkbox
+                  [checked]="isTrackInPlaylist(track.id, playlist.id)"
+                >
+                </mat-checkbox>
+              </div>
+            </button>
+
+          </mat-menu>
 
         }
       </td>
     </ng-container>
 
 
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; let track;" (mouseenter)="showHide(false, track)"
+        (mouseleave)="showHide(true,track)"></tr>
   </table>
   @if (allowPagination) {
     <mat-paginator showFirstLastButtons [pageSize]="pagedRequest.pageSize" [length]="pagedResponse?.totalCount"

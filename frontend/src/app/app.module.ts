@@ -18,6 +18,8 @@ import { SecondsToDurationStringPipe } from './services/pipes/seconds-to-string.
 import { LongDurationStringPipe } from './services/pipes/long-duration-string.pipe';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {CustomTranslateLoader} from './services/translate-loader';
+import {provideCacheableAnimationLoader, provideLottieOptions} from 'ngx-lottie';
+import player from 'lottie-web'
 
 @NgModule({
   declarations: [
@@ -56,7 +58,11 @@ import {CustomTranslateLoader} from './services/translate-loader';
     },
     provideNativeDateAdapter(),
     MyAuthService,
-    provideAnimationsAsync() // Ensure MyAuthService is available for the interceptor
+    provideAnimationsAsync(),// Ensure MyAuthService is available for the interceptor
+    provideLottieOptions({
+      player: () => player,
+    }),
+    provideCacheableAnimationLoader(),
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

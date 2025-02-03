@@ -54,6 +54,7 @@ import {IsOnPlaylistService} from '../../../endpoints/playlist-endpoints/is-song
 import {ArtistHandlerService} from '../../../services/artist-handler.service';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
+import {AnimationOptions} from 'ngx-lottie';
 
 @Component({
   selector: 'app-tracks-table',
@@ -95,6 +96,12 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit, O
   playlistTrackMap: Map<number, Map<number, boolean>> = new Map();
 
   artist: ArtistSimpleDto | null = null;
+  showAnim = true;
+
+  options:AnimationOptions = {
+    loop:true,
+    path: "/assets/animations/playing_anim.json"
+  }
 
   isPlayingThisAlbum: boolean = false;
   playingState: boolean = false;
@@ -510,5 +517,12 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
   addToQueue(track: TrackGetResponse) {
     this.musicPlayerService.addToQueue(track);
+  }
+
+  showHide(b: boolean, track:TrackGetResponse): void {
+    if(track.id === this.currentTrack?.id)
+    {
+      this.showAnim = b;
+    }
   }
 }

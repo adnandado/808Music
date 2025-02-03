@@ -137,7 +137,7 @@ export class ArtistMusicPageComponent implements OnInit, AfterViewInit, OnDestro
 
   createQueue(e: number) {
     console.log(this.tracks);
-    this.musicPlayerService.createQueue(this.tracks);
+    this.musicPlayerService.createQueue(this.tracks, {display: `${this.artist?.name}'s Popular`, value: "/listener/profile/"+this.artist?.id}, "artist");
     let i = this.tracks.filter(val => val.id == e)[0];
     console.log(i);
     if(i)

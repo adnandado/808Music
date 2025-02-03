@@ -100,6 +100,12 @@ song-information{
   color: #A9A9A9;
   text-align: center;
 }
+
+.mat-column-main-control {
+  text-align: center;
+
+}
+
 .dropdown-stuff {
   display: flex;
   justify-content: space-between;
@@ -181,3 +187,10 @@ song-information{
   font-weight: bold;
   color:#E692F8;
 }
+
+.x30 {
+  display: flex;
+  justify-content: center;
+}
+
+
