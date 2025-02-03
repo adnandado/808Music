@@ -56,6 +56,7 @@ import { FollowingPageComponent } from './user-profile-page/following-page/follo
 import { OrderListComponent } from './order-list/order-list.component';
   import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
   import {MatCheckbox} from '@angular/material/checkbox';
+  import {ArtistDialogComponent} from './artist-page/artist-dialog/artist-dialog.component';
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import { OrderListComponent } from './order-list/order-list.component';
         FollowersPageComponent,
         FollowingPageComponent,
         OrderListComponent,
+        ArtistDialogComponent,
     ],
     imports: [
         CommonModule,

@@ -17,6 +17,12 @@ import {
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Subscription} from 'rxjs';
+import {
+  GetArtistBioEndpointService,
+  GetArtistBioResponse
+} from '../../../endpoints/artist-endpoints/get-artist-bio-endpoint.service';
+import {ArtistDialogComponent} from './artist-dialog/artist-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-artist-page',
@@ -35,6 +41,8 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
   state$! : Subscription;
   trackChange$! : Subscription;
 
+  artistStats : GetArtistBioResponse | null = null;
+
   ngOnDestroy(): void {
     this.state$.unsubscribe();
     this.trackChange$.unsubscribe();
@@ -50,13 +58,17 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
               private checkFollowService : CheckFollowEndpointService,
               private toggleNotiService : ToggleNotificationsEndpointService,
               private location: Location,
-              private snackBar : MatSnackBar) { }
+              private snackBar : MatSnackBar,
+              private getArtistInfo : GetArtistBioEndpointService,
+              private dialog: MatDialog
+              ) { }
 
     ngOnInit(): void {
 
       this.route.params.subscribe(params => {
           let id = params['id'];
           if(id) {
+            this.loadArtistStats(id);
             this.artistService.handleAsync(id as number).subscribe({
               next: data => {
                 this.artist = data;
@@ -138,5 +150,25 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.location.back();
+  }
+  openArtistDialog(): void {
+    if (!this.artist || !this.artistStats) return;
+
+    this.dialog.open(ArtistDialogComponent, {
+      width: '900px',
+      height: '550px',
+      maxWidth: 'none',
+      panelClass: 'custom-dialog-container',
+      data: { artist: this.artist, artistStats: this.artistStats }
+    });
+
+  }
+  private loadArtistStats(id: number) {
+    const request = {
+      artistId : id
+    }
+    this.getArtistInfo.handleAsync(request).subscribe({next: data => {
+      this.artistStats = data;
+      }})
   }
 }

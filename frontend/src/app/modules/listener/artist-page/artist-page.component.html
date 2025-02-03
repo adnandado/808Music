@@ -28,12 +28,18 @@
         }
         <h2>{{ artist?.name }}</h2>
       </div>
+
       <div class="actions">
-        <div class="followers">{{ artist?.followers }} followers</div>
+        <div class="artist-numbers">
+        <div class="followers">{{ artistStats?.monthlyListeners }} Monthly listeners</div>
+
+        <div class="followers">{{ artist?.followers }} followers</div></div>
         <div class="actions-options">
           <button mat-icon-button (click)="shareProfile()">
             <mat-icon>share</mat-icon>
           </button>
+          <button mat-icon-button (click)="openArtistDialog()"><mat-icon>info</mat-icon></button>
+
           @if (followInfo) {
             <button mat-icon-button (click)="toggleNotifications()">
               <mat-icon>
@@ -54,6 +60,7 @@
               Follow
             </button>
           }
+
         </div>
       </div>
     </div>
