@@ -21,7 +21,6 @@
 
 .player {
   height: 98vh;
-  overflow-y: auto;
   padding-top: 1vh;
   box-sizing: border-box;
   width: 23vw;

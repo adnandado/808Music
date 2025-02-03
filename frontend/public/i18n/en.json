@@ -21,5 +21,36 @@
   },
   "LANG-SELECT": {
     "Placeholder": "Select language"
+  },
+  "SETTINGS": {
+    "Title": "Settings",
+    "ACCOUNT": {
+      "Title": "Account",
+      "FirstName": "First Name*",
+      "LastName": "Last Name*",
+      "DateOfBirth" : "Date of birth*",
+      "Username": "Username*",
+      "Email": "Email*",
+      "Country": "Country*",
+      "NewPassword": "New password",
+      "NewPassPlaceholder": "Leave empty if you don't want to change your password",
+      "SaveChanges": "Save Changes"
+    },
+    "PROFILE": {
+      "Title": "Profile",
+      "ChangePicture": "Change picture"
+    },
+    "NOTIFICATIONS": {
+      "Title": "Notifications",
+      "Preferences": "Change preferences",
+      "Following": "Manage following"
+    },
+    "PLAYBACK": {
+      "Title": "Playback",
+      "Autoplay": "Autoplay"
+    },
+    "LANGUAGE": {
+      "Title": "Language"
+    }
   }
 }

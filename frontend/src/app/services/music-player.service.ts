@@ -23,6 +23,10 @@ export class MusicPlayerService {
   shuffleToggled = this.shuffleToggleEvent.asObservable();
   isShuffled : boolean = false;
   private autoPlay = true;
+  private playingState = false;
+  private playStateChangeEvent = new Subject<boolean>();
+  playStateChange = this.playStateChangeEvent.asObservable();
+  private queueType = "";
 
   constructor(private trackGetAllEndpointService: TrackGetAllEndpointService,) {
     let lastQueue = window.localStorage.getItem("queue");
@@ -30,8 +34,8 @@ export class MusicPlayerService {
     if(lastQueue != null && lastQueue !== "")
     {
       this.playedIndexes = playedIndexes;
-      const {queue, source} = JSON.parse(lastQueue);
-      this.createQueue(queue, source, false, true);
+      const {queue, source, type} = JSON.parse(lastQueue);
+      this.createQueue(queue, source, type, false, true);
     }
 
     this.trackEvent.subscribe({
@@ -80,9 +84,10 @@ export class MusicPlayerService {
     }
   }
 
-  createQueue(queue : TrackGetResponse[], source : QueueSource = {display:"Song", value:"song"}, append : boolean = false, cacheRequest = false) {
+  createQueue(queue : TrackGetResponse[], source : QueueSource = {display:"Song", value:"song"}, type="album", append : boolean = false, cacheRequest = false) {
     if(!append || this.queue.length == 0) {
       this.queue = queue;
+      this.queueType=type;
       this.playedIndexes = cacheRequest ? this.getCachedPlayedIndexes() : [];
       if(!cacheRequest)
       {
@@ -102,7 +107,7 @@ export class MusicPlayerService {
       this.trackAddEvent.next(queue[0]);
     }
 
-    window.localStorage.setItem("queue", JSON.stringify({queue, source}));
+    window.localStorage.setItem("queue", JSON.stringify({queue, source, type}));
   }
 
   addToQueue(queueTrack : TrackGetResponse) {
@@ -163,6 +168,7 @@ export class MusicPlayerService {
       attempts++;
       if(attempts > this.queue.length)
       {
+        this.setAutoPlayQueue();
         return;
       }
     }
@@ -201,5 +207,23 @@ export class MusicPlayerService {
         this.createQueue(data.dataItems, {display: sortByStreams ? "808 Popular - Autoplay" : "808 Fresh - Autoplay", value: "/listener/home"})
       }
     });
+  }
+
+  setPlayState(state: boolean) {
+    this.playingState = state;
+    this.playStateChangeEvent.next(state);
+  }
+
+  togglePlayState() {
+    this.playingState = !this.playingState;
+    this.playStateChangeEvent.next(this.playingState);
+  }
+
+  getPlayState() {
+    return this.playingState;
+  }
+
+  getQueueType() {
+    return this.queueType;
   }
 }

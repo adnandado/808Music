@@ -26,6 +26,10 @@ import {
   UserRegisterOrUpdateEndpointService
 } from '../../../endpoints/auth-endpoints/user-register-or-update-endpoint.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {
+  ManageFollowingBottomSheetComponent
+} from '../bottom-sheets/manage-following-bottom-sheet/manage-following-bottom-sheet.component';
+import {TranslateService} from '@ngx-translate/core';
 
 export class MyFormat {
   value = 2;
@@ -90,7 +94,8 @@ export class SettingsComponent implements OnInit {
               private dialog: MatDialog,
               private cdRef: ChangeDetectorRef,
               private updateUserService: UserRegisterOrUpdateEndpointService,
-              private snackBar: MatSnackBar,) {}
+              private snackBar: MatSnackBar,
+              private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.userId = this.auth.getAuthToken()!.userId;
@@ -180,5 +185,15 @@ export class SettingsComponent implements OnInit {
         }
       }
     }})
+  }
+
+  openFollowingSettings() {
+    this.bottomSheet.open(ManageFollowingBottomSheetComponent, {hasBackdrop: true});
+  }
+
+  getTranslation(key : string) : string {
+    let value = "";
+    this.translateService.get(key).subscribe(data => value = data);
+    return value;
   }
 }

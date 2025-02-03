@@ -9,9 +9,16 @@
         <div class="album-cover banner-gradient">
           <div class="spotlight-info">
             <h6 (click)="goToAlbum(featuredAlbum?.id ?? 1)" class="spotlight-title">{{ getTitle(featuredAlbum?.title) }}</h6>
-            <button mat-fab (click)="playFeatured()">
-              <mat-icon>play_arrow</mat-icon>
-            </button>
+            @if (!isPlayingThisAlbum)
+            {
+              <button mat-fab (click)="playFeatured()">
+                <mat-icon>play_arrow</mat-icon>
+              </button>
+            } @else {
+              <button mat-fab (click)="musicPlayerService.togglePlayState()">
+                <mat-icon>{{playingState ? 'pause' : 'play_arrow'}}</mat-icon>
+              </button>
+            }
           </div>
         </div>
       </div>
@@ -53,27 +60,28 @@
       </mat-tab-group>
     </div>
   </div>
-
-  <div>
-    <h5>RELEASES</h5>
-    <div class="album-cards">
-      @for (album of albums?.dataItems; track album.id) {
-        <app-album-card [title]="album.title"
-                        [subtitle]="album.type + ' • ' + getYear(album.releaseDate)"
-                        [imageUrl]="MyConfig.api_address+album.coverArt"
-                        [id]="album.id"
-                        [tooltip]="album.title"
-                        (onClick)="goToAlbum($event)"
-                        (onPlayClick)="playAlbum($event,false)"
-        ></app-album-card>
-      }
-      @if (albums != null) {
-        @if (albums.dataItems.length >= 6) {
-          <div class="view-all" (click)="viewAll(false)">...</div>
+  @if (albums && albums.dataItems.length > 0) {
+    <div>
+      <h5>RELEASES</h5>
+      <div class="album-cards">
+        @for (album of albums?.dataItems; track album.id) {
+          <app-album-card [title]="album.title"
+                          [subtitle]="album.type + ' • ' + getYear(album.releaseDate)"
+                          [imageUrl]="MyConfig.api_address+album.coverArt"
+                          [id]="album.id"
+                          [tooltip]="album.title"
+                          (onClick)="goToAlbum($event)"
+                          (onPlayClick)="playAlbum($event,false)"
+          ></app-album-card>
         }
-      }
+        @if (albums != null) {
+          @if (albums.dataItems.length >= 6) {
+            <div class="view-all" (click)="viewAll(false)">...</div>
+          }
+        }
+      </div>
     </div>
-  </div>
+  }
 
   @if (featuredAlbums != null && featuredAlbums.dataItems.length > 0) {
     <div class="featured-section">

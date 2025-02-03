@@ -66,7 +66,7 @@ export class SidenavComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         event.url.includes("/listener/home");
-        if(this.router.url.includes("/artist"))
+        if(!this.router.url.includes("/listener/"))
         {
           this.reloadThePage = true;
           //setTimeout(() => { window.location.reload(); }, 100);

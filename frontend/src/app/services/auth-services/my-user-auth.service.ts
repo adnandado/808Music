@@ -142,6 +142,9 @@ export class MyUserAuthService {
           logoutInfo.requestSuccessful = false;
         }
       });
+
+      //remove user stored data
+      window.localStorage.removeItem("lang");
     }
 
     return logoutInfo;

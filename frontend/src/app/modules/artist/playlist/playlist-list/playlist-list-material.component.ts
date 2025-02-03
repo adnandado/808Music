@@ -11,6 +11,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PlaylistResponse } from '../../../../endpoints/playlist-endpoints/get-playlist-by-user-endpoint.service';
 import {PlaylistUpdateDialogComponent} from '../tracks-page/playlist-update-dialog/playlist-update-dialog.component';
 import {PlaylistCreateDialogComponent} from '../tracks-page/playlist-create-dialog/playlist-create-dialog.component';
+import {
+  PlaylistTracksGetEndpointService
+} from '../../../../endpoints/playlist-endpoints/playlist-get-tracks-endpoint.service';
+import {MusicPlayerService} from '../../../../services/music-player.service';
 
 @Component({
   selector: 'app-playlist-list-material',
@@ -29,7 +33,9 @@ export class PlaylistListMaterialComponent implements OnInit {
     private playlistService: GetPlaylistsByUserIdEndpointService,
     private playlistDeleteService: DeletePlaylistService,
     private router: Router,
-    private playlistUpdateService: PlaylistUpdateEndpointService
+    private playlistUpdateService: PlaylistUpdateEndpointService,
+    private tracksService: PlaylistTracksGetEndpointService,
+    private musicPlayerService: MusicPlayerService,
   ) {}
 
   ngOnInit(): void {
@@ -136,4 +142,15 @@ this.loadPlaylists();
     }
   }
 
+  startPlaylist(id: number, playlist: PlaylistResponse) {
+    this.tracksService.handleAsync({playlistId: id, pageSize:100000, pageNumber:1}).subscribe({
+      next: value => {
+        if(value.dataItems.length == 0)
+        {
+          this.snackBar.open('Playlist has no songs', "", {duration: 2000});
+        }
+        this.musicPlayerService.createQueue(value.dataItems, {display: playlist.title + " - Playlist", value: "/listener/playlist/" + playlist.id}, "playlist");
+      }
+    })
+  }
 }

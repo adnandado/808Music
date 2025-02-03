@@ -4,7 +4,7 @@
     <hr class="divider">
   </div>
   <div class="sidenav-icons">
-    <button mat-icon-button routerLink="/listener/home" aria-label="Home">
+    <button mat-icon-button routerLink="/listener/home" aria-label="Home" matTooltip="Home" matTooltipPosition="right">
       <mat-icon>home</mat-icon>
 
       <div routerLink="/listener/home" class="hidden" routerLinkActive="display">
@@ -12,15 +12,15 @@
       </div>
     </button>
 
-    <button mat-icon-button routerLink="/listener/search" aria-label="Search">
+    <button mat-icon-button routerLink="/listener/search" aria-label="Search" matTooltip="Search" matTooltipPosition="right">
       <mat-icon>search</mat-icon>
 
-      <div routerLink="/listener/search" class="hidden" routerLinkActive="display">
+      <div routerLink="/listener/search" class="hidden" routerLinkActive="display" >
         <mat-icon>play_arrow</mat-icon>
       </div>
     </button>
 
-    <button mat-icon-button routerLink="/listener/playlist" aria-label="Playlists">
+    <button mat-icon-button routerLink="/listener/playlist" aria-label="Playlists" matTooltip="Playlists" matTooltipPosition="right">
       <mat-icon>library_music</mat-icon>
 
       <div routerLink="/listener/playlist" class="hidden" routerLinkActive="display">
@@ -28,7 +28,7 @@
       </div>
     </button>
 
-    <button mat-icon-button routerLink="/listener/store-home" aria-label="Shopping Cart">
+    <button mat-icon-button routerLink="/listener/store-home" aria-label="Shopping Cart" matTooltip="Shop" matTooltipPosition="right">
       <mat-icon>shopping_cart</mat-icon>
 
       <div routerLink="/listener/store-home" class="hidden" routerLinkActive="display">
@@ -36,7 +36,7 @@
       </div>
     </button>
 
-    <button mat-icon-button routerLink="/listener/notifications" aria-label="Notifications">
+    <button mat-icon-button routerLink="/listener/notifications" aria-label="Notifications" matTooltip="Notifications" matTooltipPosition="right">
       <mat-icon>notifications</mat-icon>
 
       @if (unreads != null && unreads.unreadNotificationsCount > 0) {
@@ -50,7 +50,7 @@
       </div>
     </button>
 
-    <button mat-icon-button routerLink="/listener/chat" aria-label="Socials">
+    <button mat-icon-button routerLink="/listener/chat" aria-label="Socials" matTooltip="Chats" matTooltipPosition="right">
       <mat-icon>chat</mat-icon>
 
       @if (unreads != null && unreads.unreadMessaggesCount > 0) {

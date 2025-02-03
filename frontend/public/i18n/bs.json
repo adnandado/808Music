@@ -21,5 +21,36 @@
   },
   "LANG-SELECT": {
     "Placeholder": "Odaberite jezik"
+  },
+  "SETTINGS": {
+    "Title": "Postavke",
+    "ACCOUNT": {
+      "Title": "Korisnički račun",
+      "FirstName": "Ime*",
+      "LastName": "Prezime*",
+      "DateOfBirth" : "Datum rođenja*",
+      "Username": "Korisničko ime*",
+      "Email": "Email*",
+      "Country": "Država*",
+      "NewPassword": "Nova lozinka",
+      "NewPassPlaceholder": "Ostavite prazno ako ne želite promijeniti lozinku",
+      "SaveChanges": "Sačuvaj promjene"
+    },
+    "PROFILE": {
+      "Title": "Profil",
+      "ChangePicture": "Promijeni profilnu sliku"
+    },
+    "NOTIFICATIONS": {
+      "Title": "Obavijesti",
+      "Preferences": "Promijeni postavke",
+      "Following": "Upravljajte praćenjem"
+    },
+    "PLAYBACK": {
+      "Title": "Reprodukcija",
+      "Autoplay": "Automatska reprodukcija"
+    },
+    "LANGUAGE": {
+      "Title": "Jezik"
+    }
   }
 }

@@ -73,6 +73,13 @@ export class MusicControllerComponent implements OnInit {
         }
       })
 
+      this.musicPlayerService.playStateChange.subscribe(state => {
+        if(state != this.playingState)
+        {
+          this.changePlayerState();
+        }
+      })
+
       setInterval(() => {
         if(this.playingState)
         {
@@ -179,6 +186,7 @@ export class MusicControllerComponent implements OnInit {
 
         });
       }
+      this.musicPlayerService.setPlayState(this.playingState);
     }
   }
 

@@ -88,8 +88,8 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                         AddedByUsername = tu.AddedByUser.Username,
                         AddedByUserProfilePhotoPath = tu.AddedByUser.pfpCoverPath
                     })
-                    .FirstOrDefault() 
-
+                    .FirstOrDefault() ,
+            AlbumId = request.PlaylistId,
         });
 
         return await MyPagedList<TrackGetResponse>.CreateAsync(filteredTracks, request, cancellationToken);

@@ -29,13 +29,13 @@
     </mat-form-field>
     </div>
 
-    <div [ngStyle]="artist.profilePhoto != undefined ? {'margin-bottom': '22vh'} : {}">
+    <div>
       <h6>Profile Picture</h6>
       <app-artist-pic-dragzone title="Profile Picture" (imageEmit)="selectPfpFile($event)" [control]="artist.id"></app-artist-pic-dragzone>
     </div>
-    <div [ngStyle]="artist.profileBackground != undefined ? {'margin-bottom': '35vh'} : {}">
+    <div>
       <h6>Banner</h6>
-      <app-artist-pic-dragzone title="Banner" type="banner"
+      <app-artist-pic-dragzone title="Banner" type="banner" [withCrop]="true"
                                (imageEmit)="selectBgFile($event)" [control]="artist.id"></app-artist-pic-dragzone>
     </div>
     <div class="controls">

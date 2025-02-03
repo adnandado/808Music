@@ -31,10 +31,6 @@ export class ArtistLayoutComponent implements OnInit {
 
   SetSelectedArtist(e: boolean) {
     this.selectedArtist = e;
-    if(e)
-    {
-      this.router.navigate(["/artist/album"]);
-    }
   }
 
   SetEditState(id: ArtistDetailResponse | null = null)

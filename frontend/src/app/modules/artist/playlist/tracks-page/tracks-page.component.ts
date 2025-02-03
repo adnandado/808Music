@@ -354,4 +354,7 @@ export class TracksPageComponent implements OnInit {
     });
   }
 
+  startPlaylist($event: void) {
+    this.musicPlayerService.createQueue(this.featuredTracks, {display: this.playlist?.playlistTitle ?? "Playlist", value: "/listener/playlist"+this.playlist?.playlistId}, "playlist");
+  }
 }

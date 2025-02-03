@@ -35,8 +35,12 @@
   </div>
   <div class="profile-sections">
     <div class="section playlists-section">
-      <h3 class="big-names">Playlists</h3>
       <div class="playlist-row">
+        <app-playlist-card-list
+          [userId]="userId"
+          [publicOnly]="true">
+        </app-playlist-card-list>
+        <!--
       <div (click)="openPlaylist(playlist.id)" *ngFor="let playlist of playlists || [] | slice:0:maxVisibleFollowage">
         <app-playlist-card matTooltip="{{ playlist.title }}" matTooltipPosition="below" [title]="playlist.title"
                            [imageUrl]="MyConfig.media_address + playlist.coverPath"
@@ -45,7 +49,9 @@
                            [hasControls]="false"
                            (onClick)="openPlaylist(playlist.id)">
         </app-playlist-card>
-      </div></div>
+      </div>
+      -->
+      </div>
     </div>
   </div>
   <p *ngIf="playlists?.length === 0">No playlists available.</p>
