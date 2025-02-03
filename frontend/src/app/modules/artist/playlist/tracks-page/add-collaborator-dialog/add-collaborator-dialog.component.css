@@ -109,7 +109,5 @@ p{
   filter: invert(100%) brightness(100%) contrast(100%);
   transition: filter 0.3s ease;
   margin-bottom: 0.5vw;
-  box-shadow: 2px 8px 6px rgba(0,0,0,0.2),
-  0px -5px 35px rgba(255,255,255,0.3);
 }
 

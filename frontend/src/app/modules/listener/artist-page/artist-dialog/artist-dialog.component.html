@@ -1,0 +1,31 @@
+<div class="dialog-container">
+  <div class="playlist-cover" [ngStyle]="{'background-image': 'url(' + MyConfig.api_address + data.artist.profilePhotoPath + ')'}">
+
+    <div class="social-media">
+    </div>
+
+
+    <div class="rank-container">
+      <div class="rank" *ngIf="data.artistStats.musicRank !== 0">
+        <p class="rank-no">#{{ data.artistStats?.musicRank }}</p>
+        <p class="rank-title">ARTIST
+          RANK</p>
+      </div>
+      <div class="rank" *ngIf="data.artistStats.shopRank !== 0">
+        <p class="rank-no">#{{ data.artistStats?.shopRank }}</p>
+        <p class="rank-title">SHOP RANK</p>
+
+      </div>
+    </div>
+
+
+    <div class="content">
+      <p class="followers"><b>{{ data.artistStats.monthlyListeners | number }}</b> monthly listeners</p>
+
+      <div class="bio-container">
+        <p class="bio">{{ data.artistStats?.bio }}</p>
+      </div>
+
+    </div>
+  </div>
+</div>

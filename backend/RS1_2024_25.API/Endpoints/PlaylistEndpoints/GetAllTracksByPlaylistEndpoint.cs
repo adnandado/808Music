@@ -25,7 +25,6 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
         await db.Artists.LoadAsync();
         await db.Albums.LoadAsync();
 
-        // Filtriranje prema zahtjevima
         if (request.FeaturedArtists != null)
         {
             foreach (int artistId in request.FeaturedArtists)
@@ -83,7 +82,7 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
             }).ToList(),
             TrackUserInfo = db.PlaylistTracks
                     .Where(tu => tu.TrackId == t.Id && tu.PlaylistId == request.PlaylistId)
-                    .OrderByDescending(tu => tu.DateAdded) // Pretpostavljamo da postoji polje 'AddedAt' za praćenje vremena kada je pjesma dodana
+                    .OrderByDescending(tu => tu.DateAdded) 
                     .Select(tu => new TrackUserInfoDto
                     {
                         AddedByUsername = tu.AddedByUser.Username,

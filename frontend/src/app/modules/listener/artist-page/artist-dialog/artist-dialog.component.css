@@ -1,0 +1,152 @@
+.dialog-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  color: white;
+  overflow: hidden;
+}
+
+.social-media-icons{
+  display: flex;
+  flex-direction: row;
+  margin-top: 1vw;
+}
+.playlist-cover {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.playlist-cover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.playlist-cover::before {
+  content: '';
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:linear-gradient(rgba(90, 90, 90, 0.01), rgba(21, 21, 21, 0.53), rgba(0, 0, 0, 0.85));; /* Poluprozirni crni gradient */
+  z-index: 1;
+}
+.social-media{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.social-media img {
+  filter: invert(50%) sepia(100%) saturate(1000%) hue-rotate(265deg) brightness(95%) contrast(90%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.social-media img:hover {
+  filter: invert(66%) sepia(100%) saturate(1000%) hue-rotate(265deg) brightness(120%) contrast(95%);
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+
+.rank-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.bio-container {
+  max-height: 15vh;
+  overflow-y: auto;
+
+}
+.bio-container p {
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.94);
+  font-size: 16px;
+  line-height: 1.4;
+}
+.bio-container::-webkit-scrollbar {
+  width: 6px;
+  display: none;
+}
+
+.bio-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.bio-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rank {
+  background-color: rgba(230, 146, 248, 0.91);
+  color: white;
+  width: 5vw;
+  height:5vw;
+  text-align: center;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.rank-no {
+  font-size: 1.8em;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.rank-title {
+  font-size: 0.6vw;
+  font-weight: 500  ;
+  line-height: 1.1;
+}
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3), transparent);
+}
+
+.content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 2;
+}
+
+.followers {
+  font-size: 18px;
+  font-weight: 755;
+}
+
+
+.bio {
+  font-size: 14px;
+  line-height: 1.3;
+  opacity: 0.9;
+}
