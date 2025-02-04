@@ -45,7 +45,9 @@ font-size: 15px;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  background-color: #1E1E1E;
+  border: 0.1rem solid #4E444B;
+
+background-color: #161215;
   width: 50%;
   border-radius: 12px;
   min-height: 97vh;
