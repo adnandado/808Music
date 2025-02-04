@@ -36,6 +36,7 @@ import {
 } from './web-store/checkout/order-confirmation-dialog/order-confirmation-dialog.component';
 import {AddCollaboratorDialogComponent} from '../artist/playlist/tracks-page/add-collaborator-dialog/add-collaborator-dialog.component';
 import {AddCollaboratorComponent} from '../artist/playlist/add-collaborator/add-collaborator.component';
+import {UserMonthlyStatsComponent} from './user-monthly-stats/user-monthly-stats.component';
 const routes: Routes = [{
   path: '', component: ListenerLayoutComponent,
   children: [
@@ -85,6 +86,9 @@ const routes: Routes = [{
     },
     {
       path: 'artists', component: ArtistSearchResultPageComponent
+    },
+    {
+      path: 'monthly-stats', component: UserMonthlyStatsComponent
     },
     {
       path: 'settings',

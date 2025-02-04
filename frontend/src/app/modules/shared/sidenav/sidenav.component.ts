@@ -12,6 +12,7 @@ import {
   GetUserUnreadsEndpointService,
   UnreadsResponse
 } from '../../../endpoints/user-endpoints/get-user-unreads-endpoint.service';
+import {MonthlyStatsDialogComponent} from '../../listener/monthly-stats-dialog/monthly-stats-dialog.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -148,6 +149,16 @@ export class SidenavComponent implements OnInit {
       console.error('Error parsing authToken:', error);
       return 0;
     }
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(MonthlyStatsDialogComponent, {
+      width: '80%',
+      height: '800px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
   navigateTo(destination: string): void {
     if (destination === 'products') {
