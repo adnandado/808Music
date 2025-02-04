@@ -61,8 +61,6 @@ p{
 }
 .user-pfp:hover{
   cursor: pointer;
-  transform: scale(1.2);
-
 }
 .big-icon {
   font-size: 2vw;

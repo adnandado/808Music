@@ -2,8 +2,6 @@
   <button mat-icon-button class="go-back-button" (click)="goBack()">
     <mat-icon class="go-back-arrow">arrow_back</mat-icon>
   </button>
- <app-user-monthly-stats></app-user-monthly-stats>
-
   <h2 class="header-title">Followers</h2>
   <div class="followage-section" *ngIf="followers.length > 0; else noFollowers" >
     <div *ngFor="let user of followers" class="user" (click)="openProfile(user.id)">

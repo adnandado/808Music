@@ -94,16 +94,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     }
 );
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin() 
-              .AllowAnyMethod()  
-              .AllowAnyHeader(); 
-    });
-});
-
 builder.Services.AddSignalR();
 
 builder.Services.AddStackExchangeRedisCache(opt =>
@@ -140,18 +130,12 @@ app.UseCors(
         .AllowCredentials()
 ); //This needs to set everything allowed
 
-app.UseCors("AllowAll"); // CORS should be used before static files
 
 
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath)),
-    RequestPath = "/media",
-    OnPrepareResponse = ctx =>
-    {
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*"); 
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS"); 
-    }
+    RequestPath = "/media"
 });
 
 app.UseAuthentication();
@@ -163,4 +147,3 @@ app.MapHub<NotificationsHub>("/notificationsHub");
 app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
-app.UseCors("AllowAll");
