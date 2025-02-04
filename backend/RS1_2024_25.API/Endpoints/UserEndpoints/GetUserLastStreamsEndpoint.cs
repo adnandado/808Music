@@ -12,23 +12,35 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
         public override async Task<ActionResult<List<ArtistInfoResponse>>> HandleAsync(int UserId, CancellationToken cancellationToken)
         {
             var lastStreams = await db.TrackStream
-                .Where(ts => ts.UserId == UserId) 
-                .OrderByDescending(ts => ts.StreamedAt) 
-                .SelectMany(ts => db.ArtistsTracks
-                    .Where(at => at.TrackId == ts.TrackId) 
-                    .Select(at => at.Artist))
-                .Where(a => a != null) 
-                .Distinct() 
-                .Select(a => new ArtistInfoResponse
-                {
-                    ArtistId = a!.Id,
-                    ArtistName = a!.Name,
-                    ArtistPfp = a!.ProfilePhotoPath,
-                    FollowerCount = a.Followers
-                })
-                .ToListAsync(cancellationToken);
+      .Where(ts => ts.UserId == UserId)
+      .OrderByDescending(ts => ts.StreamedAt)
+      .ToListAsync(cancellationToken);
 
-            return Ok(lastStreams);
+            var artistStreams = lastStreams
+                .Select(ts => new
+                {
+                    ts.StreamedAt,
+                    Artist = db.ArtistsTracks
+                        .Where(at => at.TrackId == ts.TrackId)
+                        .Select(at => at.Artist)
+                        .FirstOrDefault() 
+                })
+                .Where(x => x.Artist != null) 
+                .GroupBy(x => x.Artist!.Id) 
+                .Select(g => g.OrderByDescending(x => x.StreamedAt).First()) 
+                .OrderByDescending(x => x.StreamedAt) 
+                .Select(x => new ArtistInfoResponse
+                {
+                    ArtistId = x.Artist!.Id,
+                    ArtistName = x.Artist!.Name,
+                    ArtistPfp = x.Artist!.ProfilePhotoPath,
+                    FollowerCount = x.Artist!.Followers
+                })
+                .ToList();
+
+            return Ok(artistStreams);
+
+
         }
     }
 

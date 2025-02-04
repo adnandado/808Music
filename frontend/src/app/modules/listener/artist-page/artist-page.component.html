@@ -35,13 +35,16 @@
 
         <div class="followers">{{ artistStats?.monthlyListeners }} MONTHLY LISTENERS</div>
         <div class="actions-options">
-          <button mat-icon-button (click)="shareProfile()">
+          <button mat-icon-button (click)="shareProfile()" [matTooltip]="'Share artist'"
+                  matTooltipPosition="above">
             <mat-icon>share</mat-icon>
           </button>
-          <button mat-icon-button (click)="openArtistDialog()"><mat-icon>info</mat-icon></button>
+          <button mat-icon-button (click)="openArtistDialog()" [matTooltip]="'More about ' + artist?.name"
+                  matTooltipPosition="above"><mat-icon>info</mat-icon></button>
 
           @if (followInfo) {
-            <button mat-icon-button (click)="toggleNotifications()">
+            <button mat-icon-button (click)="toggleNotifications()" [matTooltip]="'Toggle notifications'"
+                    matTooltipPosition="above">
               <mat-icon>
                 @if (followInfo.wantsNotifications) {
                   notifications_active
@@ -65,6 +68,25 @@
       </div>
     </div>
   </div>
+  <div class="statistics" *ngIf="userArtistStats?.minutesPlayed !== 0">
+    <div class="left-side">
+    <div class="artist-user-pic" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + '/Images/Artistpfps/' + userArtistStats?.artistProfilePicture + ')'}" ></div>
+    <div class="artist-user-pic" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address  + userArtistStats?.userProfilePicture + ')'}" ></div>
+    <div class="stats-rows">
+      <p class="text-row">You have liked {{userArtistStats?.likedSongs}} {{artist?.name}} songs.</p>
+
+      <p class="text-row">
+        You've been listening to {{ artist?.name }} for {{ userArtistStats?.minutesPlayed | number:'1.0-0' }} minutes.
+      </p>
+      <p class="text-row">You've been following {{artist?.name}} for {{userArtistStats?.daysFollowing}} days.</p>
+    </div></div>
+    <div class="personal-rank">
+      <p class="rank-title">YOUR</p>
+      <p class="rank-no">#{{ userArtistStats?.artistRank }}</p>
+      <p class="rank-title">ARTIST</p>
+    </div>
+  </div>
+  <mat-divider *ngIf="userArtistStats?.minutesPlayed !== 0"></mat-divider>
   <mat-tab-group>
     <mat-tab label="MUSIC">
       <ng-template matTabContent>

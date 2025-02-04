@@ -24,7 +24,7 @@ import {
 import {ArtistDialogComponent} from './artist-dialog/artist-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {
-  GetUserArtistStatsEndpointService
+  GetUserArtistStatsEndpointService, GetUserArtistStatsResponse
 } from '../../../endpoints/user-endpoints/get-user-artist-stats-endpoint.service';
 
 @Component({
@@ -43,7 +43,7 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
 
   state$! : Subscription;
   trackChange$! : Subscription;
-  userArtistStats : GetUserArtistStatsEndpointService | null = null;
+  userArtistStats : GetUserArtistStatsResponse | null = null;
   artistStats : GetArtistBioResponse | null = null;
 
   ngOnDestroy(): void {
@@ -88,6 +88,16 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
             this.trackGetAllService.handleAsync({leadArtistId: this.artist?.id, isReleased: true}).subscribe({next: data => {
               this.hasTracks = data.totalCount > 0;
               }})
+
+            const request = {
+              artistId : id,
+              userId : this.getUserIdFromToken()
+            }
+            this.userArtistService.handleAsync(request).subscribe(
+              {next: data => {
+              this.userArtistStats = data;
+              console.log(data);
+              }})
           }
         })
       this.playingState = this.musicPlayerService.getPlayState();
@@ -110,7 +120,25 @@ export class ArtistPageComponent implements OnInit, OnDestroy {
       }
     });
   }
+  private getUserIdFromToken(): number {
+    let authToken = sessionStorage.getItem('authToken');
 
+    if (!authToken) {
+      authToken = localStorage.getItem('authToken');
+    }
+
+    if (!authToken) {
+      return 0;
+    }
+
+    try {
+      const parsedToken = JSON.parse(authToken);
+      return parsedToken.userId;
+    } catch (error) {
+      console.error('Error parsing authToken:', error);
+      return 0;
+    }
+  }
   shufflePlay() {
     this.musicPlayerService.toggleShuffle();
   }

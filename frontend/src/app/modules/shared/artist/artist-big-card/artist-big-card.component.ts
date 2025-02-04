@@ -37,7 +37,7 @@ export class ArtistBigCardComponent implements OnInit, OnDestroy {
 
     this.state$ = this.musicPlayerService.playStateChange.subscribe(state => this.playingState = state);
     this.trackChange$ = this.musicPlayerService.trackEvent.subscribe(track =>
-      this.isPlayingThisAlbum = track.artists[0].id == this.artist?.id || track.artists[0].id == this.artists?.artistId && this.musicPlayerService.getQueueType() === "artist");
+      this.isPlayingThisAlbum = (track.artists[0].id == this.artist?.id || track.artists[0].id == this.artists?.artistId) && this.musicPlayerService.getQueueType() === "artist");
   }
 
   constructor(protected musicPlayerService: MusicPlayerService,

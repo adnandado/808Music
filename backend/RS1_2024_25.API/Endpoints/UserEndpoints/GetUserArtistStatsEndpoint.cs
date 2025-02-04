@@ -31,14 +31,14 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
             var minutesPlayed = await db.TrackStream
                 .Where(ts => ts.UserId == request.UserId)
                 .SelectMany(ts => db.ArtistsTracks
-                    .Where(at => at.TrackId == ts.TrackId && at.ArtistId == request.ArtistId) 
+                    .Where(at => at.TrackId == ts.TrackId && at.ArtistId == request.ArtistId)
                     .Select(at => at.Track.Length))
                 .SumAsync(length => length, cancellationToken);
 
             var userFollowInfo = await db.Follows
-         .Where(f => f.MyAppUserId == request.UserId && f.ArtistId == request.ArtistId)
-         .Select(f => f.StartedFollowing)
-         .FirstOrDefaultAsync(cancellationToken);
+                .Where(f => f.MyAppUserId == request.UserId && f.ArtistId == request.ArtistId)
+                .Select(f => f.StartedFollowing)
+                .FirstOrDefaultAsync(cancellationToken);
 
             int daysFollowing = 0;
             if (userFollowInfo != default)
@@ -47,44 +47,47 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
             }
 
             var userTotalMinutesByArtist = await db.TrackStream
-       .Where(ts => ts.UserId == request.UserId)
-       .SelectMany(ts => db.ArtistsTracks
-           .Where(at => at.TrackId == ts.TrackId)
-           .GroupBy(at => at.ArtistId)
-           .Select(g => new
-           {
-               ArtistId = g.Key,
-               TotalMinutes = g.Sum(at => at.Track.Length)
-           }))
-       .ToListAsync(cancellationToken);
-
-            var userArtistTotalMinutes = userTotalMinutesByArtist
-                .FirstOrDefault(x => x.ArtistId == request.ArtistId)?.TotalMinutes ?? 0;
+                .Where(ts => ts.UserId == request.UserId) 
+                .SelectMany(ts => db.ArtistsTracks
+                    .Where(at => at.TrackId == ts.TrackId)  
+                    .Select(at => new
+                    {
+                        ArtistId = at.ArtistId,
+                        TrackLength = at.Track.Length 
+                    }))
+                .GroupBy(x => x.ArtistId)  
+                .Select(g => new
+                {
+                    ArtistId = g.Key,
+                    TotalMinutes = g.Sum(x => x.TrackLength) 
+                })
+                .Where(x => x.TotalMinutes > 0)  
+                .OrderByDescending(x => x.TotalMinutes)  
+                .ToListAsync(cancellationToken);
 
             var rankedArtists = userTotalMinutesByArtist
-                .OrderByDescending(x => x.TotalMinutes)
                 .Select((x, index) => new
                 {
                     ArtistId = x.ArtistId,
-                    Rank = index + 1
+                    Rank = index + 1  
                 })
                 .ToList();
 
+           
             var artistRank = rankedArtists
                 .FirstOrDefault(x => x.ArtistId == request.ArtistId)?.Rank ?? 0;
-
 
             var response = new GetUserArtistStatsResponse
             {
                 DaysFollowing = daysFollowing,
-                MinutesPlayed = minutesPlayed, 
+                MinutesPlayed = minutesPlayed / 60f, 
                 LikedSongs = likedSongsCount,
                 UserProfilePicture = userProfile,
                 ArtistProfilePicture = artistProfile,
                 ArtistRank = artistRank
             };
 
-            return Ok(response);
+            return Ok(response);  
         }
 
     }
