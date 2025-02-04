@@ -40,9 +40,8 @@
 }
 
 .album-cover {
-  height: 25vh;
-  width: 25vh;
-  flex-basis: 25vh;
+  height: 15rem;
+  width: 15rem;
   background-color: #A9A9A9;
   border-radius: 10px;
   background-size: cover;
@@ -50,6 +49,7 @@
 }
 
 .album-info {
+  align-items: end;
   display: flex;
   gap: 15px;
 }

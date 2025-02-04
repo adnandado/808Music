@@ -9,14 +9,11 @@
        (error)="replaceWithPlaceholder()"
        id="thumbnail">
   </div>
-  @if (!isPlayingThisAlbum)
-  {
-    <button mat-fab class="play-button" (click)="emitPlayClick($event)"
-            [ngStyle]="playBtnStyle"><mat-icon>play_arrow</mat-icon></button>
-  } @else {
-    <button mat-fab class="play-button" (click)="musicPlayerService.togglePlayState(); $event.stopPropagation()"
-            [ngStyle]="playBtnStyle"><mat-icon>{{playingState ? 'pause' : 'play_arrow'}}</mat-icon></button>
-  }
+  <button mat-fab class="play-button"
+          (click)="!isPlayingThisAlbum ? emitPlayClick($event) : musicPlayerService.togglePlayState()"
+          [ngStyle]="playingState && isPlayingThisAlbum ? pauseBtnStyle : playBtnStyle">
+    <mat-icon>{{ playingState && isPlayingThisAlbum ? 'pause' : 'play_arrow' }}</mat-icon>
+  </button>
   <mat-card-header class="playlist-mat-card-header">
     <mat-card-title class="playlist-mat-card-title hide-overflow" (click)="emitClick()">{{getTitle()}}</mat-card-title>
     <mat-card-subtitle class="playlist-mat-card-subtitle">{{subtitle}}</mat-card-subtitle>

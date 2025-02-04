@@ -68,3 +68,9 @@
 .highlighted > p {
   margin: 0;
 }
+
+#thumbnail {
+  height: 10vw;
+  background-size: cover;
+  background-position: center;
+}
