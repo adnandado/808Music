@@ -63,7 +63,7 @@
 .rank-container {
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 20px;
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -120,6 +120,28 @@
   font-size: 0.6vw;
   font-weight: 500  ;
   line-height: 1.1;
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  color: white;
+  font-size: 20px;
+  border-radius: 50%;
+  width: 3vw;
+  height: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.close-button:hover {
+  cursor: pointer;
 }
 
 .gradient-overlay {

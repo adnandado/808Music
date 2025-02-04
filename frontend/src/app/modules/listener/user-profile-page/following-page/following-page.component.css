@@ -1,13 +1,13 @@
 .followage-pfp{
-  margin-top: 1vw;
+  margin-top: 0.5vw;
   border-radius: 50%;
+  background-position: center;
+  background-size: cover;
   width: 11vw;
   height: 11vw;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
   margin-left:auto;
-  margin-right: auto;
-
-}
+  margin-right: auto;}
 .followage-section{
   display: flex;
   gap: 0.5vw;

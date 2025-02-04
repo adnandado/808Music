@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RS1_2024_25.API.Data.Models.Auth;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RS1_2024_25.API.Data.Models
@@ -13,5 +14,10 @@ namespace RS1_2024_25.API.Data.Models
         public Track? Track { get; set; }
 
         public DateTime StreamedAt { get; set; } 
+
+        public int? UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public MyAppUser? User { get; set; }
+
     }
 }

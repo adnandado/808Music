@@ -69,4 +69,6 @@ export class FollowingPageComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+
+  protected readonly MyConfig = MyConfig;
 }

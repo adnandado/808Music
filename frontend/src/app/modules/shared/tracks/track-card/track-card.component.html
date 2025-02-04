@@ -10,24 +10,15 @@
         }
       </div>
     </div>
-    <div class="tc-actions" [ngStyle]="playBtnSyle">
-      @if (!isPlayingThisTrack || artistMode)
+    <div class="tc-actions" [ngStyle]="isPlayingThisTrack && playingState ? pauseBtnStyle : playBtnSyle">
+      @if (artistMode)
       {
         <button mat-fab (click)="handleActionClick()">
-          <mat-icon>
-            @if (artistMode) {
-              edit
-            } @else {
-              play_arrow
-            }
-          </mat-icon>
+          <mat-icon>edit</mat-icon>
         </button>
-      } @else if (isPlayingThisTrack && !artistMode)
-      {
-        <button mat-fab (click)="musicPlayerService.togglePlayState()">
-          <mat-icon>
-            {{playingState ? 'pause' : 'play_arrow'}}
-          </mat-icon>
+      } @else {
+        <button mat-fab (click)="!isPlayingThisTrack ? handleActionClick() : musicPlayerService.togglePlayState()">
+          <mat-icon>{{isPlayingThisTrack && playingState ? 'pause' : 'play_arrow'}}</mat-icon>
         </button>
       }
     </div>

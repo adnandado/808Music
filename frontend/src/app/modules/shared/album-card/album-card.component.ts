@@ -32,6 +32,11 @@ export class AlbumCardComponent implements OnInit, OnDestroy {
     'bottom': '7vh'
   }
 
+  pauseBtnStyle = {
+    'display': 'block',
+    'bottom': '7vh'
+  }
+
   isPlayingThisAlbum: boolean = false;
   playingState: boolean = false;
 
@@ -54,6 +59,15 @@ export class AlbumCardComponent implements OnInit, OnDestroy {
     this.state$ = this.musicPlayerService.playStateChange.subscribe(state => this.playingState = state);
     this.trackChange$ = this.musicPlayerService.trackEvent.subscribe(track =>
       this.isPlayingThisAlbum = track.albumId == this.id && this.musicPlayerService.getQueueType() === "album");
+
+    if(this.artistName != ""){
+      this.playBtnStyle['bottom'] = '10vh';
+      this.pauseBtnStyle['bottom'] = '10vh';
+    }
+    else {
+      this.playBtnStyle['bottom'] = '7vh';
+      this.pauseBtnStyle['bottom'] = '7vh';
+    }
   }
 
   replaceWithPlaceholder() {
@@ -84,6 +98,11 @@ export class AlbumCardComponent implements OnInit, OnDestroy {
     this.playBtnStyle['display'] = 'block';
     if(this.artistName != ""){
       this.playBtnStyle['bottom'] = '10vh';
+      this.pauseBtnStyle['bottom'] = '10vh';
+    }
+    else {
+      this.playBtnStyle['bottom'] = '7vh';
+      this.pauseBtnStyle['bottom'] = '7vh';
     }
   }
 
