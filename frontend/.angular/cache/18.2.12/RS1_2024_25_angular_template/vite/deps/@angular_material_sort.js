@@ -4,6 +4,12 @@ import {
   MatCommonModule
 } from "./chunk-YLGR4HG7.js";
 import {
+  AriaDescriber,
+  ENTER,
+  FocusMonitor,
+  SPACE
+} from "./chunk-C3HE3YWP.js";
+import {
   animate,
   animateChild,
   keyframes,
@@ -13,12 +19,6 @@ import {
   transition,
   trigger
 } from "./chunk-OPRBR5CV.js";
-import {
-  AriaDescriber,
-  ENTER,
-  FocusMonitor,
-  SPACE
-} from "./chunk-C3HE3YWP.js";
 import "./chunk-QFPSIRYE.js";
 import {
   ChangeDetectionStrategy,
@@ -64,10 +64,10 @@ import {
   ɵɵrestoreView,
   ɵɵtemplate
 } from "./chunk-LO7GNJQE.js";
+import "./chunk-5OPE3T2R.js";
 import {
   merge
 } from "./chunk-4N4GOYJH.js";
-import "./chunk-5OPE3T2R.js";
 import {
   ReplaySubject,
   Subject

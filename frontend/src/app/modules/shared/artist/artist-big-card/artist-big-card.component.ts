@@ -61,6 +61,10 @@ export class ArtistBigCardComponent implements OnInit, OnDestroy {
     'display': 'none',
   };
 
+  pauseBtnSyle = {
+    'display': 'block',
+  };
+
   showPlayButton(b: boolean) {
     if(b)
     {
