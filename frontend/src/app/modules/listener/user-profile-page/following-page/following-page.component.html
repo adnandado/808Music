@@ -5,12 +5,8 @@
   <h2 class="header-title">Following</h2>
   <div class="followage-section"  *ngIf="following.length > 0; else noFollowing">
     <div *ngFor="let user of following" class="user" (click)="user.artistId ? openArtistProfile(user.artistId) : openProfile(user.userId)">
-      <img
-        class="followage-pfp"
+      <div class="followage-pfp" [ngStyle]="{'background-image': 'url(' + mediaAddress + (user.artistId ? '/Images/Artistpfps/' + user.profilePicture : user.profilePicture) + ')'}" ></div>
 
-        [src]="mediaAddress + (user.artistId ? '/Images/Artistpfps/' + user.profilePicture : user.profilePicture)"
-        alt="Profile Picture"
-      />
       <div class="username-profiletype">
         <p class="username-followage">{{ user.username }}</p>
         <p class="profile-undertext">

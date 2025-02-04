@@ -66,6 +66,7 @@ export class ListenerHomeComponent implements OnInit {
     streams: "yes",
     needsToHaveSongs: "yes"
   }
+  private slideInterval: any;
   events : UpcomingEvent [] = [];
   infinitePage = [1];
   currentSlide: number = 0;
@@ -103,6 +104,10 @@ export class ListenerHomeComponent implements OnInit {
         this.mostStreamedArtists = data;
       }
     })
+    this.startAutoSlide();
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.slideInterval);
   }
   loadEvents(): void {
     this.eventGetUpcoming.getUpcomingEvents().subscribe({
@@ -127,7 +132,11 @@ export class ListenerHomeComponent implements OnInit {
       this.currentSlide = (this.currentSlide - 1 + this.events.length) % this.events.length;
     }
   }
-
+  private startAutoSlide(): void {
+    this.slideInterval = setInterval(() => {
+      this.nextSlide();
+    }, 10000);
+  }
   changeSlide(index: number): void {
     this.currentSlide = index;
   }

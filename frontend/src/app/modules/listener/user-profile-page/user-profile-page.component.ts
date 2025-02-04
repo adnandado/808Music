@@ -18,6 +18,10 @@ import {
 import { UserFollowService } from '../../../endpoints/user-endpoints/get-user-followage-endpoint.service';
 import { UserHeaderColorService } from '../../../endpoints/user-endpoints/user-header-color-endpoint.service';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {
+  ArtistInfoResponse,
+  GetUserLastStreamsEndpointService
+} from '../../../endpoints/user-endpoints/get-user-last-streams-endpoint.service';
 
 @Component({
   selector: 'app-user-profile-page',
@@ -56,6 +60,7 @@ export class UserProfilePageComponent implements OnInit {
   showAllFollowers = false;
   showAllFollowing = false;
   userId = 0;
+  lastStreamed : ArtistInfoResponse[] = [];
   constructor(
     private router: ActivatedRoute,
     private playlistService: GetPlaylistsByUserIdEndpointService,
@@ -65,7 +70,8 @@ export class UserProfilePageComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private userFollowService: UserFollowService,
     private route: Router,
-    private userHeaderColorService: UserHeaderColorService
+    private userHeaderColorService: UserHeaderColorService,
+    private lastStreams : GetUserLastStreamsEndpointService
   ) {}
 
   ngOnInit(): void {
@@ -121,7 +127,12 @@ export class UserProfilePageComponent implements OnInit {
         console.error('Error fetching following and followers:', error);
       }
     );
-
+    this.lastStreams.getUserLastStreams(userId).subscribe({
+      next: (response) => {
+        this.lastStreamed = response;
+        console.log(this.lastStreamed);
+      }
+    })
     this.playlistService.handleAsync(userId).subscribe(playlists => {
       this.playlists = (playlists || []).filter(playlist => playlist.isPublic);
     });

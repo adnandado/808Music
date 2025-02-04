@@ -1,5 +1,8 @@
 <div class="dialog-container">
   <div class="playlist-cover" [ngStyle]="{'background-image': 'url(' + MyConfig.api_address + data.artist.profilePhotoPath + ')'}">
+    <button class="close-button" mat-icon-button (click)="closeDialog($event)">
+      <mat-icon>close</mat-icon>
+    </button>
 
     <div class="social-media">
     </div>

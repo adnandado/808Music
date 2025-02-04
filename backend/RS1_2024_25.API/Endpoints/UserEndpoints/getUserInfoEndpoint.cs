@@ -27,7 +27,7 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
 
             if (user == null)
             {
-                return NotFound("Korisnik nije pronađen.");
+                return NotFound("User not found.");
             }
 
             var userResponse = new UserResponse

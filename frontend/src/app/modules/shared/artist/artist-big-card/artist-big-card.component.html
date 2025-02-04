@@ -1,3 +1,4 @@
+@if (!isForProfile){
 <div class="artist-card" (mouseover)="showPlayButton(true)" (mouseleave)="showPlayButton(false)">
   <div class="thumbnail-image" [ngStyle]="{'background-image':'url('+MyConfig.api_address+artist?.pfpPath+')'}"></div>
   <div class="artist-info">
@@ -19,3 +20,27 @@
     </div>
   }
 </div>
+}
+@else {
+  <div class="artist-card" (mouseover)="showPlayButton(true)" (mouseleave)="showPlayButton(false)">
+    <div class="thumbnail-image" [ngStyle]="{'background-image':'url('+MyConfig.media_address+ '/Images/Artistpfps/' + artists?.artistPfp+')'}"></div>
+    <div class="artist-info">
+      <h6 class="artist-name hide-overflow" (click)="goToArtist()">{{ artists?.artistName }}</h6>
+      <p class="follow-count hide-overflow">{{getFollowCount()}}</p>
+    </div>
+    @if (!isPlayingThisAlbum)
+    {
+      <div class="play-button" (click)="playArtists()" [ngStyle]="playBtnSyle">
+        <mat-icon>
+          play_arrow
+        </mat-icon>
+      </div>
+    } @else {
+      <div class="play-button" (click)="musicPlayerService.togglePlayState()" [ngStyle]="playBtnSyle">
+        <mat-icon>
+          {{playingState ? 'pause' : 'play_arrow'}}
+        </mat-icon>
+      </div>
+    }
+  </div>
+}

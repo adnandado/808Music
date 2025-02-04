@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductGetByArtistIdService, Product } from '../../../../endpoints/products-endpoints/product-get-by-artist-id.service';
-import { Router, ActivatedRoute } from '@angular/router'; // Importiraj ActivatedRoute
+import { Router, ActivatedRoute } from '@angular/router';
 import { ArtistHandlerService } from '../../../../services/artist-handler.service';
 import {MyConfig} from '../../../../my-config';
 
