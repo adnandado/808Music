@@ -2,6 +2,8 @@ import {Component, Input} from '@angular/core';
 import {MyConfig} from '../../../../my-config';
 import {ArtistSimpleDto} from '../../../../services/auth-services/dto/artist-dto';
 import {Params, Router} from '@angular/router';
+import {ArtistInfoResponse} from '../../../../endpoints/user-endpoints/get-user-last-streams-endpoint.service';
+import {TrackGetResponse} from '../../../../endpoints/track-endpoints/track-get-by-id-endpoint.service';
 
 @Component({
   selector: 'app-artist-big-card-list',
@@ -13,6 +15,8 @@ export class ArtistBigCardListComponent {
   protected readonly MyConfig = MyConfig;
   @Input() title: string = "Artists";
   @Input() artists: ArtistSimpleDto[] | null  = null;
+  @Input() artist : ArtistInfoResponse [] | null  = null;
+  @Input() isProfile = false;
   @Input() numberDescription = "number"
   @Input() queryParams: Params | null = null;
 

@@ -60,15 +60,15 @@ namespace RS1_2024_25.API.Endpoints.ArtistEndpoints
                 .ToListAsync(cancellationToken);
 
             int shopRank = rankedArtistsShop.FindIndex(a => a.ArtistId == ArtistId) + 1;
-
             DateTime fourWeeksAgo = DateTime.UtcNow.AddDays(-30);
             int monthlyListeners = await db.ArtistsTracks
-      .Where(at => at.ArtistId == ArtistId)
-      .SelectMany(at => at.Track.TrackStreams)
-      .Where(ts => ts.StreamedAt >= fourWeeksAgo)
-      .Select(ts => ts.TrackId) 
-      .Distinct()
-      .CountAsync(cancellationToken);
+                .Where(at => at.ArtistId == ArtistId)
+                .SelectMany(at => at.Track.TrackStreams)
+                .Where(ts => ts.StreamedAt >= fourWeeksAgo && ts.UserId != null) 
+                .Select(ts => ts.UserId)
+                .Distinct()
+                .CountAsync(cancellationToken);
+
 
 
             var response = new ArtistBioResponse

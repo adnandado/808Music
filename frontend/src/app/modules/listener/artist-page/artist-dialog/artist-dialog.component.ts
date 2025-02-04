@@ -20,8 +20,9 @@ export class ArtistDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: ArtistDialogData
   ) {}
 
-  closeDialog(): void {
+  closeDialog($event: MouseEvent): void {
     this.dialogRef.close();
+    $event.stopPropagation();
   }
 
   protected readonly MyConfig = MyConfig;

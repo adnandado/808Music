@@ -7,12 +7,9 @@
   <h2 class="header-title">Followers</h2>
   <div class="followage-section" *ngIf="followers.length > 0; else noFollowers" >
     <div *ngFor="let user of followers" class="user" (click)="openProfile(user.id)">
-      <img
-        class="followage-pfp"
 
-        [src]="mediaAddress + user.profilePicture"
-        alt="Profile Picture"
-      />
+      <div class="followage-pfp" [ngStyle]="{'background-image': 'url(' + mediaAddress + user.profilePicture + ')'}" ></div>
+
       <p class="username-followage">{{ user.username }}</p>
       <p class="profile-undertext">Profile</p>
 

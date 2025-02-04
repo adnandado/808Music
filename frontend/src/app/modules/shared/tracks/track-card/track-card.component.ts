@@ -18,6 +18,9 @@ export class TrackCardComponent implements AfterViewInit, OnInit, OnDestroy {
   playBtnSyle = {
     'display': 'none',
   };
+  pauseBtnStyle = {
+    'display': 'block'
+  }
 
   cardStyle = {
     width: '32vw'

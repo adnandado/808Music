@@ -1,46 +1,49 @@
 <mat-card appearance="outlined" class="album-mat-card"
           [matTooltip]="tooltip"
+          #tooltipElement="matTooltip"
           matTooltipPosition="above"
           matTooltipShowDelay="500" matTooltipHideDelay="250"
           (mouseover)="showPlayButton()" (mouseleave)="hidePlayButton()">
-    <img [src]="imageUrl" matCardImage alt="Album Cover" (error)="replaceWithPlaceholder()" id="thumbnail">
-    @if(!hasControls) {
-      @if (!isPlayingThisAlbum) {
-        <button mat-fab class="play-button" (click)="emitPlayClick()"
-                [ngStyle]="playBtnStyle"><mat-icon>play_arrow</mat-icon></button>
-      } @else {
-        <button mat-fab class="play-button" (click)="musicPlayerService.togglePlayState()"
-                [ngStyle]="playBtnStyle"><mat-icon>{{playingState ? 'pause' : 'play_arrow'}}</mat-icon></button>
-      }
-    }
+  <div [ngStyle]="{'background-image': 'url('+imageUrl+')'}" matCardImage aria-label="Album Cover"
+       (error)="replaceWithPlaceholder()" id="thumbnail"></div>
+  @if (!hasControls) {
+    <button mat-fab class="play-button"
+            (click)="!isPlayingThisAlbum ? emitPlayClick() : musicPlayerService.togglePlayState()"
+            [ngStyle]="playingState && isPlayingThisAlbum ? pauseBtnStyle : playBtnStyle">
+      <mat-icon>{{ playingState && isPlayingThisAlbum ? 'pause' : 'play_arrow' }}</mat-icon>
+    </button>
+  }
   <mat-card-header class="album-mat-card-header">
-    <mat-card-title class="album-mat-card-title hide-overflow" (click)="emitClick()">{{getTitle()}}</mat-card-title>
-    @if (artistName != "")
-    {
-      <mat-card-subtitle class="album-mat-card-subtitle italic hide-overflow artist-name" (click)="goToArtist()">{{artistName}}</mat-card-subtitle>
+    <mat-card-title class="album-mat-card-title hide-overflow" (click)="emitClick()">{{ getTitle() }}</mat-card-title>
+    @if (artistName != "") {
+      <mat-card-subtitle class="album-mat-card-subtitle italic hide-overflow artist-name"
+                         (click)="goToArtist()">{{ artistName }}
+      </mat-card-subtitle>
     }
   </mat-card-header>
-    <mat-card-content class="album-mat-card-subtitle hide-overflow">{{subtitle}}</mat-card-content>
-  @if (numOfTracks != -1)
-  {
-    <mat-card-content class="album-mat-card-subtitle italic hide-overflow"><div class="highlighted"><p>{{numOfTracks}} tracks</p> @if (isHighLighted && hasControls) {<mat-icon>stars</mat-icon>}</div></mat-card-content>
+  <mat-card-content class="album-mat-card-subtitle hide-overflow">{{ subtitle }}</mat-card-content>
+  @if (numOfTracks != -1) {
+    <mat-card-content class="album-mat-card-subtitle italic hide-overflow">
+      <div class="highlighted"><p>{{ numOfTracks }} tracks</p> @if (isHighLighted && hasControls) {
+        <mat-icon>stars</mat-icon>
+      }</div>
+    </mat-card-content>
   }
-  @if (hasControls)
-  {
+  @if (hasControls) {
     @if (role !== "Viewer") {
-    <mat-card-actions class="album-mat-card-controls">
-      <button mat-icon-button (click)="emitDelete()" matTooltip="Delete">
-        <mat-icon>delete</mat-icon>
-      </button>
-      @if (!isHighLighted && releaseDate < Date.now() && numOfTracks > 0) {
-        <button mat-icon-button (click)="emitStats()" matTooltip="Highlight release">
-          <mat-icon>star</mat-icon>
+      <mat-card-actions class="album-mat-card-controls">
+        <button mat-icon-button (click)="emitDelete()" matTooltip="Delete">
+          <mat-icon>delete</mat-icon>
         </button>
-      }
-      <button mat-icon-button (click)="emitEdit()" matTooltip="Edit">
-        <mat-icon>edit</mat-icon>
-      </button>
-    </mat-card-actions>
+        @if (!isHighLighted && releaseDate < Date.now() && numOfTracks > 0) {
+          <button mat-icon-button (click)="emitStats()" matTooltip="Highlight release">
+            <mat-icon>star</mat-icon>
+          </button>
+        }
+        <button mat-icon-button (click)="emitEdit()" matTooltip="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-card-actions>
     }
   } @else {
     <mat-card-content></mat-card-content>

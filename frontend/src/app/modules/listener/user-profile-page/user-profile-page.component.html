@@ -56,11 +56,15 @@
   </div>
   <p *ngIf="playlists?.length === 0">No playlists available.</p>
 
+  <app-artist-big-card-list [isProfile] = "true" [artist]="lastStreamed" [title]="'RECENTLY PLAYED ARTISTS'" [numberDescription]="'followers' " ></app-artist-big-card-list>
+  <p *ngIf="lastStreamed?.length === 0">No streaming activity.</p>
+
+
   <h3 class="big-names" (click)="goToFollowers()">Followers</h3>
   <div class="followage-section">
     <div *ngFor="let user of (showAllFollowers ? followers : followers | slice:0:maxVisibleFollowage)">
       <div class="user" (click)="openProfile(user.id)" >
-        <img class="followage-pfp" [src]="MyConfig.media_address + user.profilePicture" alt="Profile Picture">
+        <div class="followage-pfp" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address +  user.profilePicture + ')'}" ></div>
         <div class="username-profiletype">
 
           <p class="username-followage">{{ user.username }}</p>
@@ -77,14 +81,16 @@
     <div *ngFor="let user of (showAllFollowing ? followingUsers : followingUsers | slice:0:maxVisibleFollowage)">
       @if(user.artistId !== null) {
         <div class="user" (click)="openArtistProfile(user.artistId)">
-          <img class="followage-pfp"  [src]="MyConfig.media_address + '/Images/Artistpfps/' + user.profilePicture" alt="Profile Picture" width="40" height="40">
+          <div class="followage-pfp" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + '/Images/Artistpfps/' + user.profilePicture + ')'}" ></div>
+
           <div class="username-profiletype">
             <p class="username-followage">{{ user.username }}</p>
             <p class="profile-undertext">Artist</p></div>
         </div>
       } @else {
         <div class="user" (click)="openProfile(user.userId)">
-          <img class="followage-pfp"  [src]="MyConfig.media_address + user.profilePicture" alt="Profile Picture" width="40" height="40">
+          <div class="followage-pfp" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address +  user.profilePicture + ')'}" ></div>
+
           <div class="username-profiletype">
             <p class="username-followage">{{ user.username }}</p>
             <p class="profile-undertext">Profile</p></div>
