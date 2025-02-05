@@ -63,7 +63,9 @@ namespace RS1_2024_25.API.Endpoints.PlaylistEndpoints
                    Username = up.User.Username,
                    ProfilePicture = up.User.pfpCoverPath, 
                    IsOwner = up.IsOwner         
-               }).ToList()
+               })
+               .OrderByDescending(up => up.IsOwner)
+               .ToList()
            })
            .FirstOrDefaultAsync(cancellationToken);
 
