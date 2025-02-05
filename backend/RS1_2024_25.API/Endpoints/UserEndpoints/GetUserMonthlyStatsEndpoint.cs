@@ -50,7 +50,7 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
                     PfpPath = g.First().ProfilePhotoPath
                 })
                 .OrderByDescending(x => x.TotalMinutes)
-                .Take(3)
+                .Take(5)
                 .ToList();
 
             var topSongs = monthlyStreams
