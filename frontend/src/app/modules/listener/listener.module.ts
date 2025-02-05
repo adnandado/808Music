@@ -59,7 +59,7 @@ import { OrderListComponent } from './order-list/order-list.component';
   import {ArtistDialogComponent} from './artist-page/artist-dialog/artist-dialog.component';
 import { UserMonthlyStatsComponent } from './user-monthly-stats/user-monthly-stats.component';
 import { MonthlyStatsDialogComponent } from './monthly-stats-dialog/monthly-stats-dialog.component';
-  import {MatDialogActions, MatDialogContent} from '@angular/material/dialog';
+  import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -135,6 +135,7 @@ import { MonthlyStatsDialogComponent } from './monthly-stats-dialog/monthly-stat
     MatCheckbox,
     MatDialogActions,
     MatDialogContent,
+    MatDialogTitle,
   ],
     exports: [
         ListenerHomeComponent

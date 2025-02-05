@@ -256,12 +256,37 @@ flex-direction: row;
   font-size:1em;
   text-align: left;
   font-weight: bold;
-  
+
 }
 .footer{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+.error-text{
+  color: white;
+  margin: 0;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  line-height: 1.1;
+}
+.gif{
+  display: flex;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35vw;
+  height: 25vw;
+}
+.error-texts{
+  color: white;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  line-height: 1.1;
 }
 .logo {
   width: 5vw;
