@@ -17,6 +17,9 @@
 
       <div *ngIf="statsData.artistRankTwoPfp !== ''" class="profile-medium" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + '/Images/Artistpfps/' + statsData.artistRankTwoPfp + ')'}" ></div>
       <div *ngIf="statsData.artistRankThreePfp !== ''" class="profile-small" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + '/Images/Artistpfps/' + statsData.artistRankThreePfp + ')'}" ></div>
+      <div *ngIf="statsData.artistRankFourPfp !== ''" class="profile-smaller" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + '/Images/Artistpfps/' + statsData.artistRankFourPfp + ')'}" ></div>
+      <div *ngIf="statsData.artistRankFivePfp !== ''" class="profile-smallest" [ngStyle]="{'background-image': 'url(' + MyConfig.media_address + '/Images/Artistpfps/' + statsData.artistRankFivePfp + ')'}" ></div>
+
     </div>
   </div>
   </div>
