@@ -81,7 +81,9 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
                 TopSongs = topSongs,
                 ArtistRankOnePfp = topArtists.ElementAtOrDefault(0)?.PfpPath,
                 ArtistRankTwoPfp = topArtists.ElementAtOrDefault(1)?.PfpPath,
-                ArtistRankThreePfp = topArtists.ElementAtOrDefault(2)?.PfpPath
+                ArtistRankThreePfp = topArtists.ElementAtOrDefault(2)?.PfpPath,
+                ArtistRankFourPfp = topArtists.ElementAtOrDefault(3)?.PfpPath,
+                ArtistRankFivePfp = topArtists.ElementAtOrDefault(4)?.PfpPath
             };
 
             return Ok(response);
@@ -93,6 +95,9 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
         public string ArtistRankOnePfp { get; set; }
         public string ArtistRankTwoPfp { get; set; }
         public string ArtistRankThreePfp { get; set; }
+        public string ArtistRankFourPfp { get; set; }
+        public string ArtistRankFivePfp { get; set; }
+
         public float MinutesStreamed { get; set; }
         public int Streams { get; set; }
         public string Username { get; set; }

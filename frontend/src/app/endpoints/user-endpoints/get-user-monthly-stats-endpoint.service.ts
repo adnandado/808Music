@@ -7,6 +7,9 @@ export interface UserMonthlyStatsResponse {
   artistRankOnePfp: string;
   artistRankTwoPfp: string;
   artistRankThreePfp: string;
+  artistRankFourPfp: string;
+  artistRankFivePfp: string;
+
   minutesStreamed: number;
   streams: number;
   username: string;
