@@ -148,7 +148,7 @@ flex-direction: column;
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  margin-top: -6vw;
+  margin-top: -4.5vw;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -335,12 +335,12 @@ lists ol li::before {
 }
 
 button {
-  padding: 0.5vw;
+  padding: 0.2vw;
   background: #E692F8;
   color: white;
   border: none;
   cursor: pointer;
-  width: 5vw;
+  width: 4vw;
   border-radius: 15px;
 }
 
