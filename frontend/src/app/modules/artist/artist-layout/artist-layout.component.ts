@@ -24,7 +24,7 @@ export class ArtistLayoutComponent implements OnInit {
   ngOnInit(): void {
         if(!this.auth.isLoggedIn())
         {
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth/login'], {queryParams: {redirectUrl: "-artist"}});
         }
         this.selectedArtist = this.artistHandler.isArtistSelected();
     }

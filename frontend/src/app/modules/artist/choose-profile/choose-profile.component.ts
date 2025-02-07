@@ -25,6 +25,7 @@ import {TextInputDialogComponent} from '../../shared/dialogs/text-input-dialog/t
 import {
   UserInviteAcceptEndpointService
 } from '../../../endpoints/user-artist-invite-endpoints/user-invite-accept-endpoint.service';
+import {Route, Router} from '@angular/router';
 
 @Component({
   selector: 'app-choose-profile',
@@ -51,7 +52,8 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
               private artistById: ArtistGetByIdEndpointService,
               private leaveArtist: UserLeaveArtistEndpointService,
               private artistDeleteService: ArtistFlagForDeletionEndpointService,
-              private userInviteService : UserInviteAcceptEndpointService) {
+              private userInviteService : UserInviteAcceptEndpointService,
+              private router:Router) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -178,5 +180,9 @@ export class ChooseProfileComponent implements OnInit, OnChanges {
         }
       }
     })
+  }
+
+  goToProfile(a: ArtistSimpleDto) {
+    this.router.navigate(["/listener/profile", a.id]);
   }
 }

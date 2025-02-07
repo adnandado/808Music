@@ -517,6 +517,7 @@ export class TracksTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
   addToQueue(track: TrackGetResponse) {
     this.musicPlayerService.addToQueue(track);
+    this.snackBar.open(`${track.title} added to queue.`, "Dismiss", {duration: 2000});
   }
 
   showHide(b: boolean, track:TrackGetResponse): void {

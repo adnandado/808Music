@@ -32,9 +32,16 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.snackBar.open(data.message, "", {duration: 2000});
+    let snackRef = this.snackBar.open(data.message, "View", {duration: 2000});
     let audio = new Audio('assets/notification.mp3');
     audio.play().catch(err => {console.log(err)});
+
+    snackRef.afterDismissed().subscribe(data => {
+      if(data.dismissedByAction)
+      {
+        this.router.navigate(['/listener/notifications']);
+      }
+    });
   }
 
   constructor(private auth: MyUserAuthService,
@@ -56,7 +63,7 @@ export class ListenerLayoutComponent implements OnInit, OnDestroy {
     if(!this.auth.isLoggedIn())
     {
       console.log("Not logged in...");
-      setTimeout(() => this.router.navigate(['/auth/login']), 1000);
+      setTimeout(() => this.router.navigate(['/auth/login'], {queryParams: {redirectUrl: "-listener"}}), 1000);
     }
     /*
     const request: IsSubscribedRequest = {

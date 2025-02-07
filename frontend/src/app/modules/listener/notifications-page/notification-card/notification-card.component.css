@@ -1,6 +1,6 @@
 .notification-card {
   width: 100%;
-  height: 12vh;
+  height: fit-content;
   position: relative;
   background-color: #161215;
   border-radius: 20px;
@@ -31,6 +31,7 @@
   display: flex;
   flex-direction: row;
   gap: 15px;
+  align-items: center;
 }
 
 .greyed {

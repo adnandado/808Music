@@ -100,7 +100,7 @@ export class SidenavComponent implements OnInit {
 
     this.notificationService.addNotificationListener(this.notiReceive);
     this.chatNoti$ = this.chatService.msgNotify$.subscribe(this.notiReceive);
-    this.chat$ = this.chatService.msgReceived$.subscribe(msg => {
+    this.chat$ = this.chatService.msgNotify$.subscribe(msg => {
       this.unreads!.unreadMessaggesCount++;
       if (this.unreads!.unreadMessaggesCount > 99) {
         this.unreads!.unreadMessaggesCount = 99;

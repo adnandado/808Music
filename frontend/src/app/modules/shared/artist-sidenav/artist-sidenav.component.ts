@@ -4,6 +4,8 @@ import {ArtistHandlerService} from '../../../services/artist-handler.service';
 import {MyConfig} from '../../../my-config';
 import {UserProfileService} from '../../../endpoints/auth-endpoints/user-profile-endpoint.service';
 import {MyUserAuthService} from '../../../services/auth-services/my-user-auth.service';
+import {Browser} from 'leaflet';
+import win = Browser.win;
 
 @Component({
   selector: 'artist-sidenav',
@@ -124,8 +126,11 @@ export class ArtistSidenavComponent implements OnInit {
   }
 
   switchArtist() {
+
     sessionStorage.removeItem('artist');
-    window.location.reload();
+    this.router.navigate([`/artist/dashboard`]).then(val => {
+      window.location.reload();
+    });
   }
 
     protected readonly MyConfig = MyConfig;

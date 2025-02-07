@@ -71,3 +71,12 @@
 .error {
   color: red;
 }
+
+.dual-controls {
+  display: flex;
+  align-items: center;
+}
+
+.dual-controls > h6 {
+  margin: 0;
+}
