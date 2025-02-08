@@ -22,7 +22,7 @@ namespace RS1_2024_25.API.Endpoints.TrackEndpoints
             var user = await db.MyAppUsers.Include(u => u.Subscription)
                             .FirstOrDefaultAsync(u => u.ID == userId, cancellationToken);
 
-            if ((user.Subscription == null || user.Subscription.EndDate < DateTime.UtcNow) && request.ArtistMode != null && !request.ArtistMode.Value)
+            if ((user.Subscription == null || user.Subscription.EndDate < DateTime.UtcNow) && (request.ArtistMode == null || !request.ArtistMode.Value))
             {
                 return Unauthorized(new { message = "Your subscription has expired or is not active." });
             }

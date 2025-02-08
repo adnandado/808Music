@@ -26,6 +26,7 @@ import {ArtistSimpleDto} from '../../../../services/auth-services/dto/artist-dto
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MyConfig} from '../../../../my-config';
 import {MyUserAuthService} from '../../../../services/auth-services/my-user-auth.service';
+import {TrackStreamEndpointService} from '../../../../endpoints/track-endpoints/track-stream-endpoint.service';
 
 @Component({
   selector: 'app-tracks-create-or-edit',
@@ -60,6 +61,7 @@ export class TracksCreateOrEditComponent implements OnInit {
               private router: Router,
               private postTrackService: TrackInsertOrUpdateEndpointService,
               private auth: MyUserAuthService,
+              private trackStreamService: TrackStreamEndpointService
               ) {
   }
 
@@ -195,4 +197,18 @@ export class TracksCreateOrEditComponent implements OnInit {
   }
 
   protected readonly MyConfig = MyConfig;
+
+  downloadTrack() {
+    this.trackStreamService.handleAsync({jwt: this.jwt, trackId: this.oldTrack?.id!, artistMode: true}).subscribe({
+      next: value => {
+        let blob = new Blob([value], {type: "audio/mpeg"});
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `${this.oldTrack!.title} ● ${this.oldTrack!.artists.map(val => val.name).join(', ')}`
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    })
+  }
 }

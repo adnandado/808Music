@@ -11,8 +11,14 @@
   </div>
   @if (oldTrack != null) {
     <div class="player">
-      <h6>Current song file</h6>
-      <audio controls [src]="MyConfig.api_address + '/api/TrackStreamEndpoint?trackId=' + oldTrack.id + '&jwt=' + jwt + '&artistMode=true'"></audio>
+      <div class="dual-controls">
+        <h6>Current song file</h6>
+        <button mat-icon-button (click)="downloadTrack()" matTooltip="Download track" matTooltipPosition="right">
+          <mat-icon>download</mat-icon>
+        </button>
+      </div>
+      <audio controls
+             [src]="MyConfig.api_address + '/api/TrackStreamEndpoint?trackId=' + oldTrack.id + '&jwt=' + jwt + '&artistMode=true'"></audio>
     </div>
   }
 

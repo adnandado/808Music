@@ -110,6 +110,7 @@
 .left-side{
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 .personal-rank{
   background-color: rgba(230, 146, 248, 0.91);

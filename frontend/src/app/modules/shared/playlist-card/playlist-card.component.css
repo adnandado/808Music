@@ -9,7 +9,7 @@
   transition: 250ms background-color;
   overflow-x: hidden;
   margin: 0 auto;
-  margin-right: 1.25vw;
+  margin-right: 20px;
   position: relative;
 }
 

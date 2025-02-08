@@ -256,6 +256,7 @@ export class AlbumListMaterialComponent implements OnInit {
     {
       e.source.select();
       this.pagedRequest.isReleased = undefined;
+      this.pagedRequest.getUnlisted = undefined;
     }
     else if(!e.selected && e.isUserInput)
     {

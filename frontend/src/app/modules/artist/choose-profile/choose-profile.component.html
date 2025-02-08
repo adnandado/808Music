@@ -27,7 +27,7 @@
     <mat-card appearance="outlined" class="artist-card" >
       <mat-card-header>
         <mat-card-title-group>
-          <mat-card-title>{{a.name}}</mat-card-title>
+          <mat-card-title (click)="goToProfile(a)" class="artist-name" [matTooltip]="'View ' + a.name + ' profile on the listener side.'" matTooltipShowDelay="250">{{a.name}}</mat-card-title>
           <mat-card-subtitle>Role: {{a.role}}</mat-card-subtitle>
           <img mat-card-avatar *ngIf="url+a.pfpPath"  [src]="url+a.pfpPath" class="avatar-image">
         </mat-card-title-group>
