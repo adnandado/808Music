@@ -51,3 +51,8 @@ mat-card-subtitle {
   align-items: center;
   gap: 20px;
 }
+
+.artist-name:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

@@ -28,7 +28,7 @@ const routes: Routes = [
     component: ArtistLayoutComponent,
     children: [
       {
-        path: '', redirectTo: 'album', pathMatch: 'full',
+        path: '', redirectTo: 'dashboard', pathMatch: 'full',
       },
       {
         path: 'album',
@@ -66,15 +66,16 @@ const routes: Routes = [
       },
     ]
   },
+  /*
   {
     path: 'create',
     component: AlbumCreateComponent
   },
-
   {
     path: 'edit/:id',
     component: AlbumCreateComponent
   },
+   */
   {
     path: 'new-profile',
     component: ManageUsersComponent,

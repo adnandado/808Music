@@ -124,7 +124,7 @@ export class MusicPlayerService {
   }
 
   getQueue() {
-    return this.queue.filter((t,i) => !this.playedIndexes.includes(i));
+    return this.queue.filter((t,i) => !this.playedIndexes.includes(i) || i > this.playedIndexes[this.playedIndexes.length - 1]);
   }
 
   playNext() {
@@ -204,7 +204,7 @@ export class MusicPlayerService {
     let sortByStreams = Date.now()%2 == 0;
     this.trackGetAllEndpointService.handleAsync({title:"", isReleased: true, sortByStreams: sortByStreams, pageSize: 1000, pageNumber:1, }).subscribe({
       next: data => {
-        this.createQueue(data.dataItems, {display: sortByStreams ? "808 Popular - Autoplay" : "808 Fresh - Autoplay", value: "/listener/home"})
+        this.createQueue(data.dataItems, {display: sortByStreams ? "808 Popular - Autoplay" : "808 Fresh - Autoplay", value: "/listener/home"}, "autoplay")
       }
     });
   }

@@ -148,6 +148,7 @@ this.loadPlaylists();
         if(value.dataItems.length == 0)
         {
           this.snackBar.open('Playlist has no songs', "", {duration: 2000});
+          return;
         }
         this.musicPlayerService.createQueue(value.dataItems, {display: playlist.title + " - Playlist", value: "/listener/playlist/" + playlist.id}, "playlist");
       }

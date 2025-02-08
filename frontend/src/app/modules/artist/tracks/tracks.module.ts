@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TracksRoutingModule } from './tracks-routing.module';
 import { TracksListComponent } from './tracks-list/tracks-list.component';
 import {MatIcon} from '@angular/material/icon';
-import {MatAnchor, MatButton, MatIconButton} from '@angular/material/button';
+import {MatAnchor, MatButton, MatIconAnchor, MatIconButton} from '@angular/material/button';
 import { TracksLayoutComponent } from './tracks-layout/tracks-layout.component';
 import {
   MatCell,
@@ -26,6 +26,7 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {NgxAudioPlayerModule} from '@khajegan/ngx-audio-player';
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {AppModule} from "../../../app.module";
+import {MatTooltip} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -64,6 +65,8 @@ import {AppModule} from "../../../app.module";
     NgxAudioPlayerModule,
     MatAutocomplete,
     MatAutocompleteTrigger,
+    MatIconAnchor,
+    MatTooltip,
   ],
   exports: [
     TracksListComponent
