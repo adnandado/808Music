@@ -30,6 +30,49 @@ p { margin: 0}
 .chart-section {
   margin-top: 0.5vw;
 }
+.bio-container::-webkit-scrollbar {
+  width: 6px;
+  display: none;
+}
+.text-container{}
+.bio-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.bio-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.table-container {
+  width: 100%;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+.table-body-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.table-body-container table {
+  width: 100%;
+}
+
 .text {
   position: relative;
   justify-content: center;
@@ -187,7 +230,9 @@ table {
   width:98%;
   border-collapse: collapse;
 }
-
+td{
+  font-size:1em;
+}
 th, td {
   padding: 10px;
   text-align: left;
@@ -195,7 +240,7 @@ th, td {
 }
 
 th {
-  background-color: rgba(51, 51, 51, 0.35);
+  background-color: rgba(51, 51, 51, 0.73);
   color: white;
 }
 
