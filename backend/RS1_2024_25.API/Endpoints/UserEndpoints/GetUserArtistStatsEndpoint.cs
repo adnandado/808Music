@@ -33,7 +33,8 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
                 .SelectMany(ts => db.ArtistsTracks
                     .Where(at => at.TrackId == ts.TrackId && at.ArtistId == request.ArtistId)
                     .Select(at => at.Track.Length))
-                .SumAsync(length => length, cancellationToken);
+                .SumAsync(cancellationToken);
+            
 
             var userFollowInfo = await db.Follows
                 .Where(f => f.MyAppUserId == request.UserId && f.ArtistId == request.ArtistId)
@@ -49,7 +50,7 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoints
             var userTotalMinutesByArtist = await db.TrackStream
                 .Where(ts => ts.UserId == request.UserId) 
                 .SelectMany(ts => db.ArtistsTracks
-                    .Where(at => at.TrackId == ts.TrackId)  
+                    .Where(at => at.TrackId == ts.TrackId && at.IsLead == true)  
                     .Select(at => new
                     {
                         ArtistId = at.ArtistId,

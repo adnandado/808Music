@@ -108,7 +108,7 @@ export class ArtistDashboardComponent implements OnInit, AfterViewInit {
   getTableTitle(): string {
     switch (this.selectedDataType) {
       case 'productSales':
-        return 'Last 5 Products Sold';
+        return 'Products By Order ';
       case 'quantitySold':
         return 'Best Selling Products';
       case 'saleAmount':

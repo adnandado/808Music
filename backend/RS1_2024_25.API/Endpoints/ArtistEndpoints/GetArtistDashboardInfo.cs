@@ -54,7 +54,6 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
 
         var last5Followers = followers
             .OrderByDescending(f => f.StartedFollowing)
-            .Take(5)
             .ToList();
 
         var productSales = await _db.Products
@@ -71,18 +70,15 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
         var highestPriceSold = productSales
           .Where(ps => ps.QuantitySold > 0)
           .OrderByDescending(ps => ps.TotalRevenue)
-          .Take(5)
           .ToList();
 
         var mostSales = productSales
             .Where(ps => ps.QuantitySold > 0)
             .OrderByDescending(ps => ps.QuantitySold)
-            .Take(5)
             .ToList();
         var last5Products = await _db.OrderDetails
     .Where(od => od.Product.ArtistId == request.ArtistId)  
     .OrderByDescending(od => od.Order.DateAdded)  
-    .Take(5)  
     .Select(od => new ProductSalesStats
     {
         ProductId = od.Product.Id,
@@ -192,7 +188,6 @@ public class GetArtistDashboardEndpoint : MyEndpointBaseAsync
            .Where(at => at.ArtistId == request.ArtistId)
            .SelectMany(at => at.Track.TrackStreams)
            .OrderByDescending(sd => sd.StreamedAt)
-           .Take(5)
            .Select(sd => new StreamStats
            {
                TrackId = sd.TrackId,

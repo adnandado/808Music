@@ -99,7 +99,9 @@
 
   <div class="dashboard-tables">
     <section class="table-section">
-      <h2 class="table-title">Last 5 Streams</h2>
+      <h2 class="table-title">Stream history</h2>
+      <div class="table-container">
+
       <table>
         <thead>
         <tr>
@@ -113,11 +115,13 @@
           <td>{{ moment(stream.streamedAt).fromNow() }}</td>
         </tr>
         </tbody>
-      </table>
+      </table> </div>
     </section>
 
     <section class="table-section">
-      <h2 class="table-title" [@fadeInOut]>Last 5 Followers</h2>
+      <h2 class="table-title" [@fadeInOut]>Follower history</h2>
+      <div class="table-container">
+
       <table>
         <thead>
         <tr>
@@ -131,7 +135,7 @@
           <td>{{ moment(follower.startedFollowing).fromNow() }}</td>
         </tr>
         </tbody>
-      </table>
+      </table> </div>
     </section>
     <section class="table-section">
       <h2 class="table-title">{{ getTableTitle() }}</h2>
@@ -141,22 +145,25 @@
       <mat-icon (click)="nextDataType()" class="change-icon">arrow_forward_ios</mat-icon>
     </span>
 
-      <table>
-        <thead>
-        <tr>
-          <th>Product Title</th>
-          <th>Quantity Sold</th>
-          <th>Total Revenue</th>
-        </tr>
-        </thead>
-        <tbody *ngIf="artistDashboardData && selectedDataType" >
-        <tr *ngFor="let sale of artistDashboardData[selectedDataType]">
-          <td [@fadeInOut]>{{ sale.productTitle }}</td>
-          <td [@fadeInOut]>{{ sale.quantitySold}}</td>
-          <td [@fadeInOut]>{{ sale.totalRevenue| currency }}</td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="table-container">
+        <table>
+          <thead>
+          <tr>
+            <th>Product Title</th>
+            <th>Quantity Sold</th>
+            <th>Total Revenue</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="artistDashboardData && selectedDataType">
+          <tr *ngFor="let sale of artistDashboardData[selectedDataType]">
+            <td [@fadeInOut]>{{ sale.productTitle }}</td>
+            <td [@fadeInOut]>{{ sale.quantitySold }}</td>
+            <td [@fadeInOut]>{{ sale.totalRevenue | currency }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
     </section>
 
   </div>

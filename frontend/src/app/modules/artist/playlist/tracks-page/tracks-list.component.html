@@ -14,7 +14,7 @@
       <div class="playlist-details">
         <mat-icon *ngIf="playlist?.tracks">explicit</mat-icon>
         <div>
-          <p class="playlist-privacy">{{ playlistDetails?.isPublic ? 'Public playlist' : 'Private playlist' }}</p>
+          <p *ngIf="!isLikedSongs" class="playlist-privacy">{{ playlistDetails?.isPublic ? 'Public playlist' : 'Private playlist' }}</p>
 <h2 class="playlist-title">{{ playlistDetails?.title }}</h2>
           <div class="playlist-information">
             <div class="user-row" *ngFor="let user of playlistDetails?.users">

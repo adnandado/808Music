@@ -97,7 +97,7 @@ export class EventpageComponent {
     }
 
     const customIcon = L.icon({
-      iconUrl: 'https://th.bing.com/th/id/R.81f20b3f073d38c550b0938686909785?rik=rsNHhb6EvzomoQ&riu=http%3a%2f%2fclipart-library.com%2fimage_gallery2%2fKanye-West-PNG-Pic.png&ehk=xOLiNla8XPcrGhjryB7yA2GB%2bdHvVldfG1U%2fLLj016Y%3d&risl=&pid=ImgRaw&r=0',
+      iconUrl: 'https://files.cults3d.com/uploaders/23511406/illustration-file/9aafa4e5-8d7b-479d-becc-79bc235b065f/379683535646300a3a95677589335670.png',
       iconSize: [32, 32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32]
