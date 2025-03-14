@@ -1,6 +1,6 @@
 # 808Music 🎵  
 
-808Music is a music streaming app made as a school project with my colleague Marko Dogan.
+808Music is a music streaming web application made as a school project with my colleague Marko Dogan.
 
 ## 🎯 Key Features  
 
@@ -26,3 +26,6 @@
 ### **Database**  
 - **Sql** 
 
+## Goals for the future
+-- Make it responsive
+-- Make a mobile app 
