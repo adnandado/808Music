@@ -24,5 +24,5 @@
 - **Stripe API**  
 
 ### **Database**  
-- **MySql** 
+- **Sql** 
 
